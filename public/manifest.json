@@ -1,6 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "SETX Football",
+  "name": "SETX Football Camp - Youth Football Training",
+  "description": "Two-day youth football camp for ages 5-12 in Southeast Texas. July 2026.",
   "icons": [
     {
       "src": "favicon.ico",
@@ -20,6 +21,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#002868",
   "background_color": "#ffffff"
 }
