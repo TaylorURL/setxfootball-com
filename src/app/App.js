@@ -457,7 +457,7 @@ function App() {
             <div className="inline-block bg-gradient-to-r from-primary-50 to-accent-50 rounded-2xl p-8">
               <p className="text-gray-700 mb-4 text-lg">Interested in becoming a sponsor?</p>
               <a 
-                href="mailto:sponsor@setxfootball.com" 
+                href="mailto:hanksclayton81@gmail.com" 
                 className="inline-flex items-center bg-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-primary-600/50"
               >
                 <FaEnvelope className="mr-2" />
@@ -809,13 +809,13 @@ function App() {
                   <span className="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center mr-4 group-hover:bg-accent-400 transition-colors duration-300">
                     <FaPhone className="text-accent-400 group-hover:text-white transition-colors duration-300" />
                   </span>
-                  (555) 123-4567
+                  936-641-0681
                 </li>
                 <li className="flex items-center text-gray-400 group">
                   <span className="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center mr-4 group-hover:bg-accent-400 transition-colors duration-300">
                     <FaEnvelope className="text-accent-400 group-hover:text-white transition-colors duration-300" />
                   </span>
-                  info@setxfootball.com
+                  hanksclayton81@gmail.com
                 </li>
               </ul>
             </div>
