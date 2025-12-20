@@ -352,7 +352,7 @@ function App() {
             <div className="w-24 h-1.5 bg-gradient-to-r from-accent-400 to-accent-600 mx-auto rounded-full"></div>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
+          <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
             <div className="scroll-animate from-left">
               <div className="relative">
                 <div className="rounded-3xl h-96 overflow-hidden group hover-lift shadow-2xl">
@@ -368,15 +368,15 @@ function App() {
             </div>
             
             <div className="scroll-animate from-right delay-2">
-              <h3 className="text-3xl font-bold text-gray-900 mb-6">Welcome to SETX Football Camp</h3>
+              <h3 className="text-3xl font-bold text-gray-900 mb-6">Built for Our Community</h3>
               <p className="text-gray-600 mb-6 leading-relaxed text-lg">
-                Our football camp provides young athletes with the opportunity to develop their skills, 
-                learn teamwork, and build character in a fun and supportive environment. Led by experienced 
-                coaches, we focus on fundamentals, sportsmanship, and creating lasting memories.
+                SETX Youth Football Camp was built to give kids in our community opportunities we didn't always have growing up in Daisetta, Texas. With limited youth sports available, we chose to create something better.
               </p>
-              <p className="text-gray-600 mb-8 leading-relaxed text-lg">
-                Whether your child is new to football or looking to sharpen their skills, our camp 
-                offers something for everyone. We believe in building champions both on and off the field.
+              <p className="text-gray-600 mb-6 leading-relaxed text-lg">
+                SETXYFC is a community-first, majority-free football camp offering two half days of fun, fundamentals, and confidence-building instruction. We provide drinks, snacks, and a camp shirt for every participant—registered or not—because inclusion matters.
+              </p>
+              <p className="text-gray-600 mb-8 leading-relaxed text-lg font-semibold">
+                Now in our third year, the camp continues to grow, and we're excited to see what this season brings for our kids and our community.
               </p>
               
               <div className="grid grid-cols-2 gap-4">
@@ -384,7 +384,7 @@ function App() {
                   { title: 'Ages', value: '5-12 years old', icon: FaUsers },
                   { title: 'Duration', value: 'Two day camp', icon: FaClipboardList },
                   { title: 'Skill Levels', value: 'All levels welcome', icon: FaStar },
-                  { title: 'Coaching', value: 'Experienced coaches', icon: FaTrophy }
+                  { title: 'Year', value: 'Third year', icon: FaTrophy }
                 ].map((item, index) => (
                   <div key={index} className={`scroll-animate scale-in delay-${index + 3} bg-gradient-to-br from-primary-50 to-primary-100 p-5 rounded-2xl hover-lift card-shine group`}>
                     <item.icon className="h-6 w-6 text-primary-600 mb-2 group-hover:scale-110 transition-transform" />
@@ -392,6 +392,166 @@ function App() {
                     <p className="text-gray-600 text-sm">{item.value}</p>
                   </div>
                 ))}
+              </div>
+            </div>
+          </div>
+
+          <div className="scroll-animate delay-4 mt-32">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center justify-center bg-gradient-to-r from-accent-500 to-accent-600 text-white px-6 py-3 rounded-full text-sm font-bold uppercase tracking-wider mb-6 shadow-lg shadow-accent-500/30">
+                <FaShieldAlt className="mr-3 h-5 w-5" />
+                Background Checked & Experienced
+              </div>
+              <h3 className="text-4xl md:text-5xl lg:text-6xl font-black text-gray-900 mb-6 leading-tight">
+                Coaching Experience
+                <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-accent-500">
+                  & Leadership
+                </span>
+              </h3>
+              <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                Every coach selected for SETX Youth Football Camp has completed a background check and brings real coaching and/or playing experience. These are not random volunteers—your child is being taught by leaders who understand the game and care about the community.
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-2 gap-8 mb-12">
+              <div className="scroll-animate from-left delay-5 group relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-primary-600 to-primary-700 rounded-3xl transform rotate-1 group-hover:rotate-2 transition-transform duration-300"></div>
+                <div className="relative bg-white rounded-3xl p-8 md:p-10 shadow-2xl border-4 border-white hover-lift">
+                  <div className="absolute -top-6 -right-6 w-20 h-20 bg-gradient-to-br from-accent-400 to-accent-600 rounded-2xl flex items-center justify-center shadow-xl transform rotate-12 group-hover:rotate-[20deg] transition-transform duration-300">
+                    <FaTrophy className="h-10 w-10 text-white" />
+                  </div>
+                  
+                  <div className="flex items-start mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl flex items-center justify-center mr-5 shadow-lg flex-shrink-0">
+                      <FaFootballBall className="h-8 w-8 text-white" />
+                    </div>
+                    <div>
+                      <div className="inline-block bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
+                        Co-Founder
+                      </div>
+                      <h4 className="text-2xl md:text-3xl font-black text-gray-900">Clayton Hanks</h4>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4 mb-6">
+                    <div className="flex items-start">
+                      <div className="w-2 h-2 bg-accent-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                      <p className="text-gray-700 leading-relaxed font-medium">
+                        Graduate of Hull-Daisetta High School
+                      </p>
+                    </div>
+                    <div className="flex items-start">
+                      <div className="w-2 h-2 bg-accent-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                      <p className="text-gray-700 leading-relaxed font-medium">
+                        Played semi-professional and international football with multiple teams
+                      </p>
+                    </div>
+                    <div className="flex items-start">
+                      <div className="w-2 h-2 bg-accent-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                      <p className="text-gray-700 leading-relaxed font-medium">
+                        Actively coaching youth football for the past three consecutive years
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-r from-primary-50 to-accent-50 rounded-2xl p-4 border-2 border-primary-200">
+                    <div className="flex items-center text-primary-700">
+                      <FaStar className="h-5 w-5 mr-2 text-accent-500" />
+                      <span className="font-bold text-sm uppercase tracking-wide">International Playing Experience</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="scroll-animate from-right delay-6 group relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-accent-500 to-accent-600 rounded-3xl transform -rotate-1 group-hover:-rotate-2 transition-transform duration-300"></div>
+                <div className="relative bg-white rounded-3xl p-8 md:p-10 shadow-2xl border-4 border-white hover-lift">
+                  <div className="absolute -top-6 -right-6 w-20 h-20 bg-gradient-to-br from-primary-600 to-primary-800 rounded-2xl flex items-center justify-center shadow-xl transform -rotate-12 group-hover:-rotate-[20deg] transition-transform duration-300">
+                    <FaUsers className="h-10 w-10 text-white" />
+                  </div>
+                  
+                  <div className="flex items-start mb-6">
+                    <div className="w-16 h-16 bg-gradient-to-br from-accent-400 to-accent-600 rounded-2xl flex items-center justify-center mr-5 shadow-lg flex-shrink-0">
+                      <FaHeart className="h-8 w-8 text-white" />
+                    </div>
+                    <div>
+                      <div className="inline-block bg-accent-100 text-accent-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
+                        Co-Founder
+                      </div>
+                      <h4 className="text-2xl md:text-3xl font-black text-gray-900">Timothy Taylor Sr.</h4>
+                    </div>
+                  </div>
+
+                  <div className="space-y-4 mb-6">
+                    <div className="flex items-start">
+                      <div className="w-2 h-2 bg-primary-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                      <p className="text-gray-700 leading-relaxed font-medium">
+                        Graduate of Hull-Daisetta High School
+                      </p>
+                    </div>
+                    <div className="flex items-start">
+                      <div className="w-2 h-2 bg-primary-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                      <p className="text-gray-700 leading-relaxed font-medium">
+                        Former lettering athlete with proven competitive experience
+                      </p>
+                    </div>
+                    <div className="flex items-start">
+                      <div className="w-2 h-2 bg-primary-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                      <p className="text-gray-700 leading-relaxed font-medium">
+                        Approximately five years of coaching experience
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="bg-gradient-to-r from-accent-50 to-primary-50 rounded-2xl p-4 border-2 border-accent-200">
+                    <div className="flex items-center text-accent-700">
+                      <FaStar className="h-5 w-5 mr-2 text-primary-600" />
+                      <span className="font-bold text-sm uppercase tracking-wide">Dedicated Youth Development</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="scroll-animate scale-in delay-7 relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-primary-600 via-accent-500 to-primary-600 rounded-3xl opacity-10 blur-2xl"></div>
+              <div className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 rounded-3xl overflow-hidden shadow-2xl">
+                <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary-500 via-accent-400 to-accent-500"></div>
+                <div className="absolute top-0 right-0 w-96 h-96 bg-accent-500/20 rounded-full filter blur-3xl"></div>
+                <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary-500/20 rounded-full filter blur-3xl"></div>
+                
+                <div className="relative p-8 md:p-12 lg:p-16">
+                  <div className="text-center mb-10">
+                    <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-accent-400 to-accent-600 rounded-2xl mb-6 shadow-xl">
+                      <FaStar className="h-10 w-10 text-white" />
+                    </div>
+                    <h4 className="text-3xl md:text-4xl font-black text-white mb-4">What Sets Us Apart</h4>
+                    <div className="w-24 h-1.5 bg-gradient-to-r from-accent-400 to-accent-600 mx-auto rounded-full"></div>
+                  </div>
+
+                  <div className="max-w-4xl mx-auto mb-8">
+                    <p className="text-xl md:text-2xl text-gray-200 leading-relaxed text-center font-medium">
+                      What truly sets SETXYFC apart is the presence of <span className="text-accent-400 font-bold">outside professional and high-level athletes</span> who attend as guest coaches and speakers, giving campers exposure to real-world experience, motivation, and insight that most camps simply cannot offer.
+                    </p>
+                  </div>
+
+                  <div className="bg-white/10 backdrop-blur-sm border-2 border-white/20 rounded-2xl p-8 md:p-10 text-center">
+                    <div className="flex justify-center gap-4 mb-6">
+                      <div className="w-12 h-12 bg-accent-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <FaHeart className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="w-12 h-12 bg-primary-600 rounded-xl flex items-center justify-center shadow-lg">
+                        <FaUsers className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="w-12 h-12 bg-accent-500 rounded-xl flex items-center justify-center shadow-lg">
+                        <FaShieldAlt className="h-6 w-6 text-white" />
+                      </div>
+                    </div>
+                    <p className="text-2xl md:text-3xl lg:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-accent-300 to-white leading-tight">
+                      We are more than a camp—we are mentors, leaders, and advocates, here for your kids on and off the field.
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
