@@ -64,38 +64,38 @@ const PaymentPage = () => {
   const totalAmount = registration.total_cost || (registration.shirt_quantity * SHIRT_PRICE);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900 py-12 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900 py-6 sm:py-12 px-4">
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-accent-400 to-primary-500"></div>
 
-      <div className="absolute top-10 right-20 w-72 h-72 bg-accent-400 rounded-full filter blur-3xl opacity-10"></div>
-      <div className="absolute bottom-10 left-20 w-96 h-96 bg-white rounded-full filter blur-3xl opacity-5"></div>
+      <div className="absolute top-10 right-20 w-72 h-72 bg-accent-400 rounded-full filter blur-3xl opacity-10 hidden sm:block"></div>
+      <div className="absolute bottom-10 left-20 w-96 h-96 bg-white rounded-full filter blur-3xl opacity-5 hidden sm:block"></div>
 
       <div className="max-w-2xl mx-auto relative">
         <Link
           to="/"
-          className="inline-flex items-center text-white/80 hover:text-white mb-8 transition-colors"
+          className="inline-flex items-center text-white/80 hover:text-white mb-4 sm:mb-8 transition-colors text-sm sm:text-base"
         >
           <FaArrowLeft className="mr-2" />
           Back to Home
         </Link>
 
-        <div className="bg-white rounded-3xl shadow-2xl overflow-hidden">
-          <div className="bg-gradient-to-r from-green-500 to-green-600 p-8 text-center">
-            <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-              <FaCheckCircle className="h-10 w-10 text-green-500" />
+        <div className="bg-white rounded-2xl sm:rounded-3xl shadow-2xl overflow-hidden">
+          <div className="bg-gradient-to-r from-green-500 to-green-600 p-6 sm:p-8 text-center">
+            <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg">
+              <FaCheckCircle className="h-8 w-8 sm:h-10 sm:w-10 text-green-500" />
             </div>
-            <h1 className="text-3xl font-bold text-white mb-2">Registration Complete!</h1>
-            <p className="text-green-100">Thank you for registering for SETX Football Camp</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Registration Complete!</h1>
+            <p className="text-green-100 text-sm sm:text-base">Thank you for registering for SETX Football Camp</p>
           </div>
 
-          <div className="p-8">
-            <div className="bg-gray-50 rounded-2xl p-6 mb-8">
-              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+          <div className="p-4 sm:p-8">
+            <div className="bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4 flex items-center">
                 <FaChild className="mr-2 text-primary-600" />
                 Registration Summary
               </h2>
 
-              <div className="space-y-3">
+              <div className="space-y-2 sm:space-y-3 text-sm sm:text-base">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600">Camper Name:</span>
                   <span className="font-bold text-gray-900">{registration.kid_name}</span>
@@ -118,30 +118,30 @@ const PaymentPage = () => {
                   <span className="text-gray-600 flex items-center">
                     <FaUser className="mr-1" /> Parent:
                   </span>
-                  <span className="font-bold text-gray-900">{registration.parent_name}</span>
+                  <span className="font-bold text-gray-900 truncate ml-2">{registration.parent_name}</span>
                 </div>
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-accent-50 to-accent-100 rounded-2xl p-6 mb-8 border-2 border-accent-200">
-              <h2 className="text-xl font-bold text-gray-900 mb-4 flex items-center">
+            <div className="bg-gradient-to-br from-accent-50 to-accent-100 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8 border-2 border-accent-200">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4 flex items-center">
                 <FaDollarSign className="mr-2 text-accent-600" />
                 Payment Required
               </h2>
 
-              <div className="text-center mb-6">
-                <p className="text-gray-600 mb-2">Total Amount Due</p>
-                <p className="text-5xl font-black text-accent-600">{formatCurrency(totalAmount)}</p>
-                <p className="text-gray-500 mt-2">${SHIRT_PRICE} per shirt × {registration.shirt_quantity} shirt(s)</p>
+              <div className="text-center mb-4 sm:mb-6">
+                <p className="text-gray-600 mb-2 text-sm sm:text-base">Total Amount Due</p>
+                <p className="text-4xl sm:text-5xl font-black text-accent-600">{formatCurrency(totalAmount)}</p>
+                <p className="text-gray-500 mt-2 text-sm">${SHIRT_PRICE} per shirt × {registration.shirt_quantity} shirt(s)</p>
               </div>
 
-              <div className="bg-white rounded-xl p-4 mb-4">
-                <p className="text-sm text-gray-600 mb-2 text-center">Send payment via CashApp to:</p>
-                <div className="flex items-center justify-center space-x-3">
-                  <span className="text-3xl font-black text-green-600">${CASHAPP_USERNAME}</span>
+              <div className="bg-white rounded-xl p-3 sm:p-4 mb-4">
+                <p className="text-xs sm:text-sm text-gray-600 mb-2 text-center">Send payment via CashApp to:</p>
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
+                  <span className="text-2xl sm:text-3xl font-black text-green-600">${CASHAPP_USERNAME}</span>
                   <button
                     onClick={copyToClipboard}
-                    className="flex items-center bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-lg transition-colors"
+                    className="flex items-center bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-lg transition-colors text-sm"
                   >
                     <FaCopy className="mr-1" />
                     {copied ? 'Copied!' : 'Copy'}
@@ -149,30 +149,30 @@ const PaymentPage = () => {
                 </div>
               </div>
 
-              <p className="text-sm text-gray-600 text-center">
+              <p className="text-xs sm:text-sm text-gray-600 text-center">
                 Please include your child's name in the payment note
               </p>
             </div>
 
-            <div className="bg-gray-50 rounded-2xl p-6 mb-8">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Your CashApp Info</h2>
-              <p className="text-gray-600 mb-4 text-sm">
+            <div className="bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8">
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">Your CashApp Info</h2>
+              <p className="text-gray-600 mb-3 sm:mb-4 text-xs sm:text-sm">
                 Provide your CashApp username or email so we can verify your payment:
               </p>
 
-              <div className="flex space-x-3">
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                 <input
                   type="text"
                   value={cashappUsername}
                   onChange={(e) => setCashappUsername(e.target.value)}
                   placeholder="$username or email"
                   disabled={saved}
-                  className="flex-1 px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 disabled:bg-gray-100 disabled:text-gray-500"
+                  className="flex-1 px-3 sm:px-4 py-2 sm:py-3 rounded-xl border-2 border-gray-200 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 disabled:bg-gray-100 disabled:text-gray-500 text-sm sm:text-base"
                 />
                 <button
                   onClick={handleSaveCashApp}
                   disabled={saving || saved || !cashappUsername.trim()}
-                  className={`px-6 py-3 rounded-xl font-bold transition-all ${
+                  className={`px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-bold transition-all text-sm sm:text-base ${
                     saved 
                       ? 'bg-green-500 text-white' 
                       : 'bg-primary-600 text-white hover:bg-primary-700 disabled:bg-gray-300 disabled:cursor-not-allowed'
@@ -183,7 +183,7 @@ const PaymentPage = () => {
               </div>
 
               {saved && (
-                <p className="text-green-600 text-sm mt-2 flex items-center">
+                <p className="text-green-600 text-xs sm:text-sm mt-2 flex items-center">
                   <FaCheckCircle className="mr-1" />
                   CashApp info saved successfully!
                 </p>
@@ -193,22 +193,22 @@ const PaymentPage = () => {
             <div className="text-center">
               <Link
                 to="/auth"
-                className="inline-block bg-gradient-to-r from-primary-600 to-primary-700 text-white px-8 py-4 rounded-xl font-bold hover:from-primary-700 hover:to-primary-800 transition-all shadow-lg hover:shadow-xl"
+                className="inline-block bg-gradient-to-r from-primary-600 to-primary-700 text-white px-6 sm:px-8 py-3 sm:py-4 rounded-xl font-bold hover:from-primary-700 hover:to-primary-800 transition-all shadow-lg hover:shadow-xl text-sm sm:text-base"
               >
                 Create Account to View Dashboard
               </Link>
-              <p className="text-gray-500 text-sm mt-3">
+              <p className="text-gray-500 text-xs sm:text-sm mt-3">
                 Create an account using the same email to track your registration
               </p>
             </div>
           </div>
 
-          <div className="bg-gray-50 px-8 py-6 border-t">
+          <div className="bg-gray-50 px-4 sm:px-8 py-4 sm:py-6 border-t">
             <div className="flex items-center justify-center">
-              <img src={logo} alt="SETX Football Camp" className="h-12 w-12 object-contain" />
+              <img src={logo} alt="SETX Football Camp" className="h-10 w-10 sm:h-12 sm:w-12 object-contain" />
               <div className="ml-3">
-                <p className="font-bold text-gray-900">SETX Football Camp</p>
-                <p className="text-sm text-gray-500">See you at camp!</p>
+                <p className="font-bold text-gray-900 text-sm sm:text-base">SETX Football Camp</p>
+                <p className="text-xs sm:text-sm text-gray-500">See you at camp!</p>
               </div>
             </div>
           </div>

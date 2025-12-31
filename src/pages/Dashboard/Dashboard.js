@@ -19,7 +19,9 @@ import {
   FaClock,
   FaExclamationTriangle,
   FaCheckCircle,
-  FaUserShield
+  FaUserShield,
+  FaBars,
+  FaHome
 } from 'react-icons/fa';
 
 const Dashboard = () => {
@@ -31,6 +33,7 @@ const Dashboard = () => {
   const [editForm, setEditForm] = useState({});
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (!user) {
@@ -126,10 +129,17 @@ const Dashboard = () => {
           <div className="flex justify-between items-center h-16">
             <Link to="/" className="flex items-center">
               <img src={logo} alt="SETX Football Camp" className="h-10 w-10 object-contain" />
-              <span className="ml-3 text-xl font-bold text-white">SETX Football Camp</span>
+              <span className="ml-3 text-lg sm:text-xl font-bold text-white hidden sm:block">SETX Football Camp</span>
             </Link>
 
-            <div className="flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4">
+              <Link
+                to="/"
+                className="flex items-center text-white/80 hover:text-white transition-colors px-3 py-2 rounded-lg hover:bg-white/10"
+              >
+                <FaHome className="mr-2" />
+                Home
+              </Link>
               {isStaff() && (
                 <Link
                   to="/staff"
@@ -139,7 +149,7 @@ const Dashboard = () => {
                   Staff Panel
                 </Link>
               )}
-              <span className="text-white/80">{user?.email}</span>
+              <span className="text-white/80 text-sm truncate max-w-[150px]">{user?.email}</span>
               <button
                 onClick={handleSignOut}
                 className="flex items-center text-white bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg transition-colors"
@@ -148,24 +158,62 @@ const Dashboard = () => {
                 Sign Out
               </button>
             </div>
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden text-white p-2 rounded-lg hover:bg-white/10"
+            >
+              {mobileMenuOpen ? <FaTimes className="h-6 w-6" /> : <FaBars className="h-6 w-6" />}
+            </button>
+          </div>
+        </div>
+
+        <div className={`md:hidden overflow-hidden transition-all duration-300 ${mobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+          <div className="bg-primary-800/95 px-4 py-4 space-y-2">
+            <p className="text-white/60 text-sm px-4 truncate">{user?.email}</p>
+            <Link
+              to="/"
+              onClick={() => setMobileMenuOpen(false)}
+              className="flex items-center w-full text-white/90 hover:text-white px-4 py-3 rounded-lg hover:bg-white/10"
+            >
+              <FaHome className="mr-3" />
+              Home
+            </Link>
+            {isStaff() && (
+              <Link
+                to="/staff"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center w-full text-white/90 hover:text-white px-4 py-3 rounded-lg hover:bg-white/10"
+              >
+                <FaUserShield className="mr-3" />
+                Staff Panel
+              </Link>
+            )}
+            <button
+              onClick={() => { handleSignOut(); setMobileMenuOpen(false); }}
+              className="flex items-center w-full text-white/90 hover:text-white px-4 py-3 rounded-lg hover:bg-white/10"
+            >
+              <FaSignOutAlt className="mr-3" />
+              Sign Out
+            </button>
           </div>
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="mb-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+        <div className="mb-4 sm:mb-8">
           <Link
             to="/"
-            className="inline-flex items-center text-primary-600 hover:text-primary-700 transition-colors"
+            className="inline-flex items-center text-primary-600 hover:text-primary-700 transition-colors text-sm sm:text-base"
           >
             <FaArrowLeft className="mr-2" />
             Back to Home
           </Link>
         </div>
 
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">My Dashboard</h1>
-          <p className="text-gray-600 mt-2">View and manage your camp registrations</p>
+        <div className="mb-4 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">My Dashboard</h1>
+          <p className="text-gray-600 mt-1 sm:mt-2 text-sm sm:text-base">View and manage your camp registrations</p>
         </div>
 
         {error && (
@@ -187,33 +235,34 @@ const Dashboard = () => {
             </Link>
           </div>
         ) : (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {registrations.map(reg => {
               const canEdit = RegistrationService.canEdit(reg);
               const daysRemaining = RegistrationService.getDaysRemaining(reg);
               const isEditing = editingId === reg.id;
 
               return (
-                <div key={reg.id} className="bg-white rounded-2xl shadow-lg overflow-hidden">
-                  <div className="bg-gradient-to-r from-primary-600 to-primary-700 px-6 py-4 flex justify-between items-center">
-                    <div className="flex items-center">
-                      <FaChild className="text-white mr-3 h-5 w-5" />
-                      <h3 className="text-xl font-bold text-white">
-                        {isEditing ? editForm.kid_name : reg.kid_name}
-                      </h3>
-                    </div>
-                    <div className="flex items-center space-x-3">
-                      <span className={`px-3 py-1 rounded-full text-sm font-bold ${
-                        reg.payment_status === 'paid' 
-                          ? 'bg-green-400 text-green-900' 
-                          : 'bg-yellow-400 text-yellow-900'
-                      }`}>
-                        {reg.payment_status === 'paid' ? 'Paid' : 'Pending Payment'}
-                      </span>
-                      {canEdit && !isEditing && (
+                <div key={reg.id} className="bg-white rounded-xl sm:rounded-2xl shadow-lg overflow-hidden">
+                  <div className="bg-gradient-to-r from-primary-600 to-primary-700 px-4 sm:px-6 py-3 sm:py-4">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-0">
+                      <div className="flex items-center">
+                        <FaChild className="text-white mr-2 sm:mr-3 h-4 w-4 sm:h-5 sm:w-5" />
+                        <h3 className="text-lg sm:text-xl font-bold text-white truncate">
+                          {isEditing ? editForm.kid_name : reg.kid_name}
+                        </h3>
+                      </div>
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className={`px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-bold ${
+                          reg.payment_status === 'paid' 
+                            ? 'bg-green-400 text-green-900' 
+                            : 'bg-yellow-400 text-yellow-900'
+                        }`}>
+                          {reg.payment_status === 'paid' ? 'Paid' : 'Pending'}
+                        </span>
+                        {canEdit && !isEditing && (
                         <button
                           onClick={() => startEditing(reg)}
-                          className="flex items-center bg-white/20 hover:bg-white/30 text-white px-3 py-1 rounded-lg transition-colors"
+                          className="flex items-center bg-white/20 hover:bg-white/30 text-white px-2 sm:px-3 py-1 rounded-lg transition-colors text-sm"
                         >
                           <FaEdit className="mr-1" />
                           Edit
@@ -224,51 +273,52 @@ const Dashboard = () => {
                           <button
                             onClick={() => saveEdit(reg.id)}
                             disabled={saving}
-                            className="flex items-center bg-green-500 hover:bg-green-600 text-white px-3 py-1 rounded-lg transition-colors"
+                            className="flex items-center bg-green-500 hover:bg-green-600 text-white px-2 sm:px-3 py-1 rounded-lg transition-colors text-sm"
                           >
                             <FaSave className="mr-1" />
-                            {saving ? 'Saving...' : 'Save'}
+                            {saving ? '...' : 'Save'}
                           </button>
                           <button
                             onClick={cancelEditing}
-                            className="flex items-center bg-white/20 hover:bg-white/30 text-white px-3 py-1 rounded-lg transition-colors"
+                            className="flex items-center bg-white/20 hover:bg-white/30 text-white px-2 sm:px-3 py-1 rounded-lg transition-colors text-sm"
                           >
                             <FaTimes className="mr-1" />
                             Cancel
                           </button>
                         </>
                       )}
+                      </div>
                     </div>
                   </div>
 
                   {canEdit && (
-                    <div className="bg-yellow-50 border-b border-yellow-200 px-6 py-3 flex items-center">
-                      <FaClock className="text-yellow-600 mr-2" />
-                      <span className="text-yellow-800 text-sm">
-                        You can edit this registration for {daysRemaining} more day{daysRemaining !== 1 ? 's' : ''}
+                    <div className="bg-yellow-50 border-b border-yellow-200 px-4 sm:px-6 py-2 sm:py-3 flex items-center">
+                      <FaClock className="text-yellow-600 mr-2 flex-shrink-0" />
+                      <span className="text-yellow-800 text-xs sm:text-sm">
+                        Edit available for {daysRemaining} more day{daysRemaining !== 1 ? 's' : ''}
                       </span>
                     </div>
                   )}
 
                   {!canEdit && (
-                    <div className="bg-gray-50 border-b border-gray-200 px-6 py-3 flex items-center">
-                      <FaExclamationTriangle className="text-gray-500 mr-2" />
-                      <span className="text-gray-600 text-sm">
-                        Edit window has expired. Contact us if you need to make changes.
+                    <div className="bg-gray-50 border-b border-gray-200 px-4 sm:px-6 py-2 sm:py-3 flex items-center">
+                      <FaExclamationTriangle className="text-gray-500 mr-2 flex-shrink-0" />
+                      <span className="text-gray-600 text-xs sm:text-sm">
+                        Edit window expired. Contact us for changes.
                       </span>
                     </div>
                   )}
 
-                  <div className="p-6">
-                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                      <div className="space-y-4">
-                        <h4 className="font-bold text-gray-900 flex items-center">
+                  <div className="p-4 sm:p-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                      <div className="space-y-3 sm:space-y-4">
+                        <h4 className="font-bold text-gray-900 flex items-center text-sm sm:text-base">
                           <FaChild className="mr-2 text-primary-600" />
                           Camper Info
                         </h4>
 
                         {isEditing ? (
-                          <div className="space-y-3">
+                          <div className="space-y-2 sm:space-y-3">
                             <input
                               type="text"
                               name="kid_name"
