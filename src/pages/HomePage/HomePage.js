@@ -39,7 +39,6 @@ import {
   FaTimes,
   FaBars,
   FaStar,
-  FaTrophy,
   FaHeart,
   FaShieldAlt,
   FaDollarSign,

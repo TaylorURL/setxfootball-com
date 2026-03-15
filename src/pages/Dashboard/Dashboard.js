@@ -54,6 +54,7 @@ const Dashboard = () => {
       return;
     }
     loadRegistrations();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, navigate]);
 
   /** Fetches all registrations for the current user's email from the database */

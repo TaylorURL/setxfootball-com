@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.3] - 2026-03-15
+
+- Suppress react-hooks/exhaustive-deps lint warnings in Dashboard and StaffPanel useEffect hooks
+- Remove unused FaTrophy icon import from HomePage
+
 ## [1.2] - 2026-03-15
 
 - Add Privacy Policy and Terms of Service pages with dedicated routes
