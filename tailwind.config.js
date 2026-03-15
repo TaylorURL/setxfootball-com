@@ -1,3 +1,8 @@
+/**
+ * Tailwind CSS configuration for SETX Football Camp.
+ * Extends the default palette with primary (navy blue) and accent (red)
+ * color scales sourced from CSS custom properties in index.css.
+ */
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   theme: {

@@ -1,3 +1,7 @@
+/**
+ * Application entry point. Mounts the root React component into the DOM
+ * and optionally reports web vitals.
+ */
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";

@@ -1,3 +1,9 @@
+/**
+ * @module constants
+ * @description Application-wide constants for SETX Football camp registration.
+ */
+
+/** @type {string[]} Available shirt sizes. */
 export const SHIRT_SIZES = [
   "Youth XS",
   "Youth S",
@@ -11,12 +17,16 @@ export const SHIRT_SIZES = [
   "Adult 2XL",
 ];
 
+/** @type {number} Price per shirt in USD. */
 export const SHIRT_PRICE = 5;
 
+/** @type {string} CashApp handle for payments. */
 export const CASHAPP_USERNAME = "SETXYFC";
 
+/** @type {number} Number of days after creation a registration can be edited. */
 export const EDIT_WINDOW_DAYS = 3;
 
+/** @type {string[]} Allowed emergency contact relationships. */
 export const EMERGENCY_RELATIONS = [
   "Grandparent",
   "Aunt",
@@ -28,12 +38,14 @@ export const EMERGENCY_RELATIONS = [
   "Other",
 ];
 
+/** @enum {string} Payment status values. */
 export const PAYMENT_STATUSES = {
   PENDING: "pending",
   PAID: "paid",
   REFUNDED: "refunded",
 };
 
+/** @enum {string} User role values. */
 export const USER_ROLES = {
   USER: "user",
   STAFF: "staff",

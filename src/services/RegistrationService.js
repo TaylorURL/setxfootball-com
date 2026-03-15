@@ -1,9 +1,17 @@
+/**
+ * @module RegistrationService
+ * @description Handles camp registration CRUD operations and business logic.
+ */
 import { supabase } from "../library/supabaseClient";
-
-const SHIRT_PRICE = 5;
-const EDIT_WINDOW_DAYS = 3;
+import { SHIRT_PRICE, EDIT_WINDOW_DAYS } from "../utils/constants";
 
 const RegistrationService = {
+  /**
+   * Creates a new camp registration.
+   * @param {object} registrationData - Form data for the registration.
+   * @param {string|null} [userId=null] - Optional authenticated user ID.
+   * @returns {Promise<{data: object|null, error: Error|null}>}
+   */
   async createRegistration(registrationData, userId = null) {
     const currentYear = new Date().getFullYear();
     const totalCost = registrationData.shirtQuantity * SHIRT_PRICE;
@@ -33,10 +41,14 @@ const RegistrationService = {
       .select()
       .single();
 
-    if (error) throw error;
-    return data;
+    return { data: data ?? null, error: error ?? null };
   },
 
+  /**
+   * Fetches a single registration by its ID.
+   * @param {string} id
+   * @returns {Promise<{data: object|null, error: Error|null}>}
+   */
   async getRegistrationById(id) {
     const { data, error } = await supabase
       .from("camp_registrations")
@@ -44,10 +56,14 @@ const RegistrationService = {
       .eq("id", id)
       .single();
 
-    if (error) throw error;
-    return data;
+    return { data: data ?? null, error: error ?? null };
   },
 
+  /**
+   * Fetches all registrations for a given user.
+   * @param {string} userId
+   * @returns {Promise<{data: Array, error: Error|null}>}
+   */
   async getUserRegistrations(userId) {
     const { data, error } = await supabase
       .from("camp_registrations")
@@ -55,55 +71,66 @@ const RegistrationService = {
       .eq("user_id", userId)
       .order("created_at", { ascending: false });
 
-    if (error) throw error;
-    return data;
+    return { data: data ?? [], error: error ?? null };
   },
 
+  /**
+   * Fetches all registrations matching a parent email address.
+   * @param {string} email
+   * @returns {Promise<{data: Array, error: Error|null}>}
+   */
   async getRegistrationsByEmail(email) {
-    try {
-      const { data, error } = await supabase
-        .from("camp_registrations")
-        .select("*")
-        .eq("parent_email", email)
-        .order("created_at", { ascending: false });
+    const { data, error } = await supabase
+      .from("camp_registrations")
+      .select("*")
+      .eq("parent_email", email)
+      .order("created_at", { ascending: false });
 
-      if (error) return [];
-      return data || [];
-    } catch (error) {
-      return [];
-    }
+    return { data: data ?? [], error: error ?? null };
   },
 
+  /**
+   * Fetches all registrations for a given camp year.
+   * @param {number} year
+   * @returns {Promise<{data: Array, error: Error|null}>}
+   */
   async getRegistrationsByYear(year) {
-    try {
-      const { data, error } = await supabase
-        .from("camp_registrations")
-        .select("*")
-        .eq("camp_year", year)
-        .order("created_at", { ascending: false });
+    const { data, error } = await supabase
+      .from("camp_registrations")
+      .select("*")
+      .eq("camp_year", year)
+      .order("created_at", { ascending: false });
 
-      if (error) return [];
-      return data || [];
-    } catch (error) {
-      return [];
-    }
+    return { data: data ?? [], error: error ?? null };
   },
 
+  /**
+   * Returns a list of all distinct camp years, falling back to the current year.
+   * @returns {Promise<{data: number[], error: Error|null}>}
+   */
   async getAllYears() {
-    try {
-      const { data, error } = await supabase
-        .from("camp_registrations")
-        .select("camp_year")
-        .order("camp_year", { ascending: false });
+    const { data, error } = await supabase
+      .from("camp_registrations")
+      .select("camp_year")
+      .order("camp_year", { ascending: false });
 
-      if (error) return [new Date().getFullYear()];
-      const uniqueYears = [...new Set(data.map((r) => r.camp_year))];
-      return uniqueYears.length > 0 ? uniqueYears : [new Date().getFullYear()];
-    } catch (error) {
-      return [new Date().getFullYear()];
+    if (error) {
+      return { data: [new Date().getFullYear()], error };
     }
+
+    const uniqueYears = [...new Set(data.map((r) => r.camp_year))];
+    return {
+      data: uniqueYears.length > 0 ? uniqueYears : [new Date().getFullYear()],
+      error: null,
+    };
   },
 
+  /**
+   * Updates a registration by ID with the given fields.
+   * @param {string} id
+   * @param {object} updates
+   * @returns {Promise<{data: object|null, error: Error|null}>}
+   */
   async updateRegistration(id, updates) {
     const { data, error } = await supabase
       .from("camp_registrations")
@@ -115,18 +142,34 @@ const RegistrationService = {
       .select()
       .single();
 
-    if (error) throw error;
-    return data;
+    return { data: data ?? null, error: error ?? null };
   },
 
+  /**
+   * Updates the CashApp username on a registration.
+   * @param {string} id
+   * @param {string} cashappUsername
+   * @returns {Promise<{data: object|null, error: Error|null}>}
+   */
   async updateCashAppUsername(id, cashappUsername) {
     return this.updateRegistration(id, { cashapp_username: cashappUsername });
   },
 
+  /**
+   * Updates the payment status on a registration.
+   * @param {string} id
+   * @param {string} status
+   * @returns {Promise<{data: object|null, error: Error|null}>}
+   */
   async updatePaymentStatus(id, status) {
     return this.updateRegistration(id, { payment_status: status });
   },
 
+  /**
+   * Checks whether a registration is still within the editable window.
+   * @param {object} registration
+   * @returns {boolean}
+   */
   canEdit(registration) {
     if (!registration?.created_at) return false;
 
@@ -138,6 +181,11 @@ const RegistrationService = {
     return diffDays <= EDIT_WINDOW_DAYS;
   },
 
+  /**
+   * Returns the number of days remaining in the edit window for a registration.
+   * @param {object} registration
+   * @returns {number}
+   */
   getDaysRemaining(registration) {
     if (!registration?.created_at) return 0;
 
@@ -149,6 +197,23 @@ const RegistrationService = {
     return Math.max(0, EDIT_WINDOW_DAYS - diffDays);
   },
 
+  /**
+   * Deletes a registration by ID.
+   * @param {string} id
+   * @returns {Promise<{error: Error|null}>}
+   */
+  async deleteRegistration(id) {
+    const { error } = await supabase
+      .from("camp_registrations")
+      .delete()
+      .eq("id", id);
+    return { error: error ?? null };
+  },
+
+  /**
+   * Returns the per-shirt price.
+   * @returns {number}
+   */
   getShirtPrice() {
     return SHIRT_PRICE;
   },
