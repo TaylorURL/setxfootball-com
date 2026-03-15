@@ -14,11 +14,13 @@ import StaffPanel from "../pages/StaffPanel/StaffPanel";
 import PaymentPage from "../pages/PaymentPage/PaymentPage";
 import PrivacyPage from "../pages/PrivacyPage/PrivacyPage";
 import TermsPage from "../pages/TermsPage/TermsPage";
+import ScrollToTop from "../components/ScrollToTop";
 
 function App() {
   return (
     <AuthProvider>
       <Router>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/auth" element={<AuthPage />} />

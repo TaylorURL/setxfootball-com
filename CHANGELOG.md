@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.4] - 2026-03-15
+
+- Added ScrollToTop component that automatically scrolls the page to the top whenever the user navigates to a new route
+- Integrated ScrollToTop into the main App router so it applies across all pages
+
 ## [1.3] - 2026-03-15
 
 - Suppress react-hooks/exhaustive-deps lint warnings in Dashboard and StaffPanel useEffect hooks
