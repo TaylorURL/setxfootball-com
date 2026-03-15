@@ -1,4 +1,4 @@
-import { supabase } from '../library/supabaseClient';
+import { supabase } from "../library/supabaseClient";
 
 const SHIRT_PRICE = 5;
 const EDIT_WINDOW_DAYS = 3;
@@ -9,25 +9,27 @@ const RegistrationService = {
     const totalCost = registrationData.shirtQuantity * SHIRT_PRICE;
 
     const { data, error } = await supabase
-      .from('camp_registrations')
-      .insert([{
-        user_id: userId,
-        kid_name: registrationData.kidName,
-        age: parseInt(registrationData.age),
-        nickname: registrationData.nickname || null,
-        shirt_size: registrationData.shirtSize,
-        shirt_quantity: parseInt(registrationData.shirtQuantity),
-        total_cost: totalCost,
-        parent_name: registrationData.parentName,
-        parent_phone: registrationData.parentPhone,
-        parent_email: registrationData.parentEmail,
-        emergency_name: registrationData.emergencyName,
-        emergency_phone: registrationData.emergencyPhone,
-        emergency_relation: registrationData.emergencyRelation,
-        cashapp_username: registrationData.cashappUsername || null,
-        payment_status: 'pending',
-        camp_year: currentYear
-      }])
+      .from("camp_registrations")
+      .insert([
+        {
+          user_id: userId,
+          kid_name: registrationData.kidName,
+          age: parseInt(registrationData.age),
+          nickname: registrationData.nickname || null,
+          shirt_size: registrationData.shirtSize,
+          shirt_quantity: parseInt(registrationData.shirtQuantity),
+          total_cost: totalCost,
+          parent_name: registrationData.parentName,
+          parent_phone: registrationData.parentPhone,
+          parent_email: registrationData.parentEmail,
+          emergency_name: registrationData.emergencyName,
+          emergency_phone: registrationData.emergencyPhone,
+          emergency_relation: registrationData.emergencyRelation,
+          cashapp_username: registrationData.cashappUsername || null,
+          payment_status: "pending",
+          camp_year: currentYear,
+        },
+      ])
       .select()
       .single();
 
@@ -37,9 +39,9 @@ const RegistrationService = {
 
   async getRegistrationById(id) {
     const { data, error } = await supabase
-      .from('camp_registrations')
-      .select('*')
-      .eq('id', id)
+      .from("camp_registrations")
+      .select("*")
+      .eq("id", id)
       .single();
 
     if (error) throw error;
@@ -48,10 +50,10 @@ const RegistrationService = {
 
   async getUserRegistrations(userId) {
     const { data, error } = await supabase
-      .from('camp_registrations')
-      .select('*')
-      .eq('user_id', userId)
-      .order('created_at', { ascending: false });
+      .from("camp_registrations")
+      .select("*")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false });
 
     if (error) throw error;
     return data;
@@ -60,10 +62,10 @@ const RegistrationService = {
   async getRegistrationsByEmail(email) {
     try {
       const { data, error } = await supabase
-        .from('camp_registrations')
-        .select('*')
-        .eq('parent_email', email)
-        .order('created_at', { ascending: false });
+        .from("camp_registrations")
+        .select("*")
+        .eq("parent_email", email)
+        .order("created_at", { ascending: false });
 
       if (error) return [];
       return data || [];
@@ -75,10 +77,10 @@ const RegistrationService = {
   async getRegistrationsByYear(year) {
     try {
       const { data, error } = await supabase
-        .from('camp_registrations')
-        .select('*')
-        .eq('camp_year', year)
-        .order('created_at', { ascending: false });
+        .from("camp_registrations")
+        .select("*")
+        .eq("camp_year", year)
+        .order("created_at", { ascending: false });
 
       if (error) return [];
       return data || [];
@@ -90,12 +92,12 @@ const RegistrationService = {
   async getAllYears() {
     try {
       const { data, error } = await supabase
-        .from('camp_registrations')
-        .select('camp_year')
-        .order('camp_year', { ascending: false });
+        .from("camp_registrations")
+        .select("camp_year")
+        .order("camp_year", { ascending: false });
 
       if (error) return [new Date().getFullYear()];
-      const uniqueYears = [...new Set(data.map(r => r.camp_year))];
+      const uniqueYears = [...new Set(data.map((r) => r.camp_year))];
       return uniqueYears.length > 0 ? uniqueYears : [new Date().getFullYear()];
     } catch (error) {
       return [new Date().getFullYear()];
@@ -104,12 +106,12 @@ const RegistrationService = {
 
   async updateRegistration(id, updates) {
     const { data, error } = await supabase
-      .from('camp_registrations')
+      .from("camp_registrations")
       .update({
         ...updates,
-        updated_at: new Date().toISOString()
+        updated_at: new Date().toISOString(),
       })
-      .eq('id', id)
+      .eq("id", id)
       .select()
       .single();
 
@@ -149,8 +151,7 @@ const RegistrationService = {
 
   getShirtPrice() {
     return SHIRT_PRICE;
-  }
+  },
 };
 
 export default RegistrationService;
-

@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import RegistrationService from '../../services/RegistrationService';
-import { SHIRT_SIZES, SHIRT_PRICE, EMERGENCY_RELATIONS } from '../../utils/constants';
-import logo from '../../assets/logo.PNG';
-import img1 from '../../assets/images/1.JPG';
-import img2 from '../../assets/images/2.JPG';
-import img3 from '../../assets/images/3.JPG';
-import img4 from '../../assets/images/4.JPG';
-import img5 from '../../assets/images/5.JPG';
-import img6 from '../../assets/images/6.JPG';
-import img7 from '../../assets/images/7.JPG';
-import img8 from '../../assets/images/8.JPG';
+import React, { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import RegistrationService from "../../services/RegistrationService";
+import {
+  SHIRT_SIZES,
+  SHIRT_PRICE,
+  EMERGENCY_RELATIONS,
+} from "../../utils/constants";
+import logo from "../../assets/logo.PNG";
+import img1 from "../../assets/images/1.JPG";
+import img2 from "../../assets/images/2.JPG";
+import img3 from "../../assets/images/3.JPG";
+import img4 from "../../assets/images/4.JPG";
+import img5 from "../../assets/images/5.JPG";
+import img6 from "../../assets/images/6.JPG";
+import img7 from "../../assets/images/7.JPG";
+import img8 from "../../assets/images/8.JPG";
 import {
   FaFootballBall,
   FaUsers,
@@ -31,26 +35,26 @@ import {
   FaShieldAlt,
   FaDollarSign,
   FaSignOutAlt,
-  FaUser
-} from 'react-icons/fa';
+  FaUser,
+} from "react-icons/fa";
 
 function HomePage() {
   const navigate = useNavigate();
   const { user, signOut } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [formData, setFormData] = useState({
-    kidName: '',
-    age: '',
-    nickname: '',
-    shirtSize: '',
+    kidName: "",
+    age: "",
+    nickname: "",
+    shirtSize: "",
     shirtQuantity: 1,
-    parentName: '',
-    parentPhone: '',
-    parentEmail: '',
-    emergencyName: '',
-    emergencyPhone: '',
-    emergencyRelation: '',
-    cashappUsername: ''
+    parentName: "",
+    parentPhone: "",
+    parentEmail: "",
+    emergencyName: "",
+    emergencyPhone: "",
+    emergencyRelation: "",
+    cashappUsername: "",
   });
   const [submitting, setSubmitting] = useState(false);
   const [submitResult, setSubmitResult] = useState(null);
@@ -61,8 +65,8 @@ function HomePage() {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
     };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   useEffect(() => {
@@ -70,14 +74,17 @@ function HomePage() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setVisibleSections((prev) => ({ ...prev, [entry.target.id]: true }));
+            setVisibleSections((prev) => ({
+              ...prev,
+              [entry.target.id]: true,
+            }));
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
-    const sections = document.querySelectorAll('section[id]');
+    const sections = document.querySelectorAll("section[id]");
     sections.forEach((section) => observer.observe(section));
 
     return () => sections.forEach((section) => observer.unobserve(section));
@@ -88,27 +95,28 @@ function HomePage() {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.add('animate-visible');
-            entry.target.classList.remove('animate-hidden');
+            entry.target.classList.add("animate-visible");
+            entry.target.classList.remove("animate-hidden");
           }
         });
       },
-      { threshold: 0.1, rootMargin: '0px 0px -50px 0px' }
+      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
     );
 
-    const animatedElements = document.querySelectorAll('.scroll-animate');
+    const animatedElements = document.querySelectorAll(".scroll-animate");
     animatedElements.forEach((el) => animateOnScroll.observe(el));
 
-    return () => animatedElements.forEach((el) => animateOnScroll.unobserve(el));
+    return () =>
+      animatedElements.forEach((el) => animateOnScroll.unobserve(el));
   }, [visibleSections]);
 
   const totalCost = formData.shirtQuantity * SHIRT_PRICE;
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -118,27 +126,32 @@ function HomePage() {
     setSubmitResult(null);
 
     try {
-      const registration = await RegistrationService.createRegistration(formData);
+      const registration =
+        await RegistrationService.createRegistration(formData);
 
       setFormData({
-        kidName: '',
-        age: '',
-        nickname: '',
-        shirtSize: '',
+        kidName: "",
+        age: "",
+        nickname: "",
+        shirtSize: "",
         shirtQuantity: 1,
-        parentName: '',
-        parentPhone: '',
-        parentEmail: '',
-        emergencyName: '',
-        emergencyPhone: '',
-        emergencyRelation: '',
-        cashappUsername: ''
+        parentName: "",
+        parentPhone: "",
+        parentEmail: "",
+        emergencyName: "",
+        emergencyPhone: "",
+        emergencyRelation: "",
+        cashappUsername: "",
       });
 
-      navigate('/payment', { state: { registration } });
+      navigate("/payment", { state: { registration } });
     } catch (error) {
-      setSubmitResult({ success: false, message: 'Registration failed. Please try again or contact us directly.' });
-      console.error('Error:', error);
+      setSubmitResult({
+        success: false,
+        message:
+          "Registration failed. Please try again or contact us directly.",
+      });
+      console.error("Error:", error);
       setSubmitting(false);
     }
   };
@@ -148,22 +161,33 @@ function HomePage() {
   };
 
   const scrollToSection = (id) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
     setMobileMenuOpen(false);
   };
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-gradient-to-r from-primary-800 via-accent-600 to-primary-800 shadow-2xl py-2' : 'bg-primary-700/90 backdrop-blur-md py-4'}`}>
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? "bg-gradient-to-r from-primary-800 via-accent-600 to-primary-800 shadow-2xl py-2" : "bg-primary-700/90 backdrop-blur-md py-4"}`}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center">
-            <div className="flex items-center group cursor-pointer" onClick={() => scrollToSection('home')}>
-              <img src={logo} alt="SETX Football Camp" className="h-12 w-12 object-contain transition-transform duration-300 group-hover:scale-110" />
-              <span className="ml-3 text-xl font-bold text-white tracking-wide">SETX Football Camp</span>
+            <div
+              className="flex items-center group cursor-pointer"
+              onClick={() => scrollToSection("home")}
+            >
+              <img
+                src={logo}
+                alt="SETX Football Camp"
+                className="h-12 w-12 object-contain transition-transform duration-300 group-hover:scale-110"
+              />
+              <span className="ml-3 text-xl font-bold text-white tracking-wide">
+                SETX Football Camp
+              </span>
             </div>
 
-<div className="hidden md:flex items-center space-x-1">
-              {['home', 'about', 'gallery', 'sponsors'].map((section) => (
+            <div className="hidden md:flex items-center space-x-1">
+              {["home", "about", "gallery", "sponsors"].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
@@ -173,7 +197,7 @@ function HomePage() {
                 </button>
               ))}
               <button
-                onClick={() => scrollToSection('register')}
+                onClick={() => scrollToSection("register")}
                 className="ml-4 bg-accent-400 text-white px-6 py-2.5 rounded-full font-bold hover:bg-accent-500 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-accent-400/50"
               >
                 Register Now
@@ -207,16 +231,25 @@ function HomePage() {
             </div>
 
             <div className="md:hidden flex items-center">
-              <button onClick={() => setMobileMenuOpen(!mobileMenuOpen)} className="text-white p-2 rounded-lg hover:bg-white/10 transition-colors">
-                {mobileMenuOpen ? <FaTimes className="h-6 w-6" /> : <FaBars className="h-6 w-6" />}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="text-white p-2 rounded-lg hover:bg-white/10 transition-colors"
+              >
+                {mobileMenuOpen ? (
+                  <FaTimes className="h-6 w-6" />
+                ) : (
+                  <FaBars className="h-6 w-6" />
+                )}
               </button>
             </div>
           </div>
         </div>
 
-<div className={`md:hidden overflow-hidden transition-all duration-300 ${mobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+        <div
+          className={`md:hidden overflow-hidden transition-all duration-300 ${mobileMenuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
+        >
           <div className="bg-primary-800/95 backdrop-blur-md px-4 py-4 space-y-2">
-            {['home', 'about', 'gallery', 'sponsors'].map((section) => (
+            {["home", "about", "gallery", "sponsors"].map((section) => (
               <button
                 key={section}
                 onClick={() => scrollToSection(section)}
@@ -226,7 +259,7 @@ function HomePage() {
               </button>
             ))}
             <button
-              onClick={() => scrollToSection('register')}
+              onClick={() => scrollToSection("register")}
               className="block w-full bg-accent-400 text-white px-4 py-3 rounded-lg font-bold hover:bg-accent-500 transition-all text-center mt-4"
             >
               Register Now
@@ -242,7 +275,10 @@ function HomePage() {
                   Dashboard
                 </Link>
                 <button
-                  onClick={() => { handleSignOut(); setMobileMenuOpen(false); }}
+                  onClick={() => {
+                    handleSignOut();
+                    setMobileMenuOpen(false);
+                  }}
                   className="flex items-center w-full text-white/90 hover:text-white px-4 py-3 rounded-lg hover:bg-white/10 transition-all"
                 >
                   <FaSignOutAlt className="mr-2" />
@@ -263,7 +299,10 @@ function HomePage() {
         </div>
       </nav>
 
-      <section id="home" className="relative min-h-screen overflow-hidden bg-gray-900">
+      <section
+        id="home"
+        className="relative min-h-screen overflow-hidden bg-gray-900"
+      >
         <div className="absolute inset-0">
           <img
             src={img2}
@@ -285,10 +324,16 @@ function HomePage() {
         <div className="relative z-20 min-h-screen flex items-center">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32 w-full">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
-              <div className={`${visibleSections.home ? 'animate-fade-in-left' : 'opacity-0'}`}>
+              <div
+                className={`${visibleSections.home ? "animate-fade-in-left" : "opacity-0"}`}
+              >
                 <div className="flex items-center gap-4 mb-8">
                   <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center shadow-2xl">
-                    <img src={logo} alt="SETX Football Camp" className="w-16 h-16 object-contain" />
+                    <img
+                      src={logo}
+                      alt="SETX Football Camp"
+                      className="w-16 h-16 object-contain"
+                    />
                   </div>
                   <div className="h-px flex-1 bg-gradient-to-r from-accent-400 to-transparent"></div>
                 </div>
@@ -305,19 +350,20 @@ function HomePage() {
                 </h1>
 
                 <p className="text-xl text-gray-300 mb-8 leading-relaxed max-w-xl">
-                  Train like a champion. Build skills, teamwork, and confidence in a fun, supportive environment for ages 5-12.
+                  Train like a champion. Build skills, teamwork, and confidence
+                  in a fun, supportive environment for ages 5-12.
                 </p>
 
                 <div className="flex flex-wrap gap-4 mb-12">
                   <button
-                    onClick={() => scrollToSection('register')}
+                    onClick={() => scrollToSection("register")}
                     className="group bg-accent-500 text-white px-8 py-4 rounded-xl text-lg font-bold hover:bg-accent-600 transition-all duration-300 transform hover:scale-105 shadow-xl shadow-accent-500/25 flex items-center"
                   >
                     Register Now
                     <FaChevronDown className="ml-3 rotate-[-90deg] group-hover:translate-x-1 transition-transform" />
                   </button>
                   <button
-                    onClick={() => scrollToSection('about')}
+                    onClick={() => scrollToSection("about")}
                     className="group bg-white/10 backdrop-blur-sm text-white px-8 py-4 rounded-xl text-lg font-semibold hover:bg-white/20 transition-all duration-300 border border-white/20"
                   >
                     Learn More
@@ -326,32 +372,59 @@ function HomePage() {
 
                 <div className="grid grid-cols-3 gap-6">
                   {[
-                    { value: '5-12', label: 'Ages' },
-                    { value: '$5', label: 'Per Shirt' },
-                    { value: '2 Days', label: 'Duration' }
+                    { value: "5-12", label: "Ages" },
+                    { value: "$5", label: "Per Shirt" },
+                    { value: "2 Days", label: "Duration" },
                   ].map((stat, index) => (
                     <div key={index} className="text-center">
-                      <div className="text-3xl md:text-4xl font-black text-white mb-1">{stat.value}</div>
-                      <div className="text-gray-400 text-sm uppercase tracking-wider">{stat.label}</div>
+                      <div className="text-3xl md:text-4xl font-black text-white mb-1">
+                        {stat.value}
+                      </div>
+                      <div className="text-gray-400 text-sm uppercase tracking-wider">
+                        {stat.label}
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              <div className={`hidden lg:block ${visibleSections.home ? 'animate-fade-in-right' : 'opacity-0'}`}>
+              <div
+                className={`hidden lg:block ${visibleSections.home ? "animate-fade-in-right" : "opacity-0"}`}
+              >
                 <div className="relative">
                   <div className="absolute -inset-4 bg-gradient-to-r from-accent-500 to-primary-500 rounded-3xl blur-2xl opacity-30"></div>
                   <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-3xl p-8 border border-white/10">
                     <div className="grid grid-cols-2 gap-4">
                       {[
-                        { icon: FaFootballBall, title: 'Skills Training', desc: 'Learn fundamentals' },
-                        { icon: FaUsers, title: 'Team Building', desc: 'Work together' },
-                        { icon: FaTrophy, title: 'Competition', desc: 'Friendly games' },
-                        { icon: FaHeart, title: 'Fun First', desc: 'Enjoy the game' }
+                        {
+                          icon: FaFootballBall,
+                          title: "Skills Training",
+                          desc: "Learn fundamentals",
+                        },
+                        {
+                          icon: FaUsers,
+                          title: "Team Building",
+                          desc: "Work together",
+                        },
+                        {
+                          icon: FaTrophy,
+                          title: "Competition",
+                          desc: "Friendly games",
+                        },
+                        {
+                          icon: FaHeart,
+                          title: "Fun First",
+                          desc: "Enjoy the game",
+                        },
                       ].map((item, index) => (
-                        <div key={index} className="bg-white/5 rounded-2xl p-5 hover:bg-white/10 transition-all duration-300 group">
+                        <div
+                          key={index}
+                          className="bg-white/5 rounded-2xl p-5 hover:bg-white/10 transition-all duration-300 group"
+                        >
                           <item.icon className="h-8 w-8 text-accent-400 mb-3 group-hover:scale-110 transition-transform" />
-                          <h4 className="text-white font-bold mb-1">{item.title}</h4>
+                          <h4 className="text-white font-bold mb-1">
+                            {item.title}
+                          </h4>
                           <p className="text-gray-400 text-sm">{item.desc}</p>
                         </div>
                       ))}
@@ -364,7 +437,10 @@ function HomePage() {
         </div>
 
         <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
-          <button onClick={() => scrollToSection('about')} className="animate-bounce text-white/50 hover:text-white transition-colors">
+          <button
+            onClick={() => scrollToSection("about")}
+            className="animate-bounce text-white/50 hover:text-white transition-colors"
+          >
             <FaChevronDown className="h-8 w-8" />
           </button>
         </div>
@@ -376,8 +452,12 @@ function HomePage() {
         <div className="absolute top-0 right-0 w-96 h-96 bg-primary-100 rounded-full filter blur-3xl opacity-50 -translate-y-1/2 translate-x-1/2"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="scroll-animate text-center mb-20">
-            <span className="inline-block bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">About Us</span>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">About Our Camp</h2>
+            <span className="inline-block bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+              About Us
+            </span>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">
+              About Our Camp
+            </h2>
             <div className="w-24 h-1.5 bg-gradient-to-r from-accent-400 to-accent-600 mx-auto rounded-full"></div>
           </div>
 
@@ -397,25 +477,47 @@ function HomePage() {
             </div>
 
             <div className="scroll-animate from-right delay-2">
-              <h3 className="text-3xl font-bold text-gray-900 mb-6">Built for Our Community</h3>
+              <h3 className="text-3xl font-bold text-gray-900 mb-6">
+                Built for Our Community
+              </h3>
               <p className="text-gray-600 mb-6 leading-relaxed text-lg">
-                SETX Youth Football Camp was built to give kids in our community opportunities we didn't always have growing up in Daisetta, Texas. With limited youth sports available, we chose to create something better.
+                SETX Youth Football Camp was built to give kids in our community
+                opportunities we didn't always have growing up in Daisetta,
+                Texas. With limited youth sports available, we chose to create
+                something better.
               </p>
               <p className="text-gray-600 mb-6 leading-relaxed text-lg">
-                SETXYFC is a community-first, majority-free football camp offering two half days of fun, fundamentals, and confidence-building instruction. We provide drinks, snacks, and a camp shirt for every participant—registered or not—because inclusion matters.
+                SETXYFC is a community-first, majority-free football camp
+                offering two half days of fun, fundamentals, and
+                confidence-building instruction. We provide drinks, snacks, and
+                a camp shirt for every participant—registered or not—because
+                inclusion matters.
               </p>
               <p className="text-gray-600 mb-8 leading-relaxed text-lg font-semibold">
-                Now in our third year, the camp continues to grow, and we're excited to see what this season brings for our kids and our community.
+                Now in our third year, the camp continues to grow, and we're
+                excited to see what this season brings for our kids and our
+                community.
               </p>
 
               <div className="grid grid-cols-2 gap-4">
                 {[
-                  { title: 'Ages', value: '5-12 years old', icon: FaUsers },
-                  { title: 'Duration', value: 'Two day camp', icon: FaClipboardList },
-                  { title: 'Skill Levels', value: 'All levels welcome', icon: FaStar },
-                  { title: 'Year', value: 'Third year', icon: FaTrophy }
+                  { title: "Ages", value: "5-12 years old", icon: FaUsers },
+                  {
+                    title: "Duration",
+                    value: "Two day camp",
+                    icon: FaClipboardList,
+                  },
+                  {
+                    title: "Skill Levels",
+                    value: "All levels welcome",
+                    icon: FaStar,
+                  },
+                  { title: "Year", value: "Third year", icon: FaTrophy },
                 ].map((item, index) => (
-                  <div key={index} className={`scroll-animate scale-in delay-${index + 3} bg-gradient-to-br from-primary-50 to-primary-100 p-5 rounded-2xl hover-lift card-shine group`}>
+                  <div
+                    key={index}
+                    className={`scroll-animate scale-in delay-${index + 3} bg-gradient-to-br from-primary-50 to-primary-100 p-5 rounded-2xl hover-lift card-shine group`}
+                  >
                     <item.icon className="h-6 w-6 text-primary-600 mb-2 group-hover:scale-110 transition-transform" />
                     <h4 className="font-bold text-primary-800">{item.title}</h4>
                     <p className="text-gray-600 text-sm">{item.value}</p>
@@ -438,7 +540,11 @@ function HomePage() {
                 </span>
               </h3>
               <p className="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
-                Every coach selected for SETX Youth Football Camp has completed a background check and brings real coaching and/or playing experience. These are not random volunteers—your child is being taught by leaders who understand the game and care about the community.
+                Every coach selected for SETX Youth Football Camp has completed
+                a background check and brings real coaching and/or playing
+                experience. These are not random volunteers—your child is being
+                taught by leaders who understand the game and care about the
+                community.
               </p>
             </div>
 
@@ -458,7 +564,9 @@ function HomePage() {
                       <div className="inline-block bg-primary-100 text-primary-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
                         Co-Founder
                       </div>
-                      <h4 className="text-2xl md:text-3xl font-black text-gray-900">Clayton Hanks</h4>
+                      <h4 className="text-2xl md:text-3xl font-black text-gray-900">
+                        Clayton Hanks
+                      </h4>
                     </div>
                   </div>
 
@@ -472,13 +580,15 @@ function HomePage() {
                     <div className="flex items-start">
                       <div className="w-2 h-2 bg-accent-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                       <p className="text-gray-700 leading-relaxed font-medium">
-                        Played semi-professional and international football with multiple teams
+                        Played semi-professional and international football with
+                        multiple teams
                       </p>
                     </div>
                     <div className="flex items-start">
                       <div className="w-2 h-2 bg-accent-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                       <p className="text-gray-700 leading-relaxed font-medium">
-                        Actively coaching youth football for the past three consecutive years
+                        Actively coaching youth football for the past three
+                        consecutive years
                       </p>
                     </div>
                   </div>
@@ -486,7 +596,9 @@ function HomePage() {
                   <div className="bg-gradient-to-r from-primary-50 to-accent-50 rounded-2xl p-4 border-2 border-primary-200">
                     <div className="flex items-center text-primary-700">
                       <FaStar className="h-5 w-5 mr-2 text-accent-500" />
-                      <span className="font-bold text-sm uppercase tracking-wide">International Playing Experience</span>
+                      <span className="font-bold text-sm uppercase tracking-wide">
+                        International Playing Experience
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -507,7 +619,9 @@ function HomePage() {
                       <div className="inline-block bg-accent-100 text-accent-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
                         Co-Founder
                       </div>
-                      <h4 className="text-2xl md:text-3xl font-black text-gray-900">Timothy Taylor Sr.</h4>
+                      <h4 className="text-2xl md:text-3xl font-black text-gray-900">
+                        Timothy Taylor Sr.
+                      </h4>
                     </div>
                   </div>
 
@@ -521,7 +635,8 @@ function HomePage() {
                     <div className="flex items-start">
                       <div className="w-2 h-2 bg-primary-600 rounded-full mt-2 mr-3 flex-shrink-0"></div>
                       <p className="text-gray-700 leading-relaxed font-medium">
-                        Former lettering athlete with proven competitive experience
+                        Former lettering athlete with proven competitive
+                        experience
                       </p>
                     </div>
                     <div className="flex items-start">
@@ -535,7 +650,9 @@ function HomePage() {
                   <div className="bg-gradient-to-r from-accent-50 to-primary-50 rounded-2xl p-4 border-2 border-accent-200">
                     <div className="flex items-center text-accent-700">
                       <FaStar className="h-5 w-5 mr-2 text-primary-600" />
-                      <span className="font-bold text-sm uppercase tracking-wide">Dedicated Youth Development</span>
+                      <span className="font-bold text-sm uppercase tracking-wide">
+                        Dedicated Youth Development
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -554,13 +671,21 @@ function HomePage() {
                     <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-accent-400 to-accent-600 rounded-2xl mb-6 shadow-xl">
                       <FaStar className="h-10 w-10 text-white" />
                     </div>
-                    <h4 className="text-3xl md:text-4xl font-black text-white mb-4">What Sets Us Apart</h4>
+                    <h4 className="text-3xl md:text-4xl font-black text-white mb-4">
+                      What Sets Us Apart
+                    </h4>
                     <div className="w-24 h-1.5 bg-gradient-to-r from-accent-400 to-accent-600 mx-auto rounded-full"></div>
                   </div>
 
                   <div className="max-w-4xl mx-auto mb-8">
                     <p className="text-xl md:text-2xl text-gray-200 leading-relaxed text-center font-medium">
-                      What truly sets SETXYFC apart is the presence of <span className="text-accent-400 font-bold">outside professional and high-level athletes</span> who attend as guest coaches and speakers, giving campers exposure to real-world experience, motivation, and insight that most camps simply cannot offer.
+                      What truly sets SETXYFC apart is the presence of{" "}
+                      <span className="text-accent-400 font-bold">
+                        outside professional and high-level athletes
+                      </span>{" "}
+                      who attend as guest coaches and speakers, giving campers
+                      exposure to real-world experience, motivation, and insight
+                      that most camps simply cannot offer.
                     </p>
                   </div>
 
@@ -577,7 +702,8 @@ function HomePage() {
                       </div>
                     </div>
                     <p className="text-2xl md:text-3xl lg:text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-accent-300 to-white leading-tight">
-                      We are more than a camp—we are mentors, leaders, and advocates, here for your kids on and off the field.
+                      We are more than a camp—we are mentors, leaders, and
+                      advocates, here for your kids on and off the field.
                     </p>
                   </div>
                 </div>
@@ -587,44 +713,63 @@ function HomePage() {
         </div>
       </section>
 
-      <section id="gallery" className="py-24 bg-gradient-to-b from-gray-50 to-gray-100 relative">
+      <section
+        id="gallery"
+        className="py-24 bg-gradient-to-b from-gray-50 to-gray-100 relative"
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="scroll-animate text-center mb-20">
-            <span className="inline-block bg-accent-100 text-accent-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">Memories</span>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">Camp Gallery</h2>
+            <span className="inline-block bg-accent-100 text-accent-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+              Memories
+            </span>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">
+              Camp Gallery
+            </h2>
             <div className="w-24 h-1.5 bg-gradient-to-r from-accent-400 to-accent-600 mx-auto rounded-full"></div>
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {[img1, img2, img3, img4, img5, img6, img7, img8].map((img, index) => (
-              <div
-                key={index}
-                className={`scroll-animate scale-in delay-${index + 1} group relative rounded-2xl h-56 overflow-hidden hover-lift card-shine shadow-lg`}
-              >
-                <img
-                  src={img}
-                  alt={`Camp moment ${index + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-primary-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
-                <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
-                  <p className="text-white font-semibold text-sm">Camp Moment #{index + 1}</p>
+            {[img1, img2, img3, img4, img5, img6, img7, img8].map(
+              (img, index) => (
+                <div
+                  key={index}
+                  className={`scroll-animate scale-in delay-${index + 1} group relative rounded-2xl h-56 overflow-hidden hover-lift card-shine shadow-lg`}
+                >
+                  <img
+                    src={img}
+                    alt={`Camp moment ${index + 1}`}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-primary-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-full group-hover:translate-y-0 transition-transform duration-500">
+                    <p className="text-white font-semibold text-sm">
+                      Camp Moment #{index + 1}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ),
+            )}
           </div>
         </div>
       </section>
 
-      <section id="sponsors" className="py-24 bg-white relative overflow-hidden">
+      <section
+        id="sponsors"
+        className="py-24 bg-white relative overflow-hidden"
+      >
         <div className="absolute bottom-0 left-0 w-96 h-96 bg-accent-100 rounded-full filter blur-3xl opacity-30 translate-y-1/2 -translate-x-1/2"></div>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="scroll-animate text-center mb-20">
-            <span className="inline-block bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">Partners</span>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">Our Sponsors</h2>
+            <span className="inline-block bg-primary-100 text-primary-700 px-4 py-2 rounded-full text-sm font-semibold mb-4">
+              Partners
+            </span>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-6">
+              Our Sponsors
+            </h2>
             <div className="w-24 h-1.5 bg-gradient-to-r from-accent-400 to-accent-600 mx-auto rounded-full mb-6"></div>
             <p className="text-gray-600 max-w-2xl mx-auto text-lg">
-              We are grateful for the support of our sponsors who make this camp possible.
+              We are grateful for the support of our sponsors who make this camp
+              possible.
             </p>
           </div>
 
@@ -637,14 +782,18 @@ function HomePage() {
                 <div className="w-20 h-20 mx-auto bg-white rounded-2xl flex items-center justify-center mb-4 shadow-md group-hover:shadow-lg group-hover:scale-110 transition-all duration-300">
                   <FaHandshake className="h-10 w-10 text-gray-400 group-hover:text-primary-600 transition-colors duration-300" />
                 </div>
-                <p className="text-gray-500 font-medium group-hover:text-primary-600 transition-colors">Sponsor {sponsor}</p>
+                <p className="text-gray-500 font-medium group-hover:text-primary-600 transition-colors">
+                  Sponsor {sponsor}
+                </p>
               </div>
             ))}
           </div>
 
           <div className="scroll-animate delay-5 text-center mt-16">
             <div className="inline-block bg-gradient-to-r from-primary-50 to-accent-50 rounded-2xl p-8">
-              <p className="text-gray-700 mb-4 text-lg">Interested in becoming a sponsor?</p>
+              <p className="text-gray-700 mb-4 text-lg">
+                Interested in becoming a sponsor?
+              </p>
               <a
                 href="mailto:hanksclayton81@gmail.com"
                 className="inline-flex items-center bg-primary-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-primary-700 transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-primary-600/50"
@@ -670,16 +819,28 @@ function HomePage() {
               <FaTshirt className="inline mr-2" />
               Limited Spots Available
             </span>
-            <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6">Register for Camp</h2>
+            <h2 className="text-4xl md:text-5xl font-extrabold text-white mb-6">
+              Register for Camp
+            </h2>
             <div className="w-24 h-1.5 bg-gradient-to-r from-accent-400 to-accent-600 mx-auto rounded-full mb-6"></div>
-            <p className="text-primary-100 text-lg">Sign up today and secure your spot!</p>
-            <p className="text-accent-300 font-bold text-xl mt-3">Shirts are ${SHIRT_PRICE} each</p>
+            <p className="text-primary-100 text-lg">
+              Sign up today and secure your spot!
+            </p>
+            <p className="text-accent-300 font-bold text-xl mt-3">
+              Shirts are ${SHIRT_PRICE} each
+            </p>
           </div>
 
           <div className="scroll-animate delay-2 bg-white rounded-3xl shadow-2xl p-8 md:p-10">
             {submitResult && (
-              <div className={`mb-6 p-4 rounded-lg flex items-center ${submitResult.success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                {submitResult.success ? <FaCheck className="mr-3" /> : <FaTimes className="mr-3" />}
+              <div
+                className={`mb-6 p-4 rounded-lg flex items-center ${submitResult.success ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+              >
+                {submitResult.success ? (
+                  <FaCheck className="mr-3" />
+                ) : (
+                  <FaTimes className="mr-3" />
+                )}
                 {submitResult.message}
               </div>
             )}
@@ -732,7 +893,10 @@ function HomePage() {
 
                   <div className="group">
                     <label className="block text-sm font-bold text-gray-600 mb-2 uppercase tracking-wide">
-                      Nickname <span className="text-gray-400 text-xs normal-case">(optional)</span>
+                      Nickname{" "}
+                      <span className="text-gray-400 text-xs normal-case">
+                        (optional)
+                      </span>
                     </label>
                     <input
                       type="text"
@@ -756,9 +920,13 @@ function HomePage() {
                         required
                         className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 bg-white focus:border-primary-500 focus:ring-4 focus:ring-primary-500/20 transition-all duration-300 text-gray-800 font-medium appearance-none cursor-pointer hover:border-gray-300"
                       >
-                        <option value="" className="text-gray-400">Select a size</option>
-                        {SHIRT_SIZES.map(size => (
-                          <option key={size} value={size} className="py-2">{size}</option>
+                        <option value="" className="text-gray-400">
+                          Select a size
+                        </option>
+                        {SHIRT_SIZES.map((size) => (
+                          <option key={size} value={size} className="py-2">
+                            {size}
+                          </option>
                         ))}
                       </select>
                       <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
@@ -769,22 +937,29 @@ function HomePage() {
 
                   <div className="group md:col-span-2">
                     <label className="block text-sm font-bold text-gray-600 mb-2 uppercase tracking-wide">
-                      Number of Shirts <span className="text-accent-500">*</span>
+                      Number of Shirts{" "}
+                      <span className="text-accent-500">*</span>
                     </label>
                     <div className="flex flex-wrap gap-3">
-                      {[1, 2, 3, 4, 5].map(num => (
+                      {[1, 2, 3, 4, 5].map((num) => (
                         <button
                           key={num}
                           type="button"
-                          onClick={() => handleInputChange({ target: { name: 'shirtQuantity', value: num } })}
+                          onClick={() =>
+                            handleInputChange({
+                              target: { name: "shirtQuantity", value: num },
+                            })
+                          }
                           className={`flex-1 min-w-[80px] py-4 px-4 rounded-xl border-2 font-bold transition-all duration-300 ${
                             parseInt(formData.shirtQuantity) === num
-                              ? 'border-primary-500 bg-primary-500 text-white shadow-lg shadow-primary-500/30 scale-105'
-                              : 'border-gray-200 bg-white text-gray-700 hover:border-primary-300 hover:bg-primary-50'
+                              ? "border-primary-500 bg-primary-500 text-white shadow-lg shadow-primary-500/30 scale-105"
+                              : "border-gray-200 bg-white text-gray-700 hover:border-primary-300 hover:bg-primary-50"
                           }`}
                         >
                           <div className="text-lg">{num}</div>
-                          <div className={`text-xs ${parseInt(formData.shirtQuantity) === num ? 'text-primary-100' : 'text-gray-500'}`}>
+                          <div
+                            className={`text-xs ${parseInt(formData.shirtQuantity) === num ? "text-primary-100" : "text-gray-500"}`}
+                          >
                             ${num * SHIRT_PRICE}
                           </div>
                         </button>
@@ -804,7 +979,8 @@ function HomePage() {
                 <div className="grid md:grid-cols-2 gap-6">
                   <div className="group">
                     <label className="block text-sm font-bold text-gray-600 mb-2 uppercase tracking-wide">
-                      Parent/Guardian Name <span className="text-accent-500">*</span>
+                      Parent/Guardian Name{" "}
+                      <span className="text-accent-500">*</span>
                     </label>
                     <input
                       type="text"
@@ -898,7 +1074,8 @@ function HomePage() {
 
                   <div className="group md:col-span-2">
                     <label className="block text-sm font-bold text-gray-600 mb-2 uppercase tracking-wide">
-                      Relationship to Child <span className="text-accent-500">*</span>
+                      Relationship to Child{" "}
+                      <span className="text-accent-500">*</span>
                     </label>
                     <div className="relative">
                       <select
@@ -909,8 +1086,10 @@ function HomePage() {
                         className="w-full px-5 py-4 rounded-xl border-2 border-gray-200 bg-white focus:border-accent-500 focus:ring-4 focus:ring-accent-500/20 transition-all duration-300 text-gray-800 font-medium appearance-none cursor-pointer hover:border-gray-300"
                       >
                         <option value="">Select relationship</option>
-                        {EMERGENCY_RELATIONS.map(relation => (
-                          <option key={relation} value={relation}>{relation}</option>
+                        {EMERGENCY_RELATIONS.map((relation) => (
+                          <option key={relation} value={relation}>
+                            {relation}
+                          </option>
                         ))}
                       </select>
                       <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
@@ -930,10 +1109,15 @@ function HomePage() {
                 </h3>
                 <div className="group">
                   <label className="block text-sm font-bold text-gray-600 mb-2 uppercase tracking-wide">
-                    CashApp Username or Email <span className="text-gray-400 text-xs normal-case">(optional)</span>
+                    CashApp Username or Email{" "}
+                    <span className="text-gray-400 text-xs normal-case">
+                      (optional)
+                    </span>
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-green-600 font-bold">$</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-green-600 font-bold">
+                      $
+                    </span>
                     <input
                       type="text"
                       name="cashappUsername"
@@ -943,15 +1127,22 @@ function HomePage() {
                       placeholder="username or email@example.com"
                     />
                   </div>
-                  <p className="text-gray-500 text-sm mt-2">This helps us verify your payment. You can also add this after registration.</p>
+                  <p className="text-gray-500 text-sm mt-2">
+                    This helps us verify your payment. You can also add this
+                    after registration.
+                  </p>
                 </div>
               </div>
 
               <div className="scroll-animate delay-7 bg-gradient-to-r from-primary-600 to-primary-700 rounded-2xl p-6 md:p-8 text-white shadow-xl">
                 <div className="flex flex-col md:flex-row justify-between items-center gap-4">
                   <div>
-                    <h4 className="font-bold text-xl mb-1">Total Due at Camp</h4>
-                    <p className="text-primary-200">{formData.shirtQuantity} shirt(s) x ${SHIRT_PRICE} each</p>
+                    <h4 className="font-bold text-xl mb-1">
+                      Total Due at Camp
+                    </h4>
+                    <p className="text-primary-200">
+                      {formData.shirtQuantity} shirt(s) x ${SHIRT_PRICE} each
+                    </p>
                   </div>
                   <div className="text-5xl font-extrabold">${totalCost}</div>
                 </div>
@@ -985,25 +1176,36 @@ function HomePage() {
           <div className="grid md:grid-cols-3 gap-12">
             <div>
               <div className="flex items-center mb-6">
-                <img src={logo} alt="SETX Football Camp" className="h-14 w-14 object-contain" />
-                <span className="ml-3 text-2xl font-bold">SETX Football Camp</span>
+                <img
+                  src={logo}
+                  alt="SETX Football Camp"
+                  className="h-14 w-14 object-contain"
+                />
+                <span className="ml-3 text-2xl font-bold">
+                  SETX Football Camp
+                </span>
               </div>
-              <p className="text-gray-400 leading-relaxed">Building champions on and off the field since day one. Join us for an unforgettable football experience.</p>
+              <p className="text-gray-400 leading-relaxed">
+                Building champions on and off the field since day one. Join us
+                for an unforgettable football experience.
+              </p>
             </div>
             <div>
               <h4 className="font-bold text-xl mb-6 text-white">Quick Links</h4>
               <ul className="space-y-3">
-                {['home', 'about', 'gallery', 'sponsors', 'register'].map((section) => (
-                  <li key={section}>
-                    <button
-                      onClick={() => scrollToSection(section)}
-                      className="text-gray-400 hover:text-accent-400 transition-all duration-300 capitalize flex items-center group"
-                    >
-                      <span className="w-0 group-hover:w-4 h-0.5 bg-accent-400 mr-0 group-hover:mr-2 transition-all duration-300"></span>
-                      {section}
-                    </button>
-                  </li>
-                ))}
+                {["home", "about", "gallery", "sponsors", "register"].map(
+                  (section) => (
+                    <li key={section}>
+                      <button
+                        onClick={() => scrollToSection(section)}
+                        className="text-gray-400 hover:text-accent-400 transition-all duration-300 capitalize flex items-center group"
+                      >
+                        <span className="w-0 group-hover:w-4 h-0.5 bg-accent-400 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+                        {section}
+                      </button>
+                    </li>
+                  ),
+                )}
               </ul>
             </div>
             <div>
@@ -1031,7 +1233,10 @@ function HomePage() {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-12 pt-8 text-center">
-            <p className="text-gray-500">&copy; {new Date().getFullYear()} SETX Football Camp. All rights reserved.</p>
+            <p className="text-gray-500">
+              &copy; {new Date().getFullYear()} SETX Football Camp. All rights
+              reserved.
+            </p>
           </div>
         </div>
       </footer>
@@ -1040,4 +1245,3 @@ function HomePage() {
 }
 
 export default HomePage;
-

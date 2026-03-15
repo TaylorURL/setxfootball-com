@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate, Link } from 'react-router-dom';
-import RegistrationService from '../../services/RegistrationService';
-import { formatCurrency } from '../../utils/helpers';
-import { CASHAPP_USERNAME, SHIRT_PRICE } from '../../utils/constants';
-import logo from '../../assets/logo.PNG';
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate, Link } from "react-router-dom";
+import RegistrationService from "../../services/RegistrationService";
+import { formatCurrency } from "../../utils/helpers";
+import { CASHAPP_USERNAME, SHIRT_PRICE } from "../../utils/constants";
+import logo from "../../assets/logo.PNG";
 import {
   FaCheckCircle,
   FaDollarSign,
@@ -11,14 +11,14 @@ import {
   FaCopy,
   FaChild,
   FaTshirt,
-  FaUser
-} from 'react-icons/fa';
+  FaUser,
+} from "react-icons/fa";
 
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const [registration, setRegistration] = useState(null);
-  const [cashappUsername, setCashappUsername] = useState('');
+  const [cashappUsername, setCashappUsername] = useState("");
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -26,11 +26,11 @@ const PaymentPage = () => {
   useEffect(() => {
     const regData = location.state?.registration;
     if (!regData) {
-      navigate('/');
+      navigate("/");
       return;
     }
     setRegistration(regData);
-    setCashappUsername(regData.cashapp_username || '');
+    setCashappUsername(regData.cashapp_username || "");
   }, [location.state, navigate]);
 
   const handleSaveCashApp = async () => {
@@ -38,10 +38,13 @@ const PaymentPage = () => {
 
     setSaving(true);
     try {
-      await RegistrationService.updateCashAppUsername(registration.id, cashappUsername);
+      await RegistrationService.updateCashAppUsername(
+        registration.id,
+        cashappUsername,
+      );
       setSaved(true);
     } catch (err) {
-      console.error('Error saving CashApp:', err);
+      console.error("Error saving CashApp:", err);
     } finally {
       setSaving(false);
     }
@@ -61,7 +64,8 @@ const PaymentPage = () => {
     );
   }
 
-  const totalAmount = registration.total_cost || (registration.shirt_quantity * SHIRT_PRICE);
+  const totalAmount =
+    registration.total_cost || registration.shirt_quantity * SHIRT_PRICE;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900 py-6 sm:py-12 px-4">
@@ -84,8 +88,12 @@ const PaymentPage = () => {
             <div className="w-16 h-16 sm:w-20 sm:h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 shadow-lg">
               <FaCheckCircle className="h-8 w-8 sm:h-10 sm:w-10 text-green-500" />
             </div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">Registration Complete!</h1>
-            <p className="text-green-100 text-sm sm:text-base">Thank you for registering for SETX Football Camp</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+              Registration Complete!
+            </h1>
+            <p className="text-green-100 text-sm sm:text-base">
+              Thank you for registering for SETX Football Camp
+            </p>
           </div>
 
           <div className="p-4 sm:p-8">
@@ -98,27 +106,37 @@ const PaymentPage = () => {
               <div className="space-y-2 sm:space-y-3 text-sm sm:text-base">
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600">Camper Name:</span>
-                  <span className="font-bold text-gray-900">{registration.kid_name}</span>
+                  <span className="font-bold text-gray-900">
+                    {registration.kid_name}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600">Age:</span>
-                  <span className="font-bold text-gray-900">{registration.age}</span>
+                  <span className="font-bold text-gray-900">
+                    {registration.age}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600 flex items-center">
                     <FaTshirt className="mr-1" /> Shirt Size:
                   </span>
-                  <span className="font-bold text-gray-900">{registration.shirt_size}</span>
+                  <span className="font-bold text-gray-900">
+                    {registration.shirt_size}
+                  </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600">Quantity:</span>
-                  <span className="font-bold text-gray-900">{registration.shirt_quantity} shirt(s)</span>
+                  <span className="font-bold text-gray-900">
+                    {registration.shirt_quantity} shirt(s)
+                  </span>
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-gray-600 flex items-center">
                     <FaUser className="mr-1" /> Parent:
                   </span>
-                  <span className="font-bold text-gray-900 truncate ml-2">{registration.parent_name}</span>
+                  <span className="font-bold text-gray-900 truncate ml-2">
+                    {registration.parent_name}
+                  </span>
                 </div>
               </div>
             </div>
@@ -130,21 +148,32 @@ const PaymentPage = () => {
               </h2>
 
               <div className="text-center mb-4 sm:mb-6">
-                <p className="text-gray-600 mb-2 text-sm sm:text-base">Total Amount Due</p>
-                <p className="text-4xl sm:text-5xl font-black text-accent-600">{formatCurrency(totalAmount)}</p>
-                <p className="text-gray-500 mt-2 text-sm">${SHIRT_PRICE} per shirt × {registration.shirt_quantity} shirt(s)</p>
+                <p className="text-gray-600 mb-2 text-sm sm:text-base">
+                  Total Amount Due
+                </p>
+                <p className="text-4xl sm:text-5xl font-black text-accent-600">
+                  {formatCurrency(totalAmount)}
+                </p>
+                <p className="text-gray-500 mt-2 text-sm">
+                  ${SHIRT_PRICE} per shirt × {registration.shirt_quantity}{" "}
+                  shirt(s)
+                </p>
               </div>
 
               <div className="bg-white rounded-xl p-3 sm:p-4 mb-4">
-                <p className="text-xs sm:text-sm text-gray-600 mb-2 text-center">Send payment via CashApp to:</p>
+                <p className="text-xs sm:text-sm text-gray-600 mb-2 text-center">
+                  Send payment via CashApp to:
+                </p>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3">
-                  <span className="text-2xl sm:text-3xl font-black text-green-600">${CASHAPP_USERNAME}</span>
+                  <span className="text-2xl sm:text-3xl font-black text-green-600">
+                    ${CASHAPP_USERNAME}
+                  </span>
                   <button
                     onClick={copyToClipboard}
                     className="flex items-center bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-lg transition-colors text-sm"
                   >
                     <FaCopy className="mr-1" />
-                    {copied ? 'Copied!' : 'Copy'}
+                    {copied ? "Copied!" : "Copy"}
                   </button>
                 </div>
               </div>
@@ -155,9 +184,12 @@ const PaymentPage = () => {
             </div>
 
             <div className="bg-gray-50 rounded-xl sm:rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8">
-              <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">Your CashApp Info</h2>
+              <h2 className="text-lg sm:text-xl font-bold text-gray-900 mb-3 sm:mb-4">
+                Your CashApp Info
+              </h2>
               <p className="text-gray-600 mb-3 sm:mb-4 text-xs sm:text-sm">
-                Provide your CashApp username or email so we can verify your payment:
+                Provide your CashApp username or email so we can verify your
+                payment:
               </p>
 
               <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
@@ -173,12 +205,12 @@ const PaymentPage = () => {
                   onClick={handleSaveCashApp}
                   disabled={saving || saved || !cashappUsername.trim()}
                   className={`px-4 sm:px-6 py-2 sm:py-3 rounded-xl font-bold transition-all text-sm sm:text-base ${
-                    saved 
-                      ? 'bg-green-500 text-white' 
-                      : 'bg-primary-600 text-white hover:bg-primary-700 disabled:bg-gray-300 disabled:cursor-not-allowed'
+                    saved
+                      ? "bg-green-500 text-white"
+                      : "bg-primary-600 text-white hover:bg-primary-700 disabled:bg-gray-300 disabled:cursor-not-allowed"
                   }`}
                 >
-                  {saving ? 'Saving...' : saved ? 'Saved!' : 'Save'}
+                  {saving ? "Saving..." : saved ? "Saved!" : "Save"}
                 </button>
               </div>
 
@@ -198,17 +230,26 @@ const PaymentPage = () => {
                 Create Account to View Dashboard
               </Link>
               <p className="text-gray-500 text-xs sm:text-sm mt-3">
-                Create an account using the same email to track your registration
+                Create an account using the same email to track your
+                registration
               </p>
             </div>
           </div>
 
           <div className="bg-gray-50 px-4 sm:px-8 py-4 sm:py-6 border-t">
             <div className="flex items-center justify-center">
-              <img src={logo} alt="SETX Football Camp" className="h-10 w-10 sm:h-12 sm:w-12 object-contain" />
+              <img
+                src={logo}
+                alt="SETX Football Camp"
+                className="h-10 w-10 sm:h-12 sm:w-12 object-contain"
+              />
               <div className="ml-3">
-                <p className="font-bold text-gray-900 text-sm sm:text-base">SETX Football Camp</p>
-                <p className="text-xs sm:text-sm text-gray-500">See you at camp!</p>
+                <p className="font-bold text-gray-900 text-sm sm:text-base">
+                  SETX Football Camp
+                </p>
+                <p className="text-xs sm:text-sm text-gray-500">
+                  See you at camp!
+                </p>
               </div>
             </div>
           </div>
@@ -219,4 +260,3 @@ const PaymentPage = () => {
 };
 
 export default PaymentPage;
-

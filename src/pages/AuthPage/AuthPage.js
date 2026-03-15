@@ -1,38 +1,46 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext';
-import { FaEnvelope, FaLock, FaUser, FaFootballBall, FaArrowLeft } from 'react-icons/fa';
-import logo from '../../assets/logo.PNG';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthContext";
+import {
+  FaEnvelope,
+  FaLock,
+  FaUser,
+  FaFootballBall,
+  FaArrowLeft,
+} from "react-icons/fa";
+import logo from "../../assets/logo.PNG";
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
   const { signIn, signUp } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setMessage('');
+    setError("");
+    setMessage("");
     setLoading(true);
 
     try {
       if (isLogin) {
         await signIn(email, password);
-        navigate('/dashboard');
+        navigate("/dashboard");
       } else {
         await signUp(email, password, fullName);
-        setMessage('Account created! Please check your email to verify your account.');
+        setMessage(
+          "Account created! Please check your email to verify your account.",
+        );
         setIsLogin(true);
       }
     } catch (err) {
-      setError(err.message || 'An error occurred');
+      setError(err.message || "An error occurred");
     } finally {
       setLoading(false);
     }
@@ -40,8 +48,8 @@ const AuthPage = () => {
 
   const toggleMode = () => {
     setIsLogin(!isLogin);
-    setError('');
-    setMessage('');
+    setError("");
+    setMessage("");
   };
 
   return (
@@ -64,14 +72,20 @@ const AuthPage = () => {
           <div className="text-center mb-6 sm:mb-8">
             <div className="flex justify-center mb-4">
               <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl sm:rounded-2xl flex items-center justify-center shadow-lg">
-                <img src={logo} alt="SETX Football Camp" className="w-12 h-12 sm:w-16 sm:h-16 object-contain" />
+                <img
+                  src={logo}
+                  alt="SETX Football Camp"
+                  className="w-12 h-12 sm:w-16 sm:h-16 object-contain"
+                />
               </div>
             </div>
             <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-              {isLogin ? 'Welcome Back!' : 'Create Account'}
+              {isLogin ? "Welcome Back!" : "Create Account"}
             </h1>
             <p className="text-gray-600 mt-2 text-sm sm:text-base">
-              {isLogin ? 'Sign in to access your dashboard' : 'Join SETX Football Camp'}
+              {isLogin
+                ? "Sign in to access your dashboard"
+                : "Join SETX Football Camp"}
             </p>
           </div>
 
@@ -152,7 +166,7 @@ const AuthPage = () => {
               ) : (
                 <>
                   <FaFootballBall className="mr-2" />
-                  {isLogin ? 'Sign In' : 'Create Account'}
+                  {isLogin ? "Sign In" : "Create Account"}
                 </>
               )}
             </button>
@@ -165,7 +179,7 @@ const AuthPage = () => {
                 onClick={toggleMode}
                 className="ml-2 text-primary-600 font-bold hover:text-primary-700 transition-colors"
               >
-                {isLogin ? 'Sign Up' : 'Sign In'}
+                {isLogin ? "Sign Up" : "Sign In"}
               </button>
             </p>
           </div>
@@ -176,4 +190,3 @@ const AuthPage = () => {
 };
 
 export default AuthPage;
-

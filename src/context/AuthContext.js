@@ -1,5 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import AuthService from '../services/AuthService';
+import React, { createContext, useContext, useState, useEffect } from "react";
+import AuthService from "../services/AuthService";
 
 const AuthContext = createContext({});
 
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
           await loadUserProfile(session.user.id);
         }
       } catch (error) {
-        console.error('Error initializing auth:', error);
+        console.error("Error initializing auth:", error);
       } finally {
         setLoading(false);
       }
@@ -60,11 +60,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const isStaff = () => {
-    return userProfile?.role === 'staff' || userProfile?.role === 'admin';
+    return userProfile?.role === "staff" || userProfile?.role === "admin";
   };
 
   const isAdmin = () => {
-    return userProfile?.role === 'admin';
+    return userProfile?.role === "admin";
   };
 
   const value = {
@@ -75,7 +75,7 @@ export const AuthProvider = ({ children }) => {
     signIn,
     signOut,
     isStaff,
-    isAdmin
+    isAdmin,
   };
 
   if (loading) {
@@ -89,12 +89,7 @@ export const AuthProvider = ({ children }) => {
     );
   }
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export default AuthContext;
-

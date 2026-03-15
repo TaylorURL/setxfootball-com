@@ -1,4 +1,4 @@
-import { supabase } from '../library/supabaseClient';
+import { supabase } from "../library/supabaseClient";
 
 const AuthService = {
   async signUp(email, password, fullName) {
@@ -8,9 +8,9 @@ const AuthService = {
       options: {
         data: {
           full_name: fullName,
-          role: 'user'
-        }
-      }
+          role: "user",
+        },
+      },
     });
 
     if (error) throw error;
@@ -20,7 +20,7 @@ const AuthService = {
   async signIn(email, password) {
     const { data, error } = await supabase.auth.signInWithPassword({
       email,
-      password
+      password,
     });
 
     if (error) throw error;
@@ -33,21 +33,25 @@ const AuthService = {
   },
 
   async getCurrentUser() {
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
     return user;
   },
 
   async getSession() {
-    const { data: { session } } = await supabase.auth.getSession();
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
     return session;
   },
 
   async getUserProfile(userId) {
     try {
       const { data, error } = await supabase
-        .from('user_profiles')
-        .select('*')
-        .eq('user_id', userId)
+        .from("user_profiles")
+        .select("*")
+        .eq("user_id", userId)
         .single();
 
       if (error) return null;
@@ -58,13 +62,11 @@ const AuthService = {
   },
 
   async updateUserRole(userId, role) {
-    const { data, error } = await supabase
-      .from('user_profiles')
-      .upsert({
-        user_id: userId,
-        role: role,
-        updated_at: new Date().toISOString()
-      });
+    const { data, error } = await supabase.from("user_profiles").upsert({
+      user_id: userId,
+      role: role,
+      updated_at: new Date().toISOString(),
+    });
 
     if (error) throw error;
     return data;
@@ -72,13 +74,12 @@ const AuthService = {
 
   async isStaff(userId) {
     const profile = await this.getUserProfile(userId);
-    return profile?.role === 'staff' || profile?.role === 'admin';
+    return profile?.role === "staff" || profile?.role === "admin";
   },
 
   onAuthStateChange(callback) {
     return supabase.auth.onAuthStateChange(callback);
-  }
+  },
 };
 
 export default AuthService;
-
