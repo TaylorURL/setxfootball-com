@@ -5,11 +5,11 @@
 <p align="center"><strong>A registration and management platform for Southeast Texas Football — built for parents, run by staff.</strong></p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.5-blue?style=flat-square" />
-  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react" />
-  <img src="https://img.shields.io/badge/React_Router-7-CA4245?style=flat-square&logo=reactrouter" />
-  <img src="https://img.shields.io/badge/Tailwind-3.4-38BDF8?style=flat-square&logo=tailwindcss" />
-  <img src="https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat-square&logo=supabase" />
+  <img src="https://img.shields.io/badge/v1.7-release-1e3a5f" />
+  <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react" />
+  <img src="https://img.shields.io/badge/React_Router-7-CA4245?logo=reactrouter" />
+  <img src="https://img.shields.io/badge/Tailwind-3.4-38BDF8?logo=tailwindcss" />
+  <img src="https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?logo=supabase" />
 </p>
 
 ---
