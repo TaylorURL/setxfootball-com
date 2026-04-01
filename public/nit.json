@@ -1,6 +1,9 @@
 {
-  "version": "1.7",
+  "version": "1.7.1",
   "projectName": "SETX Football",
   "branch": "main",
-  "provider": "claude-code"
+  "provider": "claude-code",
+  "cleanLogs": true,
+  "cleanCss": false,
+  "hooks": {}
 }
