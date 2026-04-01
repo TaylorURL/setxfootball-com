@@ -22,10 +22,10 @@ const RegistrationService = {
         {
           user_id: userId,
           kid_name: registrationData.kidName,
-          age: parseInt(registrationData.age),
+          age: parseInt(registrationData.age, 10),
           nickname: registrationData.nickname || null,
           shirt_size: registrationData.shirtSize,
-          shirt_quantity: parseInt(registrationData.shirtQuantity),
+          shirt_quantity: parseInt(registrationData.shirtQuantity, 10),
           total_cost: totalCost,
           parent_name: registrationData.parentName,
           parent_phone: registrationData.parentPhone,
@@ -126,12 +126,13 @@ const RegistrationService = {
   },
 
   /**
-   * Updates a registration by ID with the given fields.
+   * Updates a registration by ID, scoped to the owning user to prevent IDOR.
    * @param {string} id
    * @param {object} updates
+   * @param {string} userId - The authenticated user's ID; the update is a no-op if it doesn't match.
    * @returns {Promise<{data: object|null, error: Error|null}>}
    */
-  async updateRegistration(id, updates) {
+  async updateRegistration(id, updates, userId) {
     const { data, error } = await supabase
       .from("camp_registrations")
       .update({
@@ -139,6 +140,7 @@ const RegistrationService = {
         updated_at: new Date().toISOString(),
       })
       .eq("id", id)
+      .eq("user_id", userId)
       .select()
       .single();
 
@@ -149,20 +151,28 @@ const RegistrationService = {
    * Updates the CashApp username on a registration.
    * @param {string} id
    * @param {string} cashappUsername
+   * @param {string} userId - The authenticated user's ID.
    * @returns {Promise<{data: object|null, error: Error|null}>}
    */
-  async updateCashAppUsername(id, cashappUsername) {
-    return this.updateRegistration(id, { cashapp_username: cashappUsername });
+  async updateCashAppUsername(id, cashappUsername, userId) {
+    return this.updateRegistration(id, { cashapp_username: cashappUsername }, userId);
   },
 
   /**
-   * Updates the payment status on a registration.
+   * Updates the payment status on a registration. Staff-only; no user scoping applied.
    * @param {string} id
    * @param {string} status
    * @returns {Promise<{data: object|null, error: Error|null}>}
    */
   async updatePaymentStatus(id, status) {
-    return this.updateRegistration(id, { payment_status: status });
+    const { data, error } = await supabase
+      .from("camp_registrations")
+      .update({ payment_status: status, updated_at: new Date().toISOString() })
+      .eq("id", id)
+      .select()
+      .single();
+
+    return { data: data ?? null, error: error ?? null };
   },
 
   /**
@@ -198,15 +208,17 @@ const RegistrationService = {
   },
 
   /**
-   * Deletes a registration by ID.
+   * Deletes a registration by ID, scoped to the owning user to prevent IDOR.
    * @param {string} id
+   * @param {string} userId - The authenticated user's ID; the delete is a no-op if it doesn't match.
    * @returns {Promise<{error: Error|null}>}
    */
-  async deleteRegistration(id) {
+  async deleteRegistration(id, userId) {
     const { error } = await supabase
       .from("camp_registrations")
       .delete()
-      .eq("id", id);
+      .eq("id", id)
+      .eq("user_id", userId);
     return { error: error ?? null };
   },
 
