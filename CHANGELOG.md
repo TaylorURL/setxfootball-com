@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.5] - 2026-04-01
+
+- Fixed trailing comma in supabaseClient error message to satisfy linter/formatter requirements
+- Cleaned up package-lock.json with dependency tree changes
+
 ## [1.4] - 2026-03-15
 
 - Added ScrollToTop component that automatically scrolls the page to the top whenever the user navigates to a new route
