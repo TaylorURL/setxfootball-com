@@ -320,6 +320,7 @@ const StaffPanel = () => {
     a.href = url;
     a.download = `setx-registrations-${selectedYear}.csv`;
     a.click();
+    window.URL.revokeObjectURL(url);
   };
 
   return (
