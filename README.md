@@ -60,15 +60,15 @@ The public-facing home page is structured as a long-form landing page covering t
 
 ## Architecture
 
-| Layer | Technology |
-|---|---|
-| UI Framework | React 19 with React Router 7 |
-| Styling | Tailwind CSS 3.4 |
-| Auth | Supabase Auth with email verification |
-| Database | Supabase PostgreSQL — `camp_registrations`, `user_profiles` |
-| Service Layer | AuthService, RegistrationService — consistent `{ data, error }` tuples |
-| Access Control | Row-level security + role flags (user / staff / admin) |
-| Constants | Shirt sizes, pricing, CashApp handle, edit window, relationships, statuses |
+| Layer          | Technology                                                                 |
+| -------------- | -------------------------------------------------------------------------- |
+| UI Framework   | React 19 with React Router 7                                               |
+| Styling        | Tailwind CSS 3.4                                                           |
+| Auth           | Supabase Auth with email verification                                      |
+| Database       | Supabase PostgreSQL — `camp_registrations`, `user_profiles`                |
+| Service Layer  | AuthService, RegistrationService — consistent `{ data, error }` tuples     |
+| Access Control | Row-level security + role flags (user / staff / admin)                     |
+| Constants      | Shirt sizes, pricing, CashApp handle, edit window, relationships, statuses |
 
 **Data flow:**
 
@@ -86,16 +86,16 @@ Parent / Staff action
 
 ## Project Stats
 
-| Metric | Value |
-|---|---|
-| Routes | 7 |
-| Database Tables | 2 |
-| Shirt Sizes | 13 (Youth XS → Adult 2XL) |
-| User Roles | 3 (user, staff, admin) |
-| Edit Window | 3 days |
-| Summary Metrics in Staff Panel | 5 |
-| Service Modules | 2 (AuthService, RegistrationService) |
-| Payment Statuses | 2 (pending, paid) |
+| Metric                         | Value                                |
+| ------------------------------ | ------------------------------------ |
+| Routes                         | 7                                    |
+| Database Tables                | 2                                    |
+| Shirt Sizes                    | 13 (Youth XS → Adult 2XL)            |
+| User Roles                     | 3 (user, staff, admin)               |
+| Edit Window                    | 3 days                               |
+| Summary Metrics in Staff Panel | 5                                    |
+| Service Modules                | 2 (AuthService, RegistrationService) |
+| Payment Statuses               | 2 (pending, paid)                    |
 
 ---
 

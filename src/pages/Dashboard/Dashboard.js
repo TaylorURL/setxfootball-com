@@ -13,7 +13,11 @@ import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import RegistrationService from "../../services/RegistrationService";
 import { formatDate, formatCurrency } from "../../utils/helpers";
-import { SHIRT_SIZES, EMERGENCY_RELATIONS } from "../../utils/constants";
+import {
+  SHIRT_SIZES,
+  SHIRT_PRICE,
+  EMERGENCY_RELATIONS,
+} from "../../utils/constants";
 import logo from "../../assets/logo.PNG";
 import {
   FaUser,
@@ -126,9 +130,7 @@ const Dashboard = () => {
         nickname: editForm.nickname || null,
         shirt_size: editForm.shirt_size,
         shirt_quantity: parseInt(editForm.shirt_quantity),
-        total_cost:
-          parseInt(editForm.shirt_quantity) *
-          RegistrationService.getShirtPrice(),
+        total_cost: parseInt(editForm.shirt_quantity) * SHIRT_PRICE,
         parent_name: editForm.parent_name,
         parent_phone: editForm.parent_phone,
         emergency_name: editForm.emergency_name,
@@ -159,7 +161,10 @@ const Dashboard = () => {
   const handleDelete = async (id) => {
     setDeleting(true);
     try {
-      const { error } = await RegistrationService.deleteRegistration(id, user.id);
+      const { error } = await RegistrationService.deleteRegistration(
+        id,
+        user.id,
+      );
       if (error) throw error;
       setConfirmDelete(null);
       await loadRegistrations();

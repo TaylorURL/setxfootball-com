@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.6] - 2026-04-01
+
+- Extracted registration row mapping into a standalone `buildRegistrationRow` helper, eliminating the inline object literal inside `createRegistration`
+- Replaced all hardcoded `"camp_registrations"` string references with a `REGISTRATIONS_TABLE` constant throughout RegistrationService
+- Replaced inline date arithmetic in `canEdit` and `getDaysRemaining` with the shared `getDaysSince` helper from utils
+- Replaced `new Date().getFullYear()` calls with the shared `getCurrentYear` helper and extracted a reusable `fallback` variable in `getAllYears`
+- Removed the `getShirtPrice()` method from RegistrationService; Dashboard now imports and uses `SHIRT_PRICE` directly from constants
+- Switched payment status value in `buildRegistrationRow` from the hardcoded string `"pending"` to `PAYMENT_STATUSES.PENDING`
+- Added `PAYMENT_STATUSES` and `getDaysSince`/`getCurrentYear` imports to RegistrationService to support the above changes
+- Added `SHIRT_PRICE` to Dashboard's constants imports to replace the removed `RegistrationService.getShirtPrice()` call
+- Reformatted README markdown tables to use aligned column padding for improved readability
+
 ## [1.5] - 2026-04-01
 
 - Fixed trailing comma in supabaseClient error message to satisfy linter/formatter requirements
