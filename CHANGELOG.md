@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7] - 2026-04-01
+
+- SETX Football Release v1.7
+
 ## [1.6] - 2026-04-01
 
 - Extracted registration row mapping into a standalone `buildRegistrationRow` helper, eliminating the inline object literal inside `createRegistration`
