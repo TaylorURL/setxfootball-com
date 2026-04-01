@@ -261,6 +261,21 @@ const StaffPanel = () => {
       .reduce((sum, r) => sum + (r.total_cost || 0), 0),
   };
 
+  /**
+   * Sanitizes a single CSV cell value to prevent formula/CSV injection (CWE-1236).
+   * - Wraps all values in double-quotes
+   * - Escapes internal double-quotes as ""
+   * - Prefixes formula-trigger characters (=, +, -, @, tab, CR) with a single quote
+   */
+  const sanitizeCsvCell = (value) => {
+    const stringValue = value == null ? "" : String(value);
+    const formulaTriggers = /^[=+\-@\t\r]/;
+    const sanitized = formulaTriggers.test(stringValue)
+      ? `'${stringValue}`
+      : stringValue;
+    return `"${sanitized.replace(/"/g, '""')}"`;
+  };
+
   const exportToCSV = () => {
     const headers = [
       "Kid Name",
@@ -297,7 +312,7 @@ const StaffPanel = () => {
       formatDate(r.created_at),
     ]);
     const csvContent = [headers, ...rows]
-      .map((row) => row.join(","))
+      .map((row) => row.map(sanitizeCsvCell).join(","))
       .join("\n");
     const blob = new Blob([csvContent], { type: "text/csv" });
     const url = window.URL.createObjectURL(blob);

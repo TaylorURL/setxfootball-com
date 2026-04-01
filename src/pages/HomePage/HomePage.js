@@ -180,6 +180,7 @@ function HomePage() {
           "Registration failed. Please try again or contact us directly.",
       });
       console.error("Error:", error);
+    } finally {
       setSubmitting(false);
     }
   };

@@ -139,6 +139,7 @@ const Dashboard = () => {
       const { error } = await RegistrationService.updateRegistration(
         id,
         updates,
+        user.id,
       );
       if (error) throw error;
       await loadRegistrations();
@@ -158,7 +159,7 @@ const Dashboard = () => {
   const handleDelete = async (id) => {
     setDeleting(true);
     try {
-      const { error } = await RegistrationService.deleteRegistration(id);
+      const { error } = await RegistrationService.deleteRegistration(id, user.id);
       if (error) throw error;
       setConfirmDelete(null);
       await loadRegistrations();
