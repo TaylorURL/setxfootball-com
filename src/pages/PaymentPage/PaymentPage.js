@@ -25,6 +25,46 @@ import {
   FaUser,
 } from "react-icons/fa";
 
+const CLIPBOARD_FEEDBACK_DURATION_MS = 2000;
+
+/** Reusable label/value row for the registration summary card */
+const SummaryRow = ({ label, value, icon }) => (
+  <div className="flex justify-between items-center py-2">
+    <span className="text-xs font-medium text-slate-500 uppercase tracking-wide flex items-center">
+      {icon && <span className="mr-1.5 text-slate-400">{icon}</span>}
+      {label}
+    </span>
+    <span className="text-sm font-semibold text-slate-900 truncate ml-4">
+      {value}
+    </span>
+  </div>
+);
+
+/** Section header with icon badge and uppercase title */
+const SectionHeader = ({ icon, title, subtitle }) => (
+  <div className="mb-4">
+    <h2 className="text-sm font-semibold text-slate-900 uppercase tracking-wide flex items-center">
+      {icon && (
+        <span className="bg-primary-500/10 p-2 rounded-lg mr-3">{icon}</span>
+      )}
+      {title}
+    </h2>
+    {subtitle && <p className="text-slate-400 mt-1.5 text-xs">{subtitle}</p>}
+  </div>
+);
+
+const SUMMARY_FIELDS = [
+  { label: "Camper Name", key: "kid_name" },
+  { label: "Age", key: "age" },
+  { label: "Shirt Size", key: "shirt_size", icon: <FaTshirt /> },
+  {
+    label: "Quantity",
+    key: "shirt_quantity",
+    format: (value) => `${value} shirt(s)`,
+  },
+  { label: "Parent", key: "parent_name", icon: <FaUser /> },
+];
+
 const PaymentPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -56,8 +96,8 @@ const PaymentPage = () => {
       );
       if (error) throw error;
       setSaved(true);
-    } catch (err) {
-      console.error("Error saving CashApp:", err);
+    } catch {
+      // NOTE: silent catch — user sees the button revert to unsaved state
     } finally {
       setSaving(false);
     }
@@ -67,13 +107,13 @@ const PaymentPage = () => {
   const copyToClipboard = () => {
     navigator.clipboard.writeText(CASHAPP_USERNAME);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => setCopied(false), CLIPBOARD_FEEDBACK_DURATION_MS);
   };
 
   if (!registration) {
     return (
       <div className="min-h-screen bg-slate-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-10 w-10 border-2 border-primary-600/30 border-t-primary-600"></div>
+        <div className="animate-spin rounded-full h-10 w-10 border-2 border-primary-600/30 border-t-primary-600" />
       </div>
     );
   }
@@ -83,10 +123,10 @@ const PaymentPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900 py-6 sm:py-12 px-4">
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-accent-400 to-primary-500"></div>
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-accent-400 to-primary-500" />
 
-      <div className="absolute top-10 right-20 w-72 h-72 bg-accent-400 rounded-full filter blur-3xl opacity-10 hidden sm:block"></div>
-      <div className="absolute bottom-10 left-20 w-96 h-96 bg-white rounded-full filter blur-3xl opacity-5 hidden sm:block"></div>
+      <div className="absolute top-10 right-20 w-72 h-72 bg-accent-400 rounded-full filter blur-3xl opacity-10 hidden sm:block" />
+      <div className="absolute bottom-10 left-20 w-96 h-96 bg-white rounded-full filter blur-3xl opacity-5 hidden sm:block" />
 
       <div className="max-w-2xl mx-auto relative animate-fade-in">
         <Link
@@ -114,69 +154,32 @@ const PaymentPage = () => {
           <div className="p-5 sm:p-8">
             {/* Registration summary */}
             <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-4 sm:p-6 mb-6">
-              <h2 className="text-sm font-semibold text-slate-900 uppercase tracking-wide mb-4 flex items-center">
-                <span className="bg-primary-500/10 p-2 rounded-lg mr-3">
-                  <FaChild className="text-primary-600 text-sm" />
-                </span>
-                Registration Summary
-              </h2>
-
+              <SectionHeader
+                icon={<FaChild className="text-primary-600 text-sm" />}
+                title="Registration Summary"
+              />
               <div className="space-y-3">
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
-                    Camper Name
-                  </span>
-                  <span className="text-sm font-semibold text-slate-900">
-                    {registration.kid_name}
-                  </span>
-                </div>
-                <div className="border-t border-slate-100"></div>
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
-                    Age
-                  </span>
-                  <span className="text-sm font-semibold text-slate-900">
-                    {registration.age}
-                  </span>
-                </div>
-                <div className="border-t border-slate-100"></div>
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-xs font-medium text-slate-500 uppercase tracking-wide flex items-center">
-                    <FaTshirt className="mr-1.5 text-slate-400" /> Shirt Size
-                  </span>
-                  <span className="text-sm font-semibold text-slate-900">
-                    {registration.shirt_size}
-                  </span>
-                </div>
-                <div className="border-t border-slate-100"></div>
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
-                    Quantity
-                  </span>
-                  <span className="text-sm font-semibold text-slate-900">
-                    {registration.shirt_quantity} shirt(s)
-                  </span>
-                </div>
-                <div className="border-t border-slate-100"></div>
-                <div className="flex justify-between items-center py-2">
-                  <span className="text-xs font-medium text-slate-500 uppercase tracking-wide flex items-center">
-                    <FaUser className="mr-1.5 text-slate-400" /> Parent
-                  </span>
-                  <span className="text-sm font-semibold text-slate-900 truncate ml-4">
-                    {registration.parent_name}
-                  </span>
-                </div>
+                {SUMMARY_FIELDS.map(({ label, key, icon, format }, index) => (
+                  <React.Fragment key={key}>
+                    {index > 0 && <div className="border-t border-slate-100" />}
+                    <SummaryRow
+                      label={label}
+                      value={
+                        format ? format(registration[key]) : registration[key]
+                      }
+                      icon={icon}
+                    />
+                  </React.Fragment>
+                ))}
               </div>
             </div>
 
             {/* Payment section */}
             <div className="rounded-2xl border border-accent-200 bg-gradient-to-br from-accent-50/50 to-accent-50 shadow-sm p-4 sm:p-6 mb-6">
-              <h2 className="text-sm font-semibold text-slate-900 uppercase tracking-wide mb-4 flex items-center">
-                <span className="bg-accent-500/10 p-2 rounded-lg mr-3">
-                  <FaDollarSign className="text-accent-600 text-sm" />
-                </span>
-                Payment Required
-              </h2>
+              <SectionHeader
+                icon={<FaDollarSign className="text-accent-600 text-sm" />}
+                title="Payment Required"
+              />
 
               <div className="text-center mb-5">
                 <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mb-2">
@@ -201,6 +204,9 @@ const PaymentPage = () => {
                   </span>
                   <button
                     onClick={copyToClipboard}
+                    aria-label={
+                      copied ? "Copied to clipboard" : "Copy CashApp username"
+                    }
                     className="flex items-center bg-slate-50 hover:bg-slate-100 border border-slate-200 px-3 py-2 rounded-xl transition-all duration-200 text-xs font-semibold text-slate-700 hover:scale-[1.01]"
                   >
                     <FaCopy className="mr-1.5 text-slate-400" />
@@ -216,16 +222,17 @@ const PaymentPage = () => {
 
             {/* CashApp info section */}
             <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-4 sm:p-6 mb-6">
-              <h2 className="text-sm font-semibold text-slate-900 uppercase tracking-wide mb-1.5">
-                Your CashApp Info
-              </h2>
-              <p className="text-slate-400 mb-4 text-xs">
-                Provide your CashApp username or email so we can verify your
-                payment
-              </p>
+              <SectionHeader
+                title="Your CashApp Info"
+                subtitle="Provide your CashApp username or email so we can verify your payment"
+              />
 
               <div className="flex flex-col sm:flex-row gap-3">
+                <label className="sr-only" htmlFor="cashapp-username">
+                  CashApp username or email
+                </label>
                 <input
+                  id="cashapp-username"
                   type="text"
                   value={cashappUsername}
                   onChange={(e) => setCashappUsername(e.target.value)}
