@@ -128,12 +128,6 @@ const AuthPage = () => {
     setMessage("");
   };
 
-  const visibleFields = FORM_FIELDS.filter(
-    (f) => !f.signUpOnly || !isLogin === false || !isLogin,
-  ).filter((f) => !f.signUpOnly || !isLogin === false ? true : true)
-    ? FORM_FIELDS.filter((f) => !f.signUpOnly || !isLogin === false)
-    : FORM_FIELDS;
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900 flex items-center justify-center p-4">
       <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-accent-400 to-primary-500" />
