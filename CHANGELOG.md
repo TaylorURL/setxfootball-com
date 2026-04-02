@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.1] - 2026-04-02
+
+- SETX Football Release v1.7.1
+
 ## [1.7.1] - 2026-04-01
 
 - SETX Football Release v1.7.1

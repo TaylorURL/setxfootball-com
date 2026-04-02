@@ -11,7 +11,10 @@ import ErrorReporterUtility, {
   ErrorBoundary,
 } from "./utils/ErrorReporterUtility";
 
-ErrorReporterUtility.init({ project: "setxfootball.com" });
+ErrorReporterUtility.init({
+  project: "setxfootball.com",
+  apiKey: process.env.REACT_APP_SUPABASE_ANON_KEY,
+});
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
