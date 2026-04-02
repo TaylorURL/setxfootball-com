@@ -93,6 +93,7 @@ const PaymentPage = () => {
       const { error } = await RegistrationService.updateCashAppUsername(
         registration.id,
         cashappUsername,
+        registration.user_id,
       );
       if (error) throw error;
       setSaved(true);

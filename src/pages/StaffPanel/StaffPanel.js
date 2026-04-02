@@ -499,20 +499,20 @@ const StaffPanel = () => {
             };
             const cl = colorMap[color] || colorMap.blue;
             return (
-            <div
-              key={label}
-              className="rounded-2xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-all duration-200 p-4"
-            >
-              <div className="flex items-center justify-between mb-3">
-                <div className={`${cl.bg} p-2.5 rounded-xl`}>
-                  <Icon className={`${cl.text} h-4 w-4`} />
+              <div
+                key={label}
+                className="rounded-2xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-all duration-200 p-4"
+              >
+                <div className="flex items-center justify-between mb-3">
+                  <div className={`${cl.bg} p-2.5 rounded-xl`}>
+                    <Icon className={`${cl.text} h-4 w-4`} />
+                  </div>
                 </div>
+                <p className="text-2xl font-bold text-slate-900">{value}</p>
+                <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mt-1">
+                  {label}
+                </p>
               </div>
-              <p className="text-2xl font-bold text-slate-900">{value}</p>
-              <p className="text-xs font-medium text-slate-500 uppercase tracking-wide mt-1">
-                {label}
-              </p>
-            </div>
             );
           })}
         </div>
