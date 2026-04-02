@@ -1,13 +1,3 @@
-/**
- * AuthPage - Authentication page for sign-in and sign-up.
- *
- * Provides a togglable form for existing users to log in or new users to
- * create an account. On successful login, redirects to the dashboard.
- * On successful sign-up, prompts the user to verify their email.
- *
- * @module pages/AuthPage
- * @returns {React.ReactElement} The rendered authentication page
- */
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
@@ -22,11 +12,82 @@ import {
 } from "react-icons/fa";
 import logo from "../../assets/logo.PNG";
 
+const INPUT_CLASS =
+  "w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-900 placeholder:text-slate-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 focus:bg-white transition-all duration-200";
+
+const FORM_FIELDS = [
+  {
+    name: "fullName",
+    label: "Full Name",
+    type: "text",
+    placeholder: "Enter your full name",
+    icon: FaUser,
+    signUpOnly: true,
+  },
+  {
+    name: "email",
+    label: "Email Address",
+    type: "email",
+    placeholder: "email@example.com",
+    icon: FaEnvelope,
+  },
+  {
+    name: "password",
+    label: "Password",
+    type: "password",
+    placeholder: "••••••••",
+    icon: FaLock,
+    minLength: 6,
+  },
+];
+
+const AlertBanner = ({ variant, icon: Icon, children }) => {
+  const styles = {
+    error: "bg-red-50 border-red-200 text-red-700",
+    success: "bg-emerald-50 border-emerald-200 text-emerald-700",
+  };
+  const iconColors = { error: "text-red-400", success: "text-emerald-500" };
+
+  return (
+    <div
+      className={`mb-6 p-3.5 border rounded-xl text-sm flex items-start gap-2.5 ${styles[variant]}`}
+    >
+      <Icon className={`${iconColors[variant]} mt-0.5 shrink-0`} />
+      <span>{children}</span>
+    </div>
+  );
+};
+
+const FormField = ({ field, value, onChange, isLogin }) => {
+  const Icon = field.icon;
+  return (
+    <div>
+      <label className="block text-xs font-medium text-slate-500 mb-1.5 uppercase tracking-wide">
+        {field.label}
+      </label>
+      <div className="relative">
+        <Icon className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm" />
+        <input
+          type={field.type}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          required={field.signUpOnly ? !isLogin : true}
+          minLength={field.minLength}
+          className={INPUT_CLASS}
+          placeholder={field.placeholder}
+        />
+      </div>
+    </div>
+  );
+};
+
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
+  const [formValues, setFormValues] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+  });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
@@ -34,10 +95,9 @@ const AuthPage = () => {
   const { signIn, signUp } = useAuth();
   const navigate = useNavigate();
 
-  /**
-   * Handles form submission for both sign-in and sign-up flows.
-   * @param {React.FormEvent<HTMLFormElement>} e - The form submit event
-   */
+  const updateField = (name) => (value) =>
+    setFormValues((prev) => ({ ...prev, [name]: value }));
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
@@ -46,10 +106,10 @@ const AuthPage = () => {
 
     try {
       if (isLogin) {
-        await signIn(email, password);
+        await signIn(formValues.email, formValues.password);
         navigate("/dashboard");
       } else {
-        await signUp(email, password, fullName);
+        await signUp(formValues.email, formValues.password, formValues.fullName);
         setMessage(
           "Account created! Please check your email to verify your account.",
         );
@@ -62,7 +122,6 @@ const AuthPage = () => {
     }
   };
 
-  /** Toggles between sign-in and sign-up modes, clearing any messages */
   const toggleMode = () => {
     setIsLogin(!isLogin);
     setError("");
@@ -71,10 +130,10 @@ const AuthPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900 flex items-center justify-center p-4">
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-accent-400 to-primary-500"></div>
+      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-accent-400 to-primary-500" />
 
-      <div className="absolute top-10 right-20 w-72 h-72 bg-accent-400 rounded-full filter blur-3xl opacity-10 hidden sm:block"></div>
-      <div className="absolute bottom-10 left-20 w-96 h-96 bg-white rounded-full filter blur-3xl opacity-5 hidden sm:block"></div>
+      <div className="absolute top-10 right-20 w-72 h-72 bg-accent-400 rounded-full filter blur-3xl opacity-10 hidden sm:block" />
+      <div className="absolute bottom-10 left-20 w-96 h-96 bg-white rounded-full filter blur-3xl opacity-5 hidden sm:block" />
 
       <div className="w-full max-w-md animate-fade-in">
         <Link
@@ -107,73 +166,29 @@ const AuthPage = () => {
           </div>
 
           {error && (
-            <div className="mb-6 p-3.5 bg-red-50 border border-red-200 text-red-700 rounded-xl text-sm flex items-start gap-2.5">
-              <FaExclamationCircle className="text-red-400 mt-0.5 shrink-0" />
-              <span>{error}</span>
-            </div>
+            <AlertBanner variant="error" icon={FaExclamationCircle}>
+              {error}
+            </AlertBanner>
           )}
 
           {message && (
-            <div className="mb-6 p-3.5 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-xl text-sm flex items-start gap-2.5">
-              <FaCheckCircle className="text-emerald-500 mt-0.5 shrink-0" />
-              <span>{message}</span>
-            </div>
+            <AlertBanner variant="success" icon={FaCheckCircle}>
+              {message}
+            </AlertBanner>
           )}
 
           <form onSubmit={handleSubmit} className="space-y-4">
-            {!isLogin && (
-              <div>
-                <label className="block text-xs font-medium text-slate-500 mb-1.5 uppercase tracking-wide">
-                  Full Name
-                </label>
-                <div className="relative">
-                  <FaUser className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm" />
-                  <input
-                    type="text"
-                    value={fullName}
-                    onChange={(e) => setFullName(e.target.value)}
-                    required={!isLogin}
-                    className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-900 placeholder:text-slate-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 focus:bg-white transition-all duration-200"
-                    placeholder="Enter your full name"
-                  />
-                </div>
-              </div>
+            {FORM_FIELDS.filter((f) => !f.signUpOnly || !isLogin).map(
+              (field) => (
+                <FormField
+                  key={field.name}
+                  field={field}
+                  value={formValues[field.name]}
+                  onChange={updateField(field.name)}
+                  isLogin={isLogin}
+                />
+              ),
             )}
-
-            <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1.5 uppercase tracking-wide">
-                Email Address
-              </label>
-              <div className="relative">
-                <FaEnvelope className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm" />
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-900 placeholder:text-slate-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 focus:bg-white transition-all duration-200"
-                  placeholder="email@example.com"
-                />
-              </div>
-            </div>
-
-            <div>
-              <label className="block text-xs font-medium text-slate-500 mb-1.5 uppercase tracking-wide">
-                Password
-              </label>
-              <div className="relative">
-                <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm" />
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  minLength={6}
-                  className="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-900 placeholder:text-slate-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 focus:bg-white transition-all duration-200"
-                  placeholder="••••••••"
-                />
-              </div>
-            </div>
 
             <div className="pt-2">
               <button
@@ -182,7 +197,7 @@ const AuthPage = () => {
                 className="w-full bg-gradient-to-r from-accent-500 to-accent-600 text-white py-3 rounded-xl text-sm font-semibold hover:from-accent-600 hover:to-accent-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-md hover:shadow-lg hover:shadow-accent-500/20 hover:scale-[1.01]"
               >
                 {loading ? (
-                  <div className="animate-spin rounded-full h-5 w-5 border-2 border-white/30 border-t-white"></div>
+                  <div className="animate-spin rounded-full h-5 w-5 border-2 border-white/30 border-t-white" />
                 ) : (
                   <>
                     <FaFootballBall className="mr-2 text-xs" />
