@@ -109,7 +109,11 @@ const AuthPage = () => {
         await signIn(formValues.email, formValues.password);
         navigate("/dashboard");
       } else {
-        await signUp(formValues.email, formValues.password, formValues.fullName);
+        await signUp(
+          formValues.email,
+          formValues.password,
+          formValues.fullName,
+        );
         setMessage(
           "Account created! Please check your email to verify your account.",
         );

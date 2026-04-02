@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 ## [1.7.1] - 2026-04-02
 
+- Fixed missing `user_id` being passed to `updateCashAppUsername` in PaymentPage
+- Reformatted JSX indentation in HomePage coach cards and StaffPanel stat cards for consistency
+- Cleaned up trailing newline in LICENSE.md
+
+## [1.7.1] - 2026-04-02
+
 - SETX Football Release v1.7.1
 
 ## [1.7.1] - 2026-04-01
