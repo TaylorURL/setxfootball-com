@@ -490,14 +490,22 @@ const StaffPanel = () => {
               value: formatCurrency(stats.totalRevenue),
               label: "Expected",
             },
-          ].map(({ icon: Icon, color, value, label }) => (
+          ].map(({ icon: Icon, color, value, label }) => {
+            const colorMap = {
+              blue: { bg: "bg-blue-50", text: "text-blue-600" },
+              green: { bg: "bg-green-50", text: "text-green-600" },
+              amber: { bg: "bg-amber-50", text: "text-amber-600" },
+              purple: { bg: "bg-purple-50", text: "text-purple-600" },
+            };
+            const cl = colorMap[color] || colorMap.blue;
+            return (
             <div
               key={label}
               className="rounded-2xl border border-slate-200 bg-white shadow-sm hover:shadow-md transition-all duration-200 p-4"
             >
               <div className="flex items-center justify-between mb-3">
-                <div className={`bg-${color}-50 p-2.5 rounded-xl`}>
-                  <Icon className={`text-${color}-600 h-4 w-4`} />
+                <div className={`${cl.bg} p-2.5 rounded-xl`}>
+                  <Icon className={`${cl.text} h-4 w-4`} />
                 </div>
               </div>
               <p className="text-2xl font-bold text-slate-900">{value}</p>
@@ -505,7 +513,8 @@ const StaffPanel = () => {
                 {label}
               </p>
             </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Search/filter bar */}

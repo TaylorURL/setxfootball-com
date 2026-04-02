@@ -543,20 +543,24 @@ function HomePage() {
                     "Approximately five years of coaching experience",
                   ],
                 },
-              ].map((coach) => (
+              ].map((coach) => {
+                const cl = coach.color === "primary"
+                  ? { bg: "bg-primary-500/10", text600: "text-primary-600", bg500: "bg-primary-500", text500: "text-primary-500" }
+                  : { bg: "bg-accent-500/10", text600: "text-accent-600", bg500: "bg-accent-500", text500: "text-accent-500" };
+                return (
                 <div
                   key={coach.name}
-                  className={`scroll-animate scale-in rounded-2xl border border-slate-200 bg-white p-8 hover:shadow-lg transition-all duration-300`}
+                  className="scroll-animate scale-in rounded-2xl border border-slate-200 bg-white p-8 hover:shadow-lg transition-all duration-300"
                 >
                   <div className="flex items-center gap-4 mb-6">
-                    <div className={`bg-${coach.color}-500/10 p-3 rounded-xl`}>
+                    <div className={`${cl.bg} p-3 rounded-xl`}>
                       <coach.icon
-                        className={`h-6 w-6 text-${coach.color}-600`}
+                        className={`h-6 w-6 ${cl.text600}`}
                       />
                     </div>
                     <div>
                       <span
-                        className={`text-[10px] font-bold uppercase tracking-widest text-${coach.color}-600`}
+                        className={`text-[10px] font-bold uppercase tracking-widest ${cl.text600}`}
                       >
                         {coach.role}
                       </span>
@@ -569,7 +573,7 @@ function HomePage() {
                     {coach.points.map((point) => (
                       <div key={point} className="flex items-start">
                         <div
-                          className={`w-1.5 h-1.5 bg-${coach.color}-500 rounded-full mt-2 mr-3 flex-shrink-0`}
+                          className={`w-1.5 h-1.5 ${cl.bg500} rounded-full mt-2 mr-3 flex-shrink-0`}
                         ></div>
                         <p className="text-slate-600 text-sm leading-relaxed">
                           {point}
@@ -580,7 +584,7 @@ function HomePage() {
                   <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
                     <div className="flex items-center">
                       <FaStar
-                        className={`h-4 w-4 mr-2 text-${coach.color}-500`}
+                        className={`h-4 w-4 mr-2 ${cl.text500}`}
                       />
                       <span className="text-xs font-bold uppercase tracking-wide text-slate-600">
                         {coach.highlight}
@@ -588,7 +592,8 @@ function HomePage() {
                     </div>
                   </div>
                 </div>
-              ))}
+                );
+              })}
             </div>
 
             {/* What sets us apart */}
