@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 - SETX Football Release v1.7.1
 
+## [1.7.1] - 2026-04-03
+
+- SETX Football Release v1.7.1
+
 ## [1.7.1] - 2026-04-02
 
 - Fixed missing `user_id` being passed to `updateCashAppUsername` in PaymentPage
