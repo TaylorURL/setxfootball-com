@@ -653,7 +653,7 @@ function HomePage() {
             {[img1, img2, img3, img4, img5, img6, img7, img8].map((img, i) => (
               <div
                 key={i}
-                className={`scroll-animate scale-in delay-${Math.min(i + 1, 8)} group relative rounded-2xl h-48 sm:h-56 overflow-hidden cursor-pointer`}
+                className={`scroll-animate scale-in ${["delay-1", "delay-2", "delay-3", "delay-4", "delay-5", "delay-6", "delay-7", "delay-8"][Math.min(i, 7)]} group relative rounded-2xl h-48 sm:h-56 overflow-hidden cursor-pointer`}
               >
                 <img
                   src={img}
