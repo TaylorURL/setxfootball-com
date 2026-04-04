@@ -100,7 +100,7 @@ CREATE POLICY "Users can view own profile"
 
 CREATE POLICY "Users can create own profile"
   ON user_profiles FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
+  WITH CHECK (auth.uid() = user_id AND role = 'user');
 
 CREATE POLICY "Staff can view all profiles"
   ON user_profiles FOR SELECT
