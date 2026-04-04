@@ -2,6 +2,36 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.3] - 2026-04-04
+
+- `CHANGELOG.md`
+- `package-lock.json`
+- `package.json`
+- `public/nit.json`
+- `supabase_schema.sql`
+- Tightened the user profile creation policy to require the role be set to 'user', preventing users from self-assigning elevated roles on insert
+
+## [1.7.3] - 2026-04-04
+
+- SETX Football Release v1.7.3
+
+## [1.7.3] - 2026-04-04
+
+- SETX Football Release v1.7.3
+
+## [1.7.3] - 2026-04-04
+
+- SETX Football Release v1.7.3
+
+## [1.7.3] - 2026-04-04
+
+- `CHANGELOG.md`, `package.json`, `package-lock.json`, `supabase_schema.sql`, `public/nit.json`
+- Tightened the user profile creation policy to require the role be set to 'user', preventing users from self-assigning elevated roles on insert
+
+## [1.7.3] - 2026-04-04
+
+- SETX Football Release v1.7.3
+
 ## [1.7.2] - 2026-04-03
 
 - SETX Football Release v1.7.2
