@@ -72,6 +72,7 @@ const PaymentPage = () => {
   const [cashappUsername, setCashappUsername] = useState("");
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [saveError, setSaveError] = useState(null);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -89,6 +90,7 @@ const PaymentPage = () => {
     if (!cashappUsername.trim() || !registration) return;
 
     setSaving(true);
+    setSaveError(null);
     try {
       const { error } = await RegistrationService.updateCashAppUsername(
         registration.id,
@@ -98,7 +100,7 @@ const PaymentPage = () => {
       if (error) throw error;
       setSaved(true);
     } catch {
-      // NOTE: silent catch — user sees the button revert to unsaved state
+      setSaveError("Failed to save CashApp info. Please try again.");
     } finally {
       setSaving(false);
     }
@@ -258,6 +260,12 @@ const PaymentPage = () => {
                 <p className="text-emerald-600 text-xs mt-3 flex items-center font-medium">
                   <FaCheckCircle className="mr-1.5" />
                   CashApp info saved successfully!
+                </p>
+              )}
+
+              {saveError && (
+                <p className="text-red-600 text-xs mt-3 flex items-center font-medium">
+                  {saveError}
                 </p>
               )}
             </div>
