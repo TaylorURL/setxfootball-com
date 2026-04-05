@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.7.4] - 2026-04-05
+
+- SETX Football Release v1.7.4
+
 ## [1.7.3] - 2026-04-04
 
 - Tightened the user profile creation policy to require the role be set to 'user', preventing users from self-assigning elevated roles on insert

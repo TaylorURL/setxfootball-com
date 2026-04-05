@@ -1,6 +1,6 @@
 {
   "name": "setxfootball",
-  "version": "1.7.3",
+  "version": "1.7.4",
   "private": true,
   "dependencies": {
     "@supabase/supabase-js": "^2.88.0",

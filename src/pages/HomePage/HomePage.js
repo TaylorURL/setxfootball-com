@@ -47,6 +47,7 @@ import {
   FaPlus,
   FaTrash,
   FaCalendarAlt,
+  FaHandshake,
 } from "react-icons/fa";
 
 function HomePage() {
@@ -194,7 +195,7 @@ function HomePage() {
     setMobileMenuOpen(false);
   };
 
-  const navLinks = ["home", "about", "gallery"];
+  const navLinks = ["home", "about", "gallery", "sponsors"];
 
   return (
     <div className="min-h-screen bg-white">
@@ -667,6 +668,45 @@ function HomePage() {
         </div>
       </section>
 
+      {/* ==================== Sponsors ==================== */}
+      <section id="sponsors" className="py-24 lg:py-32 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="scroll-animate text-center mb-16">
+            <span className="inline-flex items-center bg-primary-500/10 text-primary-600 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest mb-4">
+              <FaHandshake className="mr-2" /> Our Partners
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mb-4">
+              Thank You to Our Sponsors
+            </h2>
+            <p className="text-slate-500 max-w-lg mx-auto">
+              We're grateful for the generous support that makes this camp
+              possible for our community.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+            {[
+              "/sponsors/IMG_2678.JPEG",
+              "/sponsors/IMG_2685.JPEG",
+              "/sponsors/IMG_2686.JPEG",
+            ].map((sponsorImage, index) => (
+              <div
+                key={sponsorImage}
+                className={`scroll-animate scale-in ${["delay-1", "delay-2", "delay-3"][index]} group relative rounded-2xl overflow-hidden bg-slate-50 border border-slate-200 hover:shadow-xl transition-all duration-300`}
+              >
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src={sponsorImage}
+                    alt={`Camp sponsor ${index + 1}`}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ==================== Registration Form ==================== */}
       <section id="register" className="py-24 lg:py-32 bg-slate-50 relative">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -1126,6 +1166,7 @@ function HomePage() {
                   { label: "Home", id: "home" },
                   { label: "About", id: "about" },
                   { label: "Gallery", id: "gallery" },
+                  { label: "Sponsors", id: "sponsors" },
                   { label: "Registration", id: "register" },
                 ].map(({ label, id }) => (
                   <li key={id}>
