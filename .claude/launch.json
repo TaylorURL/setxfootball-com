@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "dev",
+      "runtimeExecutable": "/Users/trentontaylor/.nvm/versions/node/v22.21.1/bin/node",
+      "runtimeArgs": ["node_modules/.bin/react-scripts", "start"],
+      "port": 3000
+    }
+  ]
+}
