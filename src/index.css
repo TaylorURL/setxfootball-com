@@ -1,14 +1,7 @@
-/* ═══════════════════════════════════════════════════════════════
-   SETX Football Camp — Global Styles
-   Tailwind directives, CSS variables, keyframe animations,
-   utility classes, and scroll-driven animation helpers.
-   ═══════════════════════════════════════════════════════════════ */
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── Color Palette (CSS Custom Properties) ── */
 :root {
   --primary-50: #eff6ff;
   --primary-100: #dbeafe;
@@ -21,7 +14,6 @@
   --primary-800: #001233;
   --primary-900: #000c1a;
 
-  /* Accent — American red */
   --accent-50: #fef2f2;
   --accent-100: #fee2e2;
   --accent-200: #fecaca;
@@ -32,6 +24,11 @@
   --accent-700: #75061d;
   --accent-800: #500413;
   --accent-900: #2b020a;
+
+  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-in-out-quint: cubic-bezier(0.77, 0, 0.175, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  --ease-press: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 body {
@@ -41,18 +38,22 @@ body {
     "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-/* ── Keyframe Animations ── */
+::selection {
+  background: rgba(191, 10, 48, 0.2);
+  color: #000c1a;
+}
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -63,7 +64,7 @@ html {
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(24px);
   }
   to {
     opacity: 1;
@@ -71,32 +72,10 @@ html {
   }
 }
 
-@keyframes fadeInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes fadeInRight {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
 @keyframes scaleIn {
   from {
     opacity: 0;
-    transform: scale(0.9);
+    transform: scale(0.96);
   }
   to {
     opacity: 1;
@@ -110,17 +89,17 @@ html {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
   }
 }
 
-@keyframes pulse-glow {
+@keyframes pulseGlow {
   0%,
   100% {
-    box-shadow: 0 0 20px rgba(191, 10, 48, 0.4);
+    box-shadow: 0 0 0 0 rgba(191, 10, 48, 0.35);
   }
   50% {
-    box-shadow: 0 0 40px rgba(191, 10, 48, 0.6);
+    box-shadow: 0 0 0 12px rgba(191, 10, 48, 0);
   }
 }
 
@@ -133,61 +112,71 @@ html {
   }
 }
 
-/* ── Animation Utility Classes ── */
+@keyframes subtleZoom {
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes marqueeLeft {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
 
 .animate-fade-in {
-  animation: fadeIn 0.5s ease-out forwards;
+  animation: fadeIn 360ms var(--ease-out-quint) forwards;
 }
 
 .animate-fade-in-up {
-  animation: fadeInUp 0.8s ease-out forwards;
-}
-
-.animate-fade-in-left {
-  animation: fadeInLeft 0.8s ease-out forwards;
-}
-
-.animate-fade-in-right {
-  animation: fadeInRight 0.8s ease-out forwards;
+  animation: fadeInUp 520ms var(--ease-out-quint) forwards;
 }
 
 .animate-scale-in {
-  animation: scaleIn 0.6s ease-out forwards;
+  animation: scaleIn 440ms var(--ease-out-quint) forwards;
 }
 
 .animate-float {
-  animation: float 3s ease-in-out infinite;
+  animation: float 4.5s ease-in-out infinite;
 }
 
 .animate-pulse-glow {
-  animation: pulse-glow 2s ease-in-out infinite;
+  animation: pulseGlow 2.2s ease-in-out infinite;
+}
+
+.animate-subtle-zoom {
+  animation: subtleZoom 1.6s var(--ease-out-quint) forwards;
+}
+
+.animate-marquee {
+  animation: marqueeLeft 36s linear infinite;
 }
 
 .delay-100 {
-  animation-delay: 0.1s;
+  animation-delay: 80ms;
 }
-
 .delay-200 {
-  animation-delay: 0.2s;
+  animation-delay: 160ms;
 }
-
 .delay-300 {
-  animation-delay: 0.3s;
+  animation-delay: 240ms;
 }
-
 .delay-400 {
-  animation-delay: 0.4s;
+  animation-delay: 320ms;
 }
-
 .delay-500 {
-  animation-delay: 0.5s;
+  animation-delay: 400ms;
 }
-
-/* ── Visual Effect Classes ── */
 
 .glass-effect {
-  backdrop-filter: blur(10px);
-  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .text-gradient {
@@ -199,13 +188,13 @@ html {
 
 .hover-lift {
   transition:
-    transform 0.3s ease,
-    box-shadow 0.3s ease;
+    transform 280ms var(--ease-out-quint),
+    box-shadow 280ms var(--ease-out-quint);
 }
 
 .hover-lift:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transform: translateY(-3px);
+  box-shadow: 0 18px 36px -12px rgba(0, 12, 26, 0.25);
 }
 
 .card-shine {
@@ -216,69 +205,68 @@ html {
 .card-shine::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
+    100deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.18),
+    transparent 65%
   );
-  transition: left 0.5s ease;
+  transform: translateX(-100%);
+  transition: transform 720ms var(--ease-out-quint);
+  pointer-events: none;
 }
 
 .card-shine:hover::before {
-  left: 100%;
+  transform: translateX(100%);
 }
 
-/* ── Form & Button Styles ── */
-
 input:focus,
-select:focus {
+select:focus,
+textarea:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 40, 104, 0.2);
+  box-shadow: 0 0 0 3px rgba(0, 40, 104, 0.18);
 }
 
 .btn-primary {
   position: relative;
   overflow: hidden;
   z-index: 1;
+  transition:
+    transform 140ms var(--ease-press),
+    box-shadow 200ms var(--ease-out-quint);
+}
+
+.btn-primary:active {
+  transform: scale(0.97);
 }
 
 .btn-primary::before {
   content: "";
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
+  inset: 0;
   background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.2),
-    transparent
+    100deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.22),
+    transparent 70%
   );
+  transform: translateX(-100%);
+  transition: transform 720ms var(--ease-out-quint);
   z-index: -1;
-  transition: left 0.5s ease;
 }
 
 .btn-primary:hover::before {
-  left: 100%;
+  transform: translateX(100%);
 }
-
-/* ── Scroll-Driven Animation Helpers ──
-   Add .scroll-animate to elements, then toggle .animate-visible
-   via IntersectionObserver. Use .from-left / .from-right / .scale-in
-   for direction variants, and .delay-N for staggered entrances. */
 
 .scroll-animate {
   opacity: 0;
-  transform: translateY(40px);
+  transform: translateY(28px);
   transition:
-    opacity 0.8s ease-out,
-    transform 0.8s ease-out;
+    opacity 720ms var(--ease-out-quint),
+    transform 720ms var(--ease-out-quint);
+  will-change: opacity, transform;
 }
 
 .scroll-animate.animate-visible {
@@ -287,7 +275,7 @@ select:focus {
 }
 
 .scroll-animate.from-left {
-  transform: translateX(-40px);
+  transform: translateX(-28px);
 }
 
 .scroll-animate.from-left.animate-visible {
@@ -295,7 +283,7 @@ select:focus {
 }
 
 .scroll-animate.from-right {
-  transform: translateX(40px);
+  transform: translateX(28px);
 }
 
 .scroll-animate.from-right.animate-visible {
@@ -303,7 +291,7 @@ select:focus {
 }
 
 .scroll-animate.scale-in {
-  transform: scale(0.9);
+  transform: scale(0.96);
 }
 
 .scroll-animate.scale-in.animate-visible {
@@ -311,33 +299,87 @@ select:focus {
 }
 
 .scroll-animate.delay-1 {
-  transition-delay: 0.1s;
+  transition-delay: 60ms;
 }
-
 .scroll-animate.delay-2 {
-  transition-delay: 0.2s;
+  transition-delay: 120ms;
 }
-
 .scroll-animate.delay-3 {
-  transition-delay: 0.3s;
+  transition-delay: 180ms;
 }
-
 .scroll-animate.delay-4 {
-  transition-delay: 0.4s;
+  transition-delay: 240ms;
 }
-
 .scroll-animate.delay-5 {
-  transition-delay: 0.5s;
+  transition-delay: 300ms;
 }
-
 .scroll-animate.delay-6 {
-  transition-delay: 0.6s;
+  transition-delay: 360ms;
 }
-
 .scroll-animate.delay-7 {
-  transition-delay: 0.7s;
+  transition-delay: 420ms;
+}
+.scroll-animate.delay-8 {
+  transition-delay: 480ms;
 }
 
-.scroll-animate.delay-8 {
-  transition-delay: 0.8s;
+.noise-texture {
+  position: relative;
+}
+
+.noise-texture::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.06;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+.field-input {
+  width: 100%;
+  background: rgb(248 250 252);
+  border: 1px solid rgb(226 232 240);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  color: rgb(15 23 42);
+  transition:
+    border-color 180ms var(--ease-out-quint),
+    box-shadow 180ms var(--ease-out-quint),
+    background-color 180ms var(--ease-out-quint);
+}
+
+.field-input::placeholder {
+  color: rgb(148 163 184);
+}
+
+.field-input:hover {
+  border-color: rgb(203 213 225);
+}
+
+.field-input:focus {
+  border-color: var(--primary-500);
+  background: white;
+  box-shadow: 0 0 0 3px rgba(0, 40, 104, 0.12);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .scroll-animate,
+  .scroll-animate.from-left,
+  .scroll-animate.from-right,
+  .scroll-animate.scale-in {
+    opacity: 1;
+    transform: none;
+  }
 }

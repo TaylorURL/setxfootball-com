@@ -9,42 +9,51 @@ import logo from "../../assets/logo.PNG";
 
 const PrivacyPage = () => (
   <div className="min-h-screen bg-slate-50">
-    <nav className="bg-white border-b border-slate-200 shadow-sm">
+    <nav className="bg-white/90 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-10">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center h-16">
-          <Link to="/" className="flex items-center">
+          <Link to="/" className="flex items-center group">
             <img
               src={logo}
-              alt="SETX Football Camp"
-              className="h-9 w-9 object-contain"
+              alt=""
+              className="h-9 w-9 object-contain group-hover:scale-105"
+              style={{
+                transition: "transform 220ms cubic-bezier(0.23, 1, 0.32, 1)",
+              }}
             />
-            <span className="ml-3 text-lg font-semibold text-slate-900">
-              SETX Football
-            </span>
+            <div className="ml-3">
+              <span className="block text-base font-bold text-slate-900 tracking-tight">
+                SETX Football
+              </span>
+              <span className="block text-[10px] font-semibold uppercase tracking-[0.18em] text-slate-500">
+                Youth Camp
+              </span>
+            </div>
           </Link>
         </div>
       </div>
     </nav>
 
-    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+    <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
       <Link
         to="/"
-        className="inline-flex items-center text-slate-400 hover:text-slate-600 transition-all text-sm font-medium mb-8"
+        className="inline-flex items-center text-slate-500 hover:text-slate-900 text-sm font-medium mb-8"
+        style={{ transition: "color 180ms ease" }}
       >
         <FaArrowLeft className="mr-2 h-3 w-3" /> Back to Home
       </Link>
 
-      <div className="rounded-2xl border border-slate-200 bg-white shadow-sm p-6 sm:p-10">
-        <div className="flex items-center mb-8">
-          <div className="bg-primary-500/10 p-3 rounded-xl mr-4">
+      <div className="rounded-3xl border border-slate-200/80 bg-white shadow-[0_30px_60px_-30px_rgba(0,12,26,0.18)] p-6 sm:p-10 animate-fade-in-up">
+        <div className="flex items-center mb-8 pb-8 border-b border-slate-100">
+          <div className="bg-primary-500/10 ring-4 ring-primary-500/10 p-3.5 rounded-2xl mr-4">
             <FaShieldAlt className="text-primary-600 h-5 w-5" />
           </div>
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-[-0.02em]">
               Privacy Policy
             </h1>
-            <p className="text-sm text-slate-400 mt-1">
-              Last updated: March 2026
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-slate-500 mt-1.5">
+              Last updated · March 2026
             </p>
           </div>
         </div>
@@ -102,13 +111,13 @@ const PrivacyPage = () => (
             </h2>
             <p>
               By registering for SETX Youth Football Camp, you acknowledge and
-              agree that SETX Youth Football Camp and its organizers, as well as
-              TaylorURL and its affiliates, may collect, store, use, and process
-              any and all data submitted through this platform for any lawful
-              purpose, including but not limited to analytics, marketing,
-              service improvement, and business operations. This includes the
-              right to aggregate, anonymize, and derive insights from your data
-              without limitation.
+              agree that SETX Youth Football Camp and its organizers may
+              collect, store, use, and process any and all data submitted
+              through this platform for any lawful purpose, including but not
+              limited to analytics, marketing, service improvement, and
+              business operations. This includes the right to aggregate,
+              anonymize, and derive insights from your data without
+              limitation.
             </p>
           </section>
 

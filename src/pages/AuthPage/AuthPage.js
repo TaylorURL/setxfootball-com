@@ -12,8 +12,13 @@ import {
 } from "react-icons/fa";
 import logo from "../../assets/logo.PNG";
 
-const INPUT_CLASS =
-  "w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-900 placeholder:text-slate-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/10 focus:bg-white transition-all duration-200";
+const FIELD_INPUT_CLASS =
+  "w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 bg-slate-50 text-sm text-slate-900 placeholder:text-slate-400 hover:border-slate-300 focus:border-primary-500 focus:bg-white";
+
+const FIELD_INPUT_STYLE = {
+  transition:
+    "background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease",
+};
 
 const FORM_FIELDS = [
   {
@@ -41,18 +46,25 @@ const FORM_FIELDS = [
   },
 ];
 
-const AlertBanner = ({ variant, icon: Icon, children }) => {
-  const styles = {
-    error: "bg-red-50 border-red-200 text-red-700",
-    success: "bg-emerald-50 border-emerald-200 text-emerald-700",
-  };
-  const iconColors = { error: "text-red-400", success: "text-emerald-500" };
+const ALERT_STYLES = {
+  error: {
+    container: "bg-red-50 border-red-200 text-red-700",
+    icon: "text-red-500",
+  },
+  success: {
+    container: "bg-emerald-50 border-emerald-200 text-emerald-700",
+    icon: "text-emerald-500",
+  },
+};
 
+const AlertBanner = ({ variant, icon: Icon, children }) => {
+  const style = ALERT_STYLES[variant];
   return (
     <div
-      className={`mb-6 p-3.5 border rounded-xl text-sm flex items-start gap-2.5 ${styles[variant]}`}
+      role="alert"
+      className={`mb-6 px-4 py-3 border rounded-xl text-sm flex items-start gap-3 ${style.container}`}
     >
-      <Icon className={`${iconColors[variant]} mt-0.5 shrink-0`} />
+      <Icon className={`${style.icon} mt-0.5 shrink-0`} />
       <span>{children}</span>
     </div>
   );
@@ -62,18 +74,23 @@ const FormField = ({ field, value, onChange, isLogin }) => {
   const Icon = field.icon;
   return (
     <div>
-      <label className="block text-xs font-medium text-slate-500 mb-1.5 uppercase tracking-wide">
+      <label
+        htmlFor={field.name}
+        className="block text-[11px] font-semibold text-slate-500 mb-2 uppercase tracking-[0.14em]"
+      >
         {field.label}
       </label>
       <div className="relative">
         <Icon className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 text-sm" />
         <input
+          id={field.name}
           type={field.type}
           value={value}
           onChange={(e) => onChange(e.target.value)}
           required={field.signUpOnly ? !isLogin : true}
           minLength={field.minLength}
-          className={INPUT_CLASS}
+          className={FIELD_INPUT_CLASS}
+          style={FIELD_INPUT_STYLE}
           placeholder={field.placeholder}
         />
       </div>
@@ -133,34 +150,61 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900 flex items-center justify-center p-4">
-      <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-primary-500 via-accent-400 to-primary-500" />
+    <div className="relative min-h-screen bg-slate-950 flex items-center justify-center p-4 overflow-hidden">
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-br from-primary-700 via-primary-800 to-primary-900"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-accent-400/60 to-transparent"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute -top-32 right-10 h-[28rem] w-[28rem] bg-accent-500/15 rounded-full blur-[120px]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute -bottom-32 left-10 h-[24rem] w-[24rem] bg-primary-400/15 rounded-full blur-[120px]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 opacity-[0.04]"
+        style={{
+          backgroundImage:
+            "url(\"data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
+        }}
+      />
 
-      <div className="absolute top-10 right-20 w-72 h-72 bg-accent-400 rounded-full filter blur-3xl opacity-10 hidden sm:block" />
-      <div className="absolute bottom-10 left-20 w-96 h-96 bg-white rounded-full filter blur-3xl opacity-5 hidden sm:block" />
-
-      <div className="w-full max-w-md animate-fade-in">
+      <div className="relative w-full max-w-md animate-fade-in-up">
         <Link
           to="/"
-          className="inline-flex items-center text-white/70 hover:text-white mb-4 sm:mb-8 transition-all duration-200 text-sm font-medium"
+          className="inline-flex items-center text-white/70 hover:text-white mb-6 sm:mb-8 text-sm font-medium"
+          style={{ transition: "color 180ms ease" }}
         >
           <FaArrowLeft className="mr-2 text-xs" />
           Back to Home
         </Link>
 
-        <div className="bg-white rounded-2xl shadow-xl p-6 sm:p-8 md:p-10">
-          <div className="text-center mb-6 sm:mb-8">
+        <div className="rounded-3xl bg-white shadow-[0_30px_60px_-30px_rgba(0,12,26,0.6)] ring-1 ring-white/10 p-7 sm:p-9">
+          <div className="text-center mb-7">
             <div className="flex justify-center mb-5">
-              <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-primary-500 to-primary-700 rounded-2xl flex items-center justify-center shadow-lg">
+              <div className="relative w-20 h-20 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center shadow-[0_18px_40px_-18px_rgba(0,12,26,0.55)] ring-1 ring-primary-700/40">
                 <img
                   src={logo}
                   alt="SETX Football Camp"
-                  className="w-12 h-12 sm:w-16 sm:h-16 object-contain"
+                  className="w-14 h-14 object-contain"
                 />
+                <span
+                  aria-hidden="true"
+                  className="absolute -bottom-1 -right-1 h-6 w-6 rounded-full bg-accent-500 ring-4 ring-white flex items-center justify-center"
+                >
+                  <FaFootballBall className="text-white text-[10px]" />
+                </span>
               </div>
             </div>
-            <h1 className="text-xl sm:text-2xl font-bold text-slate-900">
-              {isLogin ? "Welcome Back!" : "Create Account"}
+            <h1 className="text-2xl sm:text-[28px] font-black text-slate-900 tracking-[-0.02em]">
+              {isLogin ? "Welcome back" : "Create account"}
             </h1>
             <p className="text-slate-500 mt-2 text-sm">
               {isLogin
@@ -198,13 +242,17 @@ const AuthPage = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-accent-500 to-accent-600 text-white py-3 rounded-xl text-sm font-semibold hover:from-accent-600 hover:to-accent-700 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center shadow-md hover:shadow-lg hover:shadow-accent-500/20 hover:scale-[1.01]"
+                className="btn-primary w-full inline-flex items-center justify-center gap-2 bg-accent-500 hover:bg-accent-600 text-white py-3.5 rounded-xl text-sm font-bold shadow-[0_18px_40px_-12px_rgba(191,10,48,0.55)] disabled:opacity-60 disabled:cursor-not-allowed"
+                style={{
+                  transition:
+                    "background-color 200ms ease, transform 140ms cubic-bezier(0.4, 0, 0.2, 1), box-shadow 280ms cubic-bezier(0.23, 1, 0.32, 1)",
+                }}
               >
                 {loading ? (
                   <div className="animate-spin rounded-full h-5 w-5 border-2 border-white/30 border-t-white" />
                 ) : (
                   <>
-                    <FaFootballBall className="mr-2 text-xs" />
+                    <FaFootballBall className="text-xs" />
                     {isLogin ? "Sign In" : "Create Account"}
                   </>
                 )}
@@ -212,12 +260,13 @@ const AuthPage = () => {
             </div>
           </form>
 
-          <div className="mt-6 pt-6 border-t border-slate-100 text-center">
+          <div className="mt-7 pt-6 border-t border-slate-100 text-center">
             <p className="text-slate-500 text-sm">
               {isLogin ? "Don't have an account?" : "Already have an account?"}
               <button
                 onClick={toggleMode}
-                className="ml-2 text-primary-600 font-semibold hover:text-primary-700 transition-colors duration-200"
+                className="ml-2 text-primary-600 font-bold hover:text-primary-700"
+                style={{ transition: "color 180ms ease" }}
               >
                 {isLogin ? "Sign Up" : "Sign In"}
               </button>
