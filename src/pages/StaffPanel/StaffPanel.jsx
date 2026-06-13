@@ -469,24 +469,27 @@ const StaffPanel = () => {
 
         <Surface className="mt-6">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
-            <Input
-              className="flex-1"
-              placeholder="Search by name or email…"
-              value={searchTerm}
-              onChange={(event) => setSearchTerm(event.target.value)}
-              leading={<Search />}
-            />
-            <div className="flex items-center gap-3">
-              <Select
-                className="flex-1 sm:flex-none"
-                value={paymentFilter}
-                onValueChange={setPaymentFilter}
-                options={[
-                  { value: "all", label: "All Payments" },
-                  { value: "paid", label: "Paid Only" },
-                  { value: "pending", label: "Pending Only" },
-                ]}
+            <div className="sm:flex-1">
+              <Input
+                placeholder="Search by name or email…"
+                value={searchTerm}
+                onChange={(event) => setSearchTerm(event.target.value)}
+                leading={<Search />}
               />
+            </div>
+            <div className="flex items-center gap-3">
+              <div className="flex-1 sm:flex-none">
+                <Select
+                  value={paymentFilter}
+                  onValueChange={setPaymentFilter}
+                  triggerClassName="w-full sm:w-44"
+                  options={[
+                    { value: "all", label: "All Payments" },
+                    { value: "paid", label: "Paid Only" },
+                    { value: "pending", label: "Pending Only" },
+                  ]}
+                />
+              </div>
               <Button variant="primary" onClick={exportToCSV}>
                 <Download className="h-4 w-4" /> Export
               </Button>
