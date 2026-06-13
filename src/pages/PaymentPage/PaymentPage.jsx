@@ -185,7 +185,7 @@ const PaymentPage = () => {
                 />
               </Field>
               <Button
-                variant={saved ? "primary" : "primary"}
+                variant="primary"
                 size="lg"
                 className="sm:mt-[1.625rem]"
                 loading={saving}
