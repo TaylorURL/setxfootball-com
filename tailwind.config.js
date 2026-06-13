@@ -1,10 +1,20 @@
 /**
  * Tailwind CSS configuration for SETX Football Camp.
- * Extends the default palette with primary (navy blue) and accent (red)
- * color scales sourced from CSS custom properties in index.css.
+ *
+ * Builds on the Sunday Design System preset, which supplies the `ds-*` color,
+ * radius, shadow, font, and motion scales bound to the active `data-theme`.
+ * The legacy primary (navy) / accent (red) scales are retained for the brand
+ * gradients and hero treatments that sit outside the token system.
  */
+const dsPreset = require("@bradley-t-t/sunday-design-system/tailwind-preset");
+
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
+  presets: [dsPreset],
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./public/index.html",
+    "./node_modules/@bradley-t-t/sunday-design-system/dist/*.js",
+  ],
   theme: {
     extend: {
       colors: {
