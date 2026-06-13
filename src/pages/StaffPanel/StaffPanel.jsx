@@ -530,7 +530,7 @@ const StaffPanel = () => {
                       const groupStatus = GROUP_STATUS[combined.status] ?? GROUP_STATUS.pending;
 
                       return (
-                        <ExpandableRows key={key} expanded={isExpanded}>
+                        <ExpandableRows key={key}>
                           <TableRow interactive onClick={() => toggleExpanded(key)}>
                             <TableCell>
                               <IconButton
