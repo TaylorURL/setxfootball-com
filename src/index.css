@@ -1,7 +1,16 @@
+@import "@bradley-t-t/sunday-design-system/styles.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* -----------------------------------------------------------------------------
+   Brand palette
+   Legacy navy/red scales kept for the hero + marketing gradients that live
+   outside the token system. The design-system accent is rebranded below to the
+   camp's red so every DS Button, focus ring, and accent surface carries the
+   SETX identity in both dark and light themes.
+   -------------------------------------------------------------------------- */
 :root {
   --primary-50: #eff6ff;
   --primary-100: #dbeafe;
@@ -24,43 +33,50 @@
   --accent-700: #75061d;
   --accent-800: #500413;
   --accent-900: #2b020a;
-
-  --ease-out-quint: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out-quint: cubic-bezier(0.77, 0, 0.175, 1);
-  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
-  --ease-press: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-body {
-  margin: 0;
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
-    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
+/* Rebrand the design-system accent → SETX red (dark theme + portaled UI). */
+.ds-root,
+.ds-root[data-theme="dark"],
+[data-theme="dark"] {
+  --ds-accent: #bf0a30;
+  --ds-accent-bright: #fb5871;
+  --ds-accent-glow: rgba(191, 10, 48, 0.45);
+  --ds-accent-soft: rgba(191, 10, 48, 0.16);
+  --ds-accent-softer: rgba(191, 10, 48, 0.07);
+  --ds-border-hover: rgba(191, 10, 48, 0.5);
+  --ds-companion-aura: rgba(191, 10, 48, 0.22);
+  --ds-accent-face: linear-gradient(180deg, #e11d3f 0%, #bf0a30 52%, #9a0826 100%);
+  --ds-accent-face-hover: linear-gradient(180deg, #ef2c4d 0%, #cf1135 52%, #a80a29 100%);
+}
+
+.ds-root[data-theme="light"],
+[data-theme="light"] {
+  --ds-accent: #bf0a30;
+  --ds-accent-bright: #bf0a30;
+  --ds-accent-glow: rgba(191, 10, 48, 0.3);
+  --ds-accent-soft: rgba(191, 10, 48, 0.1);
+  --ds-accent-softer: rgba(191, 10, 48, 0.04);
+  --ds-border-hover: rgba(191, 10, 48, 0.5);
+  --ds-companion-aura: rgba(191, 10, 48, 0.16);
+  --ds-accent-face: linear-gradient(180deg, #d11338 0%, #bf0a30 52%, #9a0826 100%);
+  --ds-accent-face-hover: linear-gradient(180deg, #e0264a 0%, #cf1135 52%, #a80a29 100%);
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-::selection {
-  background: rgba(191, 10, 48, 0.2);
-  color: #000c1a;
+body {
+  margin: 0;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
+/* -----------------------------------------------------------------------------
+   Marketing motion
+   A small reveal vocabulary used by the public landing surfaces (hero entrance,
+   background drift, scroll-triggered section reveals). Component-level motion
+   comes from the design system itself.
+   -------------------------------------------------------------------------- */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -69,17 +85,6 @@ html {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.96);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
   }
 }
 
@@ -93,25 +98,6 @@ html {
   }
 }
 
-@keyframes pulseGlow {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(191, 10, 48, 0.35);
-  }
-  50% {
-    box-shadow: 0 0 0 12px rgba(191, 10, 48, 0);
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    background-position: -200% 0;
-  }
-  100% {
-    background-position: 200% 0;
-  }
-}
-
 @keyframes subtleZoom {
   from {
     transform: scale(1.04);
@@ -121,151 +107,24 @@ html {
   }
 }
 
-@keyframes marqueeLeft {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 360ms var(--ease-out-quint) forwards;
-}
-
 .animate-fade-in-up {
-  animation: fadeInUp 520ms var(--ease-out-quint) forwards;
-}
-
-.animate-scale-in {
-  animation: scaleIn 440ms var(--ease-out-quint) forwards;
+  animation: fadeInUp 520ms var(--ds-ease-out) forwards;
 }
 
 .animate-float {
   animation: float 4.5s ease-in-out infinite;
 }
 
-.animate-pulse-glow {
-  animation: pulseGlow 2.2s ease-in-out infinite;
-}
-
 .animate-subtle-zoom {
-  animation: subtleZoom 1.6s var(--ease-out-quint) forwards;
-}
-
-.animate-marquee {
-  animation: marqueeLeft 36s linear infinite;
-}
-
-.delay-100 {
-  animation-delay: 80ms;
-}
-.delay-200 {
-  animation-delay: 160ms;
-}
-.delay-300 {
-  animation-delay: 240ms;
-}
-.delay-400 {
-  animation-delay: 320ms;
-}
-.delay-500 {
-  animation-delay: 400ms;
-}
-
-.glass-effect {
-  backdrop-filter: blur(12px);
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.text-gradient {
-  background: linear-gradient(135deg, #ffffff 0%, #fca5a5 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.hover-lift {
-  transition:
-    transform 280ms var(--ease-out-quint),
-    box-shadow 280ms var(--ease-out-quint);
-}
-
-.hover-lift:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 36px -12px rgba(0, 12, 26, 0.25);
-}
-
-.card-shine {
-  position: relative;
-  overflow: hidden;
-}
-
-.card-shine::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    100deg,
-    transparent 35%,
-    rgba(255, 255, 255, 0.18),
-    transparent 65%
-  );
-  transform: translateX(-100%);
-  transition: transform 720ms var(--ease-out-quint);
-  pointer-events: none;
-}
-
-.card-shine:hover::before {
-  transform: translateX(100%);
-}
-
-input:focus,
-select:focus,
-textarea:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(0, 40, 104, 0.18);
-}
-
-.btn-primary {
-  position: relative;
-  overflow: hidden;
-  z-index: 1;
-  transition:
-    transform 140ms var(--ease-press),
-    box-shadow 200ms var(--ease-out-quint);
-}
-
-.btn-primary:active {
-  transform: scale(0.97);
-}
-
-.btn-primary::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    100deg,
-    transparent 30%,
-    rgba(255, 255, 255, 0.22),
-    transparent 70%
-  );
-  transform: translateX(-100%);
-  transition: transform 720ms var(--ease-out-quint);
-  z-index: -1;
-}
-
-.btn-primary:hover::before {
-  transform: translateX(100%);
+  animation: subtleZoom 1.6s var(--ds-ease-out) forwards;
 }
 
 .scroll-animate {
   opacity: 0;
   transform: translateY(28px);
   transition:
-    opacity 720ms var(--ease-out-quint),
-    transform 720ms var(--ease-out-quint);
+    opacity 720ms var(--ds-ease-out),
+    transform 720ms var(--ds-ease-out);
   will-change: opacity, transform;
 }
 
@@ -321,48 +180,6 @@ textarea:focus {
 }
 .scroll-animate.delay-8 {
   transition-delay: 480ms;
-}
-
-.noise-texture {
-  position: relative;
-}
-
-.noise-texture::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  opacity: 0.06;
-  pointer-events: none;
-  mix-blend-mode: overlay;
-}
-
-.field-input {
-  width: 100%;
-  background: rgb(248 250 252);
-  border: 1px solid rgb(226 232 240);
-  border-radius: 0.75rem;
-  padding: 0.75rem 1rem;
-  font-size: 0.875rem;
-  color: rgb(15 23 42);
-  transition:
-    border-color 180ms var(--ease-out-quint),
-    box-shadow 180ms var(--ease-out-quint),
-    background-color 180ms var(--ease-out-quint);
-}
-
-.field-input::placeholder {
-  color: rgb(148 163 184);
-}
-
-.field-input:hover {
-  border-color: rgb(203 213 225);
-}
-
-.field-input:focus {
-  border-color: var(--primary-500);
-  background: white;
-  box-shadow: 0 0 0 3px rgba(0, 40, 104, 0.12);
 }
 
 @media (prefers-reduced-motion: reduce) {
