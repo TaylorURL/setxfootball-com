@@ -455,6 +455,7 @@ const StaffPanel = () => {
             <Select
               value={String(selectedYear)}
               onValueChange={(value) => setSelectedYear(parseInt(value))}
+              triggerClassName="w-44"
               options={years.map((year) => ({ value: String(year), label: `${year} Season` }))}
             />
           }
