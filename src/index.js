@@ -6,6 +6,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { ThemeProvider, Toaster } from "@bradley-t-t/sunday-design-system";
+import "@bradley-t-t/sunday-design-system/styles.css";
 import "./index.css";
 import App from "./app/App";
 import reportWebVitals from "./hooks/reportWebVitals";
