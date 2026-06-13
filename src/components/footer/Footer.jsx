@@ -12,7 +12,6 @@ import {
   Container,
   Section,
   Separator,
-  Heading,
   Text,
   Eyebrow,
 } from "@bradley-t-t/sunday-design-system";
