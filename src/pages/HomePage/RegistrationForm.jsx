@@ -56,11 +56,14 @@ const buildFormReset = () => ({
   cashappUsername: "",
 });
 
-const SectionHeading = ({ icon: Icon, title, aside }) => (
+const SectionHeading = ({ step, icon: Icon, title, aside }) => (
   <div className="mb-5 flex items-center justify-between gap-3">
     <div className="flex items-center gap-3">
-      <span className="inline-flex h-9 w-9 items-center justify-center rounded-ds-md bg-ds-accent-soft text-ds-accent-bright">
+      <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-ds-md bg-ds-accent-soft text-ds-accent-bright">
         <Icon className="h-4 w-4" />
+        <span className="absolute -right-1.5 -top-1.5 inline-flex h-4 w-4 items-center justify-center rounded-full bg-ds-accent text-[10px] font-bold text-ds-on-accent">
+          {step}
+        </span>
       </span>
       <Heading level={3}>{title}</Heading>
     </div>
