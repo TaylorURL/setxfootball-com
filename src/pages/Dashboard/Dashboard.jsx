@@ -2,9 +2,10 @@
  * Dashboard — authenticated user view for managing camp registrations.
  *
  * Lists every registration tied to the signed-in user's email and supports
- * inline editing within the edit window plus deletion. Chrome (sidebar, nav,
- * sign-out, theme) comes from the shared DashboardShell; the body is composed
- * from design-system primitives.
+ * inline editing within the edit window plus deletion. Each registration
+ * renders as a "season card" with a varsity jersey-number header. Chrome
+ * comes from the shared DashboardShell; the body is composed from design-
+ * system primitives.
  *
  * @module pages/Dashboard
  */
@@ -43,7 +44,6 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-  Heading,
   Text,
   Eyebrow,
 } from "@bradley-t-t/sunday-design-system";
@@ -73,6 +73,54 @@ const ReadRow = ({ label, value }) => (
 const QUANTITY_OPTIONS = [1, 2, 3, 4, 5].map((num) => ({ value: String(num), label: `${num} shirt(s)` }));
 const SIZE_OPTIONS = SHIRT_SIZES.map((size) => ({ value: size, label: size }));
 const RELATION_OPTIONS = EMERGENCY_RELATIONS.map((relation) => ({ value: relation, label: relation }));
+
+const RegistrationCardHeader = ({ index, reg, isEditing, editForm, canEdit, saving, onSave, onCancel, onEdit, onDelete }) => (
+  <div className="relative flex flex-col gap-4 border-b border-ds-border bg-ds-surface-2 p-5 sm:flex-row sm:items-center sm:justify-between">
+    <span aria-hidden="true" className="sideline-stripes absolute inset-x-0 top-0 h-1 opacity-80" />
+    <div className="flex items-center gap-4">
+      <span className="heading-stencil ds-tabular inline-flex h-12 w-12 items-center justify-center rounded-ds-md bg-ds-accent text-[1.5rem] text-white shadow-[0_8px_24px_-14px_rgba(191,10,48,0.7)] ring-1 ring-white/15">
+        {String(index + 1).padStart(2, "0")}
+      </span>
+      <div>
+        <Eyebrow strong className="text-ds-accent-bright">
+          Camper
+        </Eyebrow>
+        <h3 className="heading-stencil mt-1 text-2xl text-ds-text">
+          {isEditing ? editForm.kid_name : reg.kid_name}
+        </h3>
+        <Text size="xs" tone="faint">
+          Signed up {formatDate(reg.created_at)}
+        </Text>
+      </div>
+    </div>
+    <div className="flex flex-wrap items-center gap-2">
+      <Badge tone={reg.payment_status === "paid" ? "positive" : "warning"} variant="soft" className="uppercase tracking-[0.1em]">
+        {reg.payment_status === "paid" ? "Paid" : "Pending"}
+      </Badge>
+      {isEditing ? (
+        <>
+          <Button variant="primary" size="sm" loading={saving} onClick={onSave}>
+            <Save className="h-3.5 w-3.5" /> Save
+          </Button>
+          <Button variant="secondary" size="sm" onClick={onCancel}>
+            <X className="h-3.5 w-3.5" /> Cancel
+          </Button>
+        </>
+      ) : (
+        <>
+          {canEdit && (
+            <Button variant="secondary" size="sm" onClick={onEdit}>
+              <Pencil className="h-3.5 w-3.5" /> Edit
+            </Button>
+          )}
+          <Button variant="danger" size="sm" onClick={onDelete}>
+            <Trash2 className="h-3.5 w-3.5" /> Delete
+          </Button>
+        </>
+      )}
+    </div>
+  </div>
+);
 
 const Dashboard = () => {
   const { user } = useAuth();
@@ -174,16 +222,26 @@ const Dashboard = () => {
 
   if (loading) {
     return (
-      <div className="flex min-h-[100dvh] items-center justify-center bg-ds-bg">
-        <Spinner size="xl" className="text-ds-accent-bright" />
-      </div>
+      <DashboardShell active="dashboard">
+        <div className="flex min-h-[60vh] items-center justify-center">
+          <Spinner size="xl" className="text-ds-accent-bright" />
+        </div>
+      </DashboardShell>
     );
   }
 
   return (
     <DashboardShell active="dashboard">
       <Container size="xl" className="py-8">
-        <PageHeader title="My Dashboard" description="View and manage your camp registrations" />
+        <PageHeader
+          eyebrow={
+            <span className="inline-flex items-center gap-1.5 uppercase tracking-[0.16em]">
+              <Trophy className="h-3.5 w-3.5" /> My Roster
+            </span>
+          }
+          title="My Dashboard"
+          description="View and manage your camp sign-ups."
+        />
 
         {error && (
           <Alert tone="danger" className="mt-6" onDismiss={() => setError("")}>
@@ -197,57 +255,30 @@ const Dashboard = () => {
           </div>
         ) : (
           <div className="mt-8 space-y-6">
-            {registrations.map((reg) => {
+            {registrations.map((reg, index) => {
               const canEdit = RegistrationService.canEdit(reg);
               const daysRemaining = RegistrationService.getDaysRemaining(reg);
               const isEditing = editingId === reg.id;
 
               return (
                 <Card key={reg.id} variant="surface" padding="none" className="overflow-hidden">
-                  <div className="flex flex-col gap-3 border-b border-ds-border p-5 sm:flex-row sm:items-center sm:justify-between">
-                    <div className="flex items-center gap-3">
-                      <span className="inline-flex h-10 w-10 items-center justify-center rounded-ds-md bg-ds-accent-soft text-ds-accent-bright">
-                        <Trophy className="h-4 w-4" />
-                      </span>
-                      <div>
-                        <Heading level={3}>{isEditing ? editForm.kid_name : reg.kid_name}</Heading>
-                        <Text size="xs" tone="faint">
-                          Registered {formatDate(reg.created_at)}
-                        </Text>
-                      </div>
-                    </div>
-                    <div className="flex flex-wrap items-center gap-2">
-                      <Badge tone={reg.payment_status === "paid" ? "positive" : "warning"} variant="soft">
-                        {reg.payment_status === "paid" ? "Paid" : "Pending"}
-                      </Badge>
-                      {isEditing ? (
-                        <>
-                          <Button variant="primary" size="sm" loading={saving} onClick={() => saveEdit(reg.id)}>
-                            <Save className="h-3.5 w-3.5" /> Save
-                          </Button>
-                          <Button variant="secondary" size="sm" onClick={cancelEditing}>
-                            <X className="h-3.5 w-3.5" /> Cancel
-                          </Button>
-                        </>
-                      ) : (
-                        <>
-                          {canEdit && (
-                            <Button variant="secondary" size="sm" onClick={() => startEditing(reg)}>
-                              <Pencil className="h-3.5 w-3.5" /> Edit
-                            </Button>
-                          )}
-                          <Button variant="danger" size="sm" onClick={() => setConfirmDelete(reg)}>
-                            <Trash2 className="h-3.5 w-3.5" /> Delete
-                          </Button>
-                        </>
-                      )}
-                    </div>
-                  </div>
+                  <RegistrationCardHeader
+                    index={index}
+                    reg={reg}
+                    isEditing={isEditing}
+                    editForm={editForm}
+                    canEdit={canEdit}
+                    saving={saving}
+                    onSave={() => saveEdit(reg.id)}
+                    onCancel={cancelEditing}
+                    onEdit={() => startEditing(reg)}
+                    onDelete={() => setConfirmDelete(reg)}
+                  />
 
                   <div className="px-5 pt-4">
                     {canEdit ? (
                       <Alert tone="warning" icon={<Clock className="h-4 w-4" />}>
-                        Edit available for {daysRemaining} more day{daysRemaining !== 1 ? "s" : ""}
+                        Edit window: {daysRemaining} more day{daysRemaining !== 1 ? "s" : ""}
                       </Alert>
                     ) : (
                       <Alert tone="neutral">Edit window expired. Contact us for changes.</Alert>
@@ -256,7 +287,7 @@ const Dashboard = () => {
 
                   <div className="p-5">
                     <Grid cols={3} gap={6}>
-                      <InfoGroup icon={Trophy} title="Camper Info">
+                      <InfoGroup icon={Trophy} title="Camper">
                         {isEditing ? (
                           <div className="space-y-2.5">
                             <Field label="Name">
@@ -289,7 +320,7 @@ const Dashboard = () => {
                         )}
                       </InfoGroup>
 
-                      <InfoGroup icon={Shirt} title="Shirt Details">
+                      <InfoGroup icon={Shirt} title="Shirt Order">
                         {isEditing ? (
                           <div className="space-y-2.5">
                             <Field label="Size">
@@ -390,15 +421,15 @@ const Dashboard = () => {
                             <CheckCircle2 className="h-3.5 w-3.5" /> {reg.cashapp_username}
                           </Text>
                         ) : (
-                          <Badge tone="warning" variant="soft">
+                          <Badge tone="warning" variant="soft" className="uppercase tracking-[0.1em]">
                             Not provided
                           </Badge>
                         )}
                       </InfoGroup>
 
-                      <InfoGroup icon={Clock} title="Registration Info">
-                        <ReadRow label="Camp Year" value={reg.camp_year} />
-                        <ReadRow label="Registered" value={formatDate(reg.created_at)} />
+                      <InfoGroup icon={Clock} title="Season Info">
+                        <ReadRow label="Season" value={reg.camp_year} />
+                        <ReadRow label="Signed up" value={formatDate(reg.created_at)} />
                       </InfoGroup>
                     </Grid>
                   </div>
@@ -412,11 +443,12 @@ const Dashboard = () => {
       <Dialog open={Boolean(confirmDelete)} onOpenChange={(open) => !open && setConfirmDelete(null)}>
         <DialogContent size="sm">
           <DialogHeader>
-            <DialogTitle>Delete Registration?</DialogTitle>
+            <DialogTitle>Delete sign-up?</DialogTitle>
             <DialogDescription>
-              Are you sure you want to delete the registration for{" "}
-              <span className="font-semibold text-ds-text">{confirmDelete?.kid_name}</span>? This action cannot be
-              undone. If you've already paid, contact us for a refund.
+              Are you sure you want to delete the sign-up for{" "}
+              <span className="font-semibold text-ds-text">{confirmDelete?.kid_name}</span>?
+              This can't be undone. If you've already paid, contact us for a
+              refund.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
@@ -436,11 +468,11 @@ const Dashboard = () => {
 const EmptyDashboard = () => (
   <EmptyState
     icon={<Inbox />}
-    title="No registrations yet"
-    description="You haven't registered any campers yet."
+    title="No sign-ups yet"
+    description="You haven't signed up any campers yet — head back to the home page and grab a roster spot."
     action={
-      <Button asChild variant="primary">
-        <Link to="/#register">Register Now</Link>
+      <Button asChild variant="primary" className="font-bold uppercase tracking-[0.06em]">
+        <Link to="/#register">Sign Up Now</Link>
       </Button>
     }
   />
