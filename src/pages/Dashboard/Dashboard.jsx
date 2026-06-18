@@ -86,13 +86,9 @@ const Dashboard = () => {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    if (!user) {
-      navigate("/auth");
-      return;
-    }
     loadRegistrations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, navigate]);
+  }, []);
 
   const loadRegistrations = async () => {
     try {
