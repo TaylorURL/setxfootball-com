@@ -21,9 +21,18 @@ import { useAuth } from "../../context/AuthContext";
 import logo from "../../assets/logo.PNG";
 
 const Brand = () => (
-  <Link to="/" className="flex items-center gap-2.5">
-    <img src={logo} alt="" className="h-8 w-8 object-contain" />
-    <span className="text-[15px] font-bold tracking-tight text-ds-text">SETX Football</span>
+  <Link to="/" className="flex items-center gap-3">
+    <span className="inline-flex h-9 w-9 items-center justify-center rounded-ds-md bg-ds-accent ring-1 ring-white/15">
+      <img src={logo} alt="" className="h-7 w-7 object-contain" />
+    </span>
+    <span>
+      <span className="block text-[14px] font-black uppercase tracking-[0.04em] text-ds-text">
+        SETX Football
+      </span>
+      <span className="mt-0.5 flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.22em] text-ds-text-muted">
+        <span className="inline-block h-0.5 w-3 bg-ds-accent" /> Camp Console
+      </span>
+    </span>
   </Link>
 );
 
