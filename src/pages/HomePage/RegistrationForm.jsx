@@ -116,17 +116,9 @@ const RegistrationForm = () => {
     setSubmitResult(null);
 
     try {
-      const sizes = formData.shirts
-        .map((shirt) => {
-          const name = shirt.recipient.trim() || formData.kidName;
-          const tag = shirt.type === "family" ? "Family" : "Camper";
-          return `${shirt.size} (${name} - ${tag})`;
-        })
-        .join(", ");
-
       const { data: registration, error } = await RegistrationService.createRegistration({
         ...formData,
-        shirtSize: sizes,
+        shirtSize: encodeShirtOrders(formData.shirts, formData.kidName),
         shirtQuantity: formData.shirts.length,
       });
       if (error) throw error;
