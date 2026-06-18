@@ -3,7 +3,6 @@
  * @description React context and provider for authentication state management.
  */
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { Spinner } from "@bradley-t-t/sunday-design-system";
 import AuthService from "../services/AuthService";
 
 const AuthContext = createContext({});
