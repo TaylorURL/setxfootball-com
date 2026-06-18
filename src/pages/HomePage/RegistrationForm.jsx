@@ -35,6 +35,7 @@ import {
 } from "@bradley-t-t/sunday-design-system";
 import RegistrationService from "../../services/RegistrationService";
 import { SHIRT_SIZES, SHIRT_PRICE, EMERGENCY_RELATIONS } from "../../utils/constants";
+import { encodeShirtOrders } from "../../utils/shirtOrders";
 
 const SHIRT_TYPES = [
   { value: "camper", label: "Camper" },
@@ -55,11 +56,14 @@ const buildFormReset = () => ({
   cashappUsername: "",
 });
 
-const SectionHeading = ({ icon: Icon, title, aside }) => (
+const SectionHeading = ({ step, icon: Icon, title, aside }) => (
   <div className="mb-5 flex items-center justify-between gap-3">
     <div className="flex items-center gap-3">
-      <span className="inline-flex h-9 w-9 items-center justify-center rounded-ds-md bg-ds-accent-soft text-ds-accent-bright">
+      <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-ds-md bg-ds-accent-soft text-ds-accent-bright">
         <Icon className="h-4 w-4" />
+        <span className="absolute -right-1.5 -top-1.5 inline-flex h-4 w-4 items-center justify-center rounded-full bg-ds-accent text-[10px] font-bold text-ds-on-accent">
+          {step}
+        </span>
       </span>
       <Heading level={3}>{title}</Heading>
     </div>
@@ -115,17 +119,9 @@ const RegistrationForm = () => {
     setSubmitResult(null);
 
     try {
-      const sizes = formData.shirts
-        .map((shirt) => {
-          const name = shirt.recipient.trim() || formData.kidName;
-          const tag = shirt.type === "family" ? "Family" : "Camper";
-          return `${shirt.size} (${name} - ${tag})`;
-        })
-        .join(", ");
-
       const { data: registration, error } = await RegistrationService.createRegistration({
         ...formData,
-        shirtSize: sizes,
+        shirtSize: encodeShirtOrders(formData.shirts, formData.kidName),
         shirtQuantity: formData.shirts.length,
       });
       if (error) throw error;
@@ -152,7 +148,7 @@ const RegistrationForm = () => {
 
       <form onSubmit={handleSubmit} className="space-y-8 p-6 md:p-8">
         <fieldset>
-          <SectionHeading icon={Trophy} title="Camper Information" />
+          <SectionHeading step={1} icon={Trophy} title="Camper Information" />
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Full Name" required>
               <Input
@@ -188,6 +184,7 @@ const RegistrationForm = () => {
 
         <fieldset>
           <SectionHeading
+            step={2}
             icon={Shirt}
             title="Shirts"
             aside={<Eyebrow>${SHIRT_PRICE} each</Eyebrow>}
@@ -240,13 +237,17 @@ const RegistrationForm = () => {
               </Card>
             ))}
           </div>
-          <Button variant="link" size="sm" className="mt-3 px-0" onClick={addShirt}>
-            <Plus className="h-3.5 w-3.5" /> Add another shirt
-          </Button>
+          <button
+            type="button"
+            onClick={addShirt}
+            className="ds-press mt-3 flex w-full items-center justify-center gap-2 rounded-ds-lg border border-dashed border-ds-border-strong py-3 text-sm font-semibold text-ds-text-muted transition-colors duration-150 ease-ds-out hover:border-ds-accent hover:text-ds-accent-bright"
+          >
+            <Plus className="h-4 w-4" /> Add another shirt
+          </button>
         </fieldset>
 
         <fieldset>
-          <SectionHeading icon={Users} title="Parent / Guardian" />
+          <SectionHeading step={3} icon={Users} title="Parent / Guardian" />
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Full Name" required>
               <Input
@@ -283,7 +284,7 @@ const RegistrationForm = () => {
         </fieldset>
 
         <fieldset>
-          <SectionHeading icon={ShieldCheck} title="Emergency Contact" />
+          <SectionHeading step={4} icon={ShieldCheck} title="Emergency Contact" />
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Name" required>
               <Input
@@ -318,6 +319,7 @@ const RegistrationForm = () => {
 
         <fieldset>
           <SectionHeading
+            step={5}
             icon={DollarSign}
             title="Payment Info"
             aside={<Eyebrow>Optional</Eyebrow>}
@@ -334,19 +336,24 @@ const RegistrationForm = () => {
 
         <Separator />
 
-        <div className="flex flex-col items-center justify-between gap-4 rounded-ds-lg bg-ds-surface-2 p-5 sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-4 rounded-ds-lg border border-ds-accent-soft bg-ds-accent-softer p-5 sm:flex-row">
           <div>
-            <Eyebrow strong>Total Due</Eyebrow>
+            <Eyebrow strong className="text-ds-accent-bright">
+              Total Due
+            </Eyebrow>
             <Text size="sm" tone="muted" className="mt-1">
-              {formData.shirts.length} shirt{formData.shirts.length !== 1 ? "s" : ""} × ${SHIRT_PRICE}
+              {formData.shirts.length} shirt{formData.shirts.length !== 1 ? "s" : ""} × ${SHIRT_PRICE} each
             </Text>
           </div>
-          <span className="ds-tabular text-4xl font-bold tracking-tight text-ds-text">${totalCost}</span>
+          <span className="ds-tabular text-4xl font-black tracking-tight text-ds-accent-bright">${totalCost}</span>
         </div>
 
         <Button type="submit" variant="primary" size="lg" block loading={submitting}>
           <ClipboardList className="h-4 w-4" /> Complete Registration
         </Button>
+        <Text size="xs" tone="faint" className="text-center">
+          Payment is collected after you register — no payment needed now.
+        </Text>
       </form>
     </Card>
   );
