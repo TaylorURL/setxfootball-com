@@ -148,7 +148,7 @@ const RegistrationForm = () => {
 
       <form onSubmit={handleSubmit} className="space-y-8 p-6 md:p-8">
         <fieldset>
-          <SectionHeading icon={Trophy} title="Camper Information" />
+          <SectionHeading step={1} icon={Trophy} title="Camper Information" />
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Full Name" required>
               <Input
