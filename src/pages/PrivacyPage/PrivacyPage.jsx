@@ -10,7 +10,6 @@ import {
   Card,
   Button,
   Prose,
-  Heading,
   Eyebrow,
 } from "@bradley-t-t/sunday-design-system";
 import MarketingPage from "../../components/layout/MarketingPage";
@@ -25,13 +24,19 @@ const PrivacyPage = () => (
           </Link>
         </Button>
 
-        <Card variant="elevated" padding="lg">
+        <Card variant="elevated" padding="lg" className="relative overflow-hidden">
+          <span aria-hidden="true" className="sideline-stripes absolute inset-x-0 top-0 h-1.5 opacity-90" />
           <div className="mb-8 flex items-center gap-4 border-b border-ds-border pb-8">
-            <span className="inline-flex h-12 w-12 items-center justify-center rounded-ds-lg bg-ds-accent-soft text-ds-accent-bright">
-              <ShieldCheck className="h-5 w-5" />
+            <span className="inline-flex h-14 w-14 items-center justify-center rounded-ds-lg bg-ds-accent text-white shadow-[0_8px_24px_-14px_rgba(191,10,48,0.7)] ring-1 ring-white/15">
+              <ShieldCheck className="h-6 w-6" />
             </span>
             <div>
-              <Heading level="display">Privacy Policy</Heading>
+              <Eyebrow strong className="text-ds-accent-bright">
+                Legal
+              </Eyebrow>
+              <h1 className="heading-stencil heading-stencil-tight mt-1 text-4xl text-ds-text sm:text-5xl">
+                Privacy Policy
+              </h1>
               <Eyebrow className="mt-1.5">Last updated · March 2026</Eyebrow>
             </div>
           </div>

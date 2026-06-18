@@ -5,7 +5,8 @@
  * payment toggling, order grouping (multiple shirt orders from the same
  * parent/camper), summary KPIs, and CSV export. Data orchestration lives in
  * useStaffRegistrations; grouping/CSV logic lives in utils; chrome comes from
- * the shared DashboardShell.
+ * the shared DashboardShell. The header carries a small varsity treatment
+ * (jersey-number season chip, sideline stripe, stadium-stencil title).
  *
  * @module pages/StaffPanel
  */
@@ -123,12 +124,12 @@ const StaffPanel = () => {
       <Container size="xl" className="py-8">
         <PageHeader
           eyebrow={
-            <span className="inline-flex items-center gap-1.5">
-              <ShieldCheck className="h-3.5 w-3.5" /> Staff
+            <span className="inline-flex items-center gap-1.5 uppercase tracking-[0.16em]">
+              <ShieldCheck className="h-3.5 w-3.5" /> Staff Console
             </span>
           }
           title="Staff Panel"
-          description="Manage camp registrations by year"
+          description="Manage camp sign-ups, payments, and shirt orders by season."
           actions={
             <Select
               value={String(selectedYear)}
@@ -164,7 +165,7 @@ const StaffPanel = () => {
                   options={PAYMENT_FILTER_OPTIONS}
                 />
               </div>
-              <Button variant="primary" onClick={exportToCSV}>
+              <Button variant="primary" className="font-bold uppercase tracking-[0.06em]" onClick={exportToCSV}>
                 <Download className="h-4 w-4" /> Export
               </Button>
             </div>
@@ -179,8 +180,8 @@ const StaffPanel = () => {
           <div className="mt-6">
             <EmptyState
               icon={<Inbox />}
-              title="No registrations found"
-              description={`No registrations match your search criteria for ${selectedYear}.`}
+              title="No sign-ups found"
+              description={`Nothing matches your filters for ${selectedYear}.`}
             />
           </div>
         ) : (

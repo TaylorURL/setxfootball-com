@@ -1,7 +1,8 @@
 /**
  * ProtectedRoute — gates a route on authentication, and optionally on staff
- * role. AuthProvider blocks the tree with a loading state until auth resolves,
- * so the guards here always see settled user/profile state.
+ * role. Waits silently for the auth session to resolve before deciding (so a
+ * signed-in user refreshing the page isn't bounced to /auth before their
+ * session has loaded).
  *
  * @param {object} props
  * @param {React.ReactNode} props.children - The protected page.
@@ -11,8 +12,9 @@ import { Navigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 
 const ProtectedRoute = ({ children, requireStaff = false }) => {
-  const { user, isStaff } = useAuth();
+  const { user, loading, isStaff } = useAuth();
 
+  if (loading) return null;
   if (!user) return <Navigate to="/auth" />;
   if (requireStaff && !isStaff()) return <Navigate to="/dashboard" />;
 

@@ -3,7 +3,6 @@
  * @description React context and provider for authentication state management.
  */
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { Spinner } from "@bradley-t-t/sunday-design-system";
 import AuthService from "../services/AuthService";
 
 const AuthContext = createContext({});
@@ -91,15 +90,6 @@ export const AuthProvider = ({ children }) => {
     isStaff,
     isAdmin,
   };
-
-  if (loading) {
-    return (
-      <div className="flex min-h-[100dvh] flex-col items-center justify-center gap-4 bg-ds-bg">
-        <Spinner size="xl" className="text-ds-accent-bright" />
-        <p className="text-[13px] text-ds-text-muted">Loading…</p>
-      </div>
-    );
-  }
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
