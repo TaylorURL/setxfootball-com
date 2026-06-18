@@ -1,13 +1,21 @@
 /**
  * PaymentPage — post-registration payment instructions.
  *
- * Shown after a successful registration submit. Surfaces a registration
- * summary, CashApp payment details, and a field to save the payer's CashApp
+ * Shown after a successful registration submit. Reads like a completed
+ * ticket/jersey order: confirmation header, registration summary, payment
+ * receipt with CashApp handle, and a field to save the payer's CashApp
  * handle. Built from design-system primitives.
  */
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import { ArrowLeft, CheckCircle2, Copy, Check, DollarSign } from "lucide-react";
+import {
+  ArrowLeft,
+  CheckCircle2,
+  Copy,
+  Check,
+  DollarSign,
+  Ticket,
+} from "lucide-react";
 import {
   Container,
   Card,
@@ -16,10 +24,10 @@ import {
   Button,
   Alert,
   Spinner,
-  Heading,
   Text,
   Eyebrow,
 } from "@bradley-t-t/sunday-design-system";
+import Footer from "../../components/footer/Footer";
 import RegistrationService from "../../services/RegistrationService";
 import { formatCurrency } from "../../utils/helpers";
 import { CASHAPP_USERNAME, SHIRT_PRICE } from "../../utils/constants";
@@ -27,7 +35,7 @@ import { CASHAPP_USERNAME, SHIRT_PRICE } from "../../utils/constants";
 const CLIPBOARD_FEEDBACK_DURATION_MS = 2000;
 
 const SUMMARY_FIELDS = [
-  { label: "Camper Name", key: "kid_name" },
+  { label: "Camper", key: "kid_name" },
   { label: "Age", key: "age" },
   { label: "Shirt Size", key: "shirt_size" },
   { label: "Quantity", key: "shirt_quantity", format: (value) => `${value} shirt(s)` },
@@ -35,7 +43,7 @@ const SUMMARY_FIELDS = [
 ];
 
 const SummaryRow = ({ label, value }) => (
-  <div className="flex items-center justify-between gap-4 py-2.5">
+  <div className="flex items-center justify-between gap-4 py-3">
     <Eyebrow>{label}</Eyebrow>
     <Text size="sm" weight="semibold" truncate className="text-right">
       {value}
@@ -99,125 +107,144 @@ const PaymentPage = () => {
   const totalAmount = registration.total_cost || registration.shirt_quantity * SHIRT_PRICE;
 
   return (
-    <div className="min-h-[100dvh] bg-ds-bg py-10 sm:py-14">
-      <Container size="sm">
-        <Button asChild variant="ghost" size="sm" className="mb-6 px-0">
-          <Link to="/">
-            <ArrowLeft className="h-4 w-4" /> Back to Home
-          </Link>
-        </Button>
+    <div className="flex min-h-[100dvh] flex-col bg-ds-bg">
+      <main className="flex-1 py-10 sm:py-14">
+        <Container size="sm">
+          <Button asChild variant="ghost" size="sm" className="mb-6 px-0">
+            <Link to="/">
+              <ArrowLeft className="h-4 w-4" /> Back to Home
+            </Link>
+          </Button>
 
-        <div className="space-y-6">
-          <Card variant="elevated" padding="lg" className="text-center">
-            <span className="mx-auto mb-4 inline-flex h-14 w-14 items-center justify-center rounded-ds-full bg-ds-positive-soft text-ds-positive">
-              <CheckCircle2 className="h-7 w-7" />
-            </span>
-            <Heading level="display">Registration complete</Heading>
-            <Text tone="muted" className="mt-2">
-              Thank you for registering for SETX Football Camp
-            </Text>
-          </Card>
+          <div className="space-y-6">
+            {/* Confirmation header */}
+            <Card variant="elevated" padding="lg" className="relative overflow-hidden text-center">
+              <span aria-hidden="true" className="sideline-stripes absolute inset-x-0 top-0 h-1.5 opacity-90" />
+              <span className="mx-auto mb-4 inline-flex h-16 w-16 items-center justify-center rounded-ds-full bg-ds-positive-soft text-ds-positive">
+                <CheckCircle2 className="h-8 w-8" />
+              </span>
+              <Eyebrow strong className="text-ds-positive">
+                You're On The Roster
+              </Eyebrow>
+              <h1 className="heading-stencil heading-stencil-tight mt-2 text-4xl text-ds-text sm:text-5xl">
+                Sign-up complete.
+              </h1>
+              <Text tone="muted" className="mt-3">
+                Thanks for signing up for SETX Football Camp — see you on the
+                field.
+              </Text>
+            </Card>
 
-          <Card variant="surface" padding="lg">
-            <Eyebrow strong className="mb-1">
-              Registration Summary
-            </Eyebrow>
-            <div className="mt-2 divide-y divide-ds-border">
-              {SUMMARY_FIELDS.map(({ label, key, format }) => (
-                <SummaryRow
-                  key={key}
-                  label={label}
-                  value={format ? format(registration[key]) : registration[key]}
-                />
-              ))}
-            </div>
-          </Card>
+            {/* Summary */}
+            <Card variant="surface" padding="lg">
+              <Eyebrow strong className="mb-1 inline-flex items-center gap-2 text-ds-accent-bright">
+                <Ticket className="h-3.5 w-3.5" /> Sign-up Summary
+              </Eyebrow>
+              <div className="mt-3 divide-y divide-ds-border">
+                {SUMMARY_FIELDS.map(({ label, key, format }) => (
+                  <SummaryRow
+                    key={key}
+                    label={label}
+                    value={format ? format(registration[key]) : registration[key]}
+                  />
+                ))}
+              </div>
+            </Card>
 
-          <Card variant="accent" padding="lg" className="text-center">
-            <Eyebrow strong className="text-ds-accent-bright">
-              Total Amount Due
-            </Eyebrow>
-            <p className="ds-tabular mt-2 text-5xl font-black tracking-tight text-ds-accent-bright sm:text-6xl">
-              {formatCurrency(totalAmount)}
-            </p>
-            <Text size="sm" tone="muted" className="mt-3">
-              ${SHIRT_PRICE} per shirt × {registration.shirt_quantity} shirt(s)
-            </Text>
+            {/* Receipt / payment */}
+            <Card variant="accent" padding="lg" className="relative overflow-hidden text-center">
+              <span aria-hidden="true" className="sideline-stripes absolute inset-x-0 top-0 h-1.5 opacity-90" />
+              <Eyebrow strong className="text-ds-accent-bright">
+                Total Due
+              </Eyebrow>
+              <p className="heading-stencil ds-tabular mt-3 text-6xl tracking-tight text-ds-accent-bright sm:text-7xl">
+                {formatCurrency(totalAmount)}
+              </p>
+              <Text size="sm" tone="muted" className="mt-3">
+                ${SHIRT_PRICE} per shirt × {registration.shirt_quantity} shirt
+                {registration.shirt_quantity !== 1 ? "s" : ""}
+              </Text>
 
-            <div className="mt-5 rounded-ds-lg border border-ds-border-strong bg-ds-bg-elevated p-5">
-              <Eyebrow className="mb-3">Send payment via CashApp to</Eyebrow>
-              <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <span className="text-2xl font-black tracking-tight text-ds-positive sm:text-3xl">
-                  ${CASHAPP_USERNAME}
-                </span>
+              <div className="mt-6 rounded-ds-lg border border-ds-border-strong bg-ds-bg-elevated p-5">
+                <Eyebrow strong className="mb-3 text-ds-text">
+                  Send payment via CashApp to
+                </Eyebrow>
+                <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+                  <span className="heading-stencil text-3xl text-ds-positive sm:text-4xl">
+                    ${CASHAPP_USERNAME}
+                  </span>
+                  <Button
+                    variant={copied ? "primary" : "secondary"}
+                    size="sm"
+                    onClick={copyToClipboard}
+                    aria-label={copied ? "Copied to clipboard" : "Copy CashApp username"}
+                  >
+                    {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copied ? "Copied" : "Copy"}
+                  </Button>
+                </div>
+              </div>
+              <Text size="xs" tone="muted" className="mt-3 uppercase tracking-[0.12em]">
+                Include your child's name in the payment note
+              </Text>
+            </Card>
+
+            {/* CashApp info save */}
+            <Card variant="surface" padding="lg">
+              <Eyebrow strong className="mb-1 text-ds-accent-bright">
+                Your CashApp Info
+              </Eyebrow>
+              <Text size="sm" tone="muted" className="mb-4">
+                Add your CashApp username or email so we can match your
+                payment to your sign-up.
+              </Text>
+
+              <div className="flex flex-col gap-3 sm:flex-row">
+                <Field label="CashApp username or email" className="flex-1">
+                  <Input
+                    value={cashappUsername}
+                    onChange={(event) => setCashappUsername(event.target.value)}
+                    placeholder="$username or email"
+                    leading={<DollarSign />}
+                    disabled={saved}
+                  />
+                </Field>
                 <Button
-                  variant={copied ? "primary" : "secondary"}
-                  size="sm"
-                  onClick={copyToClipboard}
-                  aria-label={copied ? "Copied to clipboard" : "Copy CashApp username"}
+                  variant="primary"
+                  size="lg"
+                  className="font-bold uppercase tracking-[0.06em] sm:mt-[1.625rem]"
+                  loading={saving}
+                  disabled={saved || !cashappUsername.trim()}
+                  onClick={handleSaveCashApp}
                 >
-                  {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-                  {copied ? "Copied!" : "Copy"}
+                  {saved ? "Saved" : "Save"}
                 </Button>
               </div>
-            </div>
-            <Text size="xs" tone="muted" className="mt-3">
-              Please include your child's name in the payment note
-            </Text>
-          </Card>
 
-          <Card variant="surface" padding="lg">
-            <Eyebrow strong className="mb-1">
-              Your CashApp Info
-            </Eyebrow>
-            <Text size="sm" tone="muted" className="mb-4">
-              Provide your CashApp username or email so we can verify your payment
-            </Text>
+              {saved && (
+                <Alert tone="positive" className="mt-4">
+                  CashApp info saved successfully.
+                </Alert>
+              )}
+              {saveError && (
+                <Alert tone="danger" className="mt-4">
+                  {saveError}
+                </Alert>
+              )}
+            </Card>
 
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Field label="CashApp username or email" className="flex-1">
-                <Input
-                  value={cashappUsername}
-                  onChange={(event) => setCashappUsername(event.target.value)}
-                  placeholder="$username or email"
-                  leading={<DollarSign />}
-                  disabled={saved}
-                />
-              </Field>
-              <Button
-                variant="primary"
-                size="lg"
-                className="sm:mt-[1.625rem]"
-                loading={saving}
-                disabled={saved || !cashappUsername.trim()}
-                onClick={handleSaveCashApp}
-              >
-                {saved ? "Saved!" : "Save"}
+            <div className="text-center">
+              <Button asChild variant="secondary" size="lg" className="font-bold uppercase tracking-[0.06em]">
+                <Link to="/auth">Create Account To Track Sign-Ups</Link>
               </Button>
+              <Text size="xs" tone="faint" className="mt-3 uppercase tracking-[0.12em]">
+                Use the same email to track your registration
+              </Text>
             </div>
-
-            {saved && (
-              <Alert tone="positive" className="mt-4">
-                CashApp info saved successfully
-              </Alert>
-            )}
-            {saveError && (
-              <Alert tone="danger" className="mt-4">
-                {saveError}
-              </Alert>
-            )}
-          </Card>
-
-          <div className="text-center">
-            <Button asChild variant="secondary" size="lg">
-              <Link to="/auth">Create Account to View Dashboard</Link>
-            </Button>
-            <Text size="xs" tone="faint" className="mt-3">
-              Use the same email to track your registration
-            </Text>
           </div>
-        </div>
-      </Container>
+        </Container>
+      </main>
+      <Footer />
     </div>
   );
 };
