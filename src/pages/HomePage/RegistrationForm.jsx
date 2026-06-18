@@ -35,6 +35,7 @@ import {
 } from "@bradley-t-t/sunday-design-system";
 import RegistrationService from "../../services/RegistrationService";
 import { SHIRT_SIZES, SHIRT_PRICE, EMERGENCY_RELATIONS } from "../../utils/constants";
+import { encodeShirtOrders } from "../../utils/shirtOrders";
 
 const SHIRT_TYPES = [
   { value: "camper", label: "Camper" },
