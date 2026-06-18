@@ -4,9 +4,9 @@
  * Sections: navigation, hero, story + coaches, gallery, sponsors, registration,
  * footer. The hero and feature bands use deliberate dark, image-forward brand
  * treatments; everything else is composed from design-system primitives that
- * follow the active theme.
+ * follow the active theme. Scroll choreography comes from the shared `Reveal`
+ * primitive and section headers from `SectionIntro`.
  */
-import { useEffect } from "react";
 import {
   Calendar,
   ArrowRight,
@@ -25,7 +25,6 @@ import {
   Section,
   Grid,
   Card,
-  Badge,
   Button,
   Heading,
   Text,
@@ -33,6 +32,8 @@ import {
 } from "@bradley-t-t/sunday-design-system";
 import Navbar from "../../components/nav/Navbar";
 import Footer from "../../components/footer/Footer";
+import Reveal from "../../components/marketing/Reveal";
+import SectionIntro from "../../components/marketing/SectionIntro";
 import RegistrationForm from "./RegistrationForm";
 import { SHIRT_PRICE } from "../../utils/constants";
 import img1 from "../../assets/images/1.JPG";
@@ -102,47 +103,11 @@ const SPONSOR_IMAGES = [
   "/sponsors/IMG_2686.JPEG",
 ];
 
-const REVEAL_DELAYS = [
-  "delay-1",
-  "delay-2",
-  "delay-3",
-  "delay-4",
-  "delay-5",
-  "delay-6",
-  "delay-7",
-  "delay-8",
-];
-
-const SectionEyebrow = ({ children }) => (
-  <span className="mb-4 inline-flex items-center gap-2 text-[11px] font-bold uppercase tracking-[0.2em] text-ds-accent-bright">
-    <span className="h-px w-8 bg-ds-accent" />
-    {children}
-    <span className="h-px w-8 bg-ds-accent" />
-  </span>
-);
-
 const scrollToSection = (id) => {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
 };
 
 function HomePage() {
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("animate-visible");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -60px 0px" },
-    );
-    const elements = document.querySelectorAll(".scroll-animate");
-    elements.forEach((element) => observer.observe(element));
-    return () => observer.disconnect();
-  }, []);
-
   return (
     <div className="min-h-screen bg-ds-bg text-ds-text">
       <Navbar transparent sections={NAV_SECTIONS} onSectionSelect={scrollToSection} />
@@ -229,7 +194,7 @@ function HomePage() {
       <Section id="about" space="xl" className="bg-ds-bg">
         <Container size="xl">
           <div className="mb-24 grid items-center gap-12 lg:mb-32 lg:grid-cols-2 lg:gap-16">
-            <div className="scroll-animate from-left relative">
+            <Reveal variant="left" className="relative">
               <Card variant="outline" padding="none" className="overflow-hidden">
                 <img src={img1} alt="Coaches and campers on the field" className="h-[460px] w-full object-cover" />
               </Card>
@@ -242,13 +207,18 @@ function HomePage() {
                   <Eyebrow className="mt-1">Strong &amp; Growing</Eyebrow>
                 </div>
               </Card>
-            </div>
+            </Reveal>
 
-            <div className="scroll-animate from-right delay-2">
-              <SectionEyebrow>Our Story</SectionEyebrow>
-              <Heading level="display" className="mb-6">
-                Built for our <span className="text-ds-accent-bright">community.</span>
-              </Heading>
+            <Reveal variant="right" delay={2}>
+              <SectionIntro
+                align="start"
+                eyebrow="Our Story"
+                title={
+                  <>
+                    Built for our <span className="text-ds-accent-bright">community.</span>
+                  </>
+                }
+              />
               <div className="space-y-4">
                 <Text tone="muted" size="lg">
                   SETX Youth Football Camp was built to give kids in our community opportunities we didn't always
@@ -278,60 +248,57 @@ function HomePage() {
                   </Card>
                 ))}
               </Grid>
-            </div>
+            </Reveal>
           </div>
 
-          <div className="scroll-animate mb-16 text-center">
-            <Badge tone="accent" variant="soft" size="lg" className="mb-5">
-              <ShieldCheck className="h-3.5 w-3.5" /> Background Checked
-            </Badge>
-            <Heading level="display" className="mb-4">
-              Meet the Coaches
-            </Heading>
-            <Text tone="muted" size="lg" className="mx-auto max-w-2xl">
+          <Reveal className="mb-16">
+            <SectionIntro
+              badge={
+                <>
+                  <ShieldCheck className="h-3.5 w-3.5" /> Background Checked
+                </>
+              }
+              title="Meet the Coaches"
+            >
               Every coach has completed a background check and brings real coaching and playing experience.
-            </Text>
-          </div>
+            </SectionIntro>
+          </Reveal>
 
           <Grid cols={2} gap={6} className="mb-12">
             {COACHES.map((coach, index) => (
-              <Card
-                key={coach.name}
-                variant="surface"
-                padding="lg"
-                interactive
-                className={`scroll-animate scale-in ${index === 0 ? "delay-1" : "delay-2"}`}
-              >
-                <div className="mb-6 flex items-center gap-4">
-                  <span className="inline-flex h-12 w-12 items-center justify-center rounded-ds-lg bg-ds-accent-soft text-ds-accent-bright">
-                    <coach.icon className="h-5 w-5" />
-                  </span>
-                  <div>
-                    <Eyebrow strong>{coach.role}</Eyebrow>
-                    <Heading level={2} className="mt-0.5">
-                      {coach.name}
-                    </Heading>
+              <Reveal key={coach.name} variant="scale" delay={index + 1}>
+                <Card variant="surface" padding="lg" interactive className="h-full">
+                  <div className="mb-6 flex items-center gap-4">
+                    <span className="inline-flex h-12 w-12 items-center justify-center rounded-ds-lg bg-ds-accent-soft text-ds-accent-bright">
+                      <coach.icon className="h-5 w-5" />
+                    </span>
+                    <div>
+                      <Eyebrow strong>{coach.role}</Eyebrow>
+                      <Heading level={2} className="mt-0.5">
+                        {coach.name}
+                      </Heading>
+                    </div>
                   </div>
-                </div>
-                <ul className="mb-6 space-y-2.5">
-                  {coach.points.map((point) => (
-                    <li key={point} className="flex items-start gap-3">
-                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ds-accent" />
-                      <Text size="sm" tone="muted">
-                        {point}
-                      </Text>
-                    </li>
-                  ))}
-                </ul>
-                <div className="flex items-center gap-2 rounded-ds-md bg-ds-surface-2 p-3.5">
-                  <Star className="h-3.5 w-3.5 text-ds-accent-bright" />
-                  <Eyebrow strong>{coach.highlight}</Eyebrow>
-                </div>
-              </Card>
+                  <ul className="mb-6 space-y-2.5">
+                    {coach.points.map((point) => (
+                      <li key={point} className="flex items-start gap-3">
+                        <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ds-accent" />
+                        <Text size="sm" tone="muted">
+                          {point}
+                        </Text>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="flex items-center gap-2 rounded-ds-md bg-ds-surface-2 p-3.5">
+                    <Star className="h-3.5 w-3.5 text-ds-accent-bright" />
+                    <Eyebrow strong>{coach.highlight}</Eyebrow>
+                  </div>
+                </Card>
+              </Reveal>
             ))}
           </Grid>
 
-          <div className="scroll-animate scale-in relative overflow-hidden rounded-ds-2xl bg-slate-950 p-10 text-center md:p-16">
+          <Reveal variant="scale" className="relative overflow-hidden rounded-ds-2xl bg-slate-950 p-10 text-center md:p-16">
             <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent-400/60 to-transparent" />
             <div className="absolute -right-20 -top-32 h-72 w-72 rounded-full bg-primary-500/15 blur-3xl" />
             <div className="absolute -bottom-32 -left-20 h-72 w-72 rounded-full bg-accent-500/15 blur-3xl" />
@@ -355,37 +322,30 @@ function HomePage() {
                 </p>
               </div>
             </div>
-          </div>
+          </Reveal>
         </Container>
       </Section>
 
       {/* Gallery */}
       <Section id="gallery" space="xl" className="border-t border-ds-border bg-ds-bg-elevated">
         <Container size="xl">
-          <div className="scroll-animate mb-14 text-center">
-            <SectionEyebrow>Memories</SectionEyebrow>
-            <Heading level="display" className="mb-4">
-              Camp Gallery
-            </Heading>
-            <Text tone="muted" size="lg" className="mx-auto max-w-lg">
+          <Reveal className="mb-14">
+            <SectionIntro eyebrow="Memories" title="Camp Gallery">
               Highlights from past camps — the energy, the learning, the fun.
-            </Text>
-          </div>
+            </SectionIntro>
+          </Reveal>
 
           <div className="grid auto-rows-[140px] grid-cols-4 gap-3 sm:auto-rows-[180px] sm:gap-4 lg:auto-rows-[200px]">
             {GALLERY.map((item, index) => (
-              <Card
-                key={item.src}
-                variant="outline"
-                padding="none"
-                className={`scroll-animate scale-in ${REVEAL_DELAYS[index]} ${item.span} group overflow-hidden`}
-              >
-                <img
-                  src={item.src}
-                  alt={`Camp moment ${index + 1}`}
-                  className="h-full w-full object-cover transition-transform duration-700 ease-ds-out group-hover:scale-[1.06]"
-                />
-              </Card>
+              <Reveal key={item.src} variant="scale" delay={index + 1} className={item.span}>
+                <Card variant="outline" padding="none" className="group h-full w-full overflow-hidden">
+                  <img
+                    src={item.src}
+                    alt={`Camp moment ${index + 1}`}
+                    className="h-full w-full object-cover transition-transform duration-700 ease-ds-out group-hover:scale-[1.06]"
+                  />
+                </Card>
+              </Reveal>
             ))}
           </div>
         </Container>
@@ -394,34 +354,32 @@ function HomePage() {
       {/* Sponsors */}
       <Section id="sponsors" space="xl" className="bg-ds-bg">
         <Container size="xl">
-          <div className="scroll-animate mb-16 text-center">
-            <Badge tone="accent" variant="soft" size="lg" className="mb-4">
-              <Handshake className="h-3.5 w-3.5" /> Our Partners
-            </Badge>
-            <Heading level="display" className="mb-4">
-              Thank you to our sponsors
-            </Heading>
-            <Text tone="muted" size="lg" className="mx-auto max-w-lg">
+          <Reveal className="mb-16">
+            <SectionIntro
+              badge={
+                <>
+                  <Handshake className="h-3.5 w-3.5" /> Our Partners
+                </>
+              }
+              title="Thank you to our sponsors"
+            >
               We're grateful for the generous support that makes this camp possible for our community.
-            </Text>
-          </div>
+            </SectionIntro>
+          </Reveal>
 
           <Grid cols={3} gap={6}>
             {SPONSOR_IMAGES.map((sponsorImage, index) => (
-              <Card
-                key={sponsorImage}
-                variant="outline"
-                padding="none"
-                className={`scroll-animate scale-in ${REVEAL_DELAYS[index]} group overflow-hidden`}
-              >
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={sponsorImage}
-                    alt={`Sponsor ${index + 1}`}
-                    className="h-full w-full object-cover transition-transform duration-700 ease-ds-out group-hover:scale-[1.04]"
-                  />
-                </div>
-              </Card>
+              <Reveal key={sponsorImage} variant="scale" delay={index + 1}>
+                <Card variant="outline" padding="none" className="group overflow-hidden">
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={sponsorImage}
+                      alt={`Sponsor ${index + 1}`}
+                      className="h-full w-full object-cover transition-transform duration-700 ease-ds-out group-hover:scale-[1.04]"
+                    />
+                  </div>
+                </Card>
+              </Reveal>
             ))}
           </Grid>
         </Container>
@@ -430,20 +388,21 @@ function HomePage() {
       {/* Registration */}
       <Section id="register" space="xl" className="border-t border-ds-border bg-ds-bg-elevated">
         <Container size="md">
-          <div className="scroll-animate mb-12 text-center">
-            <Badge tone="accent" variant="soft" size="lg" className="mb-4">
-              <Shirt className="h-3.5 w-3.5" /> Limited Spots
-            </Badge>
-            <Heading level="display" className="mb-3">
-              Register for camp
-            </Heading>
-            <Text tone="muted" size="lg">
+          <Reveal className="mb-12">
+            <SectionIntro
+              badge={
+                <>
+                  <Shirt className="h-3.5 w-3.5" /> Limited Spots
+                </>
+              }
+              title="Register for camp"
+            >
               Sign up today — shirts are <span className="font-bold text-ds-text">${SHIRT_PRICE} each</span>
-            </Text>
-          </div>
-          <div className="scroll-animate delay-2">
+            </SectionIntro>
+          </Reveal>
+          <Reveal delay={2}>
             <RegistrationForm />
-          </div>
+          </Reveal>
         </Container>
       </Section>
 

@@ -9,7 +9,7 @@
  * @module pages/Dashboard
  */
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   Trophy,
   Shirt,
@@ -76,7 +76,6 @@ const RELATION_OPTIONS = EMERGENCY_RELATIONS.map((relation) => ({ value: relatio
 
 const Dashboard = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const [registrations, setRegistrations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState(null);
@@ -87,13 +86,9 @@ const Dashboard = () => {
   const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
-    if (!user) {
-      navigate("/auth");
-      return;
-    }
     loadRegistrations();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user, navigate]);
+  }, []);
 
   const loadRegistrations = async () => {
     try {

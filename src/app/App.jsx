@@ -15,6 +15,7 @@ import PaymentPage from "../pages/PaymentPage/PaymentPage";
 import PrivacyPage from "../pages/PrivacyPage/PrivacyPage";
 import TermsPage from "../pages/TermsPage/TermsPage";
 import ScrollToTop from "../components/ScrollToTop";
+import ProtectedRoute from "../components/routing/ProtectedRoute";
 
 function App() {
   return (
@@ -24,8 +25,22 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/auth" element={<AuthPage />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/staff" element={<StaffPanel />} />
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/staff"
+            element={
+              <ProtectedRoute requireStaff>
+                <StaffPanel />
+              </ProtectedRoute>
+            }
+          />
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
