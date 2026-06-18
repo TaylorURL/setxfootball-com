@@ -284,7 +284,7 @@ const RegistrationForm = () => {
         </fieldset>
 
         <fieldset>
-          <SectionHeading icon={ShieldCheck} title="Emergency Contact" />
+          <SectionHeading step={4} icon={ShieldCheck} title="Emergency Contact" />
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Name" required>
               <Input
