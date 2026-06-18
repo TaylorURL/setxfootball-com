@@ -336,19 +336,24 @@ const RegistrationForm = () => {
 
         <Separator />
 
-        <div className="flex flex-col items-center justify-between gap-4 rounded-ds-lg bg-ds-surface-2 p-5 sm:flex-row">
+        <div className="flex flex-col items-center justify-between gap-4 rounded-ds-lg border border-ds-accent-soft bg-ds-accent-softer p-5 sm:flex-row">
           <div>
-            <Eyebrow strong>Total Due</Eyebrow>
+            <Eyebrow strong className="text-ds-accent-bright">
+              Total Due
+            </Eyebrow>
             <Text size="sm" tone="muted" className="mt-1">
-              {formData.shirts.length} shirt{formData.shirts.length !== 1 ? "s" : ""} × ${SHIRT_PRICE}
+              {formData.shirts.length} shirt{formData.shirts.length !== 1 ? "s" : ""} × ${SHIRT_PRICE} each
             </Text>
           </div>
-          <span className="ds-tabular text-4xl font-bold tracking-tight text-ds-text">${totalCost}</span>
+          <span className="ds-tabular text-4xl font-black tracking-tight text-ds-accent-bright">${totalCost}</span>
         </div>
 
         <Button type="submit" variant="primary" size="lg" block loading={submitting}>
           <ClipboardList className="h-4 w-4" /> Complete Registration
         </Button>
+        <Text size="xs" tone="faint" className="text-center">
+          Payment is collected after you register — no payment needed now.
+        </Text>
       </form>
     </Card>
   );
