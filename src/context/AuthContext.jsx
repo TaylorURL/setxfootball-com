@@ -91,15 +91,6 @@ export const AuthProvider = ({ children }) => {
     isAdmin,
   };
 
-  if (loading) {
-    return (
-      <div className="flex min-h-[100dvh] flex-col items-center justify-center gap-4 bg-ds-bg">
-        <Spinner size="xl" className="text-ds-accent-bright" />
-        <p className="text-[13px] text-ds-text-muted">Loading…</p>
-      </div>
-    );
-  }
-
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
