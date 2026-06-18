@@ -4,10 +4,10 @@
 
 /* -----------------------------------------------------------------------------
    Brand palette
-   Legacy navy/red scales kept for the hero + marketing gradients that live
-   outside the token system. The design-system accent is rebranded below to the
-   camp's red so every DS Button, focus ring, and accent surface carries the
-   SETX identity in both dark and light themes.
+   The camp identity reads as a Texas youth football program: deep field navy,
+   camp red, gridiron gold, bone cream. The design-system accent is rebranded
+   below to the camp red so every DS Button, focus ring, and accent surface
+   carries the SETX identity in both dark and light themes.
    -------------------------------------------------------------------------- */
 :root {
   --primary-50: #eff6ff;
@@ -31,6 +31,12 @@
   --accent-700: #75061d;
   --accent-800: #500413;
   --accent-900: #2b020a;
+
+  --field-bone: #f8f5ef;
+  --field-cream: #efeadc;
+  --field-coal: #0b1320;
+  --gridiron-gold: #eab308;
+  --gridiron-gold-bright: #fbbf24;
 }
 
 /* Rebrand the design-system accent → SETX red (dark theme + portaled UI). */
@@ -70,9 +76,96 @@ body {
 }
 
 /* -----------------------------------------------------------------------------
+   Camp motifs
+   Project-specific visual vocabulary: yard-line dividers, sideline stripe
+   accents, stencil headline weight, and the jersey patch chip used as a
+   varsity badge across hero and section intros. These compose with the design
+   system rather than replace it.
+   -------------------------------------------------------------------------- */
+.heading-stencil {
+  font-family:
+    "Bebas Neue",
+    "Oswald",
+    "Helvetica Neue Condensed",
+    "Arial Narrow",
+    ui-sans-serif,
+    system-ui,
+    sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.005em;
+  line-height: 0.94;
+}
+
+.heading-stencil-tight {
+  letter-spacing: -0.015em;
+  line-height: 0.92;
+}
+
+.yard-rule {
+  position: relative;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(191, 10, 48, 0.55) 18%,
+    rgba(191, 10, 48, 0.55) 82%,
+    transparent
+  );
+}
+
+.yard-rule::before,
+.yard-rule::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: #bf0a30;
+  transform: translateY(-50%);
+}
+
+.yard-rule::before {
+  left: 16%;
+}
+
+.yard-rule::after {
+  right: 16%;
+}
+
+.sideline-stripes {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(191, 10, 48, 0.85) 0 14px,
+    rgba(255, 255, 255, 0.9) 14px 28px
+  );
+}
+
+.sideline-stripes-soft {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(191, 10, 48, 0.18) 0 10px,
+    transparent 10px 22px
+  );
+}
+
+.field-grid {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+.scoreboard-grain {
+  background-image:
+    radial-gradient(circle at 18% 22%, rgba(191, 10, 48, 0.18) 0, transparent 38%),
+    radial-gradient(circle at 82% 78%, rgba(0, 40, 104, 0.22) 0, transparent 42%);
+}
+
+/* -----------------------------------------------------------------------------
    Marketing motion
-   A small reveal vocabulary used by the public landing surfaces (hero entrance,
-   background drift, scroll-triggered section reveals). Component-level motion
+   Reveal vocabulary used by the public landing surfaces — entrance fade,
+   background drift, scroll-triggered section reveals. Component-level motion
    comes from the design system itself.
    -------------------------------------------------------------------------- */
 @keyframes fadeInUp {
@@ -105,6 +198,15 @@ body {
   }
 }
 
+@keyframes marqueeSlide {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 .animate-fade-in-up {
   animation: fadeInUp 520ms var(--ds-ease-out) forwards;
 }
@@ -115,6 +217,10 @@ body {
 
 .animate-subtle-zoom {
   animation: subtleZoom 1.6s var(--ds-ease-out) forwards;
+}
+
+.animate-marquee {
+  animation: marqueeSlide 32s linear infinite;
 }
 
 .scroll-animate {
@@ -196,5 +302,9 @@ body {
   .scroll-animate.scale-in {
     opacity: 1;
     transform: none;
+  }
+
+  .animate-marquee {
+    animation: none;
   }
 }
