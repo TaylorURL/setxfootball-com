@@ -237,13 +237,17 @@ const RegistrationForm = () => {
               </Card>
             ))}
           </div>
-          <Button variant="link" size="sm" className="mt-3 px-0" onClick={addShirt}>
-            <Plus className="h-3.5 w-3.5" /> Add another shirt
-          </Button>
+          <button
+            type="button"
+            onClick={addShirt}
+            className="ds-press mt-3 flex w-full items-center justify-center gap-2 rounded-ds-lg border border-dashed border-ds-border-strong py-3 text-sm font-semibold text-ds-text-muted transition-colors duration-150 ease-ds-out hover:border-ds-accent hover:text-ds-accent-bright"
+          >
+            <Plus className="h-4 w-4" /> Add another shirt
+          </button>
         </fieldset>
 
         <fieldset>
-          <SectionHeading icon={Users} title="Parent / Guardian" />
+          <SectionHeading step={3} icon={Users} title="Parent / Guardian" />
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Full Name" required>
               <Input
