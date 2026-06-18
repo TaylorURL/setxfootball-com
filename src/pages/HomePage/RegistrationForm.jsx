@@ -2,8 +2,9 @@
  * RegistrationForm — the camp registration card on the landing page.
  *
  * Owns the multi-shirt registration form state, validates it, submits through
- * RegistrationService, and routes to the payment page on success. Built entirely
- * from design-system form primitives.
+ * RegistrationService, and routes to the payment page on success. Built from
+ * design-system form primitives; step headers carry a jersey-style number
+ * patch to read like a roster sign-up sheet.
  */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -18,6 +19,7 @@ import {
   Plus,
   Trash2,
   ClipboardList,
+  Ticket,
 } from "lucide-react";
 import {
   Card,
@@ -30,7 +32,6 @@ import {
   Alert,
   Separator,
   Eyebrow,
-  Heading,
   Text,
 } from "@bradley-t-t/sunday-design-system";
 import RegistrationService from "../../services/RegistrationService";
@@ -56,16 +57,21 @@ const buildFormReset = () => ({
   cashappUsername: "",
 });
 
-const SectionHeading = ({ step, icon: Icon, title, aside }) => (
+const StepHeader = ({ step, icon: Icon, title, aside }) => (
   <div className="mb-5 flex items-center justify-between gap-3">
     <div className="flex items-center gap-3">
-      <span className="relative inline-flex h-9 w-9 items-center justify-center rounded-ds-md bg-ds-accent-soft text-ds-accent-bright">
-        <Icon className="h-4 w-4" />
-        <span className="absolute -right-1.5 -top-1.5 inline-flex h-4 w-4 items-center justify-center rounded-full bg-ds-accent text-[10px] font-bold text-ds-on-accent">
-          {step}
-        </span>
+      <span className="heading-stencil relative inline-flex h-11 w-11 items-center justify-center rounded-ds-md bg-ds-accent text-[1.25rem] text-white shadow-[0_6px_18px_-10px_rgba(191,10,48,0.7)] ring-1 ring-white/15">
+        {String(step).padStart(2, "0")}
       </span>
-      <Heading level={3}>{title}</Heading>
+      <div>
+        <Eyebrow strong className="text-ds-accent-bright">
+          Step {step}
+        </Eyebrow>
+        <h3 className="heading-stencil mt-0.5 flex items-center gap-2 text-2xl text-ds-text">
+          <Icon className="h-4 w-4 text-ds-text-muted" />
+          {title}
+        </h3>
+      </div>
     </div>
     {aside}
   </div>
@@ -139,16 +145,18 @@ const RegistrationForm = () => {
   };
 
   return (
-    <Card variant="elevated" padding="none" className="overflow-hidden">
+    <Card variant="elevated" padding="none" className="relative overflow-hidden">
+      <span aria-hidden="true" className="sideline-stripes absolute inset-x-0 top-0 z-10 h-1.5 opacity-90" />
+
       {submitResult && (
         <div className="p-6 pb-0">
           <Alert tone={submitResult.success ? "positive" : "danger"}>{submitResult.message}</Alert>
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-8 p-6 md:p-8">
+      <form onSubmit={handleSubmit} className="space-y-9 p-6 md:p-9">
         <fieldset>
-          <SectionHeading step={1} icon={Trophy} title="Camper Information" />
+          <StepHeader step={1} icon={Trophy} title="Camper" />
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Full Name" required>
               <Input
@@ -171,7 +179,7 @@ const RegistrationForm = () => {
                 required
               />
             </Field>
-            <Field label="Nickname" help="Optional — what should we call them?" className="sm:col-span-2">
+            <Field label="Nickname" help="Optional — what should we call them on the field?" className="sm:col-span-2">
               <Input
                 name="nickname"
                 value={formData.nickname}
@@ -183,17 +191,22 @@ const RegistrationForm = () => {
         </fieldset>
 
         <fieldset>
-          <SectionHeading
+          <StepHeader
             step={2}
             icon={Shirt}
             title="Shirts"
-            aside={<Eyebrow>${SHIRT_PRICE} each</Eyebrow>}
+            aside={<Eyebrow className="text-ds-accent-bright">${SHIRT_PRICE} each</Eyebrow>}
           />
           <div className="space-y-3">
             {formData.shirts.map((shirt, index) => (
-              <Card key={shirt.id} variant="surface" padding="md">
+              <Card key={shirt.id} variant="surface" padding="md" className="relative">
                 <div className="mb-3 flex items-center justify-between">
-                  <Eyebrow strong>Shirt {index + 1}</Eyebrow>
+                  <div className="flex items-center gap-2">
+                    <span className="heading-stencil ds-tabular inline-flex h-6 w-6 items-center justify-center rounded-ds-sm bg-ds-accent-soft text-sm text-ds-accent-bright">
+                      {index + 1}
+                    </span>
+                    <Eyebrow strong>Shirt {index + 1}</Eyebrow>
+                  </div>
                   {formData.shirts.length > 1 && (
                     <IconButton
                       label={`Remove shirt ${index + 1}`}
@@ -240,14 +253,14 @@ const RegistrationForm = () => {
           <button
             type="button"
             onClick={addShirt}
-            className="ds-press mt-3 flex w-full items-center justify-center gap-2 rounded-ds-lg border border-dashed border-ds-border-strong py-3 text-sm font-semibold text-ds-text-muted transition-colors duration-150 ease-ds-out hover:border-ds-accent hover:text-ds-accent-bright"
+            className="ds-press mt-3 flex w-full items-center justify-center gap-2 rounded-ds-lg border border-dashed border-ds-border-strong py-3 text-sm font-bold uppercase tracking-[0.06em] text-ds-text-muted transition-colors duration-150 ease-ds-out hover:border-ds-accent hover:text-ds-accent-bright"
           >
             <Plus className="h-4 w-4" /> Add another shirt
           </button>
         </fieldset>
 
         <fieldset>
-          <SectionHeading step={3} icon={Users} title="Parent / Guardian" />
+          <StepHeader step={3} icon={Users} title="Parent / Guardian" />
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Full Name" required>
               <Input
@@ -284,7 +297,7 @@ const RegistrationForm = () => {
         </fieldset>
 
         <fieldset>
-          <SectionHeading step={4} icon={ShieldCheck} title="Emergency Contact" />
+          <StepHeader step={4} icon={ShieldCheck} title="Emergency Contact" />
           <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Name" required>
               <Input
@@ -318,13 +331,16 @@ const RegistrationForm = () => {
         </fieldset>
 
         <fieldset>
-          <SectionHeading
+          <StepHeader
             step={5}
             icon={DollarSign}
             title="Payment Info"
             aside={<Eyebrow>Optional</Eyebrow>}
           />
-          <Field label="CashApp username or email" help="Helps us verify your payment. You can also add this later.">
+          <Field
+            label="CashApp username or email"
+            help="Helps us match your payment. You can also add it after registering."
+          >
             <Input
               name="cashappUsername"
               value={formData.cashappUsername}
@@ -336,23 +352,39 @@ const RegistrationForm = () => {
 
         <Separator />
 
-        <div className="flex flex-col items-center justify-between gap-4 rounded-ds-lg border border-ds-accent-soft bg-ds-accent-softer p-5 sm:flex-row">
-          <div>
-            <Eyebrow strong className="text-ds-accent-bright">
-              Total Due
-            </Eyebrow>
-            <Text size="sm" tone="muted" className="mt-1">
-              {formData.shirts.length} shirt{formData.shirts.length !== 1 ? "s" : ""} × ${SHIRT_PRICE} each
-            </Text>
+        {/* Ticket-style total */}
+        <div className="relative overflow-hidden rounded-ds-xl border border-ds-accent-soft bg-ds-accent-softer p-5 sm:p-6">
+          <span aria-hidden="true" className="sideline-stripes absolute inset-y-0 left-0 w-1.5 opacity-90" />
+          <div className="flex flex-col items-start justify-between gap-4 pl-3 sm:flex-row sm:items-center">
+            <div>
+              <div className="mb-1.5 inline-flex items-center gap-2">
+                <Ticket className="h-3.5 w-3.5 text-ds-accent-bright" />
+                <Eyebrow strong className="text-ds-accent-bright">
+                  Total Due
+                </Eyebrow>
+              </div>
+              <Text size="sm" tone="muted">
+                {formData.shirts.length} shirt{formData.shirts.length !== 1 ? "s" : ""} × ${SHIRT_PRICE} each
+              </Text>
+            </div>
+            <span className="heading-stencil ds-tabular text-5xl tracking-tight text-ds-accent-bright sm:text-6xl">
+              ${totalCost}
+            </span>
           </div>
-          <span className="ds-tabular text-4xl font-black tracking-tight text-ds-accent-bright">${totalCost}</span>
         </div>
 
-        <Button type="submit" variant="primary" size="lg" block loading={submitting}>
-          <ClipboardList className="h-4 w-4" /> Complete Registration
+        <Button
+          type="submit"
+          variant="primary"
+          size="lg"
+          block
+          loading={submitting}
+          className="font-bold uppercase tracking-[0.08em]"
+        >
+          <ClipboardList className="h-4 w-4" /> Complete Sign-Up
         </Button>
-        <Text size="xs" tone="faint" className="text-center">
-          Payment is collected after you register — no payment needed now.
+        <Text size="xs" tone="faint" className="text-center uppercase tracking-[0.12em]">
+          Payment is collected after sign-up — no payment needed now
         </Text>
       </form>
     </Card>
