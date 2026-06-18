@@ -319,6 +319,7 @@ const RegistrationForm = () => {
 
         <fieldset>
           <SectionHeading
+            step={5}
             icon={DollarSign}
             title="Payment Info"
             aside={<Eyebrow>Optional</Eyebrow>}
