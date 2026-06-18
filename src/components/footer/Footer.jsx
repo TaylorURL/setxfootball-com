@@ -145,6 +145,20 @@ const Footer = ({ onSectionSelect }) => (
             </Link>
           </div>
         </div>
+
+        <div className="mt-4 text-center">
+          <Text size="xs" tone="faint">
+            Site made by{' '}
+            <a
+              href="https://taylorurl.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-ds-text-faint underline decoration-ds-text-faint/30 transition-colors duration-150 ease-ds-out hover:text-ds-text-muted"
+            >
+              TaylorURL.com
+            </a>
+          </Text>
+        </div>
       </Container>
     </Section>
   </footer>
