@@ -15,7 +15,6 @@ import {
   Star,
   Heart,
   Users,
-  ClipboardList,
   Trophy,
   ShieldCheck,
   Handshake,
