@@ -76,7 +76,6 @@ const RELATION_OPTIONS = EMERGENCY_RELATIONS.map((relation) => ({ value: relatio
 
 const Dashboard = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
   const [registrations, setRegistrations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editingId, setEditingId] = useState(null);
