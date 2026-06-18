@@ -184,6 +184,7 @@ const RegistrationForm = () => {
 
         <fieldset>
           <SectionHeading
+            step={2}
             icon={Shirt}
             title="Shirts"
             aside={<Eyebrow>${SHIRT_PRICE} each</Eyebrow>}
