@@ -34,6 +34,7 @@ import {
   Eyebrow,
   Text,
 } from "@bradley-t-t/sunday-design-system";
+import VarsityNumber from "../../components/brand/VarsityNumber";
 import RegistrationService from "../../services/RegistrationService";
 import { SHIRT_SIZES, SHIRT_PRICE, EMERGENCY_RELATIONS } from "../../utils/constants";
 import { encodeShirtOrders } from "../../utils/shirtOrders";
