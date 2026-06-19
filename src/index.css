@@ -55,42 +55,15 @@
   --field-coal: #0b1320;
 }
 
-/* Rebrand the design-system accent → SETX red, per theme. */
-.ds-root,
-.ds-root[data-theme="dark"],
-[data-theme="dark"] {
-  --ds-accent: #bf0a30;
-  --ds-accent-bright: #fb5871;
-  --ds-accent-glow: rgba(191, 10, 48, 0.45);
-  --ds-accent-soft: rgba(191, 10, 48, 0.16);
-  --ds-accent-softer: rgba(191, 10, 48, 0.07);
-  --ds-border-hover: rgba(191, 10, 48, 0.5);
-  --ds-companion-aura: rgba(191, 10, 48, 0.22);
-  --ds-accent-face: linear-gradient(180deg, #e11d3f 0%, #bf0a30 52%, #9a0826 100%);
-  --ds-accent-face-hover: linear-gradient(180deg, #ef2c4d 0%, #cf1135 52%, #a80a29 100%);
-}
-
-.ds-root[data-theme="light"],
-[data-theme="light"] {
-  --ds-accent: #bf0a30;
-  --ds-accent-bright: #bf0a30;
-  --ds-accent-glow: rgba(191, 10, 48, 0.3);
-  --ds-accent-soft: rgba(191, 10, 48, 0.1);
-  --ds-accent-softer: rgba(191, 10, 48, 0.04);
-  --ds-border-hover: rgba(191, 10, 48, 0.5);
-  --ds-companion-aura: rgba(191, 10, 48, 0.16);
-  --ds-accent-face: linear-gradient(180deg, #d11338 0%, #bf0a30 52%, #9a0826 100%);
-  --ds-accent-face-hover: linear-gradient(180deg, #e0264a 0%, #cf1135 52%, #a80a29 100%);
-}
-
 /* -----------------------------------------------------------------------------
-   Gray (graphite) theme
+   Graphite — the single camp theme
 
-   A deliberate third theme: desaturated blue-graphite neutrals — softer than
-   the pure-black dark theme, with the same camp-red accent. Defines the full
+   Desaturated blue-graphite neutrals with the camp-red accent. Defines the full
    `--ds-*` surface/text/utility token set so every design-system primitive
-   renders correctly here, not just the accent.
+   renders from real tokens. Applied to the base `.ds-root` as well so no surface
+   can fall back to an unstyled state.
    -------------------------------------------------------------------------- */
+.ds-root,
 .ds-root[data-theme="gray"],
 [data-theme="gray"] {
   --ds-bg: #15171c;
