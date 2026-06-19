@@ -5,8 +5,8 @@
  * payment toggling, order grouping (multiple shirt orders from the same
  * parent/camper), summary KPIs, and CSV export. Data orchestration lives in
  * useStaffRegistrations; grouping/CSV logic lives in utils; chrome comes from
- * the shared DashboardShell. The header carries a small varsity treatment
- * (jersey-number season chip, sideline stripe, stadium-stencil title).
+ * the shared DashboardShell. The header carries the stadium-stencil title and
+ * the season selector.
  *
  * @module pages/StaffPanel
  */
