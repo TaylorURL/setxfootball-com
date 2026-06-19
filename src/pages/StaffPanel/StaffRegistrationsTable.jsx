@@ -40,7 +40,7 @@ const StaffRegistrationsTable = ({ groups, expandedRows, onToggleExpand, updatin
           const groupStatus = GROUP_STATUS[combined.status] ?? GROUP_STATUS.pending;
 
           return (
-            <ExpandableRows key={key}>
+            <Fragment key={key}>
               <TableRow interactive onClick={() => onToggleExpand(key)}>
                 <TableCell>
                   <IconButton
