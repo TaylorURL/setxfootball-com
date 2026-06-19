@@ -19,30 +19,13 @@ import {
   Eyebrow,
 } from "@bradley-t-t/sunday-design-system";
 import { useAuth } from "../../context/AuthContext";
-import logo from "../../assets/logo.PNG";
+import BrandMark from "../../components/brand/BrandMark";
 
 const FORM_FIELDS = [
   { name: "fullName", label: "Full Name", type: "text", placeholder: "Enter your full name", icon: User, signUpOnly: true },
   { name: "email", label: "Email Address", type: "email", placeholder: "email@example.com", icon: Mail },
   { name: "password", label: "Password", type: "password", placeholder: "••••••••", icon: Lock, minLength: 6 },
 ];
-
-const Brand = () => (
-  <Link to="/" className="flex flex-col items-center gap-3" aria-label="SETX Football home">
-    <span className="relative inline-flex h-16 w-16 items-center justify-center overflow-hidden rounded-ds-xl bg-ds-accent shadow-[0_10px_30px_-14px_rgba(191,10,48,0.7)] ring-1 ring-white/15">
-      <img src={logo} alt="SETX Football Camp" className="h-12 w-12 object-contain" />
-    </span>
-    <span className="text-center">
-      <span className="block text-[15px] font-black uppercase tracking-[0.08em] text-ds-text">
-        SETX Football
-      </span>
-      <span className="mt-1 inline-flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.24em] text-ds-text-muted">
-        <span className="inline-block h-0.5 w-3 bg-ds-accent" />
-        Youth Camp · Daisetta TX
-      </span>
-    </span>
-  </Link>
-);
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
