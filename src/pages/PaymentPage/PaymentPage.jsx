@@ -110,6 +110,7 @@ const PaymentPage = () => {
 
   return (
     <div className="flex min-h-[100dvh] flex-col bg-ds-bg">
+      <Seo {...PAGE_SEO.payment} />
       <main className="flex-1 py-10 sm:py-14">
         <Container size="sm">
           <Button asChild variant="ghost" size="sm" className="mb-6 px-0">
