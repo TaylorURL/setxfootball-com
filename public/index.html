@@ -6,46 +6,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#002868" />
 
-    <title>
-      SETX Football Camp | Youth Football Training in Southeast Texas | July
-      2026
-    </title>
+    <!--
+      Static defaults below — react-helmet-async overrides these per route at
+      runtime (see src/components/seo/Seo.jsx). They remain as the no-JS
+      fallback for crawlers that don't execute JavaScript.
+    -->
+    <title>SETX Football Camp — Youth Football in Southeast Texas</title>
     <meta
       name="description"
-      content="SETX Football Camp offers a two-day youth football training experience for kids ages 5-12 in Southeast Texas. Join us in July 2026 for skill development, teamwork, and fun. Register today!"
+      content="SETX Football Camp offers a two-day youth football training experience for kids ages 5–12 in Southeast Texas. Join us in July 2026 for skill development, teamwork, and fun. Register today!"
     />
     <meta
       name="keywords"
       content="SETX football camp, youth football, Southeast Texas, kids football camp, football training, summer camp 2026, youth sports, football skills"
     />
     <meta name="author" content="SETX Football Camp" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://setxfootball.com" />
 
-    <meta
-      property="og:title"
-      content="SETX Football Camp | Youth Football Training"
-    />
+    <meta property="og:title" content="SETX Football Camp — Youth Football in Southeast Texas" />
     <meta
       property="og:description"
-      content="Two-day youth football camp for ages 5-12 in Southeast Texas. Build skills, teamwork, and confidence. July 2026."
+      content="Two-day youth football camp for ages 5–12 in Southeast Texas. Build skills, teamwork, and confidence. July 2026."
     />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="en_US" />
     <meta property="og:site_name" content="SETX Football Camp" />
+    <meta property="og:url" content="https://setxfootball.com" />
+    <meta property="og:image" content="https://setxfootball.com/android-chrome-512x512.png" />
 
     <meta name="twitter:card" content="summary_large_image" />
-    <meta
-      name="twitter:title"
-      content="SETX Football Camp | Youth Football Training"
-    />
+    <meta name="twitter:title" content="SETX Football Camp — Youth Football in Southeast Texas" />
     <meta
       name="twitter:description"
-      content="Two-day youth football camp for ages 5-12 in Southeast Texas. Build skills, teamwork, and confidence. July 2026."
+      content="Two-day youth football camp for ages 5–12 in Southeast Texas. Build skills, teamwork, and confidence. July 2026."
     />
+    <meta name="twitter:image" content="https://setxfootball.com/android-chrome-512x512.png" />
 
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://setxfootball.com" />
-
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -54,6 +52,29 @@
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SportsActivityLocation",
+        "name": "SETX Youth Football Camp",
+        "url": "https://setxfootball.com",
+        "description": "A two-day youth football camp in Southeast Texas for kids ages 5–12. Real coaching, every kid plays, shirts and snacks included.",
+        "telephone": "+1-936-641-0681",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Daisetta",
+          "addressRegion": "TX",
+          "addressCountry": "US"
+        },
+        "sport": "American Football",
+        "audience": {
+          "@type": "PeopleAudience",
+          "suggestedMinAge": 5,
+          "suggestedMaxAge": 12
+        }
+      }
+    </script>
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
