@@ -73,7 +73,7 @@ const AuthPage = () => {
   return (
     <CenteredLayout
       width="md"
-      brand={<Brand />}
+      brand={<BrandMark orientation="vertical" size="lg" to="/" />}
       footer={
         <Link
           to="/"
