@@ -130,8 +130,8 @@ body {
 /* -----------------------------------------------------------------------------
    Camp motifs
    Project-specific visual vocabulary: the stadium-stencil display weight,
-   yard-line dividers, sideline-stripe accents, field grid, and scoreboard
-   grain. These compose with the design system rather than replace it.
+   yard-line dividers, clean accent edges, field grid, and scoreboard grain.
+   These compose with the design system rather than replace it.
    -------------------------------------------------------------------------- */
 .heading-stencil {
   font-family: "Oswald", "Bebas Neue", "Helvetica Neue Condensed", "Arial Narrow",
