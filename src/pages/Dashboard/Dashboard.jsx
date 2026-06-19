@@ -48,6 +48,7 @@ import {
   Eyebrow,
 } from "@bradley-t-t/sunday-design-system";
 import DashboardShell from "../../components/layout/DashboardShell";
+import VarsityNumber from "../../components/brand/VarsityNumber";
 import { useAuth } from "../../context/AuthContext";
 import RegistrationService from "../../services/RegistrationService";
 import { formatDate, formatCurrency } from "../../utils/helpers";
@@ -78,9 +79,7 @@ const RegistrationCardHeader = ({ index, reg, isEditing, editForm, canEdit, savi
   <div className="relative flex flex-col gap-4 border-b border-ds-border bg-ds-surface-2 p-5 sm:flex-row sm:items-center sm:justify-between">
     <span aria-hidden="true" className="sideline-stripes absolute inset-x-0 top-0 h-1 opacity-80" />
     <div className="flex items-center gap-4">
-      <span className="heading-stencil ds-tabular inline-flex h-12 w-12 items-center justify-center rounded-ds-md bg-ds-accent text-[1.5rem] text-white shadow-[0_8px_24px_-14px_rgba(191,10,48,0.7)] ring-1 ring-white/15">
-        {String(index + 1).padStart(2, "0")}
-      </span>
+      <VarsityNumber>{String(index + 1).padStart(2, "0")}</VarsityNumber>
       <div>
         <Eyebrow strong className="text-ds-accent-bright">
           Camper

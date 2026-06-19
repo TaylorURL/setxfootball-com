@@ -34,6 +34,7 @@ import {
   Eyebrow,
   Text,
 } from "@bradley-t-t/sunday-design-system";
+import VarsityNumber from "../../components/brand/VarsityNumber";
 import RegistrationService from "../../services/RegistrationService";
 import { SHIRT_SIZES, SHIRT_PRICE, EMERGENCY_RELATIONS } from "../../utils/constants";
 import { encodeShirtOrders } from "../../utils/shirtOrders";
@@ -60,9 +61,7 @@ const buildFormReset = () => ({
 const StepHeader = ({ step, icon: Icon, title, aside }) => (
   <div className="mb-5 flex items-center justify-between gap-3">
     <div className="flex items-center gap-3">
-      <span className="heading-stencil relative inline-flex h-11 w-11 items-center justify-center rounded-ds-md bg-ds-accent text-[1.25rem] text-white shadow-[0_6px_18px_-10px_rgba(191,10,48,0.7)] ring-1 ring-white/15">
-        {String(step).padStart(2, "0")}
-      </span>
+      <VarsityNumber size="sm">{String(step).padStart(2, "0")}</VarsityNumber>
       <div>
         <Eyebrow strong className="text-ds-accent-bright">
           Step {step}

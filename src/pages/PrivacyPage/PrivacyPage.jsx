@@ -27,7 +27,7 @@ const PrivacyPage = () => (
         <Card variant="elevated" padding="lg" className="relative overflow-hidden">
           <span aria-hidden="true" className="sideline-stripes absolute inset-x-0 top-0 h-1.5 opacity-90" />
           <div className="mb-8 flex items-center gap-4 border-b border-ds-border pb-8">
-            <span className="inline-flex h-14 w-14 items-center justify-center rounded-ds-lg bg-ds-accent text-white shadow-[0_8px_24px_-14px_rgba(191,10,48,0.7)] ring-1 ring-white/15">
+            <span className="brand-chip-shadow inline-flex h-14 w-14 items-center justify-center rounded-ds-lg bg-ds-accent text-white ring-1 ring-white/15">
               <ShieldCheck className="h-6 w-6" />
             </span>
             <div>
