@@ -40,9 +40,9 @@ const FooterColumn = ({ title, children }) => (
   </div>
 );
 
-const Footer = ({ onSectionSelect }) => (
+const Footer = () => (
   <footer className="relative border-t border-ds-border bg-ds-bg-elevated">
-    <div aria-hidden="true" className="sideline-stripes absolute inset-x-0 top-0 h-1.5 opacity-70" />
+    <div aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 h-1" />
     <Section space="lg">
       <Container size="xl">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
