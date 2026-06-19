@@ -3,11 +3,8 @@
  *
  * Reads like the back of a programme: a brand column with mission line and
  * season mark, quick links, contact, and camp facts, capped with a copyright
- * + legal row. Composed from design-system layout + typography primitives so
- * it tracks the active theme.
- *
- * Quick links smooth-scroll when `onSectionSelect` is supplied (on the landing
- * page); otherwise they route to the landing anchors.
+ * + legal row. Composed from design-system layout + typography primitives.
+ * Quick links route to the public pages via the shared nav config.
  */
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Calendar, Users, Shirt } from "lucide-react";
@@ -18,14 +15,9 @@ import {
   Eyebrow,
 } from "@bradley-t-t/sunday-design-system";
 import BrandMark from "../brand/BrandMark";
+import { PUBLIC_NAV_LINKS, REGISTER_PATH } from "../nav/navLinks";
 
-const QUICK_LINKS = [
-  { label: "Home", id: "home" },
-  { label: "About", id: "about" },
-  { label: "Gallery", id: "gallery" },
-  { label: "Sponsors", id: "sponsors" },
-  { label: "Sign Up", id: "register" },
-];
+const QUICK_LINKS = [...PUBLIC_NAV_LINKS, { label: "Sign Up", to: REGISTER_PATH }];
 
 const CONTACTS = [
   { icon: MapPin, text: "Daisetta, TX" },
