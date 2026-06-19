@@ -23,7 +23,8 @@ const GallerySection = () => (
             <Card variant="outline" padding="none" className="group relative h-full w-full overflow-hidden">
               <img
                 src={item.src}
-                alt={`Camp moment — ${item.caption}`}
+                alt={`SETX Youth Football Camp — ${item.caption}`}
+                loading="lazy"
                 className="h-full w-full object-cover transition-transform duration-500 ease-ds-out group-hover:scale-[1.06]"
               />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/65 via-slate-950/0 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
