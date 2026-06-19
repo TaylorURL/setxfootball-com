@@ -28,8 +28,6 @@ import img8 from "../../assets/images/8.JPG";
 export const HERO_IMAGE = img1;
 export const STORY_IMAGE = img1;
 
-export const NAV_SECTIONS = ["home", "about", "gallery", "sponsors"];
-
 export const HERO_STATS = [
   { value: "5–12", label: "Ages" },
   { value: "$5", label: "Per Shirt" },
