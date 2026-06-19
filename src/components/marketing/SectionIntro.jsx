@@ -27,9 +27,9 @@ const StripeEyebrow = ({ children, centered }) => (
       centered ? "justify-center" : "justify-start",
     )}
   >
-    <span aria-hidden="true" className="sideline-stripes inline-block h-1 w-10 rounded-sm" />
+    <span aria-hidden="true" className="inline-block h-0.5 w-8 rounded-full bg-ds-accent" />
     {children}
-    <span aria-hidden="true" className="sideline-stripes inline-block h-1 w-10 rounded-sm" />
+    <span aria-hidden="true" className="inline-block h-0.5 w-8 rounded-full bg-ds-accent" />
   </span>
 );
 
