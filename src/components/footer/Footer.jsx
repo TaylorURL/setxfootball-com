@@ -17,7 +17,7 @@ import {
   Text,
   Eyebrow,
 } from "@bradley-t-t/sunday-design-system";
-import logo from "../../assets/logo.PNG";
+import BrandMark from "../brand/BrandMark";
 
 const QUICK_LINKS = [
   { label: "Home", id: "home" },
