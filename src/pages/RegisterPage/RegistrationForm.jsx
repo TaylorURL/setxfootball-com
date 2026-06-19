@@ -353,7 +353,7 @@ const RegistrationForm = () => {
 
         {/* Ticket-style total */}
         <div className="relative overflow-hidden rounded-ds-xl border border-ds-accent-soft bg-ds-accent-softer p-5 sm:p-6">
-          <span aria-hidden="true" className="sideline-stripes absolute inset-y-0 left-0 w-1.5 opacity-90" />
+          <span aria-hidden="true" className="accent-edge absolute inset-y-0 left-0 w-1.5" />
           <div className="flex flex-col items-start justify-between gap-4 pl-3 sm:flex-row sm:items-center">
             <div>
               <div className="mb-1.5 inline-flex items-center gap-2">
