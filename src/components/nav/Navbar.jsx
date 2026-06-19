@@ -1,11 +1,10 @@
 /**
- * Navbar — the public "command dock": a centered, always-floating pill nav.
- *
- * A single compact rounded dock holds the brand, the routed section links (with
- * an active indicator driven by the current route), and the action cluster
- * (Login / Dashboard, Sign Up). On small screens the dock collapses to brand +
- * a menu trigger that opens a full-screen takeover menu — a deliberately
- * immersive pattern rather than a dropdown.
+ * Navbar — the public "command bar": a full-bleed bar that spans the viewport
+ * edge-to-edge. The bar itself stretches the full width; inner content is
+ * width-capped so the brand, routed links and action cluster stay readable on
+ * wide screens. On small screens the bar collapses to brand + a menu trigger
+ * that opens a full-screen takeover menu — a deliberately immersive pattern
+ * rather than a dropdown.
  */
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
