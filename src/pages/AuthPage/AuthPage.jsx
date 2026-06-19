@@ -160,6 +160,7 @@ const AuthPage = () => {
         </div>
       </Card>
     </CenteredLayout>
+    </>
   );
 };
 
