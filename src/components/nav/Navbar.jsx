@@ -76,8 +76,8 @@ const Navbar = ({ sections = [], onSectionSelect }) => {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-sticky px-4 pt-4 sm:pt-5">
-        <nav className="mx-auto flex max-w-5xl items-center gap-2 rounded-ds-full border border-ds-border bg-ds-bg-elevated/85 p-2 pl-3 shadow-ds-lg backdrop-blur-xl sm:gap-3 sm:pl-4">
-          <span aria-hidden="true" className="sideline-stripes absolute inset-x-6 top-0 h-0.5 rounded-full opacity-70" />
+        <nav className="relative mx-auto flex max-w-5xl items-center gap-2 overflow-hidden rounded-ds-full border border-ds-border bg-ds-bg-elevated/85 p-2 pl-3 shadow-ds-lg backdrop-blur-xl sm:gap-3 sm:pl-4">
+          <span aria-hidden="true" className="sideline-stripes pointer-events-none absolute inset-x-10 top-0 h-0.5 opacity-70" />
           <BrandMark
             size="sm"
             onClick={() => goToSection(sections[0] ?? "home")}
