@@ -48,6 +48,7 @@ import {
   Eyebrow,
 } from "@bradley-t-t/sunday-design-system";
 import DashboardShell from "../../components/layout/DashboardShell";
+import VarsityNumber from "../../components/brand/VarsityNumber";
 import { useAuth } from "../../context/AuthContext";
 import RegistrationService from "../../services/RegistrationService";
 import { formatDate, formatCurrency } from "../../utils/helpers";
