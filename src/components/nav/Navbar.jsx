@@ -74,8 +74,12 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-sticky px-4 pt-4 sm:pt-5">
-        <nav className="relative mx-auto flex max-w-5xl items-center gap-2 overflow-hidden rounded-ds-full border border-ds-border bg-ds-bg-elevated/85 p-2 pl-3 shadow-ds-lg backdrop-blur-xl sm:gap-3 sm:pl-4">
+      <header className="fixed inset-x-0 top-0 z-sticky border-b border-ds-border bg-ds-bg-elevated/85 shadow-ds-lg backdrop-blur-xl">
+        <span aria-hidden="true" className="accent-edge absolute inset-x-0 bottom-0 h-0.5" />
+        <nav
+          aria-label="Primary"
+          className="relative mx-auto flex w-full max-w-7xl items-center gap-2 px-4 py-3 sm:gap-3 sm:px-6 sm:py-3.5 lg:px-8"
+        >
           <BrandMark size="sm" to="/" className="shrink-0" />
 
           <div className="mx-auto hidden items-center gap-0.5 md:flex">
