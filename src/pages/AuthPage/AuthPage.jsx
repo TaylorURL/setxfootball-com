@@ -73,6 +73,8 @@ const AuthPage = () => {
   const visibleFields = FORM_FIELDS.filter((field) => !field.signUpOnly || !isLogin);
 
   return (
+    <>
+    <Seo {...PAGE_SEO.auth} title={isLogin ? "Sign In" : "Create Account"} />
     <CenteredLayout
       width="md"
       brand={<BrandMark orientation="vertical" size="lg" to="/" />}
