@@ -115,7 +115,7 @@ const Footer = () => (
 
         <div className="mt-8 flex flex-col items-center justify-between gap-3 sm:flex-row">
           <Text size="xs" tone="faint" className="uppercase tracking-[0.16em]">
-            © {new Date().getFullYear()} SETX Youth Football Camp · Built in Daisetta
+            © {new Date().getFullYear()} SETX Youth Football Camp
           </Text>
           <div className="flex items-center gap-4">
             <Link
