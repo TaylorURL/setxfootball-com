@@ -62,23 +62,14 @@ const Footer = () => (
 
           <FooterColumn title="Quick Links">
             <ul className="space-y-2.5">
-              {QUICK_LINKS.map(({ label, id }) => (
-                <li key={id}>
-                  {onSectionSelect ? (
-                    <button
-                      onClick={() => onSectionSelect(id)}
-                      className="text-[13px] font-medium text-ds-text-muted transition-colors duration-150 ease-ds-out hover:text-ds-accent-bright"
-                    >
-                      {label}
-                    </button>
-                  ) : (
-                    <Link
-                      to={`/#${id}`}
-                      className="text-[13px] font-medium text-ds-text-muted transition-colors duration-150 ease-ds-out hover:text-ds-accent-bright"
-                    >
-                      {label}
-                    </Link>
-                  )}
+              {QUICK_LINKS.map(({ label, to }) => (
+                <li key={to}>
+                  <Link
+                    to={to}
+                    className="text-[13px] font-medium text-ds-text-muted transition-colors duration-150 ease-ds-out hover:text-ds-accent-bright"
+                  >
+                    {label}
+                  </Link>
                 </li>
               ))}
             </ul>
