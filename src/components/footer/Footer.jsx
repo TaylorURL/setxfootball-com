@@ -17,7 +17,11 @@ import {
 import BrandMark from "../brand/BrandMark";
 import { PUBLIC_NAV_LINKS, REGISTER_PATH } from "../nav/navLinks";
 
-const QUICK_LINKS = [...PUBLIC_NAV_LINKS, { label: "Sign Up", to: REGISTER_PATH }];
+const QUICK_LINKS = [
+  ...PUBLIC_NAV_LINKS,
+  { label: "Design", to: "/design" },
+  { label: "Sign Up", to: REGISTER_PATH },
+];
 
 const CONTACTS = [
   { icon: MapPin, text: "Daisetta, TX" },
@@ -115,7 +119,7 @@ const Footer = () => (
 
         <div className="mt-8 flex flex-col items-center justify-between gap-3 sm:flex-row">
           <Text size="xs" tone="faint" className="uppercase tracking-[0.16em]">
-            © {new Date().getFullYear()} SETX Youth Football Camp · Built in Daisetta
+            © {new Date().getFullYear()} SETX Youth Football Camp
           </Text>
           <div className="flex items-center gap-4">
             <Link

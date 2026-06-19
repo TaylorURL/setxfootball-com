@@ -29,7 +29,8 @@ const SponsorsSection = () => (
               <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={sponsorImage}
-                  alt={`Sponsor ${index + 1}`}
+                  alt={`SETX Football Camp sponsor banner ${index + 1}`}
+                  loading="lazy"
                   className="h-full w-full object-cover transition-transform duration-500 ease-ds-out group-hover:scale-[1.04]"
                 />
               </div>

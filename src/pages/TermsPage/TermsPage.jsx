@@ -13,9 +13,12 @@ import {
   Eyebrow,
 } from "@bradley-t-t/sunday-design-system";
 import MarketingPage from "../../components/layout/MarketingPage";
+import Seo from "../../components/seo/Seo";
+import { PAGE_SEO } from "../../components/seo/seoContent";
 
 const TermsPage = () => (
   <MarketingPage>
+    <Seo {...PAGE_SEO.terms} />
     <Section space="lg">
       <Container size="md">
         <Button asChild variant="ghost" size="sm" className="mb-6 px-0">

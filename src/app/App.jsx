@@ -20,6 +20,7 @@ import StaffPanel from "../pages/StaffPanel/StaffPanel";
 import PaymentPage from "../pages/PaymentPage/PaymentPage";
 import PrivacyPage from "../pages/PrivacyPage/PrivacyPage";
 import TermsPage from "../pages/TermsPage/TermsPage";
+import DesignPage from "../pages/DesignPage/DesignPage";
 import ScrollToTop from "../components/ScrollToTop";
 import ProtectedRoute from "../components/routing/ProtectedRoute";
 
@@ -54,6 +55,7 @@ function App() {
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
+          <Route path="/design" element={<DesignPage />} />
         </Routes>
       </Router>
     </AuthProvider>

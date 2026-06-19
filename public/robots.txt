@@ -1,3 +1,9 @@
 # https://www.robotstxt.org/robotstxt.html
 User-agent: *
-Disallow:
+Allow: /
+Disallow: /auth
+Disallow: /payment
+Disallow: /dashboard
+Disallow: /staff
+
+Sitemap: https://setxfootball.com/sitemap.xml

@@ -1,6 +1,6 @@
 {
   "name": "setxfootball",
-  "version": "1.7.11",
+  "version": "1.7.12",
   "private": true,
   "dependencies": {
     "@bradley-t-t/sunday-design-system": "file:./vendor/bradley-t-t-sunday-design-system-2026.24.1.tgz",
@@ -20,6 +20,7 @@
     "postcss": "^8.5.6",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "react-helmet-async": "^3.0.0",
     "react-router-dom": "^7.11.0",
     "react-scripts": "5.0.1",
     "recharts": "^2.15.0",
