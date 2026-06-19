@@ -10,9 +10,12 @@ import Reveal from "../../components/marketing/Reveal";
 import SectionIntro from "../../components/marketing/SectionIntro";
 import RegistrationForm from "./RegistrationForm";
 import { SHIRT_PRICE } from "../../utils/constants";
+import Seo from "../../components/seo/Seo";
+import { PAGE_SEO } from "../../components/seo/seoContent";
 
 const RegisterPage = () => (
   <MarketingPage>
+    <Seo {...PAGE_SEO.register} />
     <Section space="xl" className="relative overflow-hidden bg-ds-bg">
       <div aria-hidden="true" className="absolute -right-32 top-20 h-80 w-80 rounded-full bg-ds-accent-soft blur-[120px]" />
       <div aria-hidden="true" className="absolute -left-20 bottom-10 h-72 w-72 rounded-full bg-primary-500/10 blur-[120px]" />

@@ -26,7 +26,12 @@ const StorySection = () => (
         <Reveal variant="left" className="relative">
           <Card variant="outline" padding="none" className="relative overflow-hidden">
             <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 z-10 h-1.5" />
-            <img src={STORY_IMAGE} alt="Coaches and campers on the field" className="h-[460px] w-full object-cover" />
+            <img
+              src={STORY_IMAGE}
+              alt="SETX Youth Football Camp coaches and campers on the field in Daisetta, Texas"
+              loading="lazy"
+              className="h-[460px] w-full object-cover"
+            />
           </Card>
           <Card variant="elevated" className="absolute -bottom-7 -right-6 hidden items-center gap-4 sm:flex">
             <VarsityNumber>03</VarsityNumber>

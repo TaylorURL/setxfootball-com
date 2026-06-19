@@ -6,6 +6,7 @@
  */
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider, Toaster } from "@bradley-t-t/sunday-design-system";
 import "@bradley-t-t/sunday-design-system/styles.css";
 import "./index.css";
@@ -20,10 +21,12 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <ErrorBoundary>
-      <ThemeProvider defaultTheme={CAMP_THEME} themes={[CAMP_THEME]} storageKey="setx-theme">
-        <App />
-        <Toaster position="bottom-right" />
-      </ThemeProvider>
+      <HelmetProvider>
+        <ThemeProvider defaultTheme={CAMP_THEME} themes={[CAMP_THEME]} storageKey="setx-theme">
+          <App />
+          <Toaster position="bottom-right" />
+        </ThemeProvider>
+      </HelmetProvider>
     </ErrorBoundary>
   </React.StrictMode>,
 );

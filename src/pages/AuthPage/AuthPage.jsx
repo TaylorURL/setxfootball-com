@@ -20,6 +20,8 @@ import {
 } from "@bradley-t-t/sunday-design-system";
 import { useAuth } from "../../context/AuthContext";
 import BrandMark from "../../components/brand/BrandMark";
+import Seo from "../../components/seo/Seo";
+import { PAGE_SEO } from "../../components/seo/seoContent";
 
 const FORM_FIELDS = [
   { name: "fullName", label: "Full Name", type: "text", placeholder: "Enter your full name", icon: User, signUpOnly: true },
@@ -71,6 +73,8 @@ const AuthPage = () => {
   const visibleFields = FORM_FIELDS.filter((field) => !field.signUpOnly || !isLogin);
 
   return (
+    <>
+    <Seo {...PAGE_SEO.auth} title={isLogin ? "Sign In" : "Create Account"} />
     <CenteredLayout
       width="md"
       brand={<BrandMark orientation="vertical" size="lg" to="/" />}
@@ -156,6 +160,7 @@ const AuthPage = () => {
         </div>
       </Card>
     </CenteredLayout>
+    </>
   );
 };
 
