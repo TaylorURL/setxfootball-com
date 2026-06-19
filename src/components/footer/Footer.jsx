@@ -3,11 +3,8 @@
  *
  * Reads like the back of a programme: a brand column with mission line and
  * season mark, quick links, contact, and camp facts, capped with a copyright
- * + legal row. Composed from design-system layout + typography primitives so
- * it tracks the active theme.
- *
- * Quick links smooth-scroll when `onSectionSelect` is supplied (on the landing
- * page); otherwise they route to the landing anchors.
+ * + legal row. Composed from design-system layout + typography primitives.
+ * Quick links route to the public pages via the shared nav config.
  */
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Calendar, Users, Shirt } from "lucide-react";
@@ -18,14 +15,9 @@ import {
   Eyebrow,
 } from "@bradley-t-t/sunday-design-system";
 import BrandMark from "../brand/BrandMark";
+import { PUBLIC_NAV_LINKS, REGISTER_PATH } from "../nav/navLinks";
 
-const QUICK_LINKS = [
-  { label: "Home", id: "home" },
-  { label: "About", id: "about" },
-  { label: "Gallery", id: "gallery" },
-  { label: "Sponsors", id: "sponsors" },
-  { label: "Sign Up", id: "register" },
-];
+const QUICK_LINKS = [...PUBLIC_NAV_LINKS, { label: "Sign Up", to: REGISTER_PATH }];
 
 const CONTACTS = [
   { icon: MapPin, text: "Daisetta, TX" },
@@ -48,9 +40,9 @@ const FooterColumn = ({ title, children }) => (
   </div>
 );
 
-const Footer = ({ onSectionSelect }) => (
+const Footer = () => (
   <footer className="relative border-t border-ds-border bg-ds-bg-elevated">
-    <div aria-hidden="true" className="sideline-stripes absolute inset-x-0 top-0 h-1.5 opacity-70" />
+    <div aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 h-1" />
     <Section space="lg">
       <Container size="xl">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
@@ -70,23 +62,14 @@ const Footer = ({ onSectionSelect }) => (
 
           <FooterColumn title="Quick Links">
             <ul className="space-y-2.5">
-              {QUICK_LINKS.map(({ label, id }) => (
-                <li key={id}>
-                  {onSectionSelect ? (
-                    <button
-                      onClick={() => onSectionSelect(id)}
-                      className="text-[13px] font-medium text-ds-text-muted transition-colors duration-150 ease-ds-out hover:text-ds-accent-bright"
-                    >
-                      {label}
-                    </button>
-                  ) : (
-                    <Link
-                      to={`/#${id}`}
-                      className="text-[13px] font-medium text-ds-text-muted transition-colors duration-150 ease-ds-out hover:text-ds-accent-bright"
-                    >
-                      {label}
-                    </Link>
-                  )}
+              {QUICK_LINKS.map(({ label, to }) => (
+                <li key={to}>
+                  <Link
+                    to={to}
+                    className="text-[13px] font-medium text-ds-text-muted transition-colors duration-150 ease-ds-out hover:text-ds-accent-bright"
+                  >
+                    {label}
+                  </Link>
                 </li>
               ))}
             </ul>

@@ -84,7 +84,7 @@ const AuthPage = () => {
       }
     >
       <Card variant="elevated" padding="lg" className="relative overflow-hidden">
-        <span aria-hidden="true" className="sideline-stripes absolute inset-x-0 top-0 h-1.5 opacity-90" />
+        <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 h-1.5" />
 
         <div className="mb-7 text-center">
           <Eyebrow strong className="text-ds-accent-bright">
