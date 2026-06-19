@@ -8,13 +8,13 @@
 
    The identity reads as a Texas youth football program: deep field navy, camp
    red, gridiron gold, bone cream. Everything below is a *token*: the legacy
-   primary/accent scales feed the dark image-forward hero bands, while the
+   primary/accent scales feed the image-forward hero bands, while the
    design-system `--ds-*` accent is rebranded to camp red so every DS Button,
-   focus ring, badge and surface carries the SETX identity in all three themes.
+   focus ring, badge and surface carries the SETX identity.
 
-   Three themes are first-class: dark, light, and gray. The design system ships
-   dark + light; the gray (graphite) theme is defined in full here so no surface
-   falls back to an unstyled state.
+   The camp ships ONE deliberate theme — graphite (a desaturated blue-graphite
+   neutral set, softer than pure black, with the camp-red accent). It is defined
+   in full here so every design-system primitive renders from real tokens.
    -------------------------------------------------------------------------- */
 :root {
   /* Field navy — hero gradients + scoreboard wash */
@@ -55,42 +55,15 @@
   --field-coal: #0b1320;
 }
 
-/* Rebrand the design-system accent → SETX red, per theme. */
-.ds-root,
-.ds-root[data-theme="dark"],
-[data-theme="dark"] {
-  --ds-accent: #bf0a30;
-  --ds-accent-bright: #fb5871;
-  --ds-accent-glow: rgba(191, 10, 48, 0.45);
-  --ds-accent-soft: rgba(191, 10, 48, 0.16);
-  --ds-accent-softer: rgba(191, 10, 48, 0.07);
-  --ds-border-hover: rgba(191, 10, 48, 0.5);
-  --ds-companion-aura: rgba(191, 10, 48, 0.22);
-  --ds-accent-face: linear-gradient(180deg, #e11d3f 0%, #bf0a30 52%, #9a0826 100%);
-  --ds-accent-face-hover: linear-gradient(180deg, #ef2c4d 0%, #cf1135 52%, #a80a29 100%);
-}
-
-.ds-root[data-theme="light"],
-[data-theme="light"] {
-  --ds-accent: #bf0a30;
-  --ds-accent-bright: #bf0a30;
-  --ds-accent-glow: rgba(191, 10, 48, 0.3);
-  --ds-accent-soft: rgba(191, 10, 48, 0.1);
-  --ds-accent-softer: rgba(191, 10, 48, 0.04);
-  --ds-border-hover: rgba(191, 10, 48, 0.5);
-  --ds-companion-aura: rgba(191, 10, 48, 0.16);
-  --ds-accent-face: linear-gradient(180deg, #d11338 0%, #bf0a30 52%, #9a0826 100%);
-  --ds-accent-face-hover: linear-gradient(180deg, #e0264a 0%, #cf1135 52%, #a80a29 100%);
-}
-
 /* -----------------------------------------------------------------------------
-   Gray (graphite) theme
+   Graphite — the single camp theme
 
-   A deliberate third theme: desaturated blue-graphite neutrals — softer than
-   the pure-black dark theme, with the same camp-red accent. Defines the full
+   Desaturated blue-graphite neutrals with the camp-red accent. Defines the full
    `--ds-*` surface/text/utility token set so every design-system primitive
-   renders correctly here, not just the accent.
+   renders from real tokens. Applied to the base `.ds-root` as well so no surface
+   can fall back to an unstyled state.
    -------------------------------------------------------------------------- */
+.ds-root,
 .ds-root[data-theme="gray"],
 [data-theme="gray"] {
   --ds-bg: #15171c;
@@ -157,8 +130,8 @@ body {
 /* -----------------------------------------------------------------------------
    Camp motifs
    Project-specific visual vocabulary: the stadium-stencil display weight,
-   yard-line dividers, sideline-stripe accents, field grid, and scoreboard
-   grain. These compose with the design system rather than replace it.
+   yard-line dividers, clean accent edges, field grid, and scoreboard grain.
+   These compose with the design system rather than replace it.
    -------------------------------------------------------------------------- */
 .heading-stencil {
   font-family: "Oswald", "Bebas Neue", "Helvetica Neue Condensed", "Arial Narrow",
@@ -214,20 +187,10 @@ body {
   right: 16%;
 }
 
-.sideline-stripes {
-  background-image: repeating-linear-gradient(
-    -45deg,
-    rgba(191, 10, 48, 0.85) 0 14px,
-    rgba(255, 255, 255, 0.9) 14px 28px
-  );
-}
-
-.sideline-stripes-soft {
-  background-image: repeating-linear-gradient(
-    -45deg,
-    rgba(191, 10, 48, 0.18) 0 10px,
-    transparent 10px 22px
-  );
+/* Clean accent edge — the single deliberate replacement for the old striped
+   motif. A solid camp-red rule that reads as a jersey trim line. */
+.accent-edge {
+  background-color: var(--ds-accent);
 }
 
 .field-grid {

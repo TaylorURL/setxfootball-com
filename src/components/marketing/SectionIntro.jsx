@@ -4,7 +4,7 @@
  * consistent.
  *
  * Two intros to choose from:
- *  - `eyebrow`: a sideline-stripe-flanked uppercase label (varsity look)
+ *  - `eyebrow`: an accent-rule-flanked uppercase label (varsity look)
  *  - `badge`: a soft accent badge for shorter callouts
  *
  * Headings render in the stadium-stencil display weight so section titles
@@ -27,9 +27,9 @@ const StripeEyebrow = ({ children, centered }) => (
       centered ? "justify-center" : "justify-start",
     )}
   >
-    <span aria-hidden="true" className="sideline-stripes inline-block h-1 w-10 rounded-sm" />
+    <span aria-hidden="true" className="inline-block h-0.5 w-8 rounded-full bg-ds-accent" />
     {children}
-    <span aria-hidden="true" className="sideline-stripes inline-block h-1 w-10 rounded-sm" />
+    <span aria-hidden="true" className="inline-block h-0.5 w-8 rounded-full bg-ds-accent" />
   </span>
 );
 

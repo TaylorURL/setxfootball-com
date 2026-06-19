@@ -1,8 +1,8 @@
 /**
- * @module homeContent
- * @description Static content for the landing page — section copy, coach roster,
- * gallery layout, and sponsor assets — kept out of the view so HomePage reads as
- * structure. All copy reflects the real SETX Youth Football Camp.
+ * @module campContent
+ * @description Static content for the public site — section copy, coach roster,
+ * gallery layout, and sponsor assets — kept out of the views so each page reads
+ * as structure. All copy reflects the real SETX Youth Football Camp.
  */
 import {
   Star,
@@ -16,19 +16,17 @@ import {
   DollarSign,
   CalendarCheck,
 } from "lucide-react";
-import img1 from "../../assets/images/1.JPG";
-import img2 from "../../assets/images/2.JPG";
-import img3 from "../../assets/images/3.JPG";
-import img4 from "../../assets/images/4.JPG";
-import img5 from "../../assets/images/5.JPG";
-import img6 from "../../assets/images/6.JPG";
-import img7 from "../../assets/images/7.JPG";
-import img8 from "../../assets/images/8.JPG";
+import img1 from "../assets/images/1.JPG";
+import img2 from "../assets/images/2.JPG";
+import img3 from "../assets/images/3.JPG";
+import img4 from "../assets/images/4.JPG";
+import img5 from "../assets/images/5.JPG";
+import img6 from "../assets/images/6.JPG";
+import img7 from "../assets/images/7.JPG";
+import img8 from "../assets/images/8.JPG";
 
 export const HERO_IMAGE = img1;
 export const STORY_IMAGE = img1;
-
-export const NAV_SECTIONS = ["home", "about", "gallery", "sponsors"];
 
 export const HERO_STATS = [
   { value: "5–12", label: "Ages" },

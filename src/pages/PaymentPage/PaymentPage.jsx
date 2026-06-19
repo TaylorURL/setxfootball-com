@@ -119,7 +119,7 @@ const PaymentPage = () => {
           <div className="space-y-6">
             {/* Confirmation header */}
             <Card variant="elevated" padding="lg" className="relative overflow-hidden text-center">
-              <span aria-hidden="true" className="sideline-stripes absolute inset-x-0 top-0 h-1.5 opacity-90" />
+              <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 h-1.5" />
               <span className="mx-auto mb-4 inline-flex h-16 w-16 items-center justify-center rounded-ds-full bg-ds-positive-soft text-ds-positive">
                 <CheckCircle2 className="h-8 w-8" />
               </span>
@@ -153,7 +153,7 @@ const PaymentPage = () => {
 
             {/* Receipt / payment */}
             <Card variant="accent" padding="lg" className="relative overflow-hidden text-center">
-              <span aria-hidden="true" className="sideline-stripes absolute inset-x-0 top-0 h-1.5 opacity-90" />
+              <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 h-1.5" />
               <Eyebrow strong className="text-ds-accent-bright">
                 Total Due
               </Eyebrow>

@@ -1,6 +1,6 @@
 /**
  * BrandMark — the SETX Youth Football lockup: the logo tile plus the wordmark
- * and a sideline-flagged subtitle. One source of truth for the brand identity
+ * and an accent-flagged subtitle. One source of truth for the brand identity
  * shown in the navbar, footer, dashboard chrome, and auth screen.
  *
  * Renders as a router `Link` when `to` is set, a `button` when `onClick` is set,
