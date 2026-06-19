@@ -77,7 +77,7 @@ const RELATION_OPTIONS = EMERGENCY_RELATIONS.map((relation) => ({ value: relatio
 
 const RegistrationCardHeader = ({ index, reg, isEditing, editForm, canEdit, saving, onSave, onCancel, onEdit, onDelete }) => (
   <div className="relative flex flex-col gap-4 border-b border-ds-border bg-ds-surface-2 p-5 sm:flex-row sm:items-center sm:justify-between">
-    <span aria-hidden="true" className="sideline-stripes absolute inset-x-0 top-0 h-1 opacity-80" />
+    <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 h-1" />
     <div className="flex items-center gap-4">
       <VarsityNumber>{String(index + 1).padStart(2, "0")}</VarsityNumber>
       <div>
