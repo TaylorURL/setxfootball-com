@@ -145,7 +145,7 @@ const RegistrationForm = () => {
 
   return (
     <Card variant="elevated" padding="none" className="relative overflow-hidden">
-      <span aria-hidden="true" className="sideline-stripes absolute inset-x-0 top-0 z-10 h-1.5 opacity-90" />
+      <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 z-10 h-1.5" />
 
       {submitResult && (
         <div className="p-6 pb-0">
