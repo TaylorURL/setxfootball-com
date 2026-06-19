@@ -17,7 +17,11 @@ import {
 import BrandMark from "../brand/BrandMark";
 import { PUBLIC_NAV_LINKS, REGISTER_PATH } from "../nav/navLinks";
 
-const QUICK_LINKS = [...PUBLIC_NAV_LINKS, { label: "Sign Up", to: REGISTER_PATH }];
+const QUICK_LINKS = [
+  ...PUBLIC_NAV_LINKS,
+  { label: "Design", to: "/design" },
+  { label: "Sign Up", to: REGISTER_PATH },
+];
 
 const CONTACTS = [
   { icon: MapPin, text: "Daisetta, TX" },
