@@ -20,6 +20,7 @@ import StaffPanel from "../pages/StaffPanel/StaffPanel";
 import PaymentPage from "../pages/PaymentPage/PaymentPage";
 import PrivacyPage from "../pages/PrivacyPage/PrivacyPage";
 import TermsPage from "../pages/TermsPage/TermsPage";
+import DesignPage from "../pages/DesignPage/DesignPage";
 import ScrollToTop from "../components/ScrollToTop";
 import ProtectedRoute from "../components/routing/ProtectedRoute";
 
