@@ -31,6 +31,8 @@ import Footer from "../../components/footer/Footer";
 import RegistrationService from "../../services/RegistrationService";
 import { formatCurrency } from "../../utils/helpers";
 import { CASHAPP_USERNAME, SHIRT_PRICE } from "../../utils/constants";
+import Seo from "../../components/seo/Seo";
+import { PAGE_SEO } from "../../components/seo/seoContent";
 
 const CLIPBOARD_FEEDBACK_DURATION_MS = 2000;
 
