@@ -1,7 +1,7 @@
 /**
  * DashboardShell — the authenticated app chrome shared by the player Dashboard
  * and the StaffPanel. Wraps the design-system AppShell with a routed Sidebar
- * (brand, nav, signed-in footer) and a top bar carrying the ThemeToggle.
+ * (brand, nav, signed-in footer).
  *
  * @param {object} props
  * @param {'dashboard'|'staff'} props.active - highlights the current nav entry
@@ -14,7 +14,6 @@ import {
   Sidebar,
   SidebarItem,
   Button,
-  ThemeToggle,
   Text,
 } from "@bradley-t-t/sunday-design-system";
 import { useAuth } from "../../context/AuthContext";
