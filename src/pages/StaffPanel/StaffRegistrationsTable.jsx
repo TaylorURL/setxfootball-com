@@ -136,15 +136,12 @@ const StaffRegistrationsTable = ({ groups, expandedRows, onToggleExpand, updatin
                   </TableCell>
                 </TableRow>
               )}
-            </ExpandableRows>
+            </Fragment>
           );
         })}
       </TableBody>
     </Table>
   </TableContainer>
 );
-
-/** Groups a primary row and its optional expanded detail row under one key. */
-const ExpandableRows = ({ children }) => <>{children}</>;
 
 export default StaffRegistrationsTable;
