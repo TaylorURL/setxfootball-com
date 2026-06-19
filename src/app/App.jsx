@@ -55,6 +55,7 @@ function App() {
           <Route path="/payment" element={<PaymentPage />} />
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
+          <Route path="/design" element={<DesignPage />} />
         </Routes>
       </Router>
     </AuthProvider>
