@@ -187,20 +187,10 @@ body {
   right: 16%;
 }
 
-.sideline-stripes {
-  background-image: repeating-linear-gradient(
-    -45deg,
-    rgba(191, 10, 48, 0.85) 0 14px,
-    rgba(255, 255, 255, 0.9) 14px 28px
-  );
-}
-
-.sideline-stripes-soft {
-  background-image: repeating-linear-gradient(
-    -45deg,
-    rgba(191, 10, 48, 0.18) 0 10px,
-    transparent 10px 22px
-  );
+/* Clean accent edge — the single deliberate replacement for the old striped
+   motif. A solid camp-red rule that reads as a jersey trim line. */
+.accent-edge {
+  background-color: var(--ds-accent);
 }
 
 .field-grid {
