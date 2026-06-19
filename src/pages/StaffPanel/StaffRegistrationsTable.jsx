@@ -2,6 +2,7 @@
  * StaffRegistrationsTable — the desktop (lg+) grouped registrations table.
  * Each grouped row expands to reveal contact details and individual orders.
  */
+import { Fragment } from "react";
 import { ChevronRight, ChevronDown, Shirt } from "lucide-react";
 import {
   IconButton,
@@ -40,7 +41,7 @@ const StaffRegistrationsTable = ({ groups, expandedRows, onToggleExpand, updatin
           const groupStatus = GROUP_STATUS[combined.status] ?? GROUP_STATUS.pending;
 
           return (
-            <ExpandableRows key={key}>
+            <Fragment key={key}>
               <TableRow interactive onClick={() => onToggleExpand(key)}>
                 <TableCell>
                   <IconButton
@@ -136,15 +137,12 @@ const StaffRegistrationsTable = ({ groups, expandedRows, onToggleExpand, updatin
                   </TableCell>
                 </TableRow>
               )}
-            </ExpandableRows>
+            </Fragment>
           );
         })}
       </TableBody>
     </Table>
   </TableContainer>
 );
-
-/** Groups a primary row and its optional expanded detail row under one key. */
-const ExpandableRows = ({ children }) => <>{children}</>;
 
 export default StaffRegistrationsTable;

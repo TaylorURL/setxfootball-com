@@ -7,7 +7,7 @@
  * @param {'dashboard'|'staff'} props.active - highlights the current nav entry
  * @param {React.ReactNode} props.children - main page content
  */
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Home, LayoutDashboard, ShieldCheck, LogOut } from "lucide-react";
 import {
   AppShell,
@@ -18,23 +18,9 @@ import {
   Text,
 } from "@bradley-t-t/sunday-design-system";
 import { useAuth } from "../../context/AuthContext";
-import logo from "../../assets/logo.PNG";
+import BrandMark from "../../components/brand/BrandMark";
 
-const Brand = () => (
-  <Link to="/" className="flex items-center gap-3">
-    <span className="inline-flex h-9 w-9 items-center justify-center rounded-ds-md bg-ds-accent ring-1 ring-white/15">
-      <img src={logo} alt="" className="h-7 w-7 object-contain" />
-    </span>
-    <span>
-      <span className="block text-[14px] font-black uppercase tracking-[0.04em] text-ds-text">
-        SETX Football
-      </span>
-      <span className="mt-0.5 flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.22em] text-ds-text-muted">
-        <span className="inline-block h-0.5 w-3 bg-ds-accent" /> Camp Console
-      </span>
-    </span>
-  </Link>
-);
+const Brand = () => <BrandMark size="sm" subtitle="Camp Console" to="/" />;
 
 const DashboardShell = ({ active, children }) => {
   const navigate = useNavigate();

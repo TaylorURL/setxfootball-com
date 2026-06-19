@@ -17,7 +17,7 @@ import {
   Text,
   Eyebrow,
 } from "@bradley-t-t/sunday-design-system";
-import logo from "../../assets/logo.PNG";
+import BrandMark from "../brand/BrandMark";
 
 const QUICK_LINKS = [
   { label: "Home", id: "home" },
@@ -55,19 +55,7 @@ const Footer = ({ onSectionSelect }) => (
       <Container size="xl">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-2 lg:grid-cols-4">
           <div className="space-y-5">
-            <div className="flex items-center">
-              <span className="inline-flex h-11 w-11 items-center justify-center rounded-ds-md bg-ds-accent ring-1 ring-white/15">
-                <img src={logo} alt="" className="h-9 w-9 object-contain" />
-              </span>
-              <span className="ml-3">
-                <span className="block text-[15px] font-black uppercase tracking-[0.04em] text-ds-text">
-                  SETX Football
-                </span>
-                <span className="mt-0.5 flex items-center gap-1.5 text-[9px] font-bold uppercase tracking-[0.22em] text-ds-text-muted">
-                  <span className="inline-block h-0.5 w-3 bg-ds-accent" /> Youth Camp · Daisetta TX
-                </span>
-              </span>
-            </div>
+            <BrandMark size="md" />
             <Text size="sm" tone="muted" className="max-w-xs">
               Building champions on and off the field — a community-first youth
               football camp, run by neighbors for neighbors.
