@@ -9,7 +9,7 @@ import Footer from "../footer/Footer";
 const MarketingPage = ({ children }) => (
   <div className="flex min-h-[100dvh] flex-col bg-ds-bg text-ds-text">
     <Navbar />
-    <main className="flex-1">{children}</main>
+    <main className="flex-1 pt-24 sm:pt-28">{children}</main>
     <Footer />
   </div>
 );
