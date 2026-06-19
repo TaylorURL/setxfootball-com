@@ -7,7 +7,7 @@
  * @param {'dashboard'|'staff'} props.active - highlights the current nav entry
  * @param {React.ReactNode} props.children - main page content
  */
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Home, LayoutDashboard, ShieldCheck, LogOut } from "lucide-react";
 import {
   AppShell,
