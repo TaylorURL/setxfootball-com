@@ -4,7 +4,7 @@
  * consistent.
  *
  * Two intros to choose from:
- *  - `eyebrow`: a sideline-stripe-flanked uppercase label (varsity look)
+ *  - `eyebrow`: an accent-rule-flanked uppercase label (varsity look)
  *  - `badge`: a soft accent badge for shorter callouts
  *
  * Headings render in the stadium-stencil display weight so section titles
