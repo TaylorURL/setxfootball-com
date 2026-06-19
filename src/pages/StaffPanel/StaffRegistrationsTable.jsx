@@ -2,6 +2,7 @@
  * StaffRegistrationsTable — the desktop (lg+) grouped registrations table.
  * Each grouped row expands to reveal contact details and individual orders.
  */
+import { Fragment } from "react";
 import { ChevronRight, ChevronDown, Shirt } from "lucide-react";
 import {
   IconButton,
