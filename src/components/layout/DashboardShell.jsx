@@ -65,7 +65,7 @@ const DashboardShell = ({ active, children }) => {
   );
 
   return (
-    <AppShell sidebar={sidebar} brand={<Brand />} header={<ThemeToggle variant="icon" />}>
+    <AppShell sidebar={sidebar} brand={<Brand />}>
       {children}
     </AppShell>
   );
