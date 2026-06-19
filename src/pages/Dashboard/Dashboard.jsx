@@ -471,7 +471,7 @@ const EmptyDashboard = () => (
     description="You haven't signed up any campers yet — head back to the home page and grab a roster spot."
     action={
       <Button asChild variant="primary" className="font-bold uppercase tracking-[0.06em]">
-        <Link to="/#register">Sign Up Now</Link>
+        <Link to="/register">Sign Up Now</Link>
       </Button>
     }
   />
