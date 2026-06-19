@@ -74,7 +74,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-sticky border-b border-ds-border bg-ds-bg-elevated/85 shadow-ds-lg backdrop-blur-xl">
+      <header className="fixed inset-x-0 top-0 z-sticky border-b border-ds-border bg-ds-bg-elevated shadow-ds-lg">
         <span aria-hidden="true" className="accent-edge absolute inset-x-0 bottom-0 h-0.5" />
         <nav
           aria-label="Primary"
