@@ -11,9 +11,12 @@ import ScoreboardSection from "../../components/marketing/sections/ScoreboardSec
 import PerksSection from "../../components/marketing/sections/PerksSection";
 import PlaybookSection from "../../components/marketing/sections/PlaybookSection";
 import JoinCallout from "../../components/marketing/sections/JoinCallout";
+import Seo from "../../components/seo/Seo";
+import { PAGE_SEO } from "../../components/seo/seoContent";
 
 const HomePage = () => (
   <MarketingPage padded={false}>
+    <Seo {...PAGE_SEO.home} />
     <HeroSection />
     <ScoreboardSection />
     <PerksSection />
