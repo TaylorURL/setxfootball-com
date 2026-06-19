@@ -8,13 +8,13 @@
 
    The identity reads as a Texas youth football program: deep field navy, camp
    red, gridiron gold, bone cream. Everything below is a *token*: the legacy
-   primary/accent scales feed the dark image-forward hero bands, while the
+   primary/accent scales feed the image-forward hero bands, while the
    design-system `--ds-*` accent is rebranded to camp red so every DS Button,
-   focus ring, badge and surface carries the SETX identity in all three themes.
+   focus ring, badge and surface carries the SETX identity.
 
-   Three themes are first-class: dark, light, and gray. The design system ships
-   dark + light; the gray (graphite) theme is defined in full here so no surface
-   falls back to an unstyled state.
+   The camp ships ONE deliberate theme — graphite (a desaturated blue-graphite
+   neutral set, softer than pure black, with the camp-red accent). It is defined
+   in full here so every design-system primitive renders from real tokens.
    -------------------------------------------------------------------------- */
 :root {
   /* Field navy — hero gradients + scoreboard wash */
