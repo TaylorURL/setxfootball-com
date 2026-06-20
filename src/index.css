@@ -224,18 +224,6 @@ body {
   letter-spacing: 0;
 }
 
-/* Bracket-style technical tag: [ 01 / Sign Up ] */
-.bracket-tag::before {
-  content: "[\00a0";
-  color: var(--ds-accent-bright);
-  opacity: 0.85;
-}
-.bracket-tag::after {
-  content: "\00a0]";
-  color: var(--ds-accent-bright);
-  opacity: 0.85;
-}
-
 /* -----------------------------------------------------------------------------
    Editorial chrome
    Sharp section dividers, rule marks, hairline borders.
