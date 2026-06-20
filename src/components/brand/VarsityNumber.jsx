@@ -1,8 +1,8 @@
 /**
- * VarsityNumber — the camp's jersey-patch number chip: a stencil numeral on a
- * camp-red tile with the brand glow. One source of truth for the varsity
- * "roster number" treatment used across the hero, the registration steps, and
- * the dashboard season cards.
+ * VarsityNumber — the camp's jersey-patch numeral on a camp-red square. Sharp
+ * corners, tabular numerals, restrained ring. One source of truth for the
+ * "roster number" treatment used across the hero, registration steps, and
+ * dashboard season cards.
  *
  * @param {object} props
  * @param {React.ReactNode} props.children - The numeral (e.g. "01", 3).
@@ -12,15 +12,15 @@
 import clsx from "clsx";
 
 const SIZES = {
-  sm: "h-11 w-11 text-[1.25rem] brand-chip-shadow-sm",
-  md: "h-12 w-12 text-[1.5rem] brand-chip-shadow",
-  lg: "h-14 w-14 text-[1.75rem] brand-chip-shadow",
+  sm: "h-10 w-10 text-[1.125rem] brand-chip-shadow-sm",
+  md: "h-12 w-12 text-[1.375rem] brand-chip-shadow",
+  lg: "h-14 w-14 text-[1.625rem] brand-chip-shadow",
 };
 
 const VarsityNumber = ({ children, size = "md", className }) => (
   <span
     className={clsx(
-      "heading-stencil ds-tabular inline-flex items-center justify-center rounded-ds-md bg-ds-accent text-white ring-1 ring-white/15",
+      "heading-stencil ds-tabular mono-num inline-flex items-center justify-center bg-ds-accent text-white ring-1 ring-white/10",
       SIZES[size],
       className,
     )}
