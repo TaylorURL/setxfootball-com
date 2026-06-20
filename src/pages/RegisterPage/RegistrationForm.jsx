@@ -193,10 +193,7 @@ const RegistrationForm = () => {
             {formData.shirts.map((shirt, index) => (
               <div key={shirt.id} className="relative border border-ds-border bg-ds-bg p-5">
                 <div className="mb-4 flex items-center justify-between">
-                  <span className="mono-tag inline-flex items-center gap-3 text-ds-text">
-                    <span className="mono-num text-ds-accent-bright">
-                      /{String(index + 1).padStart(2, "0")}
-                    </span>
+                  <span className="mono-tag text-ds-text">
                     Shirt {index + 1}
                   </span>
                   {formData.shirts.length > 1 && (
