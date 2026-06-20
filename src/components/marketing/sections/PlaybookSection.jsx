@@ -1,6 +1,6 @@
 /**
- * PlaybookSection — "How it works": the three-step sign-up playbook rendered
- * as a numbered editorial sequence with very large hanging numerals.
+ * PlaybookSection — "How it works": the three-step sign-up flow rendered as a
+ * numbered editorial sequence with large hanging step numerals.
  */
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
@@ -11,8 +11,7 @@ const PlaybookSection = () => (
     <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
       <Reveal>
         <SectionIntro
-          eyebrow="The Playbook"
-          index="02"
+          eyebrow="How It Works"
           title={<>From signup to sideline in three steps.</>}
         >
           Three steps from the couch to the field. No payment due until after
@@ -25,7 +24,7 @@ const PlaybookSection = () => (
           <Reveal key={play.title} variant="up" delay={index + 1}>
             <div className="grid grid-cols-[auto_1fr] gap-x-6">
               <span className="editorial-display mono-num text-[5rem] leading-none text-ds-accent-bright sm:text-[6rem]">
-                {String(index + 1).padStart(2, "0")}
+                {index + 1}
               </span>
               <div className="pt-2">
                 <span className="mono-tag-sm text-ds-text-faint">Step {index + 1}</span>
