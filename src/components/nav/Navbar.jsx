@@ -94,6 +94,13 @@ const Navbar = () => {
             : "border-b border-transparent bg-transparent"
         }`}
       >
+        {/* Legibility scrim — only in the transparent state so nav text stays AA over the hero image. */}
+        <div
+          aria-hidden="true"
+          className={`pointer-events-none absolute inset-x-0 top-0 h-[140px] bg-gradient-to-b from-black/70 via-black/40 to-transparent transition-opacity duration-300 ${
+            scrolled ? "opacity-0" : "opacity-100"
+          }`}
+        />
         <nav
           aria-label="Primary"
           className="relative mx-auto flex w-full max-w-[1440px] items-center gap-6 px-5 sm:px-8 lg:px-10"
