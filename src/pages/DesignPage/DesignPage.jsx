@@ -97,7 +97,7 @@ const GEAR_TILES = [
   {
     icon: Shirt,
     title: "The Camp Tee",
-    subtitle: "Season 03 · Camp red on bone",
+    subtitle: "Camp red on bone cream",
     body: "Every camper gets one — yours to keep, registered or walk-on. Block lettering across the chest, season number tagged at the sleeve.",
   },
   {
