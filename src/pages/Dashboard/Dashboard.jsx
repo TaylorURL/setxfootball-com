@@ -270,7 +270,7 @@ const Dashboard = () => {
           <EmptyDashboard />
         ) : (
           <div className="mt-10 space-y-8">
-            {registrations.map((reg, index) => {
+            {registrations.map((reg) => {
               const canEdit = RegistrationService.canEdit(reg);
               const daysRemaining = RegistrationService.getDaysRemaining(reg);
               const isEditing = editingId === reg.id;
@@ -278,7 +278,6 @@ const Dashboard = () => {
               return (
                 <article key={reg.id} className="border border-ds-border bg-ds-surface">
                   <RegistrationCardHeader
-                    index={index}
                     reg={reg}
                     isEditing={isEditing}
                     editForm={editForm}
