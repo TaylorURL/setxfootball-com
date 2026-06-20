@@ -184,8 +184,8 @@ body {
 
 /* -----------------------------------------------------------------------------
    Mono microcopy
-   The technical tag/metadata register — small uppercase, wide tracking,
-   monospace. Used for section eyebrows, coordinates, IDs, timestamps.
+   The editorial tag/metadata register — small uppercase, wide tracking,
+   monospace. Used for section eyebrows, indices, dates, supporting labels.
    -------------------------------------------------------------------------- */
 .mono-tag {
   font-family: "JetBrains Mono", "IBM Plex Mono", ui-monospace, "SF Mono",
