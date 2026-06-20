@@ -43,7 +43,7 @@ const BrandMark = ({
     <>
       <span
         className={clsx(
-          "relative inline-flex shrink-0 items-center justify-center overflow-hidden bg-ds-accent ring-1 ring-white/10 brand-chip-shadow-sm",
+          "relative inline-flex shrink-0 items-center justify-center overflow-hidden",
           scale.tile,
         )}
       >
