@@ -53,6 +53,8 @@ const TakeoverLink = ({ to, label, onNavigate }) => (
 const Navbar = () => {
   const { user, signOut } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const headerRef = useRef(null);
+  const surface = useAdaptiveNavSurface(headerRef);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -66,12 +68,15 @@ const Navbar = () => {
 
   return (
     <>
-      {/* The navbar always renders on the dark register (data-theme="gray")
-          regardless of the section beneath it, so its tokens, contrast, and
-          accent color stay reliable across every route. */}
+      {/* The header anchors to the dark register by default but flips to the
+          light register whenever a [data-surface="light"] section is sitting
+          beneath it. The `data-surface` attribute is what swaps every --ds-*
+          token coherently for the bar and all of its children. */}
       <header
+        ref={headerRef}
         data-theme="gray"
-        className="fixed inset-x-0 top-0 z-sticky border-b border-ds-border bg-ds-bg/85 text-ds-text backdrop-blur-md backdrop-saturate-150"
+        data-surface={surface === "light" ? "light" : undefined}
+        className="fixed inset-x-0 top-0 z-sticky border-b border-ds-border bg-ds-bg/85 text-ds-text backdrop-blur-md backdrop-saturate-150 transition-colors duration-200"
       >
         <nav
           aria-label="Primary"
