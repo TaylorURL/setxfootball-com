@@ -1,60 +1,78 @@
 /**
- * SectionIntro — the canonical marketing section header. Codifies the
- * typographic rhythm every public section shares so they stay visually
- * consistent.
- *
- * Two intros to choose from:
- *  - `eyebrow`: an accent-rule-flanked uppercase label (varsity look)
- *  - `badge`: a soft accent badge for shorter callouts
- *
- * Headings render in the stadium-stencil display weight so section titles
- * read like signage.
+ * SectionIntro — the canonical marketing section header. Editorial register:
+ * a monospace eyebrow with a hairline accent rule, a tight industrial-grotesque
+ * display title, and a left-aligned supporting paragraph. Section titles read
+ * like editorial spreads, not banners.
  *
  * @param {object} props
- * @param {string} [props.eyebrow] - Stripe-flanked uppercase label.
- * @param {React.ReactNode} [props.badge] - Badge contents (takes precedence over eyebrow).
+ * @param {string} [props.eyebrow] - Optional mono uppercase label.
+ * @param {React.ReactNode} [props.badge] - Optional inline icon + label group
+ *   (rendered with the same mono register as eyebrow).
  * @param {React.ReactNode} props.title - Display heading content.
- * @param {React.ReactNode} [props.children] - Supporting copy below the heading.
- * @param {'center'|'start'} [props.align='center'] - Text alignment.
+ * @param {React.ReactNode} [props.children] - Supporting copy beneath the heading.
+ * @param {'start'|'center'} [props.align='start'] - Text alignment.
+ * @param {string} [props.index] - Optional section index ("01", "02") rendered as
+ *   a hanging numeral in the editorial register.
+ * @param {string} [props.className]
  */
 import clsx from "clsx";
-import { Badge, Text } from "@bradley-t-t/sunday-design-system";
 
-const StripeEyebrow = ({ children, centered }) => (
-  <span
-    className={clsx(
-      "mb-5 inline-flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.24em] text-ds-accent-bright",
-      centered ? "justify-center" : "justify-start",
-    )}
-  >
-    <span aria-hidden="true" className="inline-block h-0.5 w-8 rounded-full bg-ds-accent" />
-    {children}
-    <span aria-hidden="true" className="inline-block h-0.5 w-8 rounded-full bg-ds-accent" />
-  </span>
-);
-
-const SectionIntro = ({ eyebrow, badge, title, children, align = "center", className }) => {
+const SectionIntro = ({
+  eyebrow,
+  badge,
+  title,
+  children,
+  align = "start",
+  index,
+  className,
+}) => {
   const centered = align === "center";
   return (
-    <div className={clsx(centered && "text-center", className)}>
-      {badge ? (
-        <Badge tone="accent" variant="soft" size="lg" className="mb-4 uppercase tracking-[0.16em]">
-          {badge}
-        </Badge>
-      ) : (
-        eyebrow && <StripeEyebrow centered={centered}>{eyebrow}</StripeEyebrow>
+    <div className={clsx(centered ? "text-center" : "text-left", className)}>
+      {(eyebrow || badge) && (
+        <div
+          className={clsx(
+            "mono-tag mb-6 inline-flex items-center gap-3 text-ds-accent-bright",
+            centered && "justify-center",
+          )}
+        >
+          <span aria-hidden="true" className="inline-block h-px w-10 bg-ds-accent" />
+          {badge || eyebrow}
+        </div>
       )}
-      <h2
+      <div
         className={clsx(
-          "heading-stencil heading-stencil-tight mb-4 text-[2.25rem] text-ds-text sm:text-5xl lg:text-[3.5rem]",
+          "flex items-baseline gap-5",
+          centered && "justify-center",
         )}
       >
-        {title}
-      </h2>
+        {index && (
+          <span
+            className="mono-tag-lg shrink-0 translate-y-[-0.5em] text-ds-text-faint"
+            aria-hidden="true"
+          >
+            {index}
+          </span>
+        )}
+        <h2
+          className={clsx(
+            "editorial-display editorial-display-tight text-ds-text",
+            "text-[2.5rem] sm:text-[3.5rem] lg:text-[4.5rem]",
+          )}
+        >
+          {title}
+        </h2>
+      </div>
       {children && (
-        <Text tone="muted" size="lg" className={clsx(centered && "mx-auto max-w-2xl")}>
+        <p
+          className={clsx(
+            "editorial-body mt-6 text-lg text-ds-text-muted sm:text-xl",
+            "max-w-2xl",
+            centered && "mx-auto",
+          )}
+        >
           {children}
-        </Text>
+        </p>
       )}
     </div>
   );
