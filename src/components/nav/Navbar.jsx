@@ -3,15 +3,22 @@
  * mark, primary nav links, an animated underline indicator for the active
  * route, and the sign-up CTA. The bar uses a translucent backdrop-blurred
  * chrome with a strong border so it stays legible over BOTH the dark hero and
- * the light paper sections beneath as you scroll. On small screens the bar
- * collapses to brand + a menu trigger that opens a full-screen takeover menu.
+ * the light paper sections beneath as you scroll. The bar itself adopts the
+ * register of whichever section is currently behind it (dark or light), so
+ * the wordmark, links, hamburger, and active underline always read against
+ * the right contrast. On small screens the bar collapses to brand + a menu
+ * trigger that opens a full-screen takeover menu (which keeps the dark
+ * register regardless of what's behind it, since the takeover paints its own
+ * solid surface).
  */
+import { useRef } from "react";
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X, User, LogOut, ArrowRight, LayoutDashboard } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import BrandMark from "../brand/BrandMark";
 import { PUBLIC_NAV_LINKS, REGISTER_PATH } from "./navLinks";
+import useAdaptiveNavSurface from "../../hooks/useAdaptiveNavSurface";
 
 const DockLink = ({ to, label }) => (
   <NavLink
