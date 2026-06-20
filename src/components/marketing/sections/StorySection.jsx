@@ -1,20 +1,25 @@
 /**
- * StorySection — the mission intro and "started by neighbors" story, with the
- * field photo and the supporting story pillars.
+ * StorySection — the camp's mission and "started by neighbors" story. An
+ * editorial half-image / half-text spread with a hanging numeral lockup, a
+ * mono pillar list, and a season stamp anchored over the field photo.
  */
-import { Container, Section, Grid, Card, Text, Eyebrow } from "@bradley-t-t/sunday-design-system";
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
-import VarsityNumber from "../../brand/VarsityNumber";
 import { STORY_IMAGE, STORY_PILLARS } from "../../../content/campContent";
 
 const StorySection = () => (
-  <Section space="xl" className="bg-ds-bg">
-    <Container size="xl">
-      <Reveal className="mb-16 lg:mb-24">
+  <section className="relative border-b border-ds-border bg-ds-bg py-24 sm:py-32 lg:py-40">
+    <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
+      <Reveal className="max-w-4xl">
         <SectionIntro
           eyebrow="Our Mission"
-          title={<>Built for our <span className="text-ds-accent-bright">community.</span></>}
+          index="01"
+          title={
+            <>
+              Built for our<br />
+              <span className="text-ds-accent-bright">community.</span>
+            </>
+          }
         >
           SETX Youth Football Camp was built to give every kid in Daisetta and
           Southeast Texas a shot at the field. Two days of fundamentals, fun, and
@@ -22,69 +27,70 @@ const StorySection = () => (
         </SectionIntro>
       </Reveal>
 
-      <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+      <div className="mt-20 grid grid-cols-1 gap-12 border-t border-ds-border pt-16 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
         <Reveal variant="left" className="relative">
-          <Card variant="outline" padding="none" className="relative overflow-hidden">
-            <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 z-10 h-1.5" />
+          <div className="relative overflow-hidden">
             <img
               src={STORY_IMAGE}
               alt="SETX Youth Football Camp coaches and campers on the field in Daisetta, Texas"
               loading="lazy"
-              className="h-[460px] w-full object-cover"
+              className="h-[520px] w-full object-cover"
             />
-          </Card>
-          <Card variant="elevated" className="absolute -bottom-7 -right-6 hidden items-center gap-4 sm:flex">
-            <VarsityNumber>03</VarsityNumber>
-            <div>
-              <div className="heading-stencil text-2xl leading-none text-ds-text">Season 03</div>
-              <Eyebrow className="mt-1.5">Strong &amp; Growing</Eyebrow>
+            <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-ds-bg/60 via-transparent to-transparent" />
+            <div className="absolute bottom-6 left-6 flex items-center gap-4 border-l-2 border-ds-accent bg-ds-bg/85 px-5 py-4 backdrop-blur-sm">
+              <span className="editorial-display mono-num text-5xl text-ds-accent-bright">
+                03
+              </span>
+              <div>
+                <p className="mono-tag-sm text-ds-text-faint">Season</p>
+                <p className="editorial-display mt-1 text-xl text-ds-text">Strong &amp; growing</p>
+              </div>
             </div>
-          </Card>
+          </div>
         </Reveal>
 
         <Reveal variant="right" delay={2}>
-          <div className="mb-5 inline-flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.24em] text-ds-accent-bright">
-            <span aria-hidden="true" className="inline-block h-0.5 w-10 rounded-full bg-ds-accent" />
+          <span className="mono-tag inline-flex items-center gap-3 text-ds-accent-bright">
+            <span aria-hidden="true" className="inline-block h-px w-10 bg-ds-accent" />
             The Story
-          </div>
-          <h2 className="heading-stencil heading-stencil-tight mb-6 text-4xl text-ds-text sm:text-5xl">
-            Started by neighbors. <br />
+          </span>
+          <h3 className="editorial-display editorial-display-tight mt-5 text-4xl text-ds-text sm:text-5xl">
+            Started by neighbors.<br />
             <span className="text-ds-accent-bright">Run for neighbors.</span>
-          </h2>
-          <div className="space-y-4">
-            <Text tone="muted" size="lg">
+          </h3>
+          <div className="mt-6 space-y-5 editorial-body">
+            <p className="text-lg text-ds-text-muted">
               Growing up in Daisetta, we didn't have many youth sports options —
               so we built one. SETXYFC is a community-first, majority-free
               football camp offering two half-days of fundamentals, fun, and
               confidence-building instruction.
-            </Text>
-            <Text tone="muted" size="lg">
+            </p>
+            <p className="text-lg text-ds-text-muted">
               Drinks, snacks, and a camp shirt for every participant — registered
               or not — because inclusion matters more than optics. Now in our
               third year, the camp keeps growing, and we're proud of what this
               community has built together.
-            </Text>
+            </p>
           </div>
 
-          <Grid cols={2} gap={3} className="mt-8">
+          <div className="mt-10 grid grid-cols-1 gap-x-8 gap-y-8 border-t border-ds-border pt-10 sm:grid-cols-2">
             {STORY_PILLARS.map((item, index) => (
               <Reveal key={item.title} variant="up" delay={index + 1}>
-                <Card variant="surface" padding="md" interactive className="h-full">
-                  <div className="mb-2.5 flex items-center gap-2.5">
-                    <span className="inline-flex h-8 w-8 items-center justify-center rounded-ds-md bg-ds-accent-soft text-ds-accent-bright">
-                      <item.icon className="h-4 w-4" />
-                    </span>
-                    <Text size="sm" weight="semibold">{item.title}</Text>
-                  </div>
-                  <Text size="xs" tone="muted">{item.body}</Text>
-                </Card>
+                <div className="left-rule-accent pl-4">
+                  <span className="mono-tag-sm text-ds-text-faint">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <item.icon className="mt-3 h-5 w-5 text-ds-accent-bright" aria-hidden="true" />
+                  <p className="editorial-display mt-3 text-lg text-ds-text">{item.title}</p>
+                  <p className="editorial-body mt-2 text-sm text-ds-text-muted">{item.body}</p>
+                </div>
               </Reveal>
             ))}
-          </Grid>
+          </div>
         </Reveal>
       </div>
-    </Container>
-  </Section>
+    </div>
+  </section>
 );
 
 export default StorySection;
