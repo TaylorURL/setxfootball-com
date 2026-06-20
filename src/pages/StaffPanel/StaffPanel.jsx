@@ -145,13 +145,12 @@ const StaffPanel = () => {
         </header>
 
         <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-          {statCards.map((card, index) => (
+          {statCards.map((card) => (
             <StatCard
               key={card.label}
               icon={card.icon}
               label={card.label}
               value={card.value}
-              index={index}
             />
           ))}
         </div>
