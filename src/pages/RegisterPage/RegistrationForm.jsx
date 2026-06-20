@@ -369,11 +369,6 @@ const RegistrationForm = () => {
         <p className="mono-tag-sm text-center text-ds-text-faint">
           Payment is collected after sign-up — no payment needed now
         </p>
-
-        {/* Hidden DS button for keyboard a11y / form lifecycle parity */}
-        <Button type="submit" variant="primary" className="sr-only" loading={submitting}>
-          Submit
-        </Button>
       </form>
     </div>
   );
