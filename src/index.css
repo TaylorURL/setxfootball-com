@@ -260,7 +260,7 @@ body {
   border-color: var(--ds-border);
 }
 
-/* Anduril-flavored vertical accent rule, used in cards and editorial blocks. */
+/* Vertical accent rule used in cards and editorial blocks. */
 .left-rule-accent {
   position: relative;
 }
