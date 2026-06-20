@@ -1,14 +1,19 @@
 /**
  * SponsorsSection — thank-you wall for local sponsors. Editorial card grid
- * with sharp edges and hairline accent rules.
+ * with sharp edges and hairline accent rules. Defaults to the paper register
+ * so sponsor logos sit on a calm, premium ground.
  */
 import { Handshake } from "lucide-react";
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
 import { SPONSOR_IMAGES } from "../../../content/campContent";
+import { surfaceProps } from "../surface";
 
-const SponsorsSection = () => (
-  <section className="relative border-b border-ds-border bg-ds-bg py-24 sm:py-32 lg:py-40">
+const SponsorsSection = ({ surface = "light" }) => (
+  <section
+    {...surfaceProps(surface)}
+    className="surface-seam relative border-b border-ds-border bg-ds-bg py-24 sm:py-32 lg:py-40"
+  >
     <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
       <Reveal>
         <SectionIntro
@@ -27,7 +32,7 @@ const SponsorsSection = () => (
       <div className="mt-16 grid grid-cols-1 gap-6 border-t border-ds-border pt-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
         {SPONSOR_IMAGES.map((sponsorImage, index) => (
           <Reveal key={sponsorImage} variant="up" delay={index + 1}>
-            <div className="relative overflow-hidden border border-ds-border">
+            <div className="card-lift relative overflow-hidden border border-ds-border">
               <span aria-hidden="true" className="absolute inset-x-0 top-0 z-10 h-px bg-ds-accent" />
               <div className="aspect-[4/3] overflow-hidden bg-ds-surface">
                 <img
