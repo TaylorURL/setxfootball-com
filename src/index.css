@@ -281,51 +281,10 @@ body {
   background-size: 72px 72px;
 }
 
-.field-numbers {
-  background-image: repeating-linear-gradient(
-    90deg,
-    transparent 0 78px,
-    rgba(255, 255, 255, 0.05) 78px 80px
-  );
-}
-
 .scoreboard-grain {
   background-image:
     radial-gradient(circle at 18% 22%, rgba(191, 10, 48, 0.16) 0, transparent 38%),
     radial-gradient(circle at 82% 78%, rgba(0, 40, 104, 0.22) 0, transparent 42%);
-}
-
-/* Sharp framing corners for editorial blocks. */
-.tech-corners {
-  position: relative;
-}
-.tech-corners::before,
-.tech-corners::after {
-  content: "";
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  border: 1px solid var(--ds-accent);
-  pointer-events: none;
-}
-.tech-corners::before {
-  top: 0;
-  left: 0;
-  border-right: 0;
-  border-bottom: 0;
-}
-.tech-corners::after {
-  bottom: 0;
-  right: 0;
-  border-left: 0;
-  border-top: 0;
-}
-
-/* Yard-rule kept for backwards-compat with any lingering markup. */
-.yard-rule {
-  position: relative;
-  height: 1px;
-  background: var(--ds-border-strong);
 }
 
 /* -----------------------------------------------------------------------------

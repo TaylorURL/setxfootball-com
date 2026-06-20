@@ -1,7 +1,6 @@
 /**
  * DifferentiatorSection — the "what sets us apart" band: an editorial dark slab
- * with sharp framing corners, a tight display headline, and a pull-quote card
- * beneath. Mono microcopy throughout.
+ * with a tight display headline and a pull-quote card beneath.
  */
 import { Sparkles } from "lucide-react";
 import Reveal from "../Reveal";
@@ -9,7 +8,7 @@ import Reveal from "../Reveal";
 const DifferentiatorSection = () => (
   <section className="relative border-b border-ds-border bg-ds-bg py-24 sm:py-32 lg:py-40">
     <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
-      <Reveal variant="scale" className="relative tech-corners overflow-hidden border border-ds-border bg-ds-bg-elevated p-10 sm:p-16 lg:p-24">
+      <Reveal variant="scale" className="relative overflow-hidden border border-ds-border bg-ds-bg-elevated p-10 sm:p-16 lg:p-24">
         <div aria-hidden="true" className="field-grid absolute inset-0 opacity-30" />
         <div aria-hidden="true" className="scoreboard-grain absolute inset-0" />
         <div className="relative max-w-4xl">

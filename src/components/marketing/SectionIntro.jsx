@@ -1,18 +1,15 @@
 /**
  * SectionIntro — the canonical marketing section header. Editorial register:
- * a monospace eyebrow with a hairline accent rule, a tight industrial-grotesque
- * display title, and a left-aligned supporting paragraph. Section titles read
- * like editorial spreads, not banners.
+ * a small uppercase eyebrow with a hairline accent rule, a tight display
+ * title, and a left-aligned supporting paragraph.
  *
  * @param {object} props
- * @param {string} [props.eyebrow] - Optional mono uppercase label.
+ * @param {string} [props.eyebrow] - Optional small uppercase label.
  * @param {React.ReactNode} [props.badge] - Optional inline icon + label group
- *   (rendered with the same mono register as eyebrow).
+ *   (rendered with the same register as eyebrow).
  * @param {React.ReactNode} props.title - Display heading content.
  * @param {React.ReactNode} [props.children] - Supporting copy beneath the heading.
  * @param {'start'|'center'} [props.align='start'] - Text alignment.
- * @param {string} [props.index] - Optional section index ("01", "02") rendered as
- *   a hanging numeral in the editorial register.
  * @param {string} [props.className]
  */
 import clsx from "clsx";
@@ -23,7 +20,6 @@ const SectionIntro = ({
   title,
   children,
   align = "start",
-  index,
   className,
 }) => {
   const centered = align === "center";
@@ -40,29 +36,14 @@ const SectionIntro = ({
           {badge || eyebrow}
         </div>
       )}
-      <div
+      <h2
         className={clsx(
-          "flex items-baseline gap-5",
-          centered && "justify-center",
+          "editorial-display editorial-display-tight text-ds-text",
+          "text-[2.5rem] sm:text-[3.5rem] lg:text-[4.5rem]",
         )}
       >
-        {index && (
-          <span
-            className="mono-tag-lg shrink-0 translate-y-[-0.5em] text-ds-text-faint"
-            aria-hidden="true"
-          >
-            {index}
-          </span>
-        )}
-        <h2
-          className={clsx(
-            "editorial-display editorial-display-tight text-ds-text",
-            "text-[2.5rem] sm:text-[3.5rem] lg:text-[4.5rem]",
-          )}
-        >
-          {title}
-        </h2>
-      </div>
+        {title}
+      </h2>
       {children && (
         <p
           className={clsx(

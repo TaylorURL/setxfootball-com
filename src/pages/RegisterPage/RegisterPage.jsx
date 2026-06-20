@@ -22,7 +22,6 @@ const RegisterPage = () => (
         <Reveal>
           <SectionIntro
             eyebrow={`Sign Up · $${SHIRT_PRICE} per shirt`}
-            index="01"
             title={<>Sign your<br />camper up.</>}
           >
             Fill out the form, choose your shirts, and you're on the roster.

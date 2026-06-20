@@ -32,7 +32,7 @@ export const HERO_STATS = [
   { value: "5–12", label: "Ages" },
   { value: "$5", label: "Per Shirt" },
   { value: "2 Days", label: "On Field" },
-  { value: "03", label: "Season" },
+  { value: "Year 3", label: "Season" },
 ];
 
 /** What every camper walks away with — true for registered kids and walk-ons alike. */
