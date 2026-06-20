@@ -382,20 +382,6 @@ body {
   }
 }
 
-@keyframes scanLineSweep {
-  0% {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.4;
-  }
-  100% {
-    transform: translateY(120%);
-    opacity: 0;
-  }
-}
-
 .animate-fade-in-up {
   animation: fadeInUp 720ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
