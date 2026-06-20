@@ -1,6 +1,8 @@
 /**
  * AboutPage — the camp's story: the mission and "started by neighbors" story,
  * the background-checked coaching staff, and the "what sets us apart" band.
+ *
+ * Rhythm: LIGHT story → dark coaches → dark differentiator → LIGHT join.
  */
 import MarketingPage from "../../components/layout/MarketingPage";
 import StorySection from "../../components/marketing/sections/StorySection";
@@ -13,10 +15,10 @@ import { PAGE_SEO } from "../../components/seo/seoContent";
 const AboutPage = () => (
   <MarketingPage>
     <Seo {...PAGE_SEO.about} />
-    <StorySection />
+    <StorySection surface="light" />
     <CoachesSection />
     <DifferentiatorSection />
-    <JoinCallout />
+    <JoinCallout surface="light" />
   </MarketingPage>
 );
 

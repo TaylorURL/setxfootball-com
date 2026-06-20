@@ -4,99 +4,99 @@
 @tailwind utilities;
 
 /* -----------------------------------------------------------------------------
-   SETX Youth Football — brand foundation
+   SETX Youth Football — brand foundation (monochrome edition)
 
-   The identity reads as a Texas youth football program: deep field navy, camp
-   red, gridiron gold, bone cream. The visual structure is editorial — sharp
-   corners, large left-aligned display typography, technical mono microcopy,
-   generous negative space — but every color in the system is the SETX brand
-   palette. No external palette is ever introduced.
+   The identity is a deliberately monochrome editorial system: a true near-black
+   canvas, an off-white paper, a neutral gray ramp for everything in between,
+   and a single confident athletic red as the only spark. No other hues — ever.
+
+   The same `--ds-*` tokens drive both the dark canvas and the light paper.
+   Sections opt into the light register with `data-surface="light"`. Every
+   `--ds-*` flips coherently, so cards, hairlines, dividers, eyebrows, and the
+   red accent all adapt to whichever surface they sit on.
    -------------------------------------------------------------------------- */
 :root {
-  /* Field navy — hero gradients + scoreboard wash */
-  --primary-50: #eff6ff;
-  --primary-100: #dbeafe;
-  --primary-200: #bfdbfe;
-  --primary-300: #93c5fd;
-  --primary-400: #60a5fa;
-  --primary-500: #002868;
-  --primary-600: #002868;
-  --primary-700: #001a4d;
-  --primary-800: #001233;
-  --primary-900: #000c1a;
+  /* Neutral gray ramp — replaces the legacy primary navy.
+     Used by ambient gradient/blur fills and a couple of legacy utilities; the
+     scale is intentionally monochrome so nothing reaches for hue. */
+  --primary-50: #fafafa;
+  --primary-100: #f4f4f4;
+  --primary-200: #e8e8e8;
+  --primary-300: #c8c8c8;
+  --primary-400: #8a8a8a;
+  --primary-500: #4a4a4a;
+  --primary-600: #2e2e2e;
+  --primary-700: #1a1a1a;
+  --primary-800: #111111;
+  --primary-900: #0a0a0a;
 
-  /* Camp red — primary accent */
-  --accent-50: #fef2f2;
-  --accent-100: #fee2e2;
-  --accent-200: #fecaca;
-  --accent-300: #fca5a5;
-  --accent-400: #bf0a30;
-  --accent-500: #bf0a30;
-  --accent-600: #9a0826;
-  --accent-700: #75061d;
-  --accent-800: #500413;
-  --accent-900: #2b020a;
+  /* Athletic red — the only accent in the system.
+     The bright cut anchors highlights on dark; the darker cut is reserved for
+     light surfaces where the bright cut would lose contrast. */
+  --accent-50: #fff1f2;
+  --accent-100: #ffe1e3;
+  --accent-200: #ffc1c5;
+  --accent-300: #ff8a92;
+  --accent-400: #ff4d5b;
+  --accent-500: #e11d2a;
+  --accent-600: #c31624;
+  --accent-700: #9c111c;
+  --accent-800: #6e0c14;
+  --accent-900: #3f060b;
 
-  /* Semantic brand tokens — single source of truth for the camp identity */
-  --brand-red: #bf0a30;
-  --brand-red-bright: #fb5871;
-  --brand-navy: #002868;
-  --brand-gold: #eab308;
-  --brand-bone: #f8f5ef;
+  /* Semantic brand token — the camp uses ONE color. */
+  --brand-red: #e11d2a;
 
-  /* The varsity jersey-patch glow, tokenized so it lives in exactly one place */
-  --brand-chip-shadow: 0 8px 24px -12px rgba(191, 10, 48, 0.7);
-  --brand-chip-shadow-sm: 0 6px 18px -10px rgba(191, 10, 48, 0.7);
-
-  --field-coal: #0b1320;
+  /* Section-edge shadow tokens (sharper than the legacy jersey-patch glow,
+     because monochrome reads better without bloom). */
+  --brand-chip-shadow: 0 8px 24px -12px rgba(225, 29, 42, 0.45);
+  --brand-chip-shadow-sm: 0 6px 18px -10px rgba(225, 29, 42, 0.45);
 }
 
 /* -----------------------------------------------------------------------------
-   Graphite — the single camp theme
+   Dark register — the default surface
 
-   Desaturated blue-graphite neutrals with the camp-red accent. Defines the full
-   `--ds-*` surface/text/utility token set so every design-system primitive
-   renders from real tokens. The radius scale is flattened to a sharp
-   editorial register (small structural radius on inputs only); the rest of the
-   site reads as crisp rectangles.
+   True near-black canvas, off-white text, hairline whites. The `gray` theme
+   key is preserved so the existing `ThemeProvider` mount keeps working without
+   changing the app entry; the values inside are what changed.
    -------------------------------------------------------------------------- */
 .ds-root,
 .ds-root[data-theme="gray"],
 [data-theme="gray"] {
-  --ds-bg: #0c0e12;
-  --ds-bg-elevated: #14171d;
-  --ds-surface: #1a1d24;
-  --ds-surface-2: #22262e;
-  --ds-surface-3: #2c313b;
-  --ds-border: rgba(226, 232, 240, 0.08);
-  --ds-border-strong: rgba(226, 232, 240, 0.14);
-  --ds-border-input: rgba(226, 232, 240, 0.22);
-  --ds-border-hover: rgba(191, 10, 48, 0.5);
-  --ds-text: #f4f6fa;
-  --ds-text-muted: #aeb6c2;
-  --ds-text-faint: #6f7783;
-  --ds-accent: #bf0a30;
-  --ds-accent-bright: #fb5871;
-  --ds-accent-glow: rgba(191, 10, 48, 0.42);
-  --ds-accent-soft: rgba(191, 10, 48, 0.16);
-  --ds-accent-softer: rgba(191, 10, 48, 0.07);
+  --ds-bg: #0a0a0a;
+  --ds-bg-elevated: #141414;
+  --ds-surface: #1a1a1a;
+  --ds-surface-2: #232323;
+  --ds-surface-3: #2e2e2e;
+  --ds-border: rgba(255, 255, 255, 0.08);
+  --ds-border-strong: rgba(255, 255, 255, 0.16);
+  --ds-border-input: rgba(255, 255, 255, 0.24);
+  --ds-border-hover: rgba(225, 29, 42, 0.55);
+  --ds-text: #f6f6f4;
+  --ds-text-muted: #a8a8a8;
+  --ds-text-faint: #707070;
+  --ds-accent: #e11d2a;
+  --ds-accent-bright: #ff2e3d;
+  --ds-accent-glow: rgba(225, 29, 42, 0.42);
+  --ds-accent-soft: rgba(225, 29, 42, 0.16);
+  --ds-accent-softer: rgba(225, 29, 42, 0.07);
   --ds-on-accent: #ffffff;
-  --ds-positive: #4ade80;
-  --ds-positive-soft: rgba(74, 222, 128, 0.15);
-  --ds-warning: #fbbf24;
-  --ds-warning-soft: rgba(251, 191, 36, 0.15);
-  --ds-danger: #f87171;
-  --ds-danger-soft: rgba(248, 113, 113, 0.15);
-  --ds-violet: #a78bfa;
-  --ds-violet-soft: rgba(167, 139, 250, 0.16);
-  --ds-indigo: #818cf8;
-  --ds-indigo-soft: rgba(129, 140, 248, 0.16);
-  --ds-cyan: #22d3ee;
-  --ds-cyan-soft: rgba(34, 211, 238, 0.16);
-  --ds-slate: #94a3b8;
-  --ds-slate-soft: rgba(148, 163, 184, 0.16);
-  --ds-overlay: rgba(6, 8, 12, 0.74);
-  --ds-backdrop: rgba(20, 23, 29, 0.78);
+  --ds-positive: #d6d6d6;
+  --ds-positive-soft: rgba(255, 255, 255, 0.08);
+  --ds-warning: #d6d6d6;
+  --ds-warning-soft: rgba(255, 255, 255, 0.08);
+  --ds-danger: #e11d2a;
+  --ds-danger-soft: rgba(225, 29, 42, 0.12);
+  --ds-violet: #a8a8a8;
+  --ds-violet-soft: rgba(255, 255, 255, 0.06);
+  --ds-indigo: #a8a8a8;
+  --ds-indigo-soft: rgba(255, 255, 255, 0.06);
+  --ds-cyan: #a8a8a8;
+  --ds-cyan-soft: rgba(255, 255, 255, 0.06);
+  --ds-slate: #a8a8a8;
+  --ds-slate-soft: rgba(255, 255, 255, 0.06);
+  --ds-overlay: rgba(0, 0, 0, 0.78);
+  --ds-backdrop: rgba(10, 10, 10, 0.82);
   --ds-sheen: rgba(255, 255, 255, 0.06);
   --ds-sheen-strong: rgba(255, 255, 255, 0.1);
   --ds-glaze: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 42%);
@@ -104,14 +104,14 @@
   --ds-field-inset: inset 0 1px 2px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
   --ds-shadow-ambient: rgba(0, 0, 0, 0.5);
   --ds-shadow-key: rgba(0, 0, 0, 0.45);
-  --ds-glass-fill: rgba(20, 23, 29, 0.7);
-  --ds-glass-border: rgba(255, 255, 255, 0.08);
+  --ds-glass-fill: rgba(20, 20, 20, 0.7);
+  --ds-glass-border: rgba(255, 255, 255, 0.1);
   --ds-glass-shadow: 0 18px 50px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.06);
   --ds-companion-contact: rgba(0, 0, 0, 0.55);
-  --ds-companion-aura: rgba(191, 10, 48, 0.2);
-  --ds-accent-face: linear-gradient(180deg, #e11d3f 0%, #bf0a30 52%, #9a0826 100%);
-  --ds-accent-face-hover: linear-gradient(180deg, #ef2c4d 0%, #cf1135 52%, #a80a29 100%);
+  --ds-companion-aura: rgba(225, 29, 42, 0.18);
+  --ds-accent-face: linear-gradient(180deg, #ff3a48 0%, #e11d2a 52%, #b3151f 100%);
+  --ds-accent-face-hover: linear-gradient(180deg, #ff4c58 0%, #ec2533 52%, #c0182a 100%);
   --ds-raised-face: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 50%, rgba(255, 255, 255, 0) 100%);
 
   /* Editorial radius register — sharp corners, sharper edges. */
@@ -124,6 +124,67 @@
   --ds-radius-3xl: 2px;
   --ds-radius-full: 9999px;
   color-scheme: dark;
+}
+
+/* -----------------------------------------------------------------------------
+   Light register — opt-in per section via `data-surface="light"`
+
+   Off-white paper, near-black text, hairline blacks. Shares the red accent
+   with the dark register (slightly deeper shade so contrast holds on paper).
+   Apply to a section root and every `--ds-*`-bound child reads light cleanly.
+   -------------------------------------------------------------------------- */
+[data-surface="light"] {
+  --ds-bg: #f6f6f4;
+  --ds-bg-elevated: #ffffff;
+  --ds-surface: #fbfbf9;
+  --ds-surface-2: #eceae5;
+  --ds-surface-3: #dcdad4;
+  --ds-border: rgba(10, 10, 10, 0.1);
+  --ds-border-strong: rgba(10, 10, 10, 0.2);
+  --ds-border-input: rgba(10, 10, 10, 0.28);
+  --ds-border-hover: rgba(184, 30, 39, 0.55);
+  --ds-text: #0a0a0a;
+  --ds-text-muted: #525252;
+  --ds-text-faint: #767676;
+  --ds-accent: #b81e27;
+  --ds-accent-bright: #9b1822;
+  --ds-accent-glow: rgba(184, 30, 39, 0.32);
+  --ds-accent-soft: rgba(184, 30, 39, 0.1);
+  --ds-accent-softer: rgba(184, 30, 39, 0.04);
+  --ds-on-accent: #ffffff;
+  --ds-positive: #2e2e2e;
+  --ds-positive-soft: rgba(10, 10, 10, 0.06);
+  --ds-warning: #2e2e2e;
+  --ds-warning-soft: rgba(10, 10, 10, 0.06);
+  --ds-danger: #b81e27;
+  --ds-danger-soft: rgba(184, 30, 39, 0.1);
+  --ds-violet: #525252;
+  --ds-violet-soft: rgba(10, 10, 10, 0.05);
+  --ds-indigo: #525252;
+  --ds-indigo-soft: rgba(10, 10, 10, 0.05);
+  --ds-cyan: #525252;
+  --ds-cyan-soft: rgba(10, 10, 10, 0.05);
+  --ds-slate: #525252;
+  --ds-slate-soft: rgba(10, 10, 10, 0.05);
+  --ds-overlay: rgba(10, 10, 10, 0.4);
+  --ds-backdrop: rgba(246, 246, 244, 0.82);
+  --ds-sheen: rgba(255, 255, 255, 0.9);
+  --ds-sheen-strong: rgba(255, 255, 255, 1);
+  --ds-glaze: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 40%);
+  --ds-inset-line: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  --ds-field-inset: inset 0 1px 2px rgba(10, 10, 10, 0.06);
+  --ds-shadow-ambient: rgba(10, 10, 10, 0.06);
+  --ds-shadow-key: rgba(10, 10, 10, 0.07);
+  --ds-glass-fill: rgba(255, 255, 255, 0.74);
+  --ds-glass-border: rgba(10, 10, 10, 0.12);
+  --ds-glass-shadow: 0 10px 30px rgba(10, 10, 10, 0.16), 0 2px 8px rgba(10, 10, 10, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --ds-companion-contact: rgba(10, 10, 10, 0.18);
+  --ds-companion-aura: rgba(184, 30, 39, 0.16);
+  --ds-accent-face: linear-gradient(180deg, #d31f29 0%, #b81e27 52%, #911820 100%);
+  --ds-accent-face-hover: linear-gradient(180deg, #de2731 0%, #c2202b 52%, #9d1a23 100%);
+  --ds-raised-face: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(246, 246, 244, 0.6) 100%);
+  color-scheme: light;
 }
 
 html {
@@ -276,15 +337,21 @@ body {
 
 .field-grid {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+    linear-gradient(currentColor 1px, transparent 1px),
+    linear-gradient(90deg, currentColor 1px, transparent 1px);
   background-size: 72px 72px;
+  color: var(--ds-text);
+  opacity: 0.04;
+}
+
+[data-surface="light"] .field-grid {
+  opacity: 0.05;
 }
 
 .scoreboard-grain {
   background-image:
-    radial-gradient(circle at 18% 22%, rgba(191, 10, 48, 0.16) 0, transparent 38%),
-    radial-gradient(circle at 82% 78%, rgba(0, 40, 104, 0.22) 0, transparent 42%);
+    radial-gradient(circle at 18% 22%, var(--ds-accent-soft) 0, transparent 42%),
+    radial-gradient(circle at 82% 78%, var(--ds-surface-2) 0, transparent 48%);
 }
 
 /* -----------------------------------------------------------------------------
@@ -341,6 +408,26 @@ body {
   }
 }
 
+@keyframes accentTickGrow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes pageFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .animate-fade-in-up {
   animation: fadeInUp 720ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
@@ -359,6 +446,10 @@ body {
 
 .animate-marquee {
   animation: marqueeSlide 32s linear infinite;
+}
+
+.animate-page-in {
+  animation: pageFadeIn 520ms cubic-bezier(0.16, 1, 0.3, 1) backwards;
 }
 
 .scroll-animate {
@@ -399,6 +490,22 @@ body {
   transform: scale(1);
 }
 
+.scroll-animate.blur-in {
+  opacity: 0;
+  filter: blur(6px);
+  transform: translateY(20px);
+  transition:
+    opacity 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 900ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 900ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.scroll-animate.blur-in.animate-visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+
 .scroll-animate.delay-1 { transition-delay: 80ms; }
 .scroll-animate.delay-2 { transition-delay: 160ms; }
 .scroll-animate.delay-3 { transition-delay: 240ms; }
@@ -407,6 +514,99 @@ body {
 .scroll-animate.delay-6 { transition-delay: 480ms; }
 .scroll-animate.delay-7 { transition-delay: 560ms; }
 .scroll-animate.delay-8 { transition-delay: 640ms; }
+
+/* -----------------------------------------------------------------------------
+   Interaction motion
+   Tasteful card lift, accent-line grow, button press. GPU-cheap transforms,
+   no layout shift. Each effect has a no-op fallback under reduced-motion.
+   -------------------------------------------------------------------------- */
+.card-lift {
+  transition:
+    transform 360ms cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 360ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 360ms cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.card-lift:hover {
+  transform: translateY(-3px);
+  border-color: var(--ds-accent);
+  box-shadow:
+    0 1px 0 0 var(--ds-accent) inset,
+    0 10px 24px -16px var(--ds-shadow-key);
+}
+
+/* Decorative accent tick used under nav links and as a section-opener line.
+   Sits behind a hover/active state and animates its width with a fast,
+   confident grow. */
+.accent-tick {
+  display: inline-block;
+  height: 1px;
+  background: var(--ds-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.accent-tick.is-on {
+  transform: scaleX(1);
+}
+
+.accent-tick.from-center {
+  transform-origin: center;
+}
+
+/* Nav link underline that scribbles in beneath the label on hover/active. */
+.nav-underline {
+  position: relative;
+}
+
+.nav-underline::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 0;
+  height: 1px;
+  background: var(--ds-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 320ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.nav-underline:hover::after,
+.nav-underline.is-active::after {
+  transform: scaleX(1);
+}
+
+/* Press affordance on solid CTAs — sits under the hover color transition. */
+.press-down {
+  transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.press-down:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+/* Subtle hairline glow under section transitions — used at the seam between
+   light and dark sections so the rhythm reads as deliberate, not abrupt. */
+.surface-seam {
+  position: relative;
+}
+
+.surface-seam::before {
+  content: "";
+  position: absolute;
+  inset: -1px 0 auto 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--ds-border-strong) 22%,
+    var(--ds-border-strong) 78%,
+    transparent 100%
+  );
+}
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -421,13 +621,24 @@ body {
   .scroll-animate,
   .scroll-animate.from-left,
   .scroll-animate.from-right,
-  .scroll-animate.scale-in {
+  .scroll-animate.scale-in,
+  .scroll-animate.blur-in {
     opacity: 1;
     transform: none;
+    filter: none;
   }
 
   .animate-marquee,
   .animate-parallax-drift {
     animation: none;
+  }
+
+  .card-lift:hover {
+    transform: none;
+  }
+
+  .accent-tick,
+  .nav-underline::after {
+    transform: scaleX(1);
   }
 }

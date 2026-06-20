@@ -1,15 +1,20 @@
 /**
  * CoachesSection — the background-checked coaching staff, each rendered as a
  * roster card with a tight display name, role, and a hairline divider list of
- * credentials.
+ * credentials. Defaults to the dark register so the cards read as printed on
+ * a deep field-coal slab.
  */
 import { ShieldCheck, Star } from "lucide-react";
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
 import { COACHES } from "../../../content/campContent";
+import { surfaceProps } from "../surface";
 
-const CoachesSection = () => (
-  <section className="relative border-b border-ds-border bg-ds-bg-elevated py-24 sm:py-32 lg:py-40">
+const CoachesSection = ({ surface }) => (
+  <section
+    {...surfaceProps(surface)}
+    className="surface-seam relative border-b border-ds-border bg-ds-bg-elevated py-24 sm:py-32 lg:py-40"
+  >
     <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
       <Reveal>
         <SectionIntro
@@ -28,7 +33,7 @@ const CoachesSection = () => (
       <div className="mt-20 grid grid-cols-1 gap-12 border-t border-ds-border pt-16 lg:grid-cols-2 lg:gap-16">
         {COACHES.map((coach, index) => (
           <Reveal key={coach.name} variant="up" delay={index + 1}>
-            <article className="relative border border-ds-border bg-ds-surface p-8 sm:p-10">
+            <article className="card-lift relative border border-ds-border bg-ds-surface p-8 sm:p-10">
               <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-ds-accent" />
               <div className="flex items-start gap-5">
                 <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-ds-accent-soft text-ds-accent-bright">
