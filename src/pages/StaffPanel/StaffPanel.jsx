@@ -73,14 +73,9 @@ const PAYMENT_FILTER_OPTIONS = [
   { value: "pending", label: "Pending Only" },
 ];
 
-const StatCard = ({ icon: Icon, label, value, index }) => (
+const StatCard = ({ icon: Icon, label, value }) => (
   <div className="left-rule-accent border border-ds-border bg-ds-surface px-5 py-5 pl-7">
-    <div className="flex items-center justify-between">
-      <span className="mono-tag-sm text-ds-text-faint">
-        {String(index + 1).padStart(2, "0")}
-      </span>
-      <Icon className="h-3.5 w-3.5 text-ds-accent-bright" />
-    </div>
+    <Icon className="h-3.5 w-3.5 text-ds-accent-bright" />
     <p className="editorial-display mono-num mt-3 text-3xl text-ds-text sm:text-4xl">
       {value}
     </p>
