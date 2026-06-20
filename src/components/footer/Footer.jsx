@@ -103,9 +103,9 @@ const Footer = () => (
 
         <FooterColumn title="Season">
           <div className="left-rule-accent pl-4">
-            <p className="mono-tag-sm text-ds-text-faint">Status</p>
+            <p className="mono-tag-sm text-ds-text-faint">Now in</p>
             <p className="editorial-display mt-2 text-2xl text-ds-text">
-              Season 03 · Active
+              Season 03
             </p>
             <p className="mono-tag-sm mt-2 text-ds-text-faint">
               Roster open · July 2026
@@ -113,12 +113,12 @@ const Footer = () => (
           </div>
         </FooterColumn>
 
-        <FooterColumn title="Coordinates">
-          <p className="mono-num text-[13px] text-ds-text-muted">
-            30°7′N&nbsp;&nbsp;94°38′W
+        <FooterColumn title="Where">
+          <p className="text-[15px] text-ds-text-muted">
+            Daisetta, Texas
           </p>
           <p className="mono-tag-sm mt-2 text-ds-text-faint">
-            Daisetta · Liberty County · Texas
+            Liberty County · Southeast Texas
           </p>
         </FooterColumn>
       </div>

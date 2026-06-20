@@ -1,7 +1,7 @@
 /**
  * DifferentiatorSection — the "what sets us apart" band: an editorial dark slab
- * with crosshair technical corners, a tight display headline, and a pull-quote
- * card beneath. Mono microcopy throughout.
+ * with sharp framing corners, a tight display headline, and a pull-quote card
+ * beneath. Mono microcopy throughout.
  */
 import { Sparkles } from "lucide-react";
 import Reveal from "../Reveal";

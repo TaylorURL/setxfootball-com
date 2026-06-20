@@ -1,9 +1,9 @@
 /**
- * Navbar — the public "command bar": a thin, full-bleed sticky bar with
- * minimal monospace labels and an underline indicator for the active route.
- * Editorial register, restrained surface (translucent over the page beneath),
- * sharp edges. On small screens the bar collapses to brand + a menu trigger
- * that opens a full-screen takeover menu — deliberately immersive.
+ * Navbar — the public top dock: a thin, full-bleed sticky bar with minimal
+ * monospace labels and an underline indicator for the active route. Editorial
+ * register, restrained surface (translucent over the page beneath), sharp
+ * edges. On small screens the bar collapses to brand + a menu trigger that
+ * opens a full-screen takeover menu — deliberately immersive.
  */
 import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";

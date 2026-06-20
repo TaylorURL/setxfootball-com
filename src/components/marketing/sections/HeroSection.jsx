@@ -30,20 +30,20 @@ const HeroSection = () => (
       <div aria-hidden="true" className="field-grid absolute inset-0 opacity-30" />
     </div>
 
-    {/* Crosshair top-left technical tag */}
+    {/* Top-left editorial tag — season + place */}
     <div className="pointer-events-none absolute left-5 top-24 z-20 hidden sm:left-8 sm:block lg:left-10">
       <div className="flex items-start gap-3">
         <span className="mt-[6px] inline-block h-px w-10 bg-ds-accent" aria-hidden="true" />
         <div>
-          <p className="mono-tag-sm text-ds-accent-bright">Season 03 / 2026</p>
-          <p className="mono-tag-sm mt-1.5 text-ds-text-faint">Daisetta, TX · 30°7′N 94°38′W</p>
+          <p className="mono-tag-sm text-ds-accent-bright">Season 03 · July 2026</p>
+          <p className="mono-tag-sm mt-1.5 text-ds-text-faint">Daisetta, Texas</p>
         </div>
       </div>
     </div>
 
-    {/* Crosshair top-right index tag */}
+    {/* Top-right editorial tag — camp specs */}
     <div className="pointer-events-none absolute right-5 top-24 z-20 hidden text-right sm:right-8 sm:block lg:right-10">
-      <p className="mono-tag-sm text-ds-text-faint">[ 01 / Camp ]</p>
+      <p className="mono-tag-sm text-ds-accent-bright">Every Kid Plays</p>
       <p className="mono-tag-sm mt-1.5 text-ds-text-faint">Ages 5–12 · $5 Shirt</p>
     </div>
 
