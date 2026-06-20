@@ -1,12 +1,10 @@
 /**
- * HeroSection — the cinematic hero band. Full-bleed photography with a soft
- * navy-to-coal gradient overlay, a left-aligned editorial display headline, and
- * a technical metadata strip pinned to the lower corners. Sharp corners,
- * generous whitespace, mono microcopy.
+ * HeroSection — the home page hero. Solid brand-colored background (no photo),
+ * a large left-aligned headline, a short intro paragraph, two sign-up CTAs, and
+ * a compact dates/location/cost strip pinned to the bottom of the band.
  */
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronDown, MapPin, Calendar } from "lucide-react";
-import { HERO_IMAGE } from "../../../content/campContent";
 import { REGISTER_PATH } from "../../nav/navLinks";
 
 /** Id of the band the hero scroll cue drops to (the camp-facts scoreboard). */
@@ -17,44 +15,20 @@ const scrollToCampFacts = () =>
 
 const HeroSection = () => (
   <section className="relative flex min-h-[100svh] items-end overflow-hidden bg-ds-bg">
-    <div className="absolute inset-0">
-      <img
-        src={HERO_IMAGE}
-        alt=""
-        aria-hidden="true"
-        className="h-full w-full animate-parallax-drift object-cover"
-      />
-      {/* Editorial gradient stack — navy wash, coal pull-down */}
-      <div className="absolute inset-0 bg-gradient-to-b from-primary-900/30 via-ds-bg/40 to-ds-bg" />
-      <div className="absolute inset-0 bg-gradient-to-tr from-ds-bg/85 via-ds-bg/35 to-transparent" />
-      <div aria-hidden="true" className="field-grid absolute inset-0 opacity-30" />
-    </div>
-
-    {/* Top-left editorial tag — season + place */}
-    <div className="pointer-events-none absolute left-5 top-24 z-20 hidden sm:left-8 sm:block lg:left-10">
-      <div className="flex items-start gap-3">
-        <span className="mt-[6px] inline-block h-px w-10 bg-ds-accent" aria-hidden="true" />
-        <div>
-          <p className="mono-tag-sm text-ds-accent-bright">Season 03 · July 2026</p>
-          <p className="mono-tag-sm mt-1.5 text-ds-text-faint">Daisetta, Texas</p>
-        </div>
-      </div>
-    </div>
-
-    {/* Top-right editorial tag — camp specs */}
-    <div className="pointer-events-none absolute right-5 top-24 z-20 hidden text-right sm:right-8 sm:block lg:right-10">
-      <p className="mono-tag-sm text-ds-accent-bright">Every Kid Plays</p>
-      <p className="mono-tag-sm mt-1.5 text-ds-text-faint">Ages 5–12 · $5 Shirt</p>
+    {/* Brand-colored background — a soft navy wash over the page coal, with a
+        warm accent glow off to the right. All tokens, no image. */}
+    <div aria-hidden="true" className="absolute inset-0">
+      <div className="absolute inset-0 bg-gradient-to-b from-primary-900 via-ds-bg to-ds-bg" />
+      <div className="absolute -right-40 top-1/3 h-[520px] w-[520px] rounded-full bg-ds-accent-soft blur-[180px]" />
+      <div className="absolute -left-32 -top-24 h-[420px] w-[420px] rounded-full bg-primary-500/25 blur-[200px]" />
+      <div className="field-grid absolute inset-0 opacity-20" />
     </div>
 
     <div className="relative z-10 mx-auto w-full max-w-[1440px] px-5 pb-20 pt-32 sm:px-8 sm:pb-28 sm:pt-40 lg:px-10 lg:pb-32">
       <div className="max-w-5xl animate-fade-in-up">
         <span className="mono-tag mb-7 inline-flex items-center gap-3 text-ds-accent-bright">
-          <span className="relative flex h-2 w-2">
-            <span className="absolute inline-flex h-full w-full animate-ping bg-ds-accent opacity-75" />
-            <span className="relative inline-flex h-2 w-2 bg-ds-accent-bright" />
-          </span>
-          Roster Open · July 2026
+          <span aria-hidden="true" className="inline-block h-px w-10 bg-ds-accent" />
+          Sign-ups Open · July 2026
         </span>
 
         <h1 className="editorial-display editorial-display-tight text-white">
@@ -69,7 +43,7 @@ const HeroSection = () => (
           </span>
         </h1>
 
-        <p className="editorial-body mt-10 max-w-xl text-lg leading-relaxed text-white/75 sm:text-xl">
+        <p className="editorial-body mt-10 max-w-xl text-lg leading-relaxed text-white/80 sm:text-xl">
           Two days of fundamentals, teamwork, and fun for kids ages 5–12. Every
           camper gets a shirt, drinks, and snacks — because in our community,
           every kid plays.
@@ -113,7 +87,6 @@ const HeroSection = () => (
       </div>
     </div>
 
-    {/* Bottom scroll cue — editorial register */}
     <button
       type="button"
       onClick={scrollToCampFacts}
@@ -126,7 +99,6 @@ const HeroSection = () => (
       </span>
     </button>
 
-    {/* Bottom hairline */}
     <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-px bg-ds-accent/70" />
   </section>
 );
