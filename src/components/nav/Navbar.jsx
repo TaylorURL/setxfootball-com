@@ -1,11 +1,11 @@
 /**
- * Navbar — the public top dock: a thin, full-bleed sticky bar with minimal
- * monospace labels and an underline indicator for the active route. Editorial
- * register, restrained surface (translucent over the page beneath), sharp
- * edges. On small screens the bar collapses to brand + a menu trigger that
- * opens a full-screen takeover menu — deliberately immersive.
+ * Navbar — the public top dock: a thin, full-bleed sticky bar with the brand
+ * mark, primary nav links, an underline indicator for the active route, and
+ * the sign-up CTA. Always renders on a solid page-colored background so the
+ * nav text stays clearly legible on every route. On small screens the bar
+ * collapses to brand + a menu trigger that opens a full-screen takeover menu.
  */
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X, User, LogOut, ArrowRight, LayoutDashboard } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
@@ -42,38 +42,18 @@ const TakeoverLink = ({ to, label, onNavigate }) => (
     end={to === "/"}
     onClick={onNavigate}
     className={({ isActive }) =>
-      `editorial-display editorial-display-tight flex items-baseline gap-5 text-left text-5xl transition-colors duration-200 hover:text-ds-accent-bright sm:text-6xl ${
+      `editorial-display editorial-display-tight text-left text-5xl transition-colors duration-200 hover:text-ds-accent-bright sm:text-6xl ${
         isActive ? "text-ds-text" : "text-ds-text-muted"
       }`
     }
   >
-    {({ isActive }) => (
-      <>
-        <span
-          aria-hidden="true"
-          className={`mono-tag-sm inline-block min-w-[28px] translate-y-[-0.6em] ${
-            isActive ? "text-ds-accent-bright" : "text-ds-text-faint"
-          }`}
-        >
-          0{PUBLIC_NAV_LINKS.findIndex((l) => l.to === to) + 1}
-        </span>
-        {label}
-      </>
-    )}
+    {label}
   </NavLink>
 );
 
 const Navbar = () => {
   const { user, signOut } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -87,20 +67,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header
-        className={`fixed inset-x-0 top-0 z-sticky transition-colors duration-300 ${
-          scrolled
-            ? "border-b border-ds-border bg-ds-bg/85 backdrop-blur-md"
-            : "border-b border-transparent bg-transparent"
-        }`}
-      >
-        {/* Legibility scrim — only in the transparent state so nav text stays AA over the hero image. */}
-        <div
-          aria-hidden="true"
-          className={`pointer-events-none absolute inset-x-0 top-0 h-[140px] bg-gradient-to-b from-black/70 via-black/40 to-transparent transition-opacity duration-300 ${
-            scrolled ? "opacity-0" : "opacity-100"
-          }`}
-        />
+      <header className="fixed inset-x-0 top-0 z-sticky border-b border-ds-border bg-ds-bg/95 backdrop-blur-md">
         <nav
           aria-label="Primary"
           className="relative mx-auto flex w-full max-w-[1440px] items-center gap-6 px-5 sm:px-8 lg:px-10"
@@ -163,7 +130,6 @@ const Navbar = () => {
         </div>
 
         <div className="flex flex-1 flex-col justify-center gap-7 px-8">
-          <span className="mono-tag-sm text-ds-text-faint">/ Navigation</span>
           {PUBLIC_NAV_LINKS.map((link) => (
             <TakeoverLink key={link.to} to={link.to} label={link.label} onNavigate={closeMenu} />
           ))}

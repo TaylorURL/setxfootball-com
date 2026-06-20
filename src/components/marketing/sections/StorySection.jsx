@@ -1,7 +1,7 @@
 /**
  * StorySection — the camp's mission and "started by neighbors" story. An
- * editorial half-image / half-text spread with a hanging numeral lockup, a
- * mono pillar list, and a season stamp anchored over the field photo.
+ * editorial half-image / half-text spread with a season stamp anchored over
+ * the field photo.
  */
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
@@ -13,7 +13,6 @@ const StorySection = () => (
       <Reveal className="max-w-4xl">
         <SectionIntro
           eyebrow="Our Mission"
-          index="01"
           title={
             <>
               Built for our<br />
@@ -37,14 +36,11 @@ const StorySection = () => (
               className="h-[520px] w-full object-cover"
             />
             <span aria-hidden="true" className="absolute inset-0 bg-gradient-to-t from-ds-bg/60 via-transparent to-transparent" />
-            <div className="absolute bottom-6 left-6 flex items-center gap-4 border-l-2 border-ds-accent bg-ds-bg/85 px-5 py-4 backdrop-blur-sm">
-              <span className="editorial-display mono-num text-5xl text-ds-accent-bright">
-                03
-              </span>
-              <div>
-                <p className="mono-tag-sm text-ds-text-faint">Season</p>
-                <p className="editorial-display mt-1 text-xl text-ds-text">Strong &amp; growing</p>
-              </div>
+            <div className="absolute bottom-6 left-6 border-l-2 border-ds-accent bg-ds-bg/85 px-5 py-4 backdrop-blur-sm">
+              <p className="mono-tag-sm text-ds-text-faint">Now in our</p>
+              <p className="editorial-display mt-1 text-2xl text-ds-text">
+                Third year &amp; growing
+              </p>
             </div>
           </div>
         </Reveal>
@@ -77,10 +73,7 @@ const StorySection = () => (
             {STORY_PILLARS.map((item, index) => (
               <Reveal key={item.title} variant="up" delay={index + 1}>
                 <div className="left-rule-accent pl-4">
-                  <span className="mono-tag-sm text-ds-text-faint">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
-                  <item.icon className="mt-3 h-5 w-5 text-ds-accent-bright" aria-hidden="true" />
+                  <item.icon className="h-5 w-5 text-ds-accent-bright" aria-hidden="true" />
                   <p className="editorial-display mt-3 text-lg text-ds-text">{item.title}</p>
                   <p className="editorial-body mt-2 text-sm text-ds-text-muted">{item.body}</p>
                 </div>

@@ -98,22 +98,17 @@ const ActionButton = ({ onClick, tone = "secondary", icon: Icon, children, loadi
   );
 };
 
-const RegistrationCardHeader = ({ index, reg, isEditing, editForm, canEdit, saving, onSave, onCancel, onEdit, onDelete }) => (
+const RegistrationCardHeader = ({ reg, isEditing, editForm, canEdit, saving, onSave, onCancel, onEdit, onDelete }) => (
   <div className="relative flex flex-col gap-5 border-b border-ds-border bg-ds-surface-2 p-6 sm:flex-row sm:items-end sm:justify-between">
     <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-ds-accent" />
-    <div className="flex items-end gap-5">
-      <span className="editorial-display mono-num text-5xl leading-none text-ds-accent-bright sm:text-6xl">
-        {String(index + 1).padStart(2, "0")}
+    <div className="pb-1">
+      <span className="mono-tag-sm text-ds-text-faint">Camper</span>
+      <h3 className="editorial-display mt-2 text-2xl text-ds-text sm:text-3xl">
+        {isEditing ? editForm.kid_name : reg.kid_name}
+      </h3>
+      <span className="mono-tag-sm mt-2 inline-block text-ds-text-faint">
+        Signed up {formatDate(reg.created_at)}
       </span>
-      <div className="pb-1">
-        <span className="mono-tag-sm text-ds-text-faint">Camper</span>
-        <h3 className="editorial-display mt-2 text-2xl text-ds-text sm:text-3xl">
-          {isEditing ? editForm.kid_name : reg.kid_name}
-        </h3>
-        <span className="mono-tag-sm mt-2 inline-block text-ds-text-faint">
-          Signed up {formatDate(reg.created_at)}
-        </span>
-      </div>
     </div>
     <div className="flex flex-wrap items-center gap-2">
       <StatusPill paid={reg.payment_status === "paid"} />
@@ -275,7 +270,7 @@ const Dashboard = () => {
           <EmptyDashboard />
         ) : (
           <div className="mt-10 space-y-8">
-            {registrations.map((reg, index) => {
+            {registrations.map((reg) => {
               const canEdit = RegistrationService.canEdit(reg);
               const daysRemaining = RegistrationService.getDaysRemaining(reg);
               const isEditing = editingId === reg.id;
@@ -283,7 +278,6 @@ const Dashboard = () => {
               return (
                 <article key={reg.id} className="border border-ds-border bg-ds-surface">
                   <RegistrationCardHeader
-                    index={index}
                     reg={reg}
                     isEditing={isEditing}
                     editForm={editForm}

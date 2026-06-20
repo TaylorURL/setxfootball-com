@@ -1,6 +1,6 @@
 /**
- * SponsorsSection — thank-you wall for local sponsors. Editorial card grid,
- * sharp edges, mono enumeration tags pinned to each frame.
+ * SponsorsSection — thank-you wall for local sponsors. Editorial card grid
+ * with sharp edges and hairline accent rules.
  */
 import { Handshake } from "lucide-react";
 import Reveal from "../Reveal";
@@ -12,8 +12,6 @@ const SponsorsSection = () => (
     <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
       <Reveal>
         <SectionIntro
-          eyebrow="Our Partners"
-          index="01"
           badge={
             <span className="inline-flex items-center gap-2">
               <Handshake className="h-3.5 w-3.5" /> Our Partners
@@ -31,9 +29,6 @@ const SponsorsSection = () => (
           <Reveal key={sponsorImage} variant="up" delay={index + 1}>
             <div className="relative overflow-hidden border border-ds-border">
               <span aria-hidden="true" className="absolute inset-x-0 top-0 z-10 h-px bg-ds-accent" />
-              <span className="mono-tag-sm absolute right-3 top-3 z-10 text-white/85">
-                /{String(index + 1).padStart(2, "0")}
-              </span>
               <div className="aspect-[4/3] overflow-hidden bg-ds-surface">
                 <img
                   src={sponsorImage}

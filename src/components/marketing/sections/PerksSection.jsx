@@ -1,7 +1,7 @@
 /**
  * PerksSection — "What every camper gets": the no-pay-to-play promise rendered
- * as a sharp four-column editorial grid with hairline dividers, hanging mono
- * indices, and ample whitespace.
+ * as a clean four-column editorial grid with hairline dividers and ample
+ * whitespace.
  */
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
@@ -12,8 +12,7 @@ const PerksSection = () => (
     <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
       <Reveal>
         <SectionIntro
-          eyebrow="The Deal"
-          index="01"
+          eyebrow="What's Included"
           title={<>What every camper gets.</>}
         >
           No hidden fees, no pay-to-play. Sign up for the shirts and the rest
@@ -25,10 +24,7 @@ const PerksSection = () => (
         {CAMPER_PERKS.map((perk, index) => (
           <Reveal key={perk.title} variant="up" delay={index + 1}>
             <div className="left-rule-accent pl-5">
-              <span className="mono-tag-sm text-ds-text-faint">
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <perk.icon className="mt-4 h-6 w-6 text-ds-accent-bright" aria-hidden="true" />
+              <perk.icon className="h-6 w-6 text-ds-accent-bright" aria-hidden="true" />
               <h3 className="editorial-display mt-5 text-2xl text-ds-text sm:text-3xl">
                 {perk.title}
               </h3>

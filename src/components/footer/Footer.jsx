@@ -1,9 +1,9 @@
 /**
  * Footer — the public marketing footer.
  *
- * Editorial register: large left-aligned wordmark wall, four-column nav grid
- * with monospace eyebrows, a hairline divider, and a technical bottom row with
- * copyright and legal links. Sharp corners throughout.
+ * Large left-aligned wordmark wall, four-column nav grid with small uppercase
+ * eyebrows, a hairline divider, and a bottom row with copyright and legal
+ * links. Sharp corners throughout.
  */
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Calendar, Users, Shirt, ArrowUpRight } from "lucide-react";
@@ -40,7 +40,6 @@ const FooterColumn = ({ title, children }) => (
 const Footer = () => (
   <footer className="relative border-t border-ds-border bg-ds-bg">
     <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
-      {/* Editorial top: wordmark wall + status */}
       <div className="grid grid-cols-1 gap-10 border-b border-ds-border py-16 lg:grid-cols-[1.4fr_1fr] lg:py-20">
         <div>
           <span className="mono-tag inline-flex items-center gap-2 text-ds-accent-bright">
@@ -70,9 +69,8 @@ const Footer = () => (
         </div>
       </div>
 
-      {/* Editorial middle: columns */}
       <div className="grid grid-cols-1 gap-12 py-14 md:grid-cols-2 lg:grid-cols-4">
-        <FooterColumn title="Index">
+        <FooterColumn title="Pages">
           <ul className="space-y-3">
             {QUICK_LINKS.map(({ label, to }) => (
               <li key={to}>
@@ -80,9 +78,6 @@ const Footer = () => (
                   to={to}
                   className="inline-flex items-center gap-2 text-[15px] text-ds-text-muted transition-colors duration-200 hover:text-ds-text"
                 >
-                  <span aria-hidden="true" className="mono-tag-sm text-ds-text-faint">
-                    /
-                  </span>
                   {label}
                 </Link>
               </li>
@@ -101,14 +96,13 @@ const Footer = () => (
           </div>
         </FooterColumn>
 
-        <FooterColumn title="Season">
+        <FooterColumn title="When">
           <div className="left-rule-accent pl-4">
-            <p className="mono-tag-sm text-ds-text-faint">Now in</p>
-            <p className="editorial-display mt-2 text-2xl text-ds-text">
-              Season 03
+            <p className="editorial-display text-2xl text-ds-text">
+              July 2026
             </p>
             <p className="mono-tag-sm mt-2 text-ds-text-faint">
-              Roster open · July 2026
+              Now in our third year
             </p>
           </div>
         </FooterColumn>
@@ -123,7 +117,6 @@ const Footer = () => (
         </FooterColumn>
       </div>
 
-      {/* Technical bottom row */}
       <div className="flex flex-col items-start justify-between gap-4 border-t border-ds-border py-6 sm:flex-row sm:items-center">
         <span className="mono-tag-sm text-ds-text-faint">
           © {new Date().getFullYear()} · SETX Youth Football Camp · All rights reserved

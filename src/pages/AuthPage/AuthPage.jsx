@@ -111,10 +111,7 @@ const AuthPage = () => {
             <div className="relative w-full max-w-md border border-ds-border bg-ds-surface p-7 sm:p-10">
               <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-ds-accent" />
 
-              <span className="mono-tag-sm text-ds-text-faint">
-                /{isLogin ? " login" : " signup"}
-              </span>
-              <h2 className="editorial-display mt-3 text-2xl text-ds-text">
+              <h2 className="editorial-display text-2xl text-ds-text">
                 {isLogin ? "Sign in" : "Create account"}
               </h2>
 
