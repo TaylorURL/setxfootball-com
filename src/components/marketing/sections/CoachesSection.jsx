@@ -1,58 +1,69 @@
 /**
- * CoachesSection — the background-checked coaching staff, each as a roster card
- * with a jersey number and highlight strip.
+ * CoachesSection — the background-checked coaching staff, each rendered as an
+ * editorial roster card with a hanging mono numeral, a tight display name, and
+ * a hairline divider list of credentials.
  */
 import { ShieldCheck, Star } from "lucide-react";
-import { Container, Section, Grid, Card, Text, Eyebrow } from "@bradley-t-t/sunday-design-system";
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
-import VarsityNumber from "../../brand/VarsityNumber";
 import { COACHES } from "../../../content/campContent";
 
 const CoachesSection = () => (
-  <Section space="xl" className="border-t border-ds-border bg-ds-bg-elevated">
-    <Container size="xl">
-      <Reveal className="mb-16">
+  <section className="relative border-b border-ds-border bg-ds-bg-elevated py-24 sm:py-32 lg:py-40">
+    <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
+      <Reveal>
         <SectionIntro
-          badge={<><ShieldCheck className="h-3.5 w-3.5" /> Background Checked</>}
-          title="Meet the Coaches"
+          eyebrow="Background Checked"
+          index="02"
+          badge={
+            <span className="inline-flex items-center gap-2">
+              <ShieldCheck className="h-3.5 w-3.5" /> Background Checked
+            </span>
+          }
+          title={<>Meet the<br />coaches.</>}
         >
           Every coach has cleared a background check and brings real coaching and
           playing experience to the field.
         </SectionIntro>
       </Reveal>
 
-      <Grid cols={2} gap={6}>
+      <div className="mt-20 grid grid-cols-1 gap-12 border-t border-ds-border pt-16 lg:grid-cols-2 lg:gap-16">
         {COACHES.map((coach, index) => (
-          <Reveal key={coach.name} variant="scale" delay={index + 1}>
-            <Card variant="surface" padding="lg" interactive className="relative h-full overflow-hidden">
-              <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 h-1" />
-              <div className="mb-6 flex items-start gap-4">
-                <VarsityNumber size="lg">{coach.number}</VarsityNumber>
-                <div className="min-w-0 flex-1">
-                  <Eyebrow strong className="text-ds-accent-bright">{coach.role}</Eyebrow>
-                  <h3 className="heading-stencil mt-1.5 text-3xl text-ds-text">{coach.name}</h3>
+          <Reveal key={coach.name} variant="up" delay={index + 1}>
+            <article className="relative border border-ds-border bg-ds-surface p-8 sm:p-10">
+              <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-ds-accent" />
+              <div className="flex items-start gap-6">
+                <span className="editorial-display mono-num text-[5rem] leading-none text-ds-accent-bright sm:text-[6rem]">
+                  {coach.number}
+                </span>
+                <div className="min-w-0 flex-1 pt-2">
+                  <span className="mono-tag-sm text-ds-text-faint">{coach.role}</span>
+                  <h3 className="editorial-display mt-3 text-3xl text-ds-text sm:text-4xl">
+                    {coach.name}
+                  </h3>
                 </div>
-                <coach.icon className="h-5 w-5 shrink-0 text-ds-text-faint" />
+                <coach.icon className="h-5 w-5 shrink-0 text-ds-text-faint" aria-hidden="true" />
               </div>
-              <ul className="mb-6 space-y-2.5">
+
+              <ul className="mt-8 space-y-3 border-t border-ds-border pt-6">
                 {coach.points.map((point) => (
                   <li key={point} className="flex items-start gap-3">
-                    <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ds-accent" />
-                    <Text size="sm" tone="muted">{point}</Text>
+                    <span className="mt-2 h-px w-3 shrink-0 bg-ds-accent" />
+                    <span className="editorial-body text-[15px] text-ds-text-muted">{point}</span>
                   </li>
                 ))}
               </ul>
-              <div className="flex items-center gap-2 rounded-ds-md bg-ds-surface-2 p-3.5">
-                <Star className="h-3.5 w-3.5 text-ds-accent-bright" />
-                <Eyebrow strong>{coach.highlight}</Eyebrow>
+
+              <div className="mt-7 flex items-center gap-3 border border-ds-border bg-ds-surface-2 px-4 py-3">
+                <Star className="h-3.5 w-3.5 shrink-0 text-ds-accent-bright" />
+                <span className="mono-tag text-ds-text">{coach.highlight}</span>
               </div>
-            </Card>
+            </article>
           </Reveal>
         ))}
-      </Grid>
-    </Container>
-  </Section>
+      </div>
+    </div>
+  </section>
 );
 
 export default CoachesSection;
