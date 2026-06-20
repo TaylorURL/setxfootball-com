@@ -11,8 +11,7 @@
  * register regardless of what's behind it, since the takeover paints its own
  * solid surface).
  */
-import { useRef } from "react";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X, User, LogOut, ArrowRight, LayoutDashboard } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
