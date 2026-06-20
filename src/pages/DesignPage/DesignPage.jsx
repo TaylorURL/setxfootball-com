@@ -88,7 +88,7 @@ const TYPE_SAMPLES = [
   {
     family: "Mono / Numerals",
     role: "Stat band & jersey numbers",
-    sample: "03 · 05–12 · $5 · 02 DAYS",
+    sample: "Ages 5–12 · $5 · 2 Days",
     className: "heading-stencil text-2xl tracking-[0.18em]",
   },
 ];
