@@ -1,45 +1,53 @@
 /**
- * SponsorsSection — thank-you wall for the local businesses and families that
- * keep the camp free.
+ * SponsorsSection — thank-you wall for local sponsors. Editorial card grid,
+ * sharp edges, mono enumeration tags pinned to each frame.
  */
 import { Handshake } from "lucide-react";
-import { Container, Section, Grid, Card } from "@bradley-t-t/sunday-design-system";
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
 import { SPONSOR_IMAGES } from "../../../content/campContent";
 
 const SponsorsSection = () => (
-  <Section space="xl" className="bg-ds-bg">
-    <Container size="xl">
-      <Reveal className="mb-16">
+  <section className="relative border-b border-ds-border bg-ds-bg py-24 sm:py-32 lg:py-40">
+    <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
+      <Reveal>
         <SectionIntro
-          badge={<><Handshake className="h-3.5 w-3.5" /> Our Partners</>}
-          title="Thank you to our sponsors."
+          eyebrow="Our Partners"
+          index="01"
+          badge={
+            <span className="inline-flex items-center gap-2">
+              <Handshake className="h-3.5 w-3.5" /> Our Partners
+            </span>
+          }
+          title={<>Thank you<br />to our sponsors.</>}
         >
           We're grateful for the local businesses and families whose generosity
           keeps the camp free for kids who need it.
         </SectionIntro>
       </Reveal>
 
-      <Grid cols={3} gap={6}>
+      <div className="mt-16 grid grid-cols-1 gap-6 border-t border-ds-border pt-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
         {SPONSOR_IMAGES.map((sponsorImage, index) => (
-          <Reveal key={sponsorImage} variant="scale" delay={index + 1}>
-            <Card variant="outline" padding="none" className="group relative overflow-hidden">
-              <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 z-10 h-1" />
-              <div className="aspect-[4/3] overflow-hidden">
+          <Reveal key={sponsorImage} variant="up" delay={index + 1}>
+            <div className="relative overflow-hidden border border-ds-border">
+              <span aria-hidden="true" className="absolute inset-x-0 top-0 z-10 h-px bg-ds-accent" />
+              <span className="mono-tag-sm absolute right-3 top-3 z-10 text-white/85">
+                /{String(index + 1).padStart(2, "0")}
+              </span>
+              <div className="aspect-[4/3] overflow-hidden bg-ds-surface">
                 <img
                   src={sponsorImage}
                   alt={`SETX Football Camp sponsor banner ${index + 1}`}
                   loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-500 ease-ds-out group-hover:scale-[1.04]"
+                  className="h-full w-full object-cover transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-[1.05]"
                 />
               </div>
-            </Card>
+            </div>
           </Reveal>
         ))}
-      </Grid>
-    </Container>
-  </Section>
+      </div>
+    </div>
+  </section>
 );
 
 export default SponsorsSection;

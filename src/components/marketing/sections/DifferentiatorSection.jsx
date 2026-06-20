@@ -1,46 +1,46 @@
 /**
- * DifferentiatorSection — the dark "what sets us apart" band: guest pro athletes
- * and the mentors-and-advocates promise. An intentional image-forward band that
- * sits over its own dark surface.
+ * DifferentiatorSection — the "what sets us apart" band: an editorial dark slab
+ * with sharp framing corners, a tight display headline, and a pull-quote card
+ * beneath. Mono microcopy throughout.
  */
 import { Sparkles } from "lucide-react";
-import { Container, Section } from "@bradley-t-t/sunday-design-system";
 import Reveal from "../Reveal";
 
 const DifferentiatorSection = () => (
-  <Section space="xl" className="bg-ds-bg">
-    <Container size="xl">
-      <Reveal variant="scale" className="scoreboard-grain relative overflow-hidden rounded-ds-2xl bg-slate-950 p-10 text-center md:p-16">
-        <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 h-1.5" />
-        <span aria-hidden="true" className="accent-edge absolute inset-x-0 bottom-0 h-1.5" />
+  <section className="relative border-b border-ds-border bg-ds-bg py-24 sm:py-32 lg:py-40">
+    <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
+      <Reveal variant="scale" className="relative tech-corners overflow-hidden border border-ds-border bg-ds-bg-elevated p-10 sm:p-16 lg:p-24">
         <div aria-hidden="true" className="field-grid absolute inset-0 opacity-30" />
-        <div className="relative">
-          <span className="mb-5 inline-flex items-center gap-2.5 text-[11px] font-bold uppercase tracking-[0.24em] text-accent-300">
-            <span aria-hidden="true" className="inline-block h-0.5 w-10 rounded-full bg-accent-400" />
+        <div aria-hidden="true" className="scoreboard-grain absolute inset-0" />
+        <div className="relative max-w-4xl">
+          <span className="mono-tag inline-flex items-center gap-3 text-ds-accent-bright">
+            <span aria-hidden="true" className="inline-block h-px w-10 bg-ds-accent" />
             What Sets Us Apart
-            <span aria-hidden="true" className="inline-block h-0.5 w-10 rounded-full bg-accent-400" />
           </span>
-          <h3 className="heading-stencil heading-stencil-tight mb-6 text-3xl text-white md:text-5xl lg:text-6xl">
-            Camps don&apos;t usually look like this.
+          <h3 className="editorial-display editorial-display-tight mt-7 text-4xl text-white sm:text-6xl lg:text-7xl">
+            Camps don&apos;t<br />
+            usually look<br />
+            <span className="text-ds-accent-bright">like this.</span>
           </h3>
-          <p className="mx-auto mb-8 max-w-3xl text-base leading-relaxed text-slate-300 md:text-lg">
+          <p className="editorial-body mt-8 max-w-3xl text-lg leading-relaxed text-white/75 sm:text-xl">
             What truly sets SETXYFC apart is the presence of{" "}
             <span className="font-semibold text-white">outside professional and high-level athletes</span>{" "}
             who attend as guest coaches and speakers — giving campers exposure to
             real-world experience, motivation, and insight most camps simply
             cannot offer.
           </p>
-          <div className="mx-auto max-w-2xl rounded-ds-xl border border-white/15 bg-white/[0.04] p-7 backdrop-blur-sm sm:p-8">
-            <Sparkles className="mx-auto mb-3 h-5 w-5 text-accent-300" />
-            <p className="heading-stencil text-2xl leading-tight text-white sm:text-3xl">
+
+          <div className="mt-12 max-w-3xl border-l-2 border-ds-accent bg-ds-bg/60 px-7 py-7 backdrop-blur-sm sm:px-9 sm:py-9">
+            <Sparkles className="h-5 w-5 text-ds-accent-bright" />
+            <p className="editorial-display mt-4 text-2xl leading-tight text-white sm:text-3xl">
               We are more than a camp. We are mentors, leaders, and advocates —
               here for your kids on and off the field.
             </p>
           </div>
         </div>
       </Reveal>
-    </Container>
-  </Section>
+    </div>
+  </section>
 );
 
 export default DifferentiatorSection;

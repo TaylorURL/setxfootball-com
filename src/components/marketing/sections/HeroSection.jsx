@@ -1,98 +1,133 @@
 /**
- * HeroSection — the varsity hero band over the field photo. Full-bleed, sits
- * under the floating navbar. CTAs route to sign-up and the about page; the
- * scroll cue drops to the on-page camp-facts band.
+ * HeroSection — the cinematic hero band. Full-bleed photography with a soft
+ * navy-to-coal gradient overlay, a left-aligned editorial display headline, and
+ * a technical metadata strip pinned to the lower corners. Sharp corners,
+ * generous whitespace, mono microcopy.
  */
 import { Link } from "react-router-dom";
-import { Calendar, ArrowRight, ChevronDown, MapPin } from "lucide-react";
-import { Container, Button, Text } from "@bradley-t-t/sunday-design-system";
+import { ArrowRight, ChevronDown, MapPin, Calendar } from "lucide-react";
 import { HERO_IMAGE } from "../../../content/campContent";
 import { REGISTER_PATH } from "../../nav/navLinks";
 
 /** Id of the band the hero scroll cue drops to (the camp-facts scoreboard). */
 export const CAMP_FACTS_ID = "camp-facts";
 
-const ChipLabel = ({ children, className = "" }) => (
-  <span className={`inline-flex items-center gap-1.5 rounded-ds-full border border-white/15 bg-white/10 px-3 py-1.5 backdrop-blur-sm ${className}`}>
-    {children}
-  </span>
-);
-
 const scrollToCampFacts = () =>
   document.getElementById(CAMP_FACTS_ID)?.scrollIntoView({ behavior: "smooth" });
 
 const HeroSection = () => (
-  <section className="relative flex min-h-[100svh] items-center overflow-hidden bg-slate-950">
+  <section className="relative flex min-h-[100svh] items-end overflow-hidden bg-ds-bg">
     <div className="absolute inset-0">
-      <img src={HERO_IMAGE} alt="" aria-hidden="true" className="h-full w-full animate-subtle-zoom object-cover" />
-      <div className="absolute inset-0 bg-gradient-to-br from-primary-900/85 via-slate-950/75 to-primary-800/65" />
-      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/45 to-slate-950/30" />
-      <div aria-hidden="true" className="field-grid absolute inset-0 opacity-40" />
-      <div aria-hidden="true" className="field-numbers absolute inset-x-0 bottom-0 h-40 opacity-60" />
+      <img
+        src={HERO_IMAGE}
+        alt=""
+        aria-hidden="true"
+        className="h-full w-full animate-parallax-drift object-cover"
+      />
+      {/* Editorial gradient stack — navy wash, coal pull-down */}
+      <div className="absolute inset-0 bg-gradient-to-b from-primary-900/30 via-ds-bg/40 to-ds-bg" />
+      <div className="absolute inset-0 bg-gradient-to-tr from-ds-bg/85 via-ds-bg/35 to-transparent" />
+      <div aria-hidden="true" className="field-grid absolute inset-0 opacity-30" />
     </div>
-    <div aria-hidden="true" className="accent-edge absolute inset-x-0 bottom-0 h-1.5" />
 
-    <Container size="xl" className="relative z-10 py-32">
-      <div className="max-w-3xl animate-fade-in-up">
-        <div className="mb-7 flex flex-wrap items-center gap-2.5">
-          <ChipLabel>
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent-400 opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-accent-500" />
-            </span>
-            <Calendar className="h-3 w-3 text-accent-300" />
-            <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/90">
-              Season 03 · July 2026
-            </span>
-          </ChipLabel>
-          <ChipLabel className="bg-white/[0.06]">
-            <MapPin className="h-3 w-3 text-white/70" />
-            <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-white/75">Daisetta, TX</span>
-          </ChipLabel>
+    {/* Top-left editorial tag — season + place */}
+    <div className="pointer-events-none absolute left-5 top-24 z-20 hidden sm:left-8 sm:block lg:left-10">
+      <div className="flex items-start gap-3">
+        <span className="mt-[6px] inline-block h-px w-10 bg-ds-accent" aria-hidden="true" />
+        <div>
+          <p className="mono-tag-sm text-ds-accent-bright">Season 03 · July 2026</p>
+          <p className="mono-tag-sm mt-1.5 text-ds-text-faint">Daisetta, Texas</p>
         </div>
+      </div>
+    </div>
 
-        <h1 className="heading-stencil heading-stencil-tight mb-7 text-[3.5rem] text-white sm:text-[5.5rem] lg:text-[7rem]">
-          Where Future
-          <br />
-          <span className="relative inline-block">
-            <span className="relative z-10 text-accent-400">Champions</span>
-            <span aria-hidden="true" className="absolute inset-x-0 bottom-2 -z-0 h-3.5 -skew-x-6 rounded bg-accent-500/30" />
+    {/* Top-right editorial tag — camp specs */}
+    <div className="pointer-events-none absolute right-5 top-24 z-20 hidden text-right sm:right-8 sm:block lg:right-10">
+      <p className="mono-tag-sm text-ds-accent-bright">Every Kid Plays</p>
+      <p className="mono-tag-sm mt-1.5 text-ds-text-faint">Ages 5–12 · $5 Shirt</p>
+    </div>
+
+    <div className="relative z-10 mx-auto w-full max-w-[1440px] px-5 pb-20 pt-32 sm:px-8 sm:pb-28 sm:pt-40 lg:px-10 lg:pb-32">
+      <div className="max-w-5xl animate-fade-in-up">
+        <span className="mono-tag mb-7 inline-flex items-center gap-3 text-ds-accent-bright">
+          <span className="relative flex h-2 w-2">
+            <span className="absolute inline-flex h-full w-full animate-ping bg-ds-accent opacity-75" />
+            <span className="relative inline-flex h-2 w-2 bg-ds-accent-bright" />
           </span>
-          <br />
-          Are Made.
+          Roster Open · July 2026
+        </span>
+
+        <h1 className="editorial-display editorial-display-tight text-white">
+          <span className="block text-[3.75rem] sm:text-[5.5rem] lg:text-[8.5rem]">
+            Where future
+          </span>
+          <span className="block text-[3.75rem] text-ds-accent-bright sm:text-[5.5rem] lg:text-[8.5rem]">
+            champions
+          </span>
+          <span className="block text-[3.75rem] text-white/85 sm:text-[5.5rem] lg:text-[8.5rem]">
+            are made.
+          </span>
         </h1>
 
-        <Text size="lg" className="mb-10 max-w-xl text-lg leading-relaxed text-white/80 sm:text-xl">
+        <p className="editorial-body mt-10 max-w-xl text-lg leading-relaxed text-white/75 sm:text-xl">
           Two days of fundamentals, teamwork, and fun for kids ages 5–12. Every
           camper gets a shirt, drinks, and snacks — because in our community,
           every kid plays.
-        </Text>
+        </p>
 
-        <div className="flex flex-wrap gap-3 sm:gap-4">
-          <Button asChild variant="primary" size="lg" className="font-bold uppercase tracking-[0.06em]">
-            <Link to={REGISTER_PATH}>
-              Sign Up Your Camper <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
-          <Button
-            asChild
-            variant="outline"
-            size="lg"
-            className="border-white/25 bg-white/10 font-semibold uppercase tracking-[0.04em] text-white backdrop-blur-sm hover:border-white/40 hover:text-white"
+        <div className="mt-10 flex flex-wrap gap-3">
+          <Link
+            to={REGISTER_PATH}
+            className="mono-tag inline-flex items-center gap-2 border border-ds-accent bg-ds-accent px-6 py-4 text-white transition-colors duration-200 hover:bg-ds-accent-bright hover:border-ds-accent-bright"
           >
-            <Link to="/about">Meet the Coaches</Link>
-          </Button>
+            Sign Up Your Camper <ArrowRight className="h-4 w-4" />
+          </Link>
+          <Link
+            to="/about"
+            className="mono-tag inline-flex items-center gap-2 border border-white/30 bg-white/5 px-6 py-4 text-white backdrop-blur-sm transition-colors duration-200 hover:bg-white/10 hover:border-white/60"
+          >
+            Meet the Coaches <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+
+        <div className="mt-14 grid max-w-2xl grid-cols-2 gap-x-10 gap-y-6 sm:grid-cols-3">
+          <div className="left-rule-accent pl-4">
+            <p className="mono-tag-sm text-ds-text-faint">Dates</p>
+            <p className="mt-2 inline-flex items-center gap-2 text-base font-semibold text-white">
+              <Calendar className="h-3.5 w-3.5" /> July 2026
+            </p>
+          </div>
+          <div className="left-rule-accent pl-4">
+            <p className="mono-tag-sm text-ds-text-faint">Location</p>
+            <p className="mt-2 inline-flex items-center gap-2 text-base font-semibold text-white">
+              <MapPin className="h-3.5 w-3.5" /> Daisetta, TX
+            </p>
+          </div>
+          <div className="left-rule-accent pl-4">
+            <p className="mono-tag-sm text-ds-text-faint">Cost</p>
+            <p className="mt-2 text-base font-semibold text-white">
+              $5 / Shirt
+            </p>
+          </div>
         </div>
       </div>
-    </Container>
+    </div>
 
+    {/* Bottom scroll cue — editorial register */}
     <button
+      type="button"
       onClick={scrollToCampFacts}
       aria-label="Scroll to camp facts"
-      className="absolute bottom-6 left-1/2 z-20 -translate-x-1/2 animate-float text-white/50 transition-colors hover:text-white"
+      className="group absolute bottom-6 left-1/2 z-20 -translate-x-1/2 transition-colors hover:text-white"
     >
-      <ChevronDown className="h-5 w-5" />
+      <span className="mono-tag-sm flex flex-col items-center gap-2 text-white/55 transition-colors group-hover:text-white">
+        Scroll
+        <ChevronDown className="h-4 w-4 animate-float" />
+      </span>
     </button>
+
+    {/* Bottom hairline */}
+    <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-px bg-ds-accent/70" />
   </section>
 );
 
