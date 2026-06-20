@@ -1,7 +1,7 @@
 /**
- * CoachesSection — the background-checked coaching staff, each rendered as an
- * editorial roster card with a hanging mono numeral, a tight display name, and
- * a hairline divider list of credentials.
+ * CoachesSection — the background-checked coaching staff, each rendered as a
+ * roster card with a tight display name, role, and a hairline divider list of
+ * credentials.
  */
 import { ShieldCheck, Star } from "lucide-react";
 import Reveal from "../Reveal";
@@ -13,8 +13,6 @@ const CoachesSection = () => (
     <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
       <Reveal>
         <SectionIntro
-          eyebrow="Background Checked"
-          index="02"
           badge={
             <span className="inline-flex items-center gap-2">
               <ShieldCheck className="h-3.5 w-3.5" /> Background Checked
@@ -32,17 +30,16 @@ const CoachesSection = () => (
           <Reveal key={coach.name} variant="up" delay={index + 1}>
             <article className="relative border border-ds-border bg-ds-surface p-8 sm:p-10">
               <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-ds-accent" />
-              <div className="flex items-start gap-6">
-                <span className="editorial-display mono-num text-[5rem] leading-none text-ds-accent-bright sm:text-[6rem]">
-                  {coach.number}
+              <div className="flex items-start gap-5">
+                <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-ds-accent-soft text-ds-accent-bright">
+                  <coach.icon className="h-5 w-5" aria-hidden="true" />
                 </span>
-                <div className="min-w-0 flex-1 pt-2">
+                <div className="min-w-0 flex-1">
                   <span className="mono-tag-sm text-ds-text-faint">{coach.role}</span>
-                  <h3 className="editorial-display mt-3 text-3xl text-ds-text sm:text-4xl">
+                  <h3 className="editorial-display mt-2 text-3xl text-ds-text sm:text-4xl">
                     {coach.name}
                   </h3>
                 </div>
-                <coach.icon className="h-5 w-5 shrink-0 text-ds-text-faint" aria-hidden="true" />
               </div>
 
               <ul className="mt-8 space-y-3 border-t border-ds-border pt-6">
