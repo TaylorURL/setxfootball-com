@@ -7,15 +7,19 @@ import { Component } from "react";
  * reached the top of the tree.
  */
 const DefaultFallback = () => (
-  <div className="flex min-h-[100dvh] flex-col items-center justify-center gap-4 bg-ds-bg px-6 text-center">
-    <h1 className="text-xl font-bold text-ds-text">Something went wrong</h1>
+  <div className="flex min-h-[100dvh] flex-col items-center justify-center gap-5 bg-ds-bg px-6 text-center">
+    <span className="mono-tag text-ds-accent-bright">System Error</span>
+    <h1 className="editorial-display editorial-display-tight max-w-xl text-4xl text-ds-text sm:text-5xl">
+      Something<br />
+      <span className="text-ds-accent-bright">went wrong.</span>
+    </h1>
     <p className="max-w-sm text-sm text-ds-text-muted">
       An unexpected error interrupted the page. Reloading usually clears it.
     </p>
     <button
       type="button"
       onClick={() => window.location.reload()}
-      className="rounded-ds-md bg-ds-accent px-4 py-2 text-sm font-semibold text-ds-on-accent transition-colors duration-150 ease-ds-out hover:opacity-90"
+      className="mono-tag inline-flex items-center gap-2 border border-ds-accent bg-ds-accent px-5 py-3 text-white transition-colors duration-200 hover:bg-ds-accent-bright hover:border-ds-accent-bright"
     >
       Reload page
     </button>

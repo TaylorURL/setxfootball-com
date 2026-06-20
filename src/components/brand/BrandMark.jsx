@@ -1,7 +1,6 @@
 /**
- * BrandMark — the SETX Youth Football lockup: the logo tile plus the wordmark
- * and an accent-flagged subtitle. One source of truth for the brand identity
- * shown in the navbar, footer, dashboard chrome, and auth screen.
+ * BrandMark — the SETX Youth Football lockup: a square logo tile plus the
+ * editorial wordmark and a mono subtitle. Sharp corners, restrained chrome.
  *
  * Renders as a router `Link` when `to` is set, a `button` when `onClick` is set,
  * otherwise a plain element — so each surface controls its own interaction
@@ -21,9 +20,9 @@ import clsx from "clsx";
 import logo from "../../assets/logo.PNG";
 
 const SIZES = {
-  sm: { tile: "h-9 w-9 rounded-ds-md", img: "h-7 w-7", word: "text-[14px]", sub: "text-[9px]", gap: "ml-3" },
-  md: { tile: "h-11 w-11 rounded-ds-md", img: "h-9 w-9", word: "text-[15px]", sub: "text-[9px]", gap: "ml-3" },
-  lg: { tile: "h-16 w-16 rounded-ds-xl", img: "h-12 w-12", word: "text-[15px]", sub: "text-[9px]", gap: "mt-3" },
+  sm: { tile: "h-9 w-9", img: "h-7 w-7", word: "text-[15px]", sub: "text-[9px]", gap: "ml-3" },
+  md: { tile: "h-11 w-11", img: "h-9 w-9", word: "text-[16px]", sub: "text-[10px]", gap: "ml-3.5" },
+  lg: { tile: "h-16 w-16", img: "h-12 w-12", word: "text-[16px]", sub: "text-[10px]", gap: "mt-3" },
 };
 
 const BrandMark = ({
@@ -38,30 +37,30 @@ const BrandMark = ({
   const scale = SIZES[size];
   const vertical = orientation === "vertical";
   const wordTone = light ? "text-white" : "text-ds-text";
-  const subTone = light ? "text-white/65" : "text-ds-text-muted";
+  const subTone = light ? "text-white/70" : "text-ds-text-faint";
 
   const content = (
     <>
       <span
         className={clsx(
-          "relative inline-flex items-center justify-center overflow-hidden bg-ds-accent ring-1 ring-white/15 brand-chip-shadow-sm",
+          "relative inline-flex shrink-0 items-center justify-center overflow-hidden bg-ds-accent ring-1 ring-white/10 brand-chip-shadow-sm",
           scale.tile,
         )}
       >
         <img src={logo} alt="" className={clsx("object-contain", scale.img)} />
       </span>
       <span className={clsx(vertical ? "text-center" : "text-left", scale.gap)}>
-        <span className={clsx("block font-black uppercase tracking-[0.05em]", scale.word, wordTone)}>
-          SETX Football
-        </span>
         <span
           className={clsx(
-            "mt-0.5 inline-flex items-center gap-1.5 font-bold uppercase tracking-[0.22em]",
-            scale.sub,
-            subTone,
+            "block font-extrabold uppercase tracking-[-0.01em] leading-none",
+            scale.word,
+            wordTone,
           )}
         >
-          <span aria-hidden="true" className="inline-block h-0.5 w-3 bg-ds-accent" />
+          SETX Football
+        </span>
+        <span className={clsx("mono-tag-sm mt-1.5 inline-flex items-center gap-2", subTone)}>
+          <span aria-hidden="true" className="inline-block h-px w-3 bg-ds-accent" />
           {subtitle}
         </span>
       </span>

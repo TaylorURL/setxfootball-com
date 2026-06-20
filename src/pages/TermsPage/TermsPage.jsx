@@ -1,17 +1,13 @@
 /**
  * TermsPage — Terms of Service for SETX Football Camp.
+ *
+ * Editorial article layout matching the Privacy page: large left-aligned title,
+ * mono "Legal" eyebrow, prose body.
  * @module pages/TermsPage
  */
 import { Link } from "react-router-dom";
-import { ArrowLeft, FileText } from "lucide-react";
-import {
-  Container,
-  Section,
-  Card,
-  Button,
-  Prose,
-  Eyebrow,
-} from "@bradley-t-t/sunday-design-system";
+import { ArrowLeft } from "lucide-react";
+import { Prose } from "@bradley-t-t/sunday-design-system";
 import MarketingPage from "../../components/layout/MarketingPage";
 import Seo from "../../components/seo/Seo";
 import { PAGE_SEO } from "../../components/seo/seoContent";
@@ -19,31 +15,30 @@ import { PAGE_SEO } from "../../components/seo/seoContent";
 const TermsPage = () => (
   <MarketingPage>
     <Seo {...PAGE_SEO.terms} />
-    <Section space="lg">
-      <Container size="md">
-        <Button asChild variant="ghost" size="sm" className="mb-6 px-0">
-          <Link to="/">
-            <ArrowLeft className="h-4 w-4" /> Back to Home
-          </Link>
-        </Button>
+    <section className="bg-ds-bg py-16 sm:py-20 lg:py-24">
+      <div className="mx-auto w-full max-w-3xl px-5 sm:px-8 lg:px-10">
+        <Link
+          to="/"
+          className="mono-tag-sm inline-flex items-center gap-2 text-ds-text-muted hover:text-ds-text"
+        >
+          <ArrowLeft className="h-3 w-3" /> Back to Home
+        </Link>
 
-        <Card variant="elevated" padding="lg" className="relative overflow-hidden">
-          <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 h-1.5" />
-          <div className="mb-8 flex items-center gap-4 border-b border-ds-border pb-8">
-            <span className="brand-chip-shadow inline-flex h-14 w-14 items-center justify-center rounded-ds-lg bg-ds-accent text-white ring-1 ring-white/15">
-              <FileText className="h-6 w-6" />
-            </span>
-            <div>
-              <Eyebrow strong className="text-ds-accent-bright">
-                Legal
-              </Eyebrow>
-              <h1 className="heading-stencil heading-stencil-tight mt-1 text-4xl text-ds-text sm:text-5xl">
-                Terms of Service
-              </h1>
-              <Eyebrow className="mt-1.5">Last updated · March 2026</Eyebrow>
-            </div>
-          </div>
+        <header className="mt-10 border-b border-ds-border pb-10">
+          <span className="mono-tag inline-flex items-center gap-3 text-ds-accent-bright">
+            <span aria-hidden="true" className="inline-block h-px w-10 bg-ds-accent" />
+            Legal · Terms
+          </span>
+          <h1 className="editorial-display editorial-display-tight mt-5 text-5xl text-ds-text sm:text-6xl lg:text-7xl">
+            Terms of<br />
+            <span className="text-ds-accent-bright">Service.</span>
+          </h1>
+          <p className="mono-tag-sm mt-5 text-ds-text-faint">
+            Last updated · March 2026
+          </p>
+        </header>
 
+        <article className="prose prose-invert mt-12">
           <Prose>
             <section>
               <h2>1. Acceptance of Terms</h2>
@@ -148,9 +143,9 @@ const TermsPage = () => (
               </p>
             </section>
           </Prose>
-        </Card>
-      </Container>
-    </Section>
+        </article>
+      </div>
+    </section>
   </MarketingPage>
 );
 

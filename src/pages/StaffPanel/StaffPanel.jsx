@@ -1,12 +1,10 @@
 /**
  * StaffPanel — staff admin view for managing camp registrations.
  *
- * Year-filterable view of all registrations with search, payment-status filter,
- * payment toggling, order grouping (multiple shirt orders from the same
- * parent/camper), summary KPIs, and CSV export. Data orchestration lives in
- * useStaffRegistrations; grouping/CSV logic lives in utils; chrome comes from
- * the shared DashboardShell. The header carries the stadium-stencil title and
- * the season selector.
+ * Editorial register: large display title with mono eyebrow; filterable stat
+ * strip, a hairline-bordered controls bar, and the desktop table / mobile card
+ * lists below. Year-filterable, search, payment-status filter, payment
+ * toggling, order grouping, summary KPIs, CSV export — all unchanged.
  *
  * @module pages/StaffPanel
  */
@@ -22,15 +20,9 @@ import {
   Inbox,
 } from "lucide-react";
 import {
-  Container,
-  PageHeader,
-  Surface,
-  Stat,
   Input,
   Select,
-  Button,
   Spinner,
-  EmptyState,
 } from "@bradley-t-t/sunday-design-system";
 import DashboardShell from "../../components/layout/DashboardShell";
 import { useStaffRegistrations } from "../../hooks/useStaffRegistrations";
@@ -81,6 +73,21 @@ const PAYMENT_FILTER_OPTIONS = [
   { value: "pending", label: "Pending Only" },
 ];
 
+const StatCard = ({ icon: Icon, label, value, index }) => (
+  <div className="left-rule-accent border border-ds-border bg-ds-surface px-5 py-5 pl-7">
+    <div className="flex items-center justify-between">
+      <span className="mono-tag-sm text-ds-text-faint">
+        {String(index + 1).padStart(2, "0")}
+      </span>
+      <Icon className="h-3.5 w-3.5 text-ds-accent-bright" />
+    </div>
+    <p className="editorial-display mono-num mt-3 text-3xl text-ds-text sm:text-4xl">
+      {value}
+    </p>
+    <p className="mono-tag-sm mt-2 text-ds-text-muted">{label}</p>
+  </div>
+);
+
 const StaffPanel = () => {
   const {
     filtered,
@@ -112,41 +119,49 @@ const StaffPanel = () => {
   };
 
   const statCards = [
-    { icon: <Users />, label: "Total", value: stats.total },
-    { icon: <CheckCircle2 />, label: "Paid", value: stats.paid },
-    { icon: <Clock />, label: "Pending", value: stats.pending },
-    { icon: <DollarSign />, label: "Collected", value: formatCurrency(stats.paidRevenue) },
-    { icon: <DollarSign />, label: "Expected", value: formatCurrency(stats.totalRevenue) },
+    { icon: Users, label: "Total", value: stats.total },
+    { icon: CheckCircle2, label: "Paid", value: stats.paid },
+    { icon: Clock, label: "Pending", value: stats.pending },
+    { icon: DollarSign, label: "Collected", value: formatCurrency(stats.paidRevenue) },
+    { icon: DollarSign, label: "Expected", value: formatCurrency(stats.totalRevenue) },
   ];
 
   return (
     <DashboardShell active="staff">
-      <Container size="xl" className="py-8">
-        <PageHeader
-          eyebrow={
-            <span className="inline-flex items-center gap-1.5 uppercase tracking-[0.16em]">
+      <div className="mx-auto w-full max-w-[1440px] px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
+        <header className="flex flex-col gap-6 border-b border-ds-border pb-8 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <span className="mono-tag inline-flex items-center gap-3 text-ds-accent-bright">
               <ShieldCheck className="h-3.5 w-3.5" /> Staff Console
             </span>
-          }
-          title="Staff Panel"
-          description="Manage camp sign-ups, payments, and shirt orders by season."
-          actions={
-            <Select
-              value={String(selectedYear)}
-              onValueChange={(value) => setSelectedYear(parseInt(value, 10))}
-              triggerClassName="w-44"
-              options={years.map((year) => ({ value: String(year), label: `${year} Season` }))}
-            />
-          }
-        />
+            <h1 className="editorial-display editorial-display-tight mt-5 text-4xl text-ds-text sm:text-5xl lg:text-6xl">
+              Staff Panel.
+            </h1>
+            <p className="editorial-body mt-4 max-w-2xl text-lg text-ds-text-muted">
+              Manage camp sign-ups, payments, and shirt orders by season.
+            </p>
+          </div>
+          <Select
+            value={String(selectedYear)}
+            onValueChange={(value) => setSelectedYear(parseInt(value, 10))}
+            triggerClassName="w-44"
+            options={years.map((year) => ({ value: String(year), label: `${year} Season` }))}
+          />
+        </header>
 
-        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-5">
-          {statCards.map((card) => (
-            <Stat key={card.label} label={card.label} value={card.value} icon={card.icon} />
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
+          {statCards.map((card, index) => (
+            <StatCard
+              key={card.label}
+              icon={card.icon}
+              label={card.label}
+              value={card.value}
+              index={index}
+            />
           ))}
         </div>
 
-        <Surface className="mt-6">
+        <div className="mt-8 border border-ds-border bg-ds-surface p-5">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <div className="sm:flex-1">
               <Input
@@ -165,28 +180,32 @@ const StaffPanel = () => {
                   options={PAYMENT_FILTER_OPTIONS}
                 />
               </div>
-              <Button variant="primary" className="font-bold uppercase tracking-[0.06em]" onClick={exportToCSV}>
+              <button
+                type="button"
+                onClick={exportToCSV}
+                className="mono-tag inline-flex items-center gap-2 border border-ds-accent bg-ds-accent px-4 py-3 text-white transition-colors duration-200 hover:bg-ds-accent-bright hover:border-ds-accent-bright"
+              >
                 <Download className="h-4 w-4" /> Export
-              </Button>
+              </button>
             </div>
           </div>
-        </Surface>
+        </div>
 
         {loading ? (
           <div className="flex justify-center py-16">
             <Spinner size="xl" className="text-ds-accent-bright" />
           </div>
         ) : grouped.length === 0 ? (
-          <div className="mt-6">
-            <EmptyState
-              icon={<Inbox />}
-              title="No sign-ups found"
-              description={`Nothing matches your filters for ${selectedYear}.`}
-            />
+          <div className="mt-8 border border-dashed border-ds-border-strong bg-ds-surface p-12 text-center">
+            <Inbox className="mx-auto h-7 w-7 text-ds-text-faint" />
+            <h2 className="editorial-display mt-5 text-2xl text-ds-text">No sign-ups found</h2>
+            <p className="editorial-body mx-auto mt-3 max-w-md text-ds-text-muted">
+              Nothing matches your filters for {selectedYear}.
+            </p>
           </div>
         ) : (
           <>
-            <div className="mt-6 hidden lg:block">
+            <div className="mt-8 hidden lg:block">
               <StaffRegistrationsTable
                 groups={grouped}
                 expandedRows={expandedRows}
@@ -195,7 +214,7 @@ const StaffPanel = () => {
                 onTogglePayment={togglePayment}
               />
             </div>
-            <div className="mt-6 lg:hidden">
+            <div className="mt-8 lg:hidden">
               <StaffRegistrationCards
                 groups={grouped}
                 expandedRows={expandedRows}
@@ -206,7 +225,7 @@ const StaffPanel = () => {
             </div>
           </>
         )}
-      </Container>
+      </div>
     </DashboardShell>
   );
 };

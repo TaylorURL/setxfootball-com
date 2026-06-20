@@ -1,10 +1,9 @@
 /**
  * PaymentPage — post-registration payment instructions.
  *
- * Shown after a successful registration submit. Reads like a completed
- * ticket/jersey order: confirmation header, registration summary, payment
- * receipt with CashApp handle, and a field to save the payer's CashApp
- * handle. Built from design-system primitives.
+ * Editorial register: a confirmation banner, a summary list with hairline
+ * dividers, a left-rule total card with mono price stamp, and the CashApp save
+ * card. Sharp corners, mono microcopy, large display numerals for totals.
  */
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
@@ -14,20 +13,15 @@ import {
   Copy,
   Check,
   DollarSign,
-  Ticket,
 } from "lucide-react";
 import {
-  Container,
-  Card,
   Field,
   Input,
-  Button,
   Alert,
   Spinner,
-  Text,
-  Eyebrow,
 } from "@bradley-t-t/sunday-design-system";
 import Footer from "../../components/footer/Footer";
+import Navbar from "../../components/nav/Navbar";
 import RegistrationService from "../../services/RegistrationService";
 import { formatCurrency } from "../../utils/helpers";
 import { CASHAPP_USERNAME, SHIRT_PRICE } from "../../utils/constants";
@@ -45,11 +39,9 @@ const SUMMARY_FIELDS = [
 ];
 
 const SummaryRow = ({ label, value }) => (
-  <div className="flex items-center justify-between gap-4 py-3">
-    <Eyebrow>{label}</Eyebrow>
-    <Text size="sm" weight="semibold" truncate className="text-right">
-      {value}
-    </Text>
+  <div className="flex items-center justify-between gap-4 border-t border-ds-border py-4">
+    <span className="mono-tag-sm text-ds-text-faint">{label}</span>
+    <span className="text-right text-base font-semibold text-ds-text">{value}</span>
   </div>
 );
 
@@ -109,41 +101,38 @@ const PaymentPage = () => {
   const totalAmount = registration.total_cost || registration.shirt_quantity * SHIRT_PRICE;
 
   return (
-    <div className="flex min-h-[100dvh] flex-col bg-ds-bg">
+    <div className="flex min-h-[100dvh] flex-col bg-ds-bg text-ds-text">
       <Seo {...PAGE_SEO.payment} />
-      <main className="flex-1 py-10 sm:py-14">
-        <Container size="sm">
-          <Button asChild variant="ghost" size="sm" className="mb-6 px-0">
-            <Link to="/">
-              <ArrowLeft className="h-4 w-4" /> Back to Home
-            </Link>
-          </Button>
+      <Navbar />
+      <main className="flex-1 pt-24 pb-20 sm:pt-28 sm:pb-24">
+        <div className="mx-auto w-full max-w-3xl px-5 sm:px-8 lg:px-10">
+          <Link
+            to="/"
+            className="mono-tag-sm inline-flex items-center gap-2 text-ds-text-muted hover:text-ds-text"
+          >
+            <ArrowLeft className="h-3 w-3" /> Back to Home
+          </Link>
 
-          <div className="space-y-6">
-            {/* Confirmation header */}
-            <Card variant="elevated" padding="lg" className="relative overflow-hidden text-center">
-              <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 h-1.5" />
-              <span className="mx-auto mb-4 inline-flex h-16 w-16 items-center justify-center rounded-ds-full bg-ds-positive-soft text-ds-positive">
-                <CheckCircle2 className="h-8 w-8" />
-              </span>
-              <Eyebrow strong className="text-ds-positive">
-                You're On The Roster
-              </Eyebrow>
-              <h1 className="heading-stencil heading-stencil-tight mt-2 text-4xl text-ds-text sm:text-5xl">
-                Sign-up complete.
-              </h1>
-              <Text tone="muted" className="mt-3">
-                Thanks for signing up for SETX Football Camp — see you on the
-                field.
-              </Text>
-            </Card>
+          {/* Confirmation header — full editorial */}
+          <div className="mt-8">
+            <span className="mono-tag inline-flex items-center gap-3 text-ds-positive">
+              <CheckCircle2 className="h-4 w-4" /> You're on the roster
+            </span>
+            <h1 className="editorial-display editorial-display-tight mt-5 text-5xl text-ds-text sm:text-6xl lg:text-7xl">
+              Sign-up<br />
+              <span className="text-ds-accent-bright">complete.</span>
+            </h1>
+            <p className="editorial-body mt-5 max-w-xl text-lg text-ds-text-muted">
+              Thanks for signing up for SETX Football Camp — see you on the field.
+            </p>
+          </div>
 
+          <div className="mt-14 space-y-7">
             {/* Summary */}
-            <Card variant="surface" padding="lg">
-              <Eyebrow strong className="mb-1 inline-flex items-center gap-2 text-ds-accent-bright">
-                <Ticket className="h-3.5 w-3.5" /> Sign-up Summary
-              </Eyebrow>
-              <div className="mt-3 divide-y divide-ds-border">
+            <section className="relative border border-ds-border bg-ds-surface p-7 sm:p-9">
+              <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-ds-accent" />
+              <span className="mono-tag text-ds-accent-bright">Sign-up Summary</span>
+              <div className="mt-5">
                 {SUMMARY_FIELDS.map(({ label, key, format }) => (
                   <SummaryRow
                     key={key}
@@ -152,57 +141,52 @@ const PaymentPage = () => {
                   />
                 ))}
               </div>
-            </Card>
+            </section>
 
             {/* Receipt / payment */}
-            <Card variant="accent" padding="lg" className="relative overflow-hidden text-center">
-              <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 h-1.5" />
-              <Eyebrow strong className="text-ds-accent-bright">
-                Total Due
-              </Eyebrow>
-              <p className="heading-stencil ds-tabular mt-3 text-6xl tracking-tight text-ds-accent-bright sm:text-7xl">
-                {formatCurrency(totalAmount)}
-              </p>
-              <Text size="sm" tone="muted" className="mt-3">
-                ${SHIRT_PRICE} per shirt × {registration.shirt_quantity} shirt
-                {registration.shirt_quantity !== 1 ? "s" : ""}
-              </Text>
+            <section className="relative overflow-hidden border border-ds-accent bg-ds-accent-softer">
+              <span aria-hidden="true" className="absolute inset-y-0 left-0 w-1 bg-ds-accent" />
+              <div className="px-7 py-9 sm:px-10 sm:py-12">
+                <span className="mono-tag text-ds-accent-bright">Total Due</span>
+                <p className="editorial-display mono-num mt-4 text-7xl text-ds-accent-bright sm:text-8xl">
+                  {formatCurrency(totalAmount)}
+                </p>
+                <p className="mono-tag-sm mt-3 text-ds-text-muted">
+                  ${SHIRT_PRICE} per shirt × {registration.shirt_quantity} shirt
+                  {registration.shirt_quantity !== 1 ? "s" : ""}
+                </p>
 
-              <div className="mt-6 rounded-ds-lg border border-ds-border-strong bg-ds-bg-elevated p-5">
-                <Eyebrow strong className="mb-3 text-ds-text">
-                  Send payment via CashApp to
-                </Eyebrow>
-                <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-                  <span className="heading-stencil text-3xl text-ds-positive sm:text-4xl">
-                    ${CASHAPP_USERNAME}
-                  </span>
-                  <Button
-                    variant={copied ? "primary" : "secondary"}
-                    size="sm"
-                    onClick={copyToClipboard}
-                    aria-label={copied ? "Copied to clipboard" : "Copy CashApp username"}
-                  >
-                    {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-                    {copied ? "Copied" : "Copy"}
-                  </Button>
+                <div className="mt-8 border border-ds-border bg-ds-bg p-5 sm:p-7">
+                  <span className="mono-tag-sm text-ds-text-faint">Send payment via CashApp to</span>
+                  <div className="mt-4 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+                    <span className="editorial-display text-3xl text-ds-positive sm:text-4xl">
+                      ${CASHAPP_USERNAME}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={copyToClipboard}
+                      aria-label={copied ? "Copied to clipboard" : "Copy CashApp username"}
+                      className="mono-tag inline-flex items-center gap-2 border border-ds-border-strong bg-ds-surface px-4 py-3 text-ds-text-muted transition-colors duration-200 hover:text-ds-text hover:border-ds-text-muted"
+                    >
+                      {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                      {copied ? "Copied" : "Copy"}
+                    </button>
+                  </div>
                 </div>
+                <p className="mono-tag-sm mt-4 text-ds-text-muted">
+                  Include your child's name in the payment note
+                </p>
               </div>
-              <Text size="xs" tone="muted" className="mt-3 uppercase tracking-[0.12em]">
-                Include your child's name in the payment note
-              </Text>
-            </Card>
+            </section>
 
-            {/* CashApp info save */}
-            <Card variant="surface" padding="lg">
-              <Eyebrow strong className="mb-1 text-ds-accent-bright">
-                Your CashApp Info
-              </Eyebrow>
-              <Text size="sm" tone="muted" className="mb-4">
-                Add your CashApp username or email so we can match your
-                payment to your sign-up.
-              </Text>
+            {/* CashApp save card */}
+            <section className="relative border border-ds-border bg-ds-surface p-7 sm:p-9">
+              <span className="mono-tag text-ds-accent-bright">Your CashApp Info</span>
+              <p className="editorial-body mt-4 text-[15px] text-ds-text-muted">
+                Add your CashApp username or email so we can match your payment to your sign-up.
+              </p>
 
-              <div className="flex flex-col gap-3 sm:flex-row">
+              <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-end">
                 <Field label="CashApp username or email" className="flex-1">
                   <Input
                     value={cashappUsername}
@@ -212,40 +196,41 @@ const PaymentPage = () => {
                     disabled={saved}
                   />
                 </Field>
-                <Button
-                  variant="primary"
-                  size="lg"
-                  className="font-bold uppercase tracking-[0.06em] sm:mt-[1.625rem]"
-                  loading={saving}
-                  disabled={saved || !cashappUsername.trim()}
+                <button
+                  type="button"
                   onClick={handleSaveCashApp}
+                  disabled={saved || !cashappUsername.trim() || saving}
+                  className="mono-tag inline-flex items-center justify-center gap-2 border border-ds-accent bg-ds-accent px-5 py-4 text-white transition-colors duration-200 hover:bg-ds-accent-bright hover:border-ds-accent-bright disabled:cursor-not-allowed disabled:opacity-60"
                 >
-                  {saved ? "Saved" : "Save"}
-                </Button>
+                  {saving ? "Saving…" : saved ? "Saved" : "Save"}
+                </button>
               </div>
 
               {saved && (
-                <Alert tone="positive" className="mt-4">
+                <Alert tone="positive" className="mt-5">
                   CashApp info saved successfully.
                 </Alert>
               )}
               {saveError && (
-                <Alert tone="danger" className="mt-4">
+                <Alert tone="danger" className="mt-5">
                   {saveError}
                 </Alert>
               )}
-            </Card>
+            </section>
 
             <div className="text-center">
-              <Button asChild variant="secondary" size="lg" className="font-bold uppercase tracking-[0.06em]">
-                <Link to="/auth">Create Account To Track Sign-Ups</Link>
-              </Button>
-              <Text size="xs" tone="faint" className="mt-3 uppercase tracking-[0.12em]">
+              <Link
+                to="/auth"
+                className="mono-tag inline-flex items-center justify-center gap-2 border border-ds-border-strong bg-ds-surface px-6 py-4 text-ds-text-muted transition-colors duration-200 hover:text-ds-text hover:border-ds-text-muted"
+              >
+                Create Account To Track Sign-Ups
+              </Link>
+              <p className="mono-tag-sm mt-4 text-ds-text-faint">
                 Use the same email to track your registration
-              </Text>
+              </p>
             </div>
           </div>
-        </Container>
+        </div>
       </main>
       <Footer />
     </div>

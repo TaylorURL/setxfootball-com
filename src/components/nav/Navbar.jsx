@@ -1,15 +1,13 @@
 /**
- * Navbar — the public "command bar": a full-bleed bar that spans the viewport
- * edge-to-edge. The bar itself stretches the full width; inner content is
- * width-capped so the brand, routed links and action cluster stay readable on
- * wide screens. On small screens the bar collapses to brand + a menu trigger
- * that opens a full-screen takeover menu — a deliberately immersive pattern
- * rather than a dropdown.
+ * Navbar — the public "command bar": a thin, full-bleed sticky bar with
+ * minimal monospace labels and an underline indicator for the active route.
+ * Editorial register, restrained surface (translucent over the page beneath),
+ * sharp edges. On small screens the bar collapses to brand + a menu trigger
+ * that opens a full-screen takeover menu — deliberately immersive.
  */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X, User, LogOut, ArrowRight, LayoutDashboard } from "lucide-react";
-import { Button, IconButton } from "@bradley-t-t/sunday-design-system";
 import { useAuth } from "../../context/AuthContext";
 import BrandMark from "../brand/BrandMark";
 import { PUBLIC_NAV_LINKS, REGISTER_PATH } from "./navLinks";
@@ -19,17 +17,20 @@ const DockLink = ({ to, label }) => (
     to={to}
     end={to === "/"}
     className={({ isActive }) =>
-      `ds-press relative rounded-ds-full px-3.5 py-2 text-[13px] font-bold uppercase tracking-[0.08em] transition-colors duration-150 ease-ds-out ${
+      `mono-tag relative inline-flex items-center px-3 py-5 transition-colors duration-200 ${
         isActive ? "text-ds-text" : "text-ds-text-muted hover:text-ds-text"
       }`
     }
   >
     {({ isActive }) => (
       <>
+        {label}
         {isActive && (
-          <span aria-hidden="true" className="absolute inset-0 -z-0 rounded-ds-full bg-ds-surface-2" />
+          <span
+            aria-hidden="true"
+            className="absolute inset-x-3 bottom-0 h-px bg-ds-accent"
+          />
         )}
-        <span className="relative z-10">{label}</span>
       </>
     )}
   </NavLink>
@@ -41,7 +42,7 @@ const TakeoverLink = ({ to, label, onNavigate }) => (
     end={to === "/"}
     onClick={onNavigate}
     className={({ isActive }) =>
-      `ds-press heading-stencil flex items-center gap-4 text-left text-4xl transition-colors duration-150 ease-ds-out hover:text-ds-accent-bright sm:text-5xl ${
+      `editorial-display editorial-display-tight flex items-baseline gap-5 text-left text-5xl transition-colors duration-200 hover:text-ds-accent-bright sm:text-6xl ${
         isActive ? "text-ds-text" : "text-ds-text-muted"
       }`
     }
@@ -50,8 +51,12 @@ const TakeoverLink = ({ to, label, onNavigate }) => (
       <>
         <span
           aria-hidden="true"
-          className={`inline-block h-2.5 w-2.5 rounded-full transition-colors duration-150 ${isActive ? "bg-ds-accent" : "bg-ds-border-strong"}`}
-        />
+          className={`mono-tag-sm inline-block min-w-[28px] translate-y-[-0.6em] ${
+            isActive ? "text-ds-accent-bright" : "text-ds-text-faint"
+          }`}
+        >
+          0{PUBLIC_NAV_LINKS.findIndex((l) => l.to === to) + 1}
+        </span>
         {label}
       </>
     )}
@@ -61,6 +66,14 @@ const TakeoverLink = ({ to, label, onNavigate }) => (
 const Navbar = () => {
   const { user, signOut } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -70,99 +83,118 @@ const Navbar = () => {
   };
 
   const authLinkClass =
-    "ds-press inline-flex items-center gap-1.5 rounded-ds-full px-3 py-2 text-[13px] font-bold uppercase tracking-[0.08em] text-ds-text-muted transition-colors duration-150 ease-ds-out hover:text-ds-text";
+    "mono-tag inline-flex items-center gap-2 px-3 py-2 text-ds-text-muted transition-colors duration-200 hover:text-ds-text";
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-sticky border-b border-ds-border bg-ds-bg-elevated shadow-ds-lg">
-        <span aria-hidden="true" className="accent-edge absolute inset-x-0 bottom-0 h-0.5" />
+      <header
+        className={`fixed inset-x-0 top-0 z-sticky transition-colors duration-300 ${
+          scrolled
+            ? "border-b border-ds-border bg-ds-bg/85 backdrop-blur-md"
+            : "border-b border-transparent bg-transparent"
+        }`}
+      >
         <nav
           aria-label="Primary"
-          className="relative mx-auto flex w-full max-w-7xl items-center gap-2 px-4 py-3 sm:gap-3 sm:px-6 sm:py-3.5 lg:px-8"
+          className="relative mx-auto flex w-full max-w-[1440px] items-center gap-6 px-5 sm:px-8 lg:px-10"
         >
           <BrandMark size="sm" to="/" className="shrink-0" />
 
-          <div className="mx-auto hidden items-center gap-0.5 md:flex">
+          <div className="mx-auto hidden items-center md:flex">
             {PUBLIC_NAV_LINKS.map((link) => (
               <DockLink key={link.to} to={link.to} label={link.label} />
             ))}
           </div>
 
-          <div className="ml-auto hidden items-center gap-1.5 md:flex">
+          <div className="ml-auto hidden items-center gap-2 md:flex">
             {user ? (
               <Link to="/dashboard" className={authLinkClass}>
-                <LayoutDashboard className="h-4 w-4" /> Dashboard
+                <LayoutDashboard className="h-3.5 w-3.5" /> Dashboard
               </Link>
             ) : (
               <Link to="/auth" className={authLinkClass}>
-                <User className="h-4 w-4" /> Login
+                <User className="h-3.5 w-3.5" /> Login
               </Link>
             )}
-            <Button asChild variant="primary" size="sm" className="font-bold uppercase tracking-[0.08em]">
-              <Link to={REGISTER_PATH}>
-                Sign Up <ArrowRight className="h-3.5 w-3.5" />
-              </Link>
-            </Button>
+            <Link
+              to={REGISTER_PATH}
+              className="mono-tag inline-flex items-center gap-2 border border-ds-accent bg-ds-accent px-4 py-2.5 text-white transition-colors duration-200 hover:bg-ds-accent-bright hover:border-ds-accent-bright"
+            >
+              Sign Up <ArrowRight className="h-3.5 w-3.5" />
+            </Link>
           </div>
 
           <div className="ml-auto flex items-center gap-1.5 md:hidden">
-            <IconButton label="Open menu" variant="ghost" onClick={() => setMenuOpen(true)}>
-              <Menu className="h-5 w-5" />
-            </IconButton>
+            <button
+              type="button"
+              aria-label="Open menu"
+              onClick={() => setMenuOpen(true)}
+              className="mono-tag inline-flex items-center gap-2 border border-ds-border-strong px-3 py-2 text-ds-text-muted transition-colors duration-200 hover:text-ds-text hover:border-ds-text-muted"
+            >
+              <Menu className="h-4 w-4" /> Menu
+            </button>
           </div>
         </nav>
       </header>
 
       {/* Full-screen takeover menu (mobile) */}
       <div
-        className={`fixed inset-0 z-modal flex flex-col bg-ds-bg transition-opacity duration-200 ease-ds-out md:hidden ${
+        className={`fixed inset-0 z-modal flex flex-col bg-ds-bg transition-opacity duration-300 md:hidden ${
           menuOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
-        <div aria-hidden="true" className="accent-edge h-1.5 w-full" />
-        <div className="flex items-center justify-between px-5 py-4">
+        <div className="flex items-center justify-between border-b border-ds-border px-5 py-4">
           <BrandMark size="sm" to="/" onClick={closeMenu} />
-          <IconButton label="Close menu" variant="ghost" onClick={closeMenu}>
-            <X className="h-5 w-5" />
-          </IconButton>
+          <button
+            type="button"
+            aria-label="Close menu"
+            onClick={closeMenu}
+            className="mono-tag inline-flex items-center gap-2 border border-ds-border-strong px-3 py-2 text-ds-text-muted hover:text-ds-text"
+          >
+            <X className="h-4 w-4" /> Close
+          </button>
         </div>
 
-        <div className="flex flex-1 flex-col justify-center gap-6 px-7">
+        <div className="flex flex-1 flex-col justify-center gap-7 px-8">
+          <span className="mono-tag-sm text-ds-text-faint">/ Navigation</span>
           {PUBLIC_NAV_LINKS.map((link) => (
             <TakeoverLink key={link.to} to={link.to} label={link.label} onNavigate={closeMenu} />
           ))}
         </div>
 
         <div className="space-y-3 border-t border-ds-border p-5">
-          <Button
-            asChild
-            variant="primary"
-            size="lg"
-            block
-            className="font-bold uppercase tracking-[0.08em]"
+          <Link
+            to={REGISTER_PATH}
             onClick={closeMenu}
+            className="mono-tag flex w-full items-center justify-center gap-2 bg-ds-accent px-5 py-4 text-white hover:bg-ds-accent-bright"
           >
-            <Link to={REGISTER_PATH}>
-              Sign Up Your Camper <ArrowRight className="h-4 w-4" />
-            </Link>
-          </Button>
+            Sign Up Your Camper <ArrowRight className="h-4 w-4" />
+          </Link>
           {user ? (
-            <div className="grid grid-cols-2 gap-3">
-              <Button asChild variant="secondary" size="lg" onClick={closeMenu}>
-                <Link to="/dashboard">
-                  <LayoutDashboard className="h-4 w-4" /> Dashboard
-                </Link>
-              </Button>
-              <Button variant="outline" size="lg" onClick={handleSignOut}>
+            <div className="grid grid-cols-2 gap-2">
+              <Link
+                to="/dashboard"
+                onClick={closeMenu}
+                className="mono-tag inline-flex items-center justify-center gap-2 border border-ds-border-strong px-3 py-3 text-ds-text-muted hover:text-ds-text"
+              >
+                <LayoutDashboard className="h-4 w-4" /> Dashboard
+              </Link>
+              <button
+                type="button"
+                onClick={handleSignOut}
+                className="mono-tag inline-flex items-center justify-center gap-2 border border-ds-border-strong px-3 py-3 text-ds-text-muted hover:text-ds-text"
+              >
                 <LogOut className="h-4 w-4" /> Sign Out
-              </Button>
+              </button>
             </div>
           ) : (
-            <Button asChild variant="secondary" size="lg" block onClick={closeMenu}>
-              <Link to="/auth">
-                <User className="h-4 w-4" /> Login
-              </Link>
-            </Button>
+            <Link
+              to="/auth"
+              onClick={closeMenu}
+              className="mono-tag flex w-full items-center justify-center gap-2 border border-ds-border-strong px-3 py-3 text-ds-text-muted hover:text-ds-text"
+            >
+              <User className="h-4 w-4" /> Login
+            </Link>
           )}
         </div>
       </div>
