@@ -1,7 +1,7 @@
 /**
  * MarketingPage — chrome for every public page: the editorial sticky Navbar
- * over a deep-bg body, then the shared Footer. Page content is passed as
- * children.
+ * over a deep-bg body, then the shared Footer. The page body fades + lifts in
+ * on mount so route changes feel intentional without being heavy.
  *
  * @param {object} props
  * @param {React.ReactNode} props.children - Page body.
@@ -14,7 +14,12 @@ import Footer from "../footer/Footer";
 const MarketingPage = ({ children, padded = true }) => (
   <div className="flex min-h-[100dvh] flex-col bg-ds-bg text-ds-text">
     <Navbar />
-    <main className={`flex-1 ${padded ? "pt-20 sm:pt-24" : ""}`}>{children}</main>
+    <main
+      key={typeof window !== "undefined" ? window.location.pathname : "ssr"}
+      className={`animate-page-in flex-1 ${padded ? "pt-20 sm:pt-24" : ""}`}
+    >
+      {children}
+    </main>
     <Footer />
   </div>
 );
