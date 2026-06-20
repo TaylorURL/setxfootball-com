@@ -1,6 +1,6 @@
 /**
  * GallerySection — the past-seasons photo mosaic. Sharp edges, hairline frames,
- * mono caption tags that slide in on hover. Generous gutters, editorial tone.
+ * caption tags that slide in on hover. Generous gutters.
  */
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
@@ -12,7 +12,6 @@ const GallerySection = () => (
       <Reveal>
         <SectionIntro
           eyebrow="Camp Memories"
-          index="01"
           title={<>From the<br />sideline.</>}
         >
           Snapshots from past seasons — the energy, the learning, and the
@@ -34,9 +33,6 @@ const GallerySection = () => (
               <span className="mono-tag-sm pointer-events-none absolute bottom-3 left-3 inline-flex items-center gap-2 bg-ds-bg/85 px-3 py-1.5 text-white opacity-0 backdrop-blur-sm transition-all duration-500 group-hover:opacity-100">
                 <span aria-hidden="true" className="inline-block h-px w-3 bg-ds-accent" />
                 {item.caption}
-              </span>
-              <span className="mono-tag-sm pointer-events-none absolute right-3 top-3 text-white/70">
-                {String(index + 1).padStart(2, "0")}
               </span>
             </div>
           </Reveal>
