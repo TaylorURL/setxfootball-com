@@ -1,6 +1,7 @@
 /**
- * MarketingPage — chrome for every public page: the full-width Navbar, a themed
- * full-height body, and the shared Footer. Page content is passed as children.
+ * MarketingPage — chrome for every public page: the editorial sticky Navbar
+ * over a deep-bg body, then the shared Footer. Page content is passed as
+ * children.
  *
  * @param {object} props
  * @param {React.ReactNode} props.children - Page body.
