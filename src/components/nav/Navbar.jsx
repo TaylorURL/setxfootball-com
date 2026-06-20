@@ -3,15 +3,21 @@
  * mark, primary nav links, an animated underline indicator for the active
  * route, and the sign-up CTA. The bar uses a translucent backdrop-blurred
  * chrome with a strong border so it stays legible over BOTH the dark hero and
- * the light paper sections beneath as you scroll. On small screens the bar
- * collapses to brand + a menu trigger that opens a full-screen takeover menu.
+ * the light paper sections beneath as you scroll. The bar itself adopts the
+ * register of whichever section is currently behind it (dark or light), so
+ * the wordmark, links, hamburger, and active underline always read against
+ * the right contrast. On small screens the bar collapses to brand + a menu
+ * trigger that opens a full-screen takeover menu (which keeps the dark
+ * register regardless of what's behind it, since the takeover paints its own
+ * solid surface).
  */
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X, User, LogOut, ArrowRight, LayoutDashboard } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
 import BrandMark from "../brand/BrandMark";
 import { PUBLIC_NAV_LINKS, REGISTER_PATH } from "./navLinks";
+import useAdaptiveNavSurface from "../../hooks/useAdaptiveNavSurface";
 
 const DockLink = ({ to, label }) => (
   <NavLink
@@ -47,6 +53,8 @@ const TakeoverLink = ({ to, label, onNavigate }) => (
 const Navbar = () => {
   const { user, signOut } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const headerRef = useRef(null);
+  const surface = useAdaptiveNavSurface(headerRef);
 
   const closeMenu = () => setMenuOpen(false);
 
@@ -60,12 +68,15 @@ const Navbar = () => {
 
   return (
     <>
-      {/* The navbar always renders on the dark register (data-theme="gray")
-          regardless of the section beneath it, so its tokens, contrast, and
-          accent color stay reliable across every route. */}
+      {/* The header anchors to the dark register by default but flips to the
+          light register whenever a [data-surface="light"] section is sitting
+          beneath it. The `data-surface` attribute is what swaps every --ds-*
+          token coherently for the bar and all of its children. */}
       <header
+        ref={headerRef}
         data-theme="gray"
-        className="fixed inset-x-0 top-0 z-sticky border-b border-ds-border bg-ds-bg/85 text-ds-text backdrop-blur-md backdrop-saturate-150"
+        data-surface={surface === "light" ? "light" : undefined}
+        className="fixed inset-x-0 top-0 z-sticky border-b border-ds-border bg-ds-bg/85 text-ds-text backdrop-blur-md backdrop-saturate-150 transition-colors duration-200"
       >
         <nav
           aria-label="Primary"
