@@ -1,8 +1,9 @@
 /**
  * Navbar — the public top dock: a thin, full-bleed sticky bar with the brand
- * mark, primary nav links, an underline indicator for the active route, and
- * the sign-up CTA. Always renders on a solid page-colored background so the
- * nav text stays clearly legible on every route. On small screens the bar
+ * mark, primary nav links, an animated underline indicator for the active
+ * route, and the sign-up CTA. The bar uses a translucent backdrop-blurred
+ * chrome with a strong border so it stays legible over BOTH the dark hero and
+ * the light paper sections beneath as you scroll. On small screens the bar
  * collapses to brand + a menu trigger that opens a full-screen takeover menu.
  */
 import { useState } from "react";
@@ -17,22 +18,14 @@ const DockLink = ({ to, label }) => (
     to={to}
     end={to === "/"}
     className={({ isActive }) =>
-      `mono-tag relative inline-flex items-center px-3 py-5 transition-colors duration-200 ${
-        isActive ? "text-ds-text" : "text-ds-text-muted hover:text-ds-text"
+      `nav-underline mono-tag relative inline-flex items-center px-3 py-5 transition-colors duration-200 ${
+        isActive
+          ? "is-active text-ds-text"
+          : "text-ds-text-muted hover:text-ds-text"
       }`
     }
   >
-    {({ isActive }) => (
-      <>
-        {label}
-        {isActive && (
-          <span
-            aria-hidden="true"
-            className="absolute inset-x-3 bottom-0 h-px bg-ds-accent"
-          />
-        )}
-      </>
-    )}
+    {label}
   </NavLink>
 );
 
@@ -67,7 +60,13 @@ const Navbar = () => {
 
   return (
     <>
-      <header className="fixed inset-x-0 top-0 z-sticky border-b border-ds-border bg-ds-bg/95 backdrop-blur-md">
+      {/* The navbar always renders on the dark register (data-theme="gray")
+          regardless of the section beneath it, so its tokens, contrast, and
+          accent color stay reliable across every route. */}
+      <header
+        data-theme="gray"
+        className="fixed inset-x-0 top-0 z-sticky border-b border-ds-border bg-ds-bg/85 text-ds-text backdrop-blur-md backdrop-saturate-150"
+      >
         <nav
           aria-label="Primary"
           className="relative mx-auto flex w-full max-w-[1440px] items-center gap-6 px-5 sm:px-8 lg:px-10"
@@ -92,9 +91,10 @@ const Navbar = () => {
             )}
             <Link
               to={REGISTER_PATH}
-              className="mono-tag inline-flex items-center gap-2 border border-ds-accent bg-ds-accent px-4 py-2.5 text-white transition-colors duration-200 hover:bg-ds-accent-bright hover:border-ds-accent-bright"
+              className="press-down group mono-tag inline-flex items-center gap-2 border border-ds-accent bg-ds-accent px-4 py-2.5 text-white transition-colors duration-200 hover:bg-ds-accent-bright hover:border-ds-accent-bright"
             >
-              Sign Up <ArrowRight className="h-3.5 w-3.5" />
+              Sign Up
+              <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
             </Link>
           </div>
 
@@ -111,9 +111,11 @@ const Navbar = () => {
         </nav>
       </header>
 
-      {/* Full-screen takeover menu (mobile) */}
+      {/* Full-screen takeover menu (mobile) — also pinned to the dark register
+          so the menu reads consistently regardless of the page beneath it. */}
       <div
-        className={`fixed inset-0 z-modal flex flex-col bg-ds-bg transition-opacity duration-300 md:hidden ${
+        data-theme="gray"
+        className={`fixed inset-0 z-modal flex flex-col bg-ds-bg text-ds-text transition-opacity duration-300 md:hidden ${
           menuOpen ? "opacity-100" : "pointer-events-none opacity-0"
         }`}
       >
@@ -139,7 +141,7 @@ const Navbar = () => {
           <Link
             to={REGISTER_PATH}
             onClick={closeMenu}
-            className="mono-tag flex w-full items-center justify-center gap-2 bg-ds-accent px-5 py-4 text-white hover:bg-ds-accent-bright"
+            className="press-down mono-tag flex w-full items-center justify-center gap-2 bg-ds-accent px-5 py-4 text-white hover:bg-ds-accent-bright"
           >
             Sign Up Your Camper <ArrowRight className="h-4 w-4" />
           </Link>

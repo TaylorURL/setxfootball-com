@@ -2,7 +2,8 @@
  * PrivacyPage — Privacy Policy for SETX Football Camp.
  *
  * Editorial article layout: large left-aligned title, a mono "Legal" eyebrow,
- * and prose rendered inside a hairline article frame.
+ * and prose rendered inside a hairline article frame. Rendered on the paper
+ * register so long-form legal copy is comfortable to read.
  * @module pages/PrivacyPage
  */
 import { Link } from "react-router-dom";
@@ -15,18 +16,18 @@ import { PAGE_SEO } from "../../components/seo/seoContent";
 const PrivacyPage = () => (
   <MarketingPage>
     <Seo {...PAGE_SEO.privacy} />
-    <section className="bg-ds-bg py-16 sm:py-20 lg:py-24">
+    <section data-surface="light" className="bg-ds-bg py-16 sm:py-20 lg:py-24">
       <div className="mx-auto w-full max-w-3xl px-5 sm:px-8 lg:px-10">
         <Link
           to="/"
-          className="mono-tag-sm inline-flex items-center gap-2 text-ds-text-muted hover:text-ds-text"
+          className="mono-tag-sm inline-flex items-center gap-2 text-ds-text-muted transition-colors hover:text-ds-text"
         >
           <ArrowLeft className="h-3 w-3" /> Back to Home
         </Link>
 
         <header className="mt-10 border-b border-ds-border pb-10">
           <span className="mono-tag inline-flex items-center gap-3 text-ds-accent-bright">
-            <span aria-hidden="true" className="inline-block h-px w-10 bg-ds-accent" />
+            <span aria-hidden="true" className="accent-tick is-on w-10" />
             Legal · Privacy
           </span>
           <h1 className="editorial-display editorial-display-tight mt-5 text-5xl text-ds-text sm:text-6xl lg:text-7xl">
@@ -38,7 +39,7 @@ const PrivacyPage = () => (
           </p>
         </header>
 
-        <article className="prose prose-invert mt-12">
+        <article className="mt-12">
           <Prose>
             <section>
               <h2>1. Information We Collect</h2>

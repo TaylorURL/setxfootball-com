@@ -1,9 +1,12 @@
 /**
  * HomePage — the public landing surface. A thin composition of marketing
  * sections: the varsity hero, the scoreboard stat band, the "every camper gets"
- * promise, the how-it-works playbook, and the closing sign-up callout. Section
- * content and the deeper pages (about, gallery, sponsors, register) live on
- * their own routes.
+ * promise, the how-it-works playbook, and the closing sign-up callout.
+ *
+ * The page is composed in a deliberate light/dark rhythm:
+ * dark hero → dark scoreboard → LIGHT perks → dark playbook → LIGHT join callout.
+ * The rhythm gives the page room to breathe while the monochrome palette and
+ * single red accent stay consistent throughout.
  */
 import MarketingPage from "../../components/layout/MarketingPage";
 import HeroSection from "../../components/marketing/sections/HeroSection";
@@ -19,9 +22,9 @@ const HomePage = () => (
     <Seo {...PAGE_SEO.home} />
     <HeroSection />
     <ScoreboardSection />
-    <PerksSection />
+    <PerksSection surface="light" />
     <PlaybookSection />
-    <JoinCallout />
+    <JoinCallout surface="light" />
   </MarketingPage>
 );
 

@@ -1,5 +1,7 @@
 /**
  * GalleryPage — the past-seasons photo mosaic, closed with the sign-up callout.
+ *
+ * Rhythm: dark gallery (photos pop against coal) → LIGHT join callout.
  */
 import MarketingPage from "../../components/layout/MarketingPage";
 import GallerySection from "../../components/marketing/sections/GallerySection";
@@ -11,7 +13,7 @@ const GalleryPage = () => (
   <MarketingPage>
     <Seo {...PAGE_SEO.gallery} />
     <GallerySection />
-    <JoinCallout />
+    <JoinCallout surface="light" />
   </MarketingPage>
 );
 
