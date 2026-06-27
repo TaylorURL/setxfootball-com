@@ -134,15 +134,18 @@ const Footer = () => (
           >
             Terms
           </Link>
-          <a
-            href="https://taylorurl.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mono-tag-sm inline-flex items-center gap-1 text-ds-text-muted transition-colors duration-200 hover:text-ds-text"
-          >
-            Built by TaylorURL <ArrowUpRight className="h-3 w-3" />
-          </a>
         </div>
+      </div>
+
+      <div className="flex items-center justify-center py-3.5">
+        <a
+          href="https://www.taylorurl.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-xs tracking-wide text-ds-text-muted transition-colors duration-150 hover:text-ds-accent-bright focus-visible:text-ds-accent-bright focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ds-accent focus-visible:ring-offset-2 focus-visible:ring-offset-ds-bg"
+        >
+          Built by <span className="font-semibold">TaylorURL</span>
+        </a>
       </div>
     </div>
   </footer>
