@@ -1,16 +1,20 @@
-<p align="center"><img src="src/assets/logo.PNG" alt="SETX Football" width="200"></p>
+<p align="center"><img src="src/assets/logo.PNG" width="200" alt="SETX Football" /></p>
 
 <h1 align="center">SETX Football</h1>
 
-<p align="center">Registration and shirt-order management for <strong>SETX Football Camp</strong> — a youth football camp in Southeast Texas. Parents sign up and pay; staff verify and manage.<br>Live at <a href="https://setxfootball.com">setxfootball.com</a>.</p>
+<p align="center"><b>Registration and shirt-order management for SETX Football Camp.</b></p>
+<p align="center">
+  A youth football camp in Southeast Texas — parents sign up and pay; staff verify and manage.<br />
+  Live at <a href="https://setxfootball.com">setxfootball.com</a>.
+</p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React 19">
-  <img src="https://img.shields.io/badge/React_Router-7-CA4245?style=flat-square&logo=reactrouter&logoColor=white" alt="React Router 7">
-  <img src="https://img.shields.io/badge/CRA-react--scripts_5-09D3AC?style=flat-square&logo=createreactapp&logoColor=white" alt="Create React App">
-  <img src="https://img.shields.io/badge/Tailwind-3.4-38BDF8?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
-  <img src="https://img.shields.io/badge/Supabase-Postgres-3ECF8E?style=flat-square&logo=supabase&logoColor=white" alt="Supabase">
-  <img src="https://img.shields.io/badge/Vercel-deployed-000000?style=flat-square&logo=vercel&logoColor=white" alt="Vercel">
+  <img src="https://img.shields.io/badge/React-19-e11d2a?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
+  <img src="https://img.shields.io/badge/React_Router-7-e11d2a?style=for-the-badge&logo=reactrouter&logoColor=white" alt="React Router 7" />
+  <img src="https://img.shields.io/badge/CRA-react--scripts_5-e11d2a?style=for-the-badge&logo=createreactapp&logoColor=white" alt="Create React App" />
+  <img src="https://img.shields.io/badge/Tailwind-3.4-e11d2a?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
+  <img src="https://img.shields.io/badge/Supabase-Postgres-e11d2a?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
+  <img src="https://img.shields.io/badge/Vercel-deployed-e11d2a?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
 </p>
 
 ---
