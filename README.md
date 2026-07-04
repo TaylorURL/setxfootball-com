@@ -1,102 +1,111 @@
-<p align="center"><img src="src/assets/logo.PNG" alt="SETX Football" width="140" /></p>
+<p align="center"><img src="src/assets/logo.PNG" alt="SETX Football" width="200"></p>
 
 <h1 align="center">SETX Football</h1>
 
-<p align="center"><strong>A registration and management platform for Southeast Texas Football — built for parents, run by staff.</strong></p>
+<p align="center">Registration and shirt-order management for <strong>SETX Football Camp</strong> — a youth football camp in Southeast Texas. Parents sign up and pay; staff verify and manage.<br>Live at <a href="https://setxfootball.com">setxfootball.com</a>.</p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/v1.7.20-release-1e3a5f" />
-  <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react" />
-  <img src="https://img.shields.io/badge/React_Router-7-CA4245?logo=reactrouter" />
-  <img src="https://img.shields.io/badge/Tailwind-3.4-38BDF8?logo=tailwindcss" />
-  <img src="https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?logo=supabase" />
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=white" alt="React 19">
+  <img src="https://img.shields.io/badge/React_Router-7-CA4245?style=flat-square&logo=reactrouter&logoColor=white" alt="React Router 7">
+  <img src="https://img.shields.io/badge/CRA-react--scripts_5-09D3AC?style=flat-square&logo=createreactapp&logoColor=white" alt="Create React App">
+  <img src="https://img.shields.io/badge/Tailwind-3.4-38BDF8?style=flat-square&logo=tailwindcss&logoColor=white" alt="Tailwind CSS">
+  <img src="https://img.shields.io/badge/Supabase-Postgres-3ECF8E?style=flat-square&logo=supabase&logoColor=white" alt="Supabase">
+  <img src="https://img.shields.io/badge/Vercel-deployed-000000?style=flat-square&logo=vercel&logoColor=white" alt="Vercel">
 </p>
 
 ---
 
-SETX Football is the registration and administrative backbone of Southeast Texas Football, an annual youth football camp. Parents visit the platform to enroll their children, configure shirt orders, submit payment through CashApp, and track the status of their registration from submission through confirmation. On the other side of the same application, staff access a protected admin panel that centralizes every registration record, payment verification workflow, and reporting export — no external tooling required.
+- **Sign up in one pass** — a multi-shirt order form (size, recipient, camper or family) with a live $5-per-shirt total; no account needed to start.
+- **CashApp payment, verified by staff** — parents pay the camp's `$SETXYFC` handle and save their username; staff confirm each payment with a single toggle.
+- **Dashboards for both sides** — parents track status and edit within a 3-day window; staff get a role-gated panel with search, family grouping, revenue KPIs, and CSV export.
 
-The platform handles the full registration lifecycle: a parent creates an account, fills out a registration form with per-child details and shirt selections, follows the CashApp payment instructions, and returns to their dashboard to monitor status. Staff verify payments, toggle statuses, search and filter the full registration list, collapse related submissions into grouped orders, and export data as CSV — all through a purpose-built staff interface that operates on the same database with role-enforced access control.
+## Stack
 
----
+| Layer         | Technology                                                                 |
+| ------------- | -------------------------------------------------------------------------- |
+| Framework     | React 19 + React Router 7 on Create React App (`react-scripts` 5)          |
+| Styling       | Tailwind CSS 3.4 + vendored `@bradley-t-t/sunday-design-system`             |
+| Icons / SEO   | `lucide-react` · `react-helmet-async`                                       |
+| Backend       | Supabase — PostgreSQL, Auth, Row-Level Security                             |
+| Data access   | `AuthService` + `RegistrationService` returning `{ data, error }` tuples    |
+| Hosting       | Vercel                                                                      |
 
-## Registration Flow
+The design system ships as a committed tarball under `vendor/` and is referenced from `package.json` as `file:./vendor/…tgz`, so installs and Vercel builds resolve it without a registry.
 
-The registration form is the core of the parent experience. Parents enter their child's information alongside a flexible shirt ordering system that supports multiple line items per submission — each with a size selection spanning Youth XS through Adult 2XL, a recipient name, and a designation for whether the shirt is for the camper or a family member. The real-time cost calculator updates as items are added or removed, applying a flat $5-per-shirt rate so parents always see their total before submitting.
+## Getting started
 
-The form also captures emergency contact information with predefined relationship options, ensuring staff have the structured data they need on camp day without free-text parsing.
-
-## Payment Verification
-
-After a registration is submitted, the platform presents CashApp payment instructions — displaying the camp's handle ($SETXYFC) alongside a one-click clipboard copy action. Parents enter their CashApp username as part of the process, giving staff the identifier needed to cross-reference incoming payments against submitted registrations without relying on memo fields or parent-initiated confirmation steps.
-
-Staff verify payment with a single toggle in the admin panel, flipping the registration status from pending to paid. That status is immediately reflected in the parent's dashboard, closing the loop without any email or external communication required.
-
-## User Dashboard
-
-Authenticated parents land on a dashboard that loads all registrations associated with their email address. Each registration displays its current payment status and, within a three-day edit window from the time of submission, an inline edit form that allows corrections to any field. The edit window is enforced both at the UI layer — where the form displays a "days remaining" countdown — and at the service layer, where update operations scope their queries by both record ID and user ID to prevent cross-user edits. After the window closes, the registration becomes read-only.
-
-## Staff Panel
-
-The staff panel is the operational center for camp administrators. It presents a full table of registrations filterable by camp year, searchable across all fields with full-text matching, and filterable by payment status. Payment toggles are applied inline without leaving the table view.
-
-The panel's order grouping feature is one of its most practical capabilities: registrations from the same parent across multiple submissions are collapsed into expandable grouped rows using fuzzy name matching on child names combined with email identity, making it straightforward to see total shirt counts and outstanding balances for a single family at a glance.
-
-A summary statistics row at the top of the panel surfaces five key metrics in real time: total registrations, total shirts ordered, total expected revenue, confirmed revenue from paid registrations, and outstanding balance from unpaid ones. The CSV export button produces a flat file of all visible registrations, respecting the active year and search filters, suitable for printing, sharing with coaches, or importing into external tools.
-
-## Authentication & Access Control
-
-SETX Football uses Supabase Auth with an email verification requirement — new accounts are not active until the verification link is followed. An `AuthContext` provider makes the current user, their profile, loading state, and role flags (`isStaff`, `isAdmin`) available throughout the component tree without prop-drilling. The staff panel route and all staff-level service operations enforce role checks both at the UI routing layer and within the service queries themselves.
-
-## Service Architecture
-
-All Supabase interactions are encapsulated in two service modules — `AuthService` and `RegistrationService` — which export functions returning consistent `{ data, error }` tuples. No component imports the Supabase client directly. This keeps the component tree free of data-access logic and makes the database contract easy to locate, audit, and adjust in one place. IDOR protection is built into every mutation: update and delete operations always include both the record's primary key and the authenticated user's ID as query constraints, preventing one user from modifying another's records even with a known ID.
-
-## Visual Experience
-
-The public-facing home page is structured as a long-form landing page covering the hero section, coaching staff bios, a photo gallery, sponsor logos, and the registration form — all in a single scrollable layout. Sections animate into view using scroll-triggered IntersectionObserver entries rather than a third-party animation library, keeping the bundle lean. The navbar sticks to the top of the viewport and applies a backdrop-blur on scroll, maintaining readability over the page content beneath it.
-
----
-
-## Architecture
-
-| Layer          | Technology                                                                 |
-| -------------- | -------------------------------------------------------------------------- |
-| UI Framework   | React 19 with React Router 7                                               |
-| Styling        | Tailwind CSS 3.4                                                           |
-| Auth           | Supabase Auth with email verification                                      |
-| Database       | Supabase PostgreSQL — `camp_registrations`, `user_profiles`                |
-| Service Layer  | AuthService, RegistrationService — consistent `{ data, error }` tuples     |
-| Access Control | Row-level security + role flags (user / staff / admin)                     |
-| Constants      | Shirt sizes, pricing, CashApp handle, edit window, relationships, statuses |
-
-**Data flow:**
-
-```
-Parent / Staff action
-  → Page component
-    → AuthService or RegistrationService
-      → Supabase Client
-        → PostgreSQL (RLS-enforced)
-          → { data, error } returned to component
-            → UI state updated (dashboard, staff panel, payment status)
+```bash
+npm install          # design system is vendored, so this resolves offline
+npm start            # dev server at localhost:3000
+npm test             # react-scripts / Jest
+CI=true npm run build   # production build gate — see below
 ```
 
----
+Create a `.env` with the Supabase credentials (the client throws if either is missing):
 
-## Project Stats
+```bash
+REACT_APP_SUPABASE_URL=your-project-url
+REACT_APP_SUPABASE_ANON_KEY=your-anon-key
+```
 
-| Metric                         | Value                                |
-| ------------------------------ | ------------------------------------ |
-| Routes                         | 7                                    |
-| Database Tables                | 2                                    |
-| Shirt Sizes                    | 13 (Youth XS → Adult 2XL)            |
-| User Roles                     | 3 (user, staff, admin)               |
-| Edit Window                    | 3 days                               |
-| Summary Metrics in Staff Panel | 5                                    |
-| Service Modules                | 2 (AuthService, RegistrationService) |
-| Payment Statuses               | 2 (pending, paid)                    |
+Always gate the build with `CI=true` — Create React App treats warnings as errors under CI, matching Vercel. A plain `npm run build` can pass locally and still fail the deploy.
 
----
+## How it works
 
-<p align="center"><sub>Built by <strong>Trenton Taylor</strong></sub></p>
+```mermaid
+flowchart TD
+    Parent[Parent] --> Register[Register - shirt order form]
+    Register --> Payment[Payment - CashApp handle, save username]
+    Parent --> Account[Create account - email verified]
+    Account --> Dashboard[Dashboard - status, 3-day edit window]
+    Staff[Staff] --> Panel[Staff panel - verify payment, grouping, CSV]
+    Register --> Services[AuthService and RegistrationService]
+    Payment --> Services
+    Dashboard --> Services
+    Panel --> Services
+    Account --> Services
+    Services --> Supabase[(Supabase - Postgres, Auth, RLS)]
+```
+
+A parent fills out the registration form, the row lands in `camp_registrations` as `pending`, and the app forwards to the payment page. Creating an account (with email verification) lets the parent return to a dashboard that finds their registrations by email. Staff open a role-gated panel over the same table to verify payments and manage the roster. Every read and write goes through the two service modules — no component touches the Supabase client directly.
+
+## Registration & dashboards
+
+The form collects the camper's details and a flexible shirt order: multiple line items, each with a size (Youth XS through Adult 2XL), a recipient name, and a camper-or-family designation, encoded into a single `shirt_size` string and decoded back into structure for staff. A live calculator applies the flat $5-per-shirt rate. Emergency-contact fields use a fixed relationship list so staff get structured data on camp day.
+
+After submitting, the parent sees an order summary, the total due, and CashApp instructions — the `$SETXYFC` handle with one-click copy, plus a field to save their CashApp username so staff can match the payment. Signed-in parents land on a dashboard that loads every registration tied to their email, shows payment status, and offers an inline edit form with a live "days remaining" countdown; after three days the registration goes read-only.
+
+## Staff panel
+
+The staff panel filters registrations by camp year, searches across camper name, parent name, and email, and filters by payment status. Payment is flipped between `pending` and `paid` with an inline toggle. Registrations from the same family collapse into expandable grouped rows via fuzzy camper-name matching plus email identity, surfacing combined shirt counts and balances. A summary strip shows five live KPIs — total registrations, paid and pending counts, collected revenue, and expected revenue — and a CSV export produces a flat file of the currently filtered rows.
+
+## Security & data access
+
+- **Auth** — Supabase email/password with a verification requirement; `AuthContext` exposes the user, profile, and `isStaff` / `isAdmin` role flags without prop-drilling.
+- **Row-Level Security** — policies scope `camp_registrations` and `user_profiles` to their owner, with staff/admin read-and-update policies keyed off `user_profiles.role`.
+- **Service boundary** — only `AuthService` and `RegistrationService` import the Supabase client; update and delete queries constrain by both record ID and user ID to block IDOR.
+- **Hardening** — Supabase credentials come only from env vars (no source fallbacks), and CSV export escapes formula triggers to prevent injection.
+
+## Project structure
+
+```
+src/
+  app/          App.jsx — routes (public pages, dashboard, staff, payment, legal)
+  pages/        Home, About, Gallery, Sponsors, Register, Auth, Dashboard,
+                StaffPanel, Payment, Privacy, Terms, Design
+  components/   nav, footer, marketing sections, routing, seo, brand, layout
+  context/      AuthContext.jsx — session state + role flags
+  services/     AuthService.js, RegistrationService.js — Supabase access
+  hooks/        useStaffRegistrations, useScrollReveal, useCountUp, …
+  utils/        constants, helpers, csv, shirtOrders, registrationGrouping
+  library/      supabaseClient.js, sunday-analyzer/ (analytics)
+  content/      campContent.js
+  assets/       logo.PNG, images/
+vendor/         bradley-t-t-sunday-design-system-*.tgz (committed)
+public/         index.html, sitemap, manifest, favicons, sponsors/
+supabase_schema.sql
+```
+
+## License
+
+Proprietary — Copyright (c) 2026 Trenton Taylor. All rights reserved. See [LICENSE.md](LICENSE.md).
