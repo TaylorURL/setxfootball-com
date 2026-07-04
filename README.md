@@ -102,7 +102,7 @@ Always gate the build with `CI=true` — Create React App treats warnings as err
 
 ## Security & data access
 
-- **Row-Level Security** — policies in [`supabase_schema.sql`](supabase_schema.sql) scope `camp_registrations` and `user_profiles` to their owner, with staff/admin read-and-update policies keyed off `user_profiles.role`.
+- **Row-Level Security** — policies scope `camp_registrations` and `user_profiles` to their owner, with staff/admin read-and-update policies keyed off `user_profiles.role`.
 - **Service boundary** — only `AuthService` and `RegistrationService` import the Supabase client; update and delete queries constrain by both record ID and user ID.
 - **No credential fallbacks** — Supabase config comes only from env vars, and CSV export escapes formula triggers to prevent injection.
 
@@ -123,7 +123,6 @@ src/
   assets/       logo.PNG, images/
 vendor/         bradley-t-t-sunday-design-system-*.tgz (committed)
 public/         index.html, sitemap, manifest, favicons, sponsors/
-supabase_schema.sql
 ```
 
 ## License
