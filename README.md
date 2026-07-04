@@ -5,7 +5,7 @@
 <p align="center"><strong>A registration and management platform for Southeast Texas Football — built for parents, run by staff.</strong></p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/v1.7.6-release-1e3a5f" />
+  <img src="https://img.shields.io/badge/v1.7.20-release-1e3a5f" />
   <img src="https://img.shields.io/badge/React-19-61DAFB?logo=react" />
   <img src="https://img.shields.io/badge/React_Router-7-CA4245?logo=reactrouter" />
   <img src="https://img.shields.io/badge/Tailwind-3.4-38BDF8?logo=tailwindcss" />
