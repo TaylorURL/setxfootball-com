@@ -18,7 +18,7 @@
   <img src="https://img.shields.io/badge/CRA-react--scripts_5-3b82f6?style=for-the-badge&logo=createreactapp&logoColor=white" alt="Create React App" />
   <img src="https://img.shields.io/badge/Tailwind-3.4-2563eb?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS" />
   <img src="https://img.shields.io/badge/Supabase-Postgres-1f56cf?style=for-the-badge&logo=supabase&logoColor=white" alt="Supabase" />
-  <img src="https://img.shields.io/badge/Vercel-deployed-2563eb?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
+  <img src="https://img.shields.io/badge/license-proprietary-2563eb?style=for-the-badge" alt="License" />
 </p>
 
 <br />
@@ -55,9 +55,9 @@ A youth camp registration needs to be effortless for a parent on a phone and air
 | UI / SEO     | `framer-motion` · `lucide-react` · `recharts` · `react-helmet-async`   |
 | Backend      | Supabase — PostgreSQL, Auth, Row-Level Security                        |
 | Data access  | `AuthService` + `RegistrationService` returning `{ data, error }` tuples |
-| Hosting      | Vercel                                                                 |
+| Delivery     | Static single-page build (`react-scripts build`), served at [setxfootball.com](https://setxfootball.com) |
 
-The design system ships as a committed tarball under `vendor/` and is referenced from `package.json` as `file:./vendor/…tgz`, so installs and Vercel builds resolve it without a registry.
+The design system ships as a committed tarball under `vendor/` and is referenced from `package.json` as `file:./vendor/…tgz`, so installs and CI builds resolve it without a registry.
 
 ## Getting started
 
@@ -75,7 +75,7 @@ Create a `.env` with the Supabase credentials — the client throws on startup i
 | `REACT_APP_SUPABASE_URL`      | always   | Supabase project URL.                |
 | `REACT_APP_SUPABASE_ANON_KEY` | always   | Supabase anonymous (public) API key. |
 
-Always gate the build with `CI=true` — Create React App treats warnings as errors under CI, matching Vercel. A plain `npm run build` can pass locally and still fail the deploy.
+Always gate the build with `CI=true` — Create React App treats warnings as errors under CI. A plain `npm run build` can pass locally and still fail the deploy.
 
 ## Routes
 
