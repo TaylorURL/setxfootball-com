@@ -44,10 +44,3 @@ export const PAYMENT_STATUSES = {
   PAID: "paid",
   REFUNDED: "refunded",
 };
-
-/** @enum {string} User role values. */
-export const USER_ROLES = {
-  USER: "user",
-  STAFF: "staff",
-  ADMIN: "admin",
-};
