@@ -8,6 +8,7 @@ import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
 import { STORY_IMAGE, STORY_PILLARS } from "../../../content/campContent";
 import { surfaceProps } from "../surface";
+import { ShinyText, TiltedCard } from "../../reactbits";
 
 const StorySection = ({ surface = "light" }) => (
   <section
@@ -17,7 +18,7 @@ const StorySection = ({ surface = "light" }) => (
     <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
       <Reveal className="max-w-4xl">
         <SectionIntro
-          eyebrow="Our Mission"
+          eyebrow={<ShinyText text="Our Mission" speed={5} />}
           title={
             <>
               Built for our<br />
@@ -33,7 +34,8 @@ const StorySection = ({ surface = "light" }) => (
 
       <div className="mt-20 grid grid-cols-1 gap-12 border-t border-ds-border pt-16 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
         <Reveal variant="left" className="relative">
-          <div className="group relative overflow-hidden">
+          {/* React Bits — TiltedCard gives the field photo a tactile 3D lean. */}
+          <TiltedCard max={8} scale={1.02} className="group relative overflow-hidden">
             <img
               src={STORY_IMAGE}
               alt="SETX Youth Football Camp coaches and campers on the field in Daisetta, Texas"
@@ -47,7 +49,7 @@ const StorySection = ({ surface = "light" }) => (
                 Third year &amp; growing
               </p>
             </div>
-          </div>
+          </TiltedCard>
         </Reveal>
 
         <Reveal variant="right" delay={2}>

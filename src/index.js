@@ -10,6 +10,7 @@ import { HelmetProvider } from "react-helmet-async";
 import { ThemeProvider, Toaster } from "@bradley-t-t/sunday-design-system";
 import "@bradley-t-t/sunday-design-system/styles.css";
 import "./index.css";
+import "./components/reactbits/reactbits.css";
 import App from "./app/App";
 import reportWebVitals from "./hooks/reportWebVitals";
 import ErrorBoundary from "./components/ErrorBoundary";

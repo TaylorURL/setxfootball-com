@@ -7,6 +7,7 @@ import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
 import { PLAYBOOK } from "../../../content/campContent";
 import { surfaceProps } from "../surface";
+import { SplitText, ShinyText, DecryptedText, CountUp } from "../../reactbits";
 
 const PlaybookSection = ({ surface }) => (
   <section
@@ -16,8 +17,8 @@ const PlaybookSection = ({ surface }) => (
     <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
       <Reveal>
         <SectionIntro
-          eyebrow="How It Works"
-          title={<>From signup to sideline in three steps.</>}
+          eyebrow={<ShinyText text="How It Works" speed={5} />}
+          title={<SplitText text="From signup to sideline in three steps." splitType="words" delay={55} />}
         >
           Three steps from the couch to the field. No payment due until after
           you've signed up.
@@ -28,11 +29,16 @@ const PlaybookSection = ({ surface }) => (
         {PLAYBOOK.map((play, index) => (
           <Reveal key={play.title} variant="up" delay={index + 1}>
             <div className="group grid grid-cols-[auto_1fr] gap-x-6">
-              <span className="editorial-display mono-num text-[5rem] leading-none text-ds-accent-bright transition-transform duration-500 ease-out group-hover:-translate-y-1 sm:text-[6rem]">
-                {index + 1}
-              </span>
+              {/* React Bits — CountUp settles each hanging step numeral in on scroll. */}
+              <CountUp
+                to={index + 1}
+                from={0}
+                duration={0.9 + index * 0.2}
+                className="editorial-display text-[5rem] leading-none text-ds-accent-bright transition-transform duration-500 ease-out group-hover:-translate-y-1 sm:text-[6rem]"
+              />
               <div className="pt-2">
-                <span className="mono-tag-sm text-ds-text-faint">Step {index + 1}</span>
+                {/* React Bits — DecryptedText resolves the step label like a terminal. */}
+                <DecryptedText text={`Step ${index + 1}`} className="mono-tag-sm text-ds-text-faint" />
                 <h3 className="editorial-display mt-3 text-3xl text-ds-text sm:text-4xl">
                   {play.title}
                 </h3>
