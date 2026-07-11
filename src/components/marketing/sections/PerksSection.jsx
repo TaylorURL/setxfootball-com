@@ -8,6 +8,7 @@ import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
 import { CAMPER_PERKS } from "../../../content/campContent";
 import { surfaceProps } from "../surface";
+import { SplitText, ShinyText, SpotlightCard } from "../../reactbits";
 
 const PerksSection = ({ surface = "light" }) => (
   <section
@@ -17,8 +18,8 @@ const PerksSection = ({ surface = "light" }) => (
     <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
       <Reveal>
         <SectionIntro
-          eyebrow="What's Included"
-          title={<>What every camper gets.</>}
+          eyebrow={<ShinyText text="What's Included" speed={5} />}
+          title={<SplitText text="What every camper gets." splitType="words" delay={60} />}
         >
           No hidden fees, no pay-to-play. Sign up for the shirts and the rest
           comes with showing up.
@@ -28,7 +29,8 @@ const PerksSection = ({ surface = "light" }) => (
       <div className="mt-16 grid grid-cols-1 gap-y-12 border-t border-ds-border pt-12 sm:grid-cols-2 sm:gap-x-12 lg:grid-cols-4 lg:gap-x-10">
         {CAMPER_PERKS.map((perk, index) => (
           <Reveal key={perk.title} variant="up" delay={index + 1}>
-            <div className="group left-rule-accent pl-5 transition-colors duration-300">
+            {/* React Bits — SpotlightCard adds a cursor-tracked accent wash to each perk. */}
+            <SpotlightCard className="group left-rule-accent pl-5 transition-colors duration-300" size={220}>
               <perk.icon
                 className="h-6 w-6 text-ds-accent-bright transition-transform duration-300 ease-out group-hover:-translate-y-0.5"
                 aria-hidden="true"
@@ -39,7 +41,7 @@ const PerksSection = ({ surface = "light" }) => (
               <p className="editorial-body mt-3 text-[15px] text-ds-text-muted">
                 {perk.body}
               </p>
-            </div>
+            </SpotlightCard>
           </Reveal>
         ))}
       </div>

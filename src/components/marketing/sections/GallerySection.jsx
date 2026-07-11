@@ -8,6 +8,7 @@ import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
 import { GALLERY } from "../../../content/campContent";
 import { surfaceProps } from "../surface";
+import { ShinyText, TiltedCard } from "../../reactbits";
 
 const GallerySection = ({ surface }) => (
   <section
@@ -17,7 +18,7 @@ const GallerySection = ({ surface }) => (
     <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
       <Reveal>
         <SectionIntro
-          eyebrow="Camp Memories"
+          eyebrow={<ShinyText text="Camp Memories" speed={5} />}
           title={<>From the<br />sideline.</>}
         >
           Snapshots from past seasons — the energy, the learning, and the
@@ -28,7 +29,8 @@ const GallerySection = ({ surface }) => (
       <div className="mt-16 grid auto-rows-[150px] grid-cols-4 gap-2 border-t border-ds-border pt-12 sm:auto-rows-[200px] sm:gap-3 lg:auto-rows-[230px]">
         {GALLERY.map((item, index) => (
           <Reveal key={item.src} variant="scale" delay={index + 1} className={item.span}>
-            <div className="group relative h-full w-full overflow-hidden border border-ds-border">
+            {/* React Bits — TiltedCard gives each photo a subtle 3D lean on hover. */}
+            <TiltedCard max={7} scale={1.04} className="group relative h-full w-full overflow-hidden border border-ds-border">
               <img
                 src={item.src}
                 alt={`SETX Youth Football Camp — ${item.caption}`}
@@ -40,7 +42,7 @@ const GallerySection = ({ surface }) => (
                 <span aria-hidden="true" className="inline-block h-px w-3 bg-ds-accent" />
                 {item.caption}
               </span>
-            </div>
+            </TiltedCard>
           </Reveal>
         ))}
       </div>

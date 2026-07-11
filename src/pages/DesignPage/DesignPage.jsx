@@ -36,6 +36,7 @@ import JoinCallout from "../../components/marketing/sections/JoinCallout";
 import Seo from "../../components/seo/Seo";
 import { PAGE_SEO } from "../../components/seo/seoContent";
 import { REGISTER_PATH } from "../../components/nav/navLinks";
+import { Squares, TrueFocus } from "../../components/reactbits";
 
 /** The monochrome system: a calm neutral ramp and ONE confident red accent. */
 const BRAND_COLORS = [
@@ -213,7 +214,8 @@ const DesignPage = () => (
     <Section space="xl" className="relative overflow-hidden bg-ds-bg">
       <div aria-hidden="true" className="absolute -top-24 right-0 h-80 w-80 rounded-full bg-ds-accent-soft blur-[140px]" />
       <div aria-hidden="true" className="absolute -bottom-24 left-0 h-72 w-72 rounded-full bg-ds-surface-2 blur-[140px] opacity-60" />
-      <div aria-hidden="true" className="field-grid absolute inset-0" />
+      {/* React Bits — a drifting Squares grid gives the look-book hero quiet motion. */}
+      <Squares className="absolute inset-0 opacity-60" size={60} speed={0.22} lineColor="var(--ds-border)" />
       <Container size="xl" className="relative">
         <Reveal>
           <SectionIntro
@@ -346,8 +348,9 @@ const DesignPage = () => (
           <Card variant="elevated" padding="lg" className="card-lift relative overflow-hidden text-center">
             <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 h-1" />
             <Type className="mx-auto mb-4 h-6 w-6 text-ds-accent-bright" />
-            <h3 className="editorial-display editorial-display-tight mb-3 text-3xl text-ds-text sm:text-4xl">
-              Wear the camp.
+            {/* React Bits — TrueFocus walks a sharp focus across the closing line. */}
+            <h3 className="editorial-display editorial-display-tight mb-3 flex justify-center text-3xl text-ds-text sm:text-4xl">
+              <TrueFocus sentence="Wear the camp." interval={1500} blur={4} />
             </h3>
             <Text tone="muted" size="lg" className="mx-auto mb-6 max-w-xl">
               The cleanest piece of camp design is a kid in a camp shirt running

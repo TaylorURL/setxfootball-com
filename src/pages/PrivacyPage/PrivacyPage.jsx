@@ -12,6 +12,7 @@ import { Prose } from "@bradley-t-t/sunday-design-system";
 import MarketingPage from "../../components/layout/MarketingPage";
 import Seo from "../../components/seo/Seo";
 import { PAGE_SEO } from "../../components/seo/seoContent";
+import { ShinyText, FadeContent } from "../../components/reactbits";
 
 const PrivacyPage = () => (
   <MarketingPage>
@@ -28,7 +29,7 @@ const PrivacyPage = () => (
         <header className="mt-10 border-b border-ds-border pb-10">
           <span className="mono-tag inline-flex items-center gap-3 text-ds-accent-bright">
             <span aria-hidden="true" className="accent-tick is-on w-10" />
-            Legal · Privacy
+            <ShinyText text="Legal · Privacy" speed={5} />
           </span>
           <h1 className="editorial-display editorial-display-tight mt-5 text-5xl text-ds-text sm:text-6xl lg:text-7xl">
             Privacy<br />
@@ -39,7 +40,7 @@ const PrivacyPage = () => (
           </p>
         </header>
 
-        <article className="mt-12">
+        <FadeContent as="article" className="mt-12" blur>
           <Prose>
             <section>
               <h2>1. Information We Collect</h2>
@@ -126,7 +127,7 @@ const PrivacyPage = () => (
               </p>
             </section>
           </Prose>
-        </article>
+        </FadeContent>
       </div>
     </section>
   </MarketingPage>

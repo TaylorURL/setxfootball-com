@@ -23,10 +23,12 @@ import TermsPage from "../pages/TermsPage/TermsPage";
 import DesignPage from "../pages/DesignPage/DesignPage";
 import ScrollToTop from "../components/ScrollToTop";
 import ProtectedRoute from "../components/routing/ProtectedRoute";
+import { ClickSpark } from "../components/reactbits";
 
 function App() {
   return (
     <AuthProvider>
+      <ClickSpark />
       <Router>
         <ScrollToTop />
         <Routes>

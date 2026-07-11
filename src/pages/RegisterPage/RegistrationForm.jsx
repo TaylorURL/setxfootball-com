@@ -31,6 +31,7 @@ import {
 import RegistrationService from "../../services/RegistrationService";
 import { SHIRT_SIZES, SHIRT_PRICE, EMERGENCY_RELATIONS } from "../../utils/constants";
 import { encodeShirtOrders } from "../../utils/shirtOrders";
+import { StarBorder } from "../../components/reactbits";
 
 const SHIRT_TYPES = [
   { value: "camper", label: "Camper" },
@@ -355,14 +356,17 @@ const RegistrationForm = () => {
           </div>
         </div>
 
-        <button
+        {/* React Bits — StarBorder orbits an accent glow around the submit CTA. */}
+        <StarBorder
+          as="button"
           type="submit"
           disabled={submitting}
-          className="mono-tag flex w-full items-center justify-center gap-2 border border-ds-accent bg-ds-accent px-6 py-5 text-white transition-colors duration-200 hover:bg-ds-accent-bright hover:border-ds-accent-bright disabled:cursor-not-allowed disabled:opacity-60"
+          className="w-full"
+          innerClassName="mono-tag flex w-full items-center justify-center gap-2 border border-ds-accent bg-ds-accent px-6 py-5 text-white transition-colors duration-200 hover:bg-ds-accent-bright hover:border-ds-accent-bright"
         >
           <ClipboardList className="h-4 w-4" />
           {submitting ? "Submitting…" : "Complete Sign-Up"}
-        </button>
+        </StarBorder>
         <p className="mono-tag-sm text-center text-ds-text-faint">
           Payment is collected after sign-up — no payment needed now
         </p>

@@ -44,6 +44,7 @@ import { useAuth } from "../../context/AuthContext";
 import RegistrationService from "../../services/RegistrationService";
 import { formatDate, formatCurrency } from "../../utils/helpers";
 import { SHIRT_SIZES, SHIRT_PRICE, EMERGENCY_RELATIONS } from "../../utils/constants";
+import { SplitText, ShinyText, SpotlightCard } from "../../components/reactbits";
 
 const QUANTITY_OPTIONS = [1, 2, 3, 4, 5].map((num) => ({ value: String(num), label: `${num} shirt(s)` }));
 const SIZE_OPTIONS = SHIRT_SIZES.map((size) => ({ value: size, label: size }));
@@ -250,10 +251,10 @@ const Dashboard = () => {
       <div className="mx-auto w-full max-w-[1440px] px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
         <header className="border-b border-ds-border pb-8">
           <span className="mono-tag inline-flex items-center gap-3 text-ds-accent-bright">
-            <Trophy className="h-3.5 w-3.5" /> My Roster
+            <Trophy className="h-3.5 w-3.5" /> <ShinyText text="My Roster" speed={5} />
           </span>
           <h1 className="editorial-display editorial-display-tight mt-5 text-4xl text-ds-text sm:text-5xl lg:text-6xl">
-            My Dashboard.
+            <SplitText text="My Dashboard." splitType="chars" delay={35} />
           </h1>
           <p className="editorial-body mt-4 max-w-2xl text-lg text-ds-text-muted">
             View and manage your camp sign-ups.
@@ -276,7 +277,8 @@ const Dashboard = () => {
               const isEditing = editingId === reg.id;
 
               return (
-                <article key={reg.id} className="border border-ds-border bg-ds-surface">
+                // React Bits — SpotlightCard adds a cursor-tracked wash to each season card.
+                <SpotlightCard as="article" key={reg.id} className="border border-ds-border bg-ds-surface" size={420}>
                   <RegistrationCardHeader
                     reg={reg}
                     isEditing={isEditing}
@@ -445,7 +447,7 @@ const Dashboard = () => {
                       <ReadRow label="Signed up" value={formatDate(reg.created_at)} />
                     </InfoGroup>
                   </div>
-                </article>
+                </SpotlightCard>
               );
             })}
           </div>
