@@ -30,6 +30,7 @@ import { formatDate, formatCurrency } from "../../utils/helpers";
 import { toCsv, downloadTextFile } from "../../utils/csv";
 import StaffRegistrationsTable from "./StaffRegistrationsTable";
 import StaffRegistrationCards from "./StaffRegistrationCards";
+import { SplitText, ShinyText, CountUp } from "../../components/reactbits";
 
 const CSV_HEADERS = [
   "Kid Name",
@@ -76,9 +77,12 @@ const PAYMENT_FILTER_OPTIONS = [
 const StatCard = ({ icon: Icon, label, value }) => (
   <div className="left-rule-accent border border-ds-border bg-ds-surface px-5 py-5 pl-7">
     <Icon className="h-3.5 w-3.5 text-ds-accent-bright" />
-    <p className="editorial-display mono-num mt-3 text-3xl text-ds-text sm:text-4xl">
-      {value}
-    </p>
+    {/* React Bits — CountUp tallies the numeric console stats on load. */}
+    {typeof value === "number" ? (
+      <CountUp as="p" to={value} duration={1.2} className="editorial-display mt-3 text-3xl text-ds-text sm:text-4xl" />
+    ) : (
+      <p className="editorial-display mono-num mt-3 text-3xl text-ds-text sm:text-4xl">{value}</p>
+    )}
     <p className="mono-tag-sm mt-2 text-ds-text-muted">{label}</p>
   </div>
 );
@@ -127,10 +131,10 @@ const StaffPanel = () => {
         <header className="flex flex-col gap-6 border-b border-ds-border pb-8 lg:flex-row lg:items-end lg:justify-between">
           <div>
             <span className="mono-tag inline-flex items-center gap-3 text-ds-accent-bright">
-              <ShieldCheck className="h-3.5 w-3.5" /> Staff Console
+              <ShieldCheck className="h-3.5 w-3.5" /> <ShinyText text="Staff Console" speed={5} />
             </span>
             <h1 className="editorial-display editorial-display-tight mt-5 text-4xl text-ds-text sm:text-5xl lg:text-6xl">
-              Staff Panel.
+              <SplitText text="Staff Panel." splitType="chars" delay={35} />
             </h1>
             <p className="editorial-body mt-4 max-w-2xl text-lg text-ds-text-muted">
               Manage camp sign-ups, payments, and shirt orders by season.

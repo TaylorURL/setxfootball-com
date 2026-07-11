@@ -23,10 +23,10 @@ import {
 import Footer from "../../components/footer/Footer";
 import Navbar from "../../components/nav/Navbar";
 import RegistrationService from "../../services/RegistrationService";
-import { formatCurrency } from "../../utils/helpers";
 import { CASHAPP_USERNAME, SHIRT_PRICE } from "../../utils/constants";
 import Seo from "../../components/seo/Seo";
 import { PAGE_SEO } from "../../components/seo/seoContent";
+import { CountUp, ShinyText, SplitText, AnimatedContent } from "../../components/reactbits";
 
 const CLIPBOARD_FEEDBACK_DURATION_MS = 2000;
 
@@ -116,18 +116,18 @@ const PaymentPage = () => {
           {/* Confirmation header — full editorial */}
           <div className="mt-8">
             <span className="mono-tag inline-flex items-center gap-3 text-ds-positive">
-              <CheckCircle2 className="h-4 w-4" /> You're on the roster
+              <CheckCircle2 className="h-4 w-4" /> <ShinyText text="You're on the roster" speed={4} />
             </span>
             <h1 className="editorial-display editorial-display-tight mt-5 text-5xl text-ds-text sm:text-6xl lg:text-7xl">
-              Sign-up<br />
-              <span className="text-ds-accent-bright">complete.</span>
+              <SplitText text="Sign-up complete." splitType="words" delay={70} />
             </h1>
             <p className="editorial-body mt-5 max-w-xl text-lg text-ds-text-muted">
               Thanks for signing up for SETX Football Camp — see you on the field.
             </p>
           </div>
 
-          <div className="mt-14 space-y-7">
+          {/* React Bits — AnimatedContent slides the receipt stack up on arrival. */}
+          <AnimatedContent as="div" className="mt-14 space-y-7" distance={40} duration={0.7}>
             {/* Summary */}
             <section className="relative border border-ds-border bg-ds-surface p-7 sm:p-9">
               <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-ds-accent" />
@@ -148,9 +148,14 @@ const PaymentPage = () => {
               <span aria-hidden="true" className="absolute inset-y-0 left-0 w-1 bg-ds-accent" />
               <div className="px-7 py-9 sm:px-10 sm:py-12">
                 <span className="mono-tag text-ds-accent-bright">Total Due</span>
-                <p className="editorial-display mono-num mt-4 text-7xl text-ds-accent-bright sm:text-8xl">
-                  {formatCurrency(totalAmount)}
-                </p>
+                {/* React Bits — CountUp tallies the total due on arrival. */}
+                <CountUp
+                  as="p"
+                  to={totalAmount}
+                  prefix="$"
+                  duration={1.4}
+                  className="editorial-display mt-4 text-7xl text-ds-accent-bright sm:text-8xl"
+                />
                 <p className="mono-tag-sm mt-3 text-ds-text-muted">
                   ${SHIRT_PRICE} per shirt × {registration.shirt_quantity} shirt
                   {registration.shirt_quantity !== 1 ? "s" : ""}
@@ -229,7 +234,7 @@ const PaymentPage = () => {
                 Use the same email to track your registration
               </p>
             </div>
-          </div>
+          </AnimatedContent>
         </div>
       </main>
       <Footer />

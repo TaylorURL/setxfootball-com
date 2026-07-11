@@ -18,6 +18,7 @@ import { useAuth } from "../../context/AuthContext";
 import BrandMark from "../../components/brand/BrandMark";
 import Seo from "../../components/seo/Seo";
 import { PAGE_SEO } from "../../components/seo/seoContent";
+import { Squares, ShinyText, Magnet } from "../../components/reactbits";
 
 const FORM_FIELDS = [
   { name: "fullName", label: "Full Name", type: "text", placeholder: "Enter your full name", icon: User, signUpOnly: true },
@@ -74,7 +75,8 @@ const AuthPage = () => {
       <div className="relative min-h-[100dvh] overflow-hidden bg-ds-bg text-ds-text">
         <div aria-hidden="true" className="absolute -right-32 top-20 h-96 w-96 rounded-full bg-ds-accent-soft blur-[160px]" />
         <div aria-hidden="true" className="absolute -left-20 bottom-10 h-80 w-80 rounded-full bg-ds-surface-2 blur-[160px] opacity-60" />
-        <div aria-hidden="true" className="field-grid absolute inset-0" />
+        {/* React Bits — a slow Squares grid gives the locker-room canvas quiet motion. */}
+        <Squares className="absolute inset-0 opacity-60" size={56} speed={0.2} lineColor="var(--ds-border)" />
 
         <div className="relative mx-auto grid min-h-[100dvh] w-full max-w-[1440px] grid-cols-1 px-5 py-10 sm:px-8 lg:grid-cols-[1fr_1fr] lg:gap-20 lg:px-10 lg:py-20">
           {/* Editorial copy column */}
@@ -83,7 +85,7 @@ const AuthPage = () => {
             <div className="mt-auto pt-16 lg:pt-0 lg:my-auto">
               <span className="mono-tag inline-flex items-center gap-3 text-ds-accent-bright">
                 <span aria-hidden="true" className="inline-block h-px w-10 bg-ds-accent" />
-                {isLogin ? "Locker Room" : "Roster"}
+                <ShinyText text={isLogin ? "Locker Room" : "Roster"} speed={5} />
               </span>
               <h1 className="editorial-display editorial-display-tight mt-6 text-5xl text-ds-text sm:text-6xl lg:text-7xl">
                 {isLogin ? (
@@ -142,14 +144,17 @@ const AuthPage = () => {
                   </Field>
                 ))}
 
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="mono-tag mt-3 flex w-full items-center justify-center gap-2 border border-ds-accent bg-ds-accent px-5 py-4 text-white transition-colors duration-200 hover:bg-ds-accent-bright hover:border-ds-accent-bright disabled:cursor-not-allowed disabled:opacity-60"
-                >
-                  {loading ? "Working…" : isLogin ? "Sign In" : "Create Account"}
-                  <ArrowRight className="h-4 w-4" />
-                </button>
+                {/* React Bits — Magnet gives the auth CTA a subtle pull toward the cursor. */}
+                <Magnet className="!flex w-full" padding={70} strength={0.25}>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="mono-tag mt-3 flex w-full items-center justify-center gap-2 border border-ds-accent bg-ds-accent px-5 py-4 text-white transition-colors duration-200 hover:bg-ds-accent-bright hover:border-ds-accent-bright disabled:cursor-not-allowed disabled:opacity-60"
+                  >
+                    {loading ? "Working…" : isLogin ? "Sign In" : "Create Account"}
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
+                </Magnet>
               </form>
 
               <div className="mt-6 flex items-center justify-between border-t border-ds-border pt-5">
