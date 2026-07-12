@@ -9,6 +9,7 @@ import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
 import { COACHES } from "../../../content/campContent";
 import { surfaceProps } from "../surface";
+import { SpotlightCard } from "../../reactbits";
 
 const CoachesSection = ({ surface }) => (
   <section
@@ -33,7 +34,8 @@ const CoachesSection = ({ surface }) => (
       <div className="mt-20 grid grid-cols-1 gap-12 border-t border-ds-border pt-16 lg:grid-cols-2 lg:gap-16">
         {COACHES.map((coach, index) => (
           <Reveal key={coach.name} variant="up" delay={index + 1}>
-            <article className="card-lift relative border border-ds-border bg-ds-surface p-8 sm:p-10">
+            {/* React Bits — SpotlightCard adds a cursor-tracked accent wash to each roster card. */}
+            <SpotlightCard as="article" className="card-lift relative border border-ds-border bg-ds-surface p-8 sm:p-10">
               <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-ds-accent" />
               <div className="flex items-start gap-5">
                 <span className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-ds-accent-soft text-ds-accent-bright">
@@ -60,7 +62,7 @@ const CoachesSection = ({ surface }) => (
                 <Star className="h-3.5 w-3.5 shrink-0 text-ds-accent-bright" />
                 <span className="mono-tag text-ds-text">{coach.highlight}</span>
               </div>
-            </article>
+            </SpotlightCard>
           </Reveal>
         ))}
       </div>

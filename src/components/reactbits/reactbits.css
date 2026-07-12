@@ -1,0 +1,169 @@
+/* -----------------------------------------------------------------------------
+   React Bits — CSS layer
+
+   Keyframes and base classes for the CSS-driven React Bits components
+   (ShinyText, GradientText, StarBorder, GlareHover). Motion-driven components
+   (SplitText, TiltedCard, Magnet, …) carry their own logic in JS via
+   framer-motion and don't need anything here.
+
+   Every effect degrades to a static, legible state under reduced-motion so the
+   monochrome editorial system stays calm for readers who ask for less motion.
+   -------------------------------------------------------------------------- */
+
+/* ShinyText — a soft sheen sweeps across the text on a loop. Colours come from
+   the caller via currentColor + a lighter highlight passed as a CSS variable. */
+.rb-shiny-text {
+  color: var(--rb-shiny-base, currentColor);
+  background: linear-gradient(
+    120deg,
+    var(--rb-shiny-base, currentColor) 40%,
+    var(--rb-shiny-highlight, #ffffff) 50%,
+    var(--rb-shiny-base, currentColor) 60%
+  );
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: rb-shine var(--rb-shiny-speed, 5s) linear infinite;
+}
+
+@keyframes rb-shine {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* GradientText — an animated multi-stop gradient fills the text (and, opt-in,
+   an outer border). Tuned by default to the athletic-red / paper ramp. */
+.rb-gradient-text {
+  display: inline-flex;
+  position: relative;
+  max-width: fit-content;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+
+.rb-gradient-text .rb-gradient-fill {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 300% 100%;
+  animation: rb-gradient var(--rb-gradient-speed, 8s) linear infinite;
+}
+
+@keyframes rb-gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* StarBorder — a travelling glow orbits the element's edge behind the content. */
+.rb-star-border {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  padding: 1px;
+  isolation: isolate;
+}
+
+.rb-star-border .rb-star-inner {
+  position: relative;
+  z-index: 1;
+}
+
+.rb-star-border .rb-star-glow {
+  position: absolute;
+  z-index: 0;
+  width: 300%;
+  height: 50%;
+  opacity: 0.7;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--rb-star-color, #ff2e3d), transparent 10%);
+}
+
+.rb-star-border .rb-star-glow-bottom {
+  bottom: -12px;
+  right: -250%;
+  animation: rb-star-move-bottom var(--rb-star-speed, 6s) linear infinite alternate;
+}
+
+.rb-star-border .rb-star-glow-top {
+  top: -12px;
+  left: -250%;
+  animation: rb-star-move-top var(--rb-star-speed, 6s) linear infinite alternate;
+}
+
+@keyframes rb-star-move-bottom {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes rb-star-move-top {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* GlareHover — a diagonal glare sweeps across the surface on hover. */
+.rb-glare-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.rb-glare-hover .rb-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    -45deg,
+    transparent 40%,
+    var(--rb-glare-color, rgba(255, 255, 255, 0.25)) 50%,
+    transparent 60%
+  );
+  background-size: 250% 250%;
+  background-position: -100% -100%;
+  transition: background-position var(--rb-glare-speed, 650ms) ease;
+}
+
+.rb-glare-hover:hover .rb-glare {
+  background-position: 100% 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rb-shiny-text,
+  .rb-gradient-text .rb-gradient-fill {
+    animation: none;
+  }
+
+  .rb-shiny-text {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+  }
+
+  .rb-star-border .rb-star-glow {
+    animation: none;
+  }
+
+  .rb-glare-hover .rb-glare {
+    display: none;
+  }
+}

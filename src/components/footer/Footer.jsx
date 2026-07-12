@@ -8,6 +8,7 @@
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Calendar, Users, Shirt, ArrowUpRight } from "lucide-react";
 import { PUBLIC_NAV_LINKS, REGISTER_PATH } from "../nav/navLinks";
+import { ShinyText, SplitText } from "../reactbits";
 
 const QUICK_LINKS = [
   ...PUBLIC_NAV_LINKS,
@@ -44,10 +45,11 @@ const Footer = () => (
         <div>
           <span className="mono-tag inline-flex items-center gap-2 text-ds-accent-bright">
             <span aria-hidden="true" className="inline-block h-px w-4 bg-ds-accent" />
-            SETX Youth Football Camp
+            <ShinyText text="SETX Youth Football Camp" speed={6} />
           </span>
           <p className="editorial-display editorial-display-tight mt-6 text-4xl text-ds-text sm:text-5xl lg:text-6xl">
-            Built for our community.<br />
+            <SplitText text="Built for our community." splitType="words" delay={45} />
+            <br />
             <span className="text-ds-text-faint">Open to every kid.</span>
           </p>
           <Link
