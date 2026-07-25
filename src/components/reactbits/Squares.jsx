@@ -1,11 +1,4 @@
 /**
- * Squares — React Bits
- *
- * An animated grid of hairline squares that drifts slowly across a canvas, with
- * a soft radial vignette fading the edges into the background. It echoes the
- * site's static `.field-grid` motif but breathes, so heroes and forms sit on a
- * living gridiron backdrop. Colours default to the current register's hairline.
- *
  * @param {object} props
  * @param {number} [props.size=52] - Cell size in pixels.
  * @param {number} [props.speed=0.4] - Drift speed in pixels per frame.

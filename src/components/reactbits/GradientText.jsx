@@ -1,10 +1,4 @@
 /**
- * GradientText — React Bits
- *
- * Fills the text with an animated multi-stop gradient that drifts left/right.
- * Defaults to the camp's athletic-red / paper ramp so it stays on-palette; pass
- * a custom `colors` array to retune it. Honours reduced-motion (freezes).
- *
  * @param {object} props
  * @param {string[]} [props.colors] - Gradient stops, looped for a seamless drift.
  * @param {number} [props.speed=8] - Seconds per full cycle.

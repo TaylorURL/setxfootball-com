@@ -1,25 +1,14 @@
-/**
- * HeroSection — the home page hero. A split editorial layout: a warm,
- * community-first headline, intro, and sign-up CTAs on the left; a real framed
- * photo of the camp's coaches and kids on the right. Trust markers and a
- * compact dates/location/cost strip anchor the community, not-for-profit tone.
- * React Bits motion primitives layer subtle life over the static composition —
- * a drifting Squares canvas, a shiny eyebrow, a living-gradient accent line,
- * a word-by-word intro, and a magnetic primary CTA.
- */
 import { Link } from "react-router-dom";
 import { ArrowRight, ChevronDown, MapPin, Calendar, Users, ShieldCheck, Heart } from "lucide-react";
 import { REGISTER_PATH } from "../../nav/navLinks";
 import { HERO_IMAGE } from "../../../content/campContent";
 import { Squares, ShinyText, GradientText, BlurText, Magnet } from "../../reactbits";
 
-/** Id of the band the hero scroll cue drops to (the camp-facts scoreboard). */
 export const CAMP_FACTS_ID = "camp-facts";
 
 const scrollToCampFacts = () =>
   document.getElementById(CAMP_FACTS_ID)?.scrollIntoView({ behavior: "smooth" });
 
-/** Short trust signals that establish the camp as community-run and safe. */
 const TRUST_MARKERS = [
   { icon: Users, label: "Open to all" },
   { icon: ShieldCheck, label: "Background-checked coaches" },
@@ -28,24 +17,19 @@ const TRUST_MARKERS = [
 
 const HeroSection = () => (
   <section className="relative flex min-h-[100svh] items-center overflow-hidden bg-ds-bg">
-    {/* Editorial monochrome wash: a black-to-coal gradient with a single warm
-        red glow off to one side. All tokens — no second hue. */}
+    {/* One warm glow against the coal gradient — no second hue anywhere. */}
     <div aria-hidden="true" className="absolute inset-0">
       <div className="absolute inset-0 bg-gradient-to-b from-black via-ds-bg to-ds-bg" />
       <div className="absolute -right-40 top-1/4 h-[520px] w-[520px] rounded-full bg-ds-accent-soft blur-[180px]" />
       <div className="absolute -left-32 -top-24 h-[420px] w-[420px] rounded-full bg-white/5 blur-[200px]" />
-      {/* React Bits — a slowly drifting Squares grid replaces the static
-          field-grid so the hero canvas quietly breathes. */}
       <Squares className="absolute inset-0 opacity-70" size={64} speed={0.25} lineColor="var(--ds-border)" />
     </div>
 
     <div className="relative z-10 mx-auto w-full max-w-[1440px] px-5 pb-24 pt-32 sm:px-8 sm:pb-28 sm:pt-40 lg:px-10 lg:pb-24 lg:pt-36">
       <div className="grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
-        {/* Left column — headline, intro, CTAs, facts. */}
         <div className="animate-fade-in-up">
           <span className="mono-tag mb-7 inline-flex items-center gap-3 text-ds-accent-bright">
             <span aria-hidden="true" className="accent-tick is-on w-10" />
-            {/* React Bits — a slow shine sweeps the eyebrow. */}
             <ShinyText text="Sign-Ups Open · Daisetta, TX · July 2026" speed={4} />
           </span>
 
@@ -53,7 +37,6 @@ const HeroSection = () => (
             <span className="block text-[3rem] sm:text-[4.25rem] lg:text-[5.75rem]">
               Where every
             </span>
-            {/* React Bits — GradientText keeps a living red glow on the key line. */}
             <GradientText
               as="span"
               className="block text-[3rem] sm:text-[4.25rem] lg:text-[5.75rem]"
@@ -67,7 +50,6 @@ const HeroSection = () => (
             </span>
           </h1>
 
-          {/* React Bits — BlurText brings the intro copy in word-by-word. */}
           <BlurText
             as="p"
             className="editorial-body mt-9 max-w-xl text-lg leading-relaxed text-ds-text/80 sm:text-xl"
@@ -76,7 +58,6 @@ const HeroSection = () => (
           />
 
           <div className="mt-9 flex flex-wrap gap-3">
-            {/* React Bits — Magnet gives the primary CTA a subtle pull toward the cursor. */}
             <Magnet padding={80} strength={0.3}>
               <Link
                 to={REGISTER_PATH}
@@ -124,7 +105,6 @@ const HeroSection = () => (
           </div>
         </div>
 
-        {/* Right column — a real photo of the camp community. */}
         <div className="animate-fade-in-up lg:justify-self-end">
           <div className="group relative overflow-hidden border border-ds-border-strong">
             <img

@@ -1,11 +1,8 @@
 import { Component } from "react";
 
-/**
- * Default recovery screen shown when the subtree throws. Uses design-system
- * token classes (which resolve from `:root` defaults even outside the
- * ThemeProvider) and a plain button so it stays resilient if the failure
- * reached the top of the tree.
- */
+// Deliberately dependency-free: plain button, token classes that resolve from
+// :root. If the failure reached the top of the tree, anything fancier here
+// would throw too.
 const DefaultFallback = () => (
   <div className="flex min-h-[100dvh] flex-col items-center justify-center gap-5 bg-ds-bg px-6 text-center">
     <span className="mono-tag text-ds-accent-bright">System Error</span>
@@ -26,11 +23,6 @@ const DefaultFallback = () => (
   </div>
 );
 
-/**
- * Catches render errors in its subtree so a thrown exception doesn't blank the
- * whole app. Renders `fallback` when provided, otherwise a default recovery
- * screen.
- */
 class ErrorBoundary extends Component {
   state = { hasError: false };
 

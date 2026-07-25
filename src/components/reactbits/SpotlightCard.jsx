@@ -1,10 +1,4 @@
 /**
- * SpotlightCard — React Bits
- *
- * A card that tracks the cursor with a soft radial spotlight, revealed only
- * while hovered. The spotlight is a red-accent wash by default, so cards glow
- * from within on the dark register without introducing any new hue.
- *
  * @param {object} props
  * @param {string} [props.spotlightColor='var(--ds-accent-soft)'] - Wash colour.
  * @param {number} [props.size=320] - Spotlight diameter in pixels.

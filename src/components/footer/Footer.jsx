@@ -1,10 +1,3 @@
-/**
- * Footer — the public marketing footer.
- *
- * Large left-aligned wordmark wall, four-column nav grid with small uppercase
- * eyebrows, a hairline divider, and a bottom row with copyright and legal
- * links. Sharp corners throughout.
- */
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Calendar, Users, Shirt, ArrowUpRight } from "lucide-react";
 import { PUBLIC_NAV_LINKS, REGISTER_PATH } from "../nav/navLinks";

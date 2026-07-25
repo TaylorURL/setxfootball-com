@@ -1,10 +1,6 @@
 /**
- * Reveal — design-system motion primitive for the public marketing surfaces.
- *
- * Wraps content in the shared `.scroll-animate` reveal vocabulary (defined in
- * index.css, reduced-motion aware) and drives it from a per-element
- * IntersectionObserver. One component replaces the scattered class-string +
- * observer boilerplate the landing page used to hand-roll.
+ * Drives the shared `.scroll-animate` classes in index.css, which already
+ * handle reduced-motion — nothing here needs to check for it.
  *
  * @param {object} props
  * @param {'up'|'left'|'right'|'scale'} [props.variant='up'] - Entrance direction.

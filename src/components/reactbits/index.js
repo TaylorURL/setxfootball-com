@@ -1,15 +1,8 @@
 /**
- * React Bits — a local install of the React Bits component library
- * (https://reactbits.dev, MIT). Each component is a self-contained, dependency
- * -light build tuned to this site's monochrome editorial system: the framer
- * -motion motion primitives reuse the app's existing `framer-motion` install,
- * the canvas backdrops read the live `--ds-*` tokens so they follow the
- * light/dark surface register, and every effect degrades cleanly under
- * `prefers-reduced-motion`. The shared CSS layer lives in `reactbits.css`
- * (imported once from `src/index.js`).
- *
- * This barrel is the single import surface for the whole library:
- *   import { SplitText, SpotlightCard, Squares } from "components/reactbits";
+ * Local build of React Bits (reactbits.dev, MIT), retuned for this design
+ * system — expect divergence from upstream. Canvas components read the live
+ * `--ds-*` tokens so they follow the surface register, and the shared CSS layer
+ * in reactbits.css is imported once from src/index.js.
  */
 
 // Text animations

@@ -1,10 +1,3 @@
-/**
- * @module useCountUp
- * @description Animates a numeric value from 0 up to `target` on first
- * intersection with the viewport. Returns a ref to attach to the displayed
- * element and the current displayed string. Honors prefers-reduced-motion by
- * jumping straight to the final value with no animation.
- */
 import { useEffect, useRef, useState } from "react";
 
 const REVEAL_OPTIONS = { threshold: 0.4 };
@@ -12,6 +5,8 @@ const REVEAL_OPTIONS = { threshold: 0.4 };
 const easeOutQuint = (t) => 1 - Math.pow(1 - t, 5);
 
 /**
+ * Returns a ref for the element to observe, plus the current display string.
+ *
  * @param {number} target - The number to animate up to.
  * @param {object} [opts]
  * @param {number} [opts.durationMs=1400] - How long the count-up takes.

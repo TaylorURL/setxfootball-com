@@ -1,8 +1,3 @@
-/**
- * SponsorsSection — thank-you wall for local sponsors. Editorial card grid
- * with sharp edges and hairline accent rules. Defaults to the paper register
- * so sponsor logos sit on a calm, premium ground.
- */
 import { Handshake } from "lucide-react";
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
@@ -33,7 +28,6 @@ const SponsorsSection = ({ surface = "light" }) => (
       <div className="mt-16 grid grid-cols-1 gap-6 border-t border-ds-border pt-12 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
         {SPONSOR_IMAGES.map((sponsorImage, index) => (
           <Reveal key={sponsorImage} variant="up" delay={index + 1}>
-            {/* React Bits — GlareHover sweeps a sheen across each sponsor card on hover. */}
             <GlareHover className="card-lift relative overflow-hidden border border-ds-border">
               <span aria-hidden="true" className="absolute inset-x-0 top-0 z-10 h-px bg-ds-accent" />
               <div className="aspect-[4/3] overflow-hidden bg-ds-surface">

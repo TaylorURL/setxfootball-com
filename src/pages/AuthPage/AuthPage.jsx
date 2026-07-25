@@ -1,11 +1,3 @@
-/**
- * AuthPage — login / signup for SETX Football Camp.
- *
- * Editorial register: a full-bleed dark surface, a tall left-aligned display
- * heading on desktop, the brand mark above, and a hairline-bordered form card.
- * Built on design-system Field + Input primitives so input validation stays
- * intact.
- */
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { Mail, Lock, User, ArrowLeft, ShieldCheck, ArrowRight } from "lucide-react";
@@ -75,7 +67,6 @@ const AuthPage = () => {
       <div className="relative min-h-[100dvh] overflow-hidden bg-ds-bg text-ds-text">
         <div aria-hidden="true" className="absolute -right-32 top-20 h-96 w-96 rounded-full bg-ds-accent-soft blur-[160px]" />
         <div aria-hidden="true" className="absolute -left-20 bottom-10 h-80 w-80 rounded-full bg-ds-surface-2 blur-[160px] opacity-60" />
-        {/* React Bits — a slow Squares grid gives the locker-room canvas quiet motion. */}
         <Squares className="absolute inset-0 opacity-60" size={56} speed={0.2} lineColor="var(--ds-border)" />
 
         <div className="relative mx-auto grid min-h-[100dvh] w-full max-w-[1440px] grid-cols-1 px-5 py-10 sm:px-8 lg:grid-cols-[1fr_1fr] lg:gap-20 lg:px-10 lg:py-20">
@@ -144,7 +135,6 @@ const AuthPage = () => {
                   </Field>
                 ))}
 
-                {/* React Bits — Magnet gives the auth CTA a subtle pull toward the cursor. */}
                 <Magnet className="!flex w-full" padding={70} strength={0.25}>
                   <button
                     type="submit"

@@ -1,11 +1,3 @@
-/**
- * @module App
- * @description Root component. Wraps the app in AuthProvider and defines the
- * client-side routes. The public site is split across its own pages — Home (/),
- * About (/about), Gallery (/gallery), Sponsors (/sponsors), Register
- * (/register) — alongside Auth, the authenticated Dashboard and StaffPanel,
- * Payment, and the legal pages.
- */
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "../context/AuthContext";

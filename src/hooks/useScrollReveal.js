@@ -1,9 +1,7 @@
 /**
- * @module useScrollReveal
- * @description Reveals an element once it scrolls into view. Returns a ref to
- * attach to the target and a `visible` flag that flips true on first intersect
- * (and stays true). Pairs with the `.scroll-animate` / `.animate-visible`
- * motion vocabulary in index.css, which already honors reduced-motion.
+ * Returns [ref, visible]. `visible` latches true on first intersection and never
+ * flips back, so elements don't re-animate on scroll-up. Pairs with the
+ * `.scroll-animate` / `.animate-visible` classes in index.css.
  */
 import { useEffect, useRef, useState } from "react";
 

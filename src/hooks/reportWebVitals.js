@@ -1,7 +1,4 @@
-/**
- * Reports Core Web Vitals metrics when a valid callback is provided.
- * @param {Function} [onPerfEntry] - Callback invoked with each metric entry.
- */
+/** @param {Function} [onPerfEntry] - called once per metric entry */
 const reportWebVitals = (onPerfEntry) => {
   if (onPerfEntry && onPerfEntry instanceof Function) {
     import("web-vitals").then(({ getCLS, getFID, getFCP, getLCP, getTTFB }) => {

@@ -1,9 +1,4 @@
-/**
- * AboutPage — the camp's story: the mission and "started by neighbors" story,
- * the background-checked coaching staff, and the "what sets us apart" band.
- *
- * Rhythm: LIGHT story → dark coaches → dark differentiator → LIGHT join.
- */
+// Surface rhythm: light story, dark coaches, dark differentiator, light join.
 import MarketingPage from "../../components/layout/MarketingPage";
 import StorySection from "../../components/marketing/sections/StorySection";
 import CoachesSection from "../../components/marketing/sections/CoachesSection";

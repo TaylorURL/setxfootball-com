@@ -1,9 +1,3 @@
-/**
- * DifferentiatorSection — the "what sets us apart" band: an editorial dark slab
- * with a tight display headline and a pull-quote card beneath. Always reads
- * dark — the dark slab is the point — but accepts a `surface` override for
- * pages that want a different rhythm.
- */
 import { Sparkles } from "lucide-react";
 import Reveal from "../Reveal";
 import { surfaceProps } from "../surface";
@@ -16,8 +10,6 @@ const DifferentiatorSection = ({ surface }) => (
   >
     <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
       <Reveal variant="scale" className="relative overflow-hidden border border-ds-border bg-ds-bg-elevated p-10 sm:p-16 lg:p-24">
-        {/* React Bits — an interactive DotGrid replaces the static grain so the
-            slab reacts to the cursor. */}
         <DotGrid className="absolute inset-0 opacity-60" gap={38} dotSize={1.5} />
         <div aria-hidden="true" className="scoreboard-grain absolute inset-0" />
         <div className="relative max-w-4xl">
@@ -40,7 +32,6 @@ const DifferentiatorSection = ({ surface }) => (
 
           <div className="mt-12 max-w-3xl border-l-2 border-ds-accent bg-ds-bg/60 px-7 py-7 backdrop-blur-sm sm:px-9 sm:py-9">
             <Sparkles className="h-5 w-5 text-ds-accent-bright" />
-            {/* React Bits — ScrollReveal develops the pull-quote word-by-word as it scrolls. */}
             <ScrollReveal
               as="p"
               className="editorial-display mt-4 text-2xl leading-tight text-ds-text sm:text-3xl"

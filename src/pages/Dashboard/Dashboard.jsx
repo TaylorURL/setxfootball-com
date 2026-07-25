@@ -1,13 +1,3 @@
-/**
- * Dashboard — authenticated user view for managing camp registrations.
- *
- * Editorial register: large display title with mono eyebrow; each registration
- * renders as a hairline-bordered "season card" with a hanging mono index and
- * sharp-edge field cells. Inline editing and deletion within the edit window
- * are preserved end-to-end.
- *
- * @module pages/Dashboard
- */
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -277,7 +267,6 @@ const Dashboard = () => {
               const isEditing = editingId === reg.id;
 
               return (
-                // React Bits — SpotlightCard adds a cursor-tracked wash to each season card.
                 <SpotlightCard as="article" key={reg.id} className="border border-ds-border bg-ds-surface" size={420}>
                   <RegistrationCardHeader
                     reg={reg}

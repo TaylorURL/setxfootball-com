@@ -1,10 +1,3 @@
-/**
- * Seo — declarative per-page head tags powered by react-helmet-async.
- *
- * Emits a unique <title>, <meta name="description">, Open Graph + Twitter
- * card tags, and a canonical link for the current route. Sensible camp-wide
- * defaults are provided so every page renders coherent social previews.
- */
 import { Helmet } from "react-helmet-async";
 import {
   SITE_URL,
