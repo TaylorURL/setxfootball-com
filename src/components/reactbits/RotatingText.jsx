@@ -1,10 +1,4 @@
 /**
- * RotatingText — React Bits
- *
- * Cycles through a list of words in place, each one swapping out on a timer
- * with a spring-driven vertical slide. Reserved for a single rotating word
- * inside an otherwise static headline.
- *
  * @param {object} props
  * @param {string[]} props.texts - Words to cycle through.
  * @param {number} [props.interval=2600] - Milliseconds each word is shown.

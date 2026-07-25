@@ -1,10 +1,4 @@
 /**
- * Magnet — React Bits
- *
- * Draws its children toward the cursor while the pointer is within a padding
- * radius, then springs them back to rest on leave. A subtle "this is grabbable"
- * affordance for primary CTAs. Falls back to no movement under reduced-motion.
- *
  * @param {object} props
  * @param {number} [props.padding=90] - Activation radius (px) around the element.
  * @param {number} [props.strength=0.35] - Fraction of cursor offset followed.

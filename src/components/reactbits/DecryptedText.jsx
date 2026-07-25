@@ -1,10 +1,4 @@
 /**
- * DecryptedText — React Bits
- *
- * Scrambles the text with random glyphs, then resolves it left-to-right into
- * the real string the first time it scrolls into view. Suits mono eyebrows and
- * short labels where a "terminal decrypt" beat fits the editorial register.
- *
  * @param {object} props
  * @param {string} props.text - The final resolved string.
  * @param {number} [props.speed=45] - Milliseconds between scramble frames.

@@ -1,11 +1,4 @@
-/**
- * PrivacyPage — Privacy Policy for SETX Football Camp.
- *
- * Editorial article layout: large left-aligned title, a mono "Legal" eyebrow,
- * and prose rendered inside a hairline article frame. Rendered on the paper
- * register so long-form legal copy is comfortable to read.
- * @module pages/PrivacyPage
- */
+// Paper register — long-form legal copy is unpleasant on the dark surface.
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Prose } from "@bradley-t-t/sunday-design-system";

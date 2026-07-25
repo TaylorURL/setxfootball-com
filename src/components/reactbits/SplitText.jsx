@@ -1,11 +1,4 @@
 /**
- * SplitText — React Bits
- *
- * Splits its text into individual characters (or words) and animates each one
- * in with a stagger the first time it scrolls into view. Framer Motion drives
- * the per-letter spring; reduced-motion collapses it to a plain, instantly
- * legible string.
- *
  * @param {object} props
  * @param {string} props.text - The string to animate.
  * @param {'chars'|'words'} [props.splitType='chars'] - Split granularity.

@@ -1,11 +1,4 @@
 /**
- * AnimatedContent — React Bits
- *
- * A general-purpose scroll-in wrapper: slides and fades its children in from a
- * chosen direction the first time they enter the viewport, with an optional
- * per-instance delay for staggering siblings. The workhorse for bringing any
- * block onto the page in the editorial reveal cadence.
- *
  * @param {object} props
  * @param {'up'|'down'|'left'|'right'} [props.direction='up'] - Entrance vector.
  * @param {number} [props.distance=48] - Travel distance in pixels.

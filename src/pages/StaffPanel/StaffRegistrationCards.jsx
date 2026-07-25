@@ -1,8 +1,4 @@
-/**
- * StaffRegistrationCards — the mobile (< lg) grouped registrations list. Each
- * card mirrors the desktop row: a header summary that expands to contact and
- * individual-order detail.
- */
+// Mobile counterpart to StaffRegistrationsTable — keep the two in step.
 import { ChevronRight, ChevronDown, Shirt, Phone, Mail } from "lucide-react";
 import { Card, Badge, Separator, Text, Eyebrow } from "@bradley-t-t/sunday-design-system";
 import { formatDate, formatCurrency } from "../../utils/helpers";

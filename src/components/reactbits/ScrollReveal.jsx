@@ -1,10 +1,4 @@
 /**
- * ScrollReveal — React Bits
- *
- * Ties a paragraph's word-by-word reveal to the scroll position: each word
- * ramps from blurred and dim to sharp and solid as the block travels up
- * through the viewport, so the copy "develops" while the reader scrolls.
- *
  * @param {object} props
  * @param {string} props.children - The text to reveal (plain string).
  * @param {number} [props.baseOpacity=0.15] - Starting opacity for each word.

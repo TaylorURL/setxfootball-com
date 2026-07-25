@@ -1,9 +1,3 @@
-/**
- * GallerySection — the past-seasons photo mosaic. Sharp edges, hairline frames,
- * caption tags that slide in on hover. Generous gutters. Photos read in
- * editorial grayscale by default and bloom back to full color on hover — the
- * monochrome system stays calm until the viewer leans in.
- */
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
 import { GALLERY } from "../../../content/campContent";
@@ -29,7 +23,6 @@ const GallerySection = ({ surface }) => (
       <div className="mt-16 grid auto-rows-[150px] grid-cols-4 gap-2 border-t border-ds-border pt-12 sm:auto-rows-[200px] sm:gap-3 lg:auto-rows-[230px]">
         {GALLERY.map((item, index) => (
           <Reveal key={item.src} variant="scale" delay={index + 1} className={item.span}>
-            {/* React Bits — TiltedCard gives each photo a subtle 3D lean on hover. */}
             <TiltedCard max={7} scale={1.04} className="group relative h-full w-full overflow-hidden border border-ds-border">
               <img
                 src={item.src}

@@ -1,10 +1,8 @@
 /**
- * Tailwind CSS configuration for SETX Football Camp.
- *
- * Builds on the Sunday Design System preset, which supplies the `ds-*` color,
- * radius, shadow, font, and motion scales bound to the active `data-theme`.
- * The legacy primary (navy) / accent (red) scales are retained for the brand
- * gradients and hero treatments that sit outside the token system.
+ * The design-system preset supplies every `ds-*` scale bound to the active
+ * `data-theme`. The `primary` (neutral ramp) and `accent` (red) scales below
+ * exist only for the gradient and hero treatments that sit outside the token
+ * system — reach for `ds-*` everywhere else.
  */
 const dsPreset = require("@bradley-t-t/sunday-design-system/tailwind-preset");
 

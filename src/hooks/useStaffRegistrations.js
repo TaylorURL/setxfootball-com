@@ -1,10 +1,5 @@
-/**
- * @module useStaffRegistrations
- * @description Owns all data orchestration behind the StaffPanel: the year
- * picker, per-year registration loading, search/payment filtering, payment
- * toggling, the grouped view model, and summary stats. The panel component
- * is left to render; this hook holds the state and the wiring.
- */
+// All of StaffPanel's state and data wiring lives here so the panel component
+// only renders.
 import { useCallback, useEffect, useMemo, useState } from "react";
 import RegistrationService from "../services/RegistrationService";
 import { getCurrentYear } from "../utils/helpers";

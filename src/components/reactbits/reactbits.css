@@ -1,17 +1,9 @@
-/* -----------------------------------------------------------------------------
-   React Bits — CSS layer
+/* Only the CSS-driven React Bits components live here. The framer-motion ones
+   (SplitText, TiltedCard, Magnet, ...) carry their animation in JS and need
+   nothing from this file. */
 
-   Keyframes and base classes for the CSS-driven React Bits components
-   (ShinyText, GradientText, StarBorder, GlareHover). Motion-driven components
-   (SplitText, TiltedCard, Magnet, …) carry their own logic in JS via
-   framer-motion and don't need anything here.
-
-   Every effect degrades to a static, legible state under reduced-motion so the
-   monochrome editorial system stays calm for readers who ask for less motion.
-   -------------------------------------------------------------------------- */
-
-/* ShinyText — a soft sheen sweeps across the text on a loop. Colours come from
-   the caller via currentColor + a lighter highlight passed as a CSS variable. */
+/* Colours come from the caller: currentColor for the base, a lighter highlight
+   passed in as a CSS variable. */
 .rb-shiny-text {
   color: var(--rb-shiny-base, currentColor);
   background: linear-gradient(
@@ -36,8 +28,6 @@
   }
 }
 
-/* GradientText — an animated multi-stop gradient fills the text (and, opt-in,
-   an outer border). Tuned by default to the athletic-red / paper ramp. */
 .rb-gradient-text {
   display: inline-flex;
   position: relative;
@@ -69,7 +59,6 @@
   }
 }
 
-/* StarBorder — a travelling glow orbits the element's edge behind the content. */
 .rb-star-border {
   position: relative;
   display: inline-block;
@@ -123,7 +112,6 @@
   }
 }
 
-/* GlareHover — a diagonal glare sweeps across the surface on hover. */
 .rb-glare-hover {
   position: relative;
   overflow: hidden;

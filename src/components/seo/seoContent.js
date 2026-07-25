@@ -1,15 +1,10 @@
-/**
- * @module seoContent
- * @description Central registry of per-page SEO copy for the public site.
- * Page components import the keyed entry instead of inlining strings so the
- * sitemap, og previews, and titles stay in sync from one place.
- */
-
+// Pages import a keyed entry rather than inlining strings, so titles, sitemap
+// and og previews can't drift apart.
 export const SITE_URL = "https://setxfootball.com";
 export const SITE_NAME = "SETX Football Camp";
 export const TWITTER_HANDLE = "@SETXFootball";
 
-/** Hero photo doubles as the default social card until a dedicated 1200x630 lands. */
+// Stand-in until a dedicated 1200x630 social card exists.
 export const DEFAULT_SOCIAL_IMAGE = `${SITE_URL}/android-chrome-512x512.png`;
 
 const KEYWORDS_CORE =

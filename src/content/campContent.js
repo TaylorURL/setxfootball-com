@@ -1,9 +1,3 @@
-/**
- * @module campContent
- * @description Static content for the public site — section copy, coach roster,
- * gallery layout, and sponsor assets — kept out of the views so each page reads
- * as structure. All copy reflects the real SETX Youth Football Camp.
- */
 import {
   Star,
   Heart,
@@ -35,7 +29,7 @@ export const HERO_STATS = [
   { value: "Year 3", label: "Season" },
 ];
 
-/** What every camper walks away with — true for registered kids and walk-ons alike. */
+// Applies to walk-ons too, not just registered campers.
 export const CAMPER_PERKS = [
   { icon: Shirt, title: "A Camp Shirt", body: "Every camper gets a shirt — yours to keep, registered or not." },
   { icon: CupSoda, title: "Drinks & Snacks", body: "We keep the sideline stocked so kids stay fueled all day." },
@@ -93,7 +87,6 @@ export const COACHES = [
   },
 ];
 
-/** The real sign-up flow, framed as a playbook. */
 export const PLAYBOOK = [
   {
     icon: ClipboardList,

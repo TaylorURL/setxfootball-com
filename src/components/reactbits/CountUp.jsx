@@ -1,10 +1,4 @@
 /**
- * CountUp — React Bits
- *
- * Animates a number from a start value up to a target the first time it scrolls
- * into view, easing out so the last digits settle gently. Framer Motion's
- * spring drives the tween; reduced-motion jumps straight to the final value.
- *
  * @param {object} props
  * @param {number} props.to - The final value.
  * @param {number} [props.from=0] - The starting value.

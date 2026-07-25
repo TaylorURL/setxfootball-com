@@ -1,11 +1,4 @@
 /**
- * ShinyText — React Bits
- *
- * A soft highlight sheen sweeps across the text on a loop. The base colour is
- * inherited (`currentColor`) so it adopts whatever the surrounding editorial
- * register sets; the sweep highlight defaults to the paper white but can be
- * pointed at the accent for a red glint.
- *
  * @param {object} props
  * @param {string} props.text - The string to render.
  * @param {number} [props.speed=5] - Seconds per sweep.

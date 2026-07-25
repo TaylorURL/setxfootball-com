@@ -1,8 +1,4 @@
 /**
- * MarketingPage — chrome for every public page: the editorial sticky Navbar
- * over a deep-bg body, then the shared Footer. The page body fades + lifts in
- * on mount so route changes feel intentional without being heavy.
- *
  * @param {object} props
  * @param {React.ReactNode} props.children - Page body.
  * @param {boolean} [props.padded=true] - Reserve space for the fixed navbar.

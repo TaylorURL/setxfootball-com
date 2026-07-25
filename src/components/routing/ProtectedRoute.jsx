@@ -1,8 +1,6 @@
 /**
- * ProtectedRoute — gates a route on authentication, and optionally on staff
- * role. Waits silently for the auth session to resolve before deciding (so a
- * signed-in user refreshing the page isn't bounced to /auth before their
- * session has loaded).
+ * Waits for the auth session to resolve before deciding — without that, a
+ * signed-in user refreshing the page gets bounced to /auth mid-load.
  *
  * @param {object} props
  * @param {React.ReactNode} props.children - The protected page.

@@ -1,10 +1,4 @@
 /**
- * GlareHover — React Bits
- *
- * Sweeps a diagonal glare across the surface on hover — a quick sheen that
- * reads like light catching a printed card. Pure CSS (see reactbits.css); the
- * glare is hidden entirely under reduced-motion.
- *
  * @param {object} props
  * @param {string} [props.glareColor='var(--ds-sheen-strong)'] - Glare tint.
  * @param {number} [props.speed=650] - Sweep duration in milliseconds.

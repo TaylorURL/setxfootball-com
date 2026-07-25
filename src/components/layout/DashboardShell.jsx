@@ -1,7 +1,6 @@
 /**
- * DashboardShell — the authenticated app chrome shared by the player Dashboard
- * and the StaffPanel. Wraps the design-system AppShell with a routed Sidebar
- * (brand, nav, signed-in footer).
+ * Shared by the player Dashboard and the StaffPanel — chrome changes belong
+ * here, not in either page.
  *
  * @param {object} props
  * @param {'dashboard'|'staff'} props.active - highlights the current nav entry

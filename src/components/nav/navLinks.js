@@ -1,11 +1,5 @@
-/**
- * @module navLinks
- * @description Single source of truth for the public site's primary navigation.
- * Shared by the Navbar and Footer so the route map lives in exactly one place.
- * The registration call-to-action is kept separate (it renders as a button).
- */
-
-/** Primary routed destinations, in nav order. */
+// Navbar and Footer both render from this, so the route map lives in one place.
+// Registration is deliberately kept out — it renders as a button, not a link.
 export const PUBLIC_NAV_LINKS = [
   { label: "Home", to: "/" },
   { label: "About", to: "/about" },
@@ -13,5 +7,4 @@ export const PUBLIC_NAV_LINKS = [
   { label: "Sponsors", to: "/sponsors" },
 ];
 
-/** The sign-up route, surfaced as the primary call to action. */
 export const REGISTER_PATH = "/register";

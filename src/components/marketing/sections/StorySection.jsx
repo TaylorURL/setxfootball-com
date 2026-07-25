@@ -1,9 +1,3 @@
-/**
- * StorySection — the camp's mission and "started by neighbors" story. An
- * editorial half-image / half-text spread with a season stamp anchored over
- * the field photo. Defaults to the paper register so it reads as the opening
- * essay of the About page.
- */
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
 import { STORY_IMAGE, STORY_PILLARS } from "../../../content/campContent";
@@ -34,7 +28,6 @@ const StorySection = ({ surface = "light" }) => (
 
       <div className="mt-20 grid grid-cols-1 gap-12 border-t border-ds-border pt-16 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
         <Reveal variant="left" className="relative">
-          {/* React Bits — TiltedCard gives the field photo a tactile 3D lean. */}
           <TiltedCard max={8} scale={1.02} className="group relative overflow-hidden">
             <img
               src={STORY_IMAGE}

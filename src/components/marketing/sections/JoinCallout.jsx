@@ -1,10 +1,3 @@
-/**
- * JoinCallout — the closing call-to-action band shared by the public pages.
- * Editorial: a left-aligned dramatic display, a mono price stamp, and an
- * accent-bordered link block. Sharp edges throughout. The page chooses which
- * surface this lands on so the closing CTA stays in rhythm with the rest of
- * the route.
- */
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import Reveal from "../Reveal";
@@ -21,7 +14,6 @@ const JoinCallout = ({ surface }) => (
     <div aria-hidden="true" className="absolute -right-32 top-10 h-96 w-96 rounded-full bg-ds-accent-soft blur-[160px]" />
     <div aria-hidden="true" className="absolute -left-20 bottom-0 h-80 w-80 rounded-full bg-ds-surface-2 blur-[160px] opacity-60" />
     <div aria-hidden="true" className="field-grid absolute inset-0" />
-    {/* React Bits — rippling Waves give the closing band a calm, living backdrop. */}
     <Waves className="absolute inset-0 opacity-50" lineCount={6} amplitude={16} lineColor="var(--ds-accent)" />
 
     <div className="relative mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
@@ -34,8 +26,6 @@ const JoinCallout = ({ surface }) => (
           <h2 className="editorial-display editorial-display-tight mt-7 text-[3rem] text-ds-text sm:text-[4rem] lg:text-[5.5rem]">
             Ready to get<br />
             your camper<br />
-            {/* React Bits — GradientText keeps the closing question glowing.
-                Red-only stops so it reads on both the light and dark register. */}
             <GradientText as="span" className="!inline" colors={["#e11d2a", "#ff4d5b", "#b81e27", "#e11d2a"]} speed={7}>
               on the roster?
             </GradientText>
@@ -57,8 +47,6 @@ const JoinCallout = ({ surface }) => (
               Includes drinks & snacks · Every kid plays
             </p>
           </div>
-          {/* React Bits — StarBorder orbits an accent glow around the CTA, and
-              Magnet gives it a gentle pull toward the cursor. */}
           <Magnet className="!flex w-full" padding={70} strength={0.25}>
             <StarBorder
               as={Link}
