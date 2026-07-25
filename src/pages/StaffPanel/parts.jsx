@@ -1,8 +1,4 @@
-/**
- * Shared presentational pieces for the StaffPanel, used by both the desktop
- * table and the mobile card list: the payment toggle, per-shirt recipient
- * lines, an individual order row, and the expanded contact/order detail.
- */
+// Shared by both the desktop table and the mobile card list.
 import { Shirt } from "lucide-react";
 import {
   Card,
@@ -15,7 +11,6 @@ import {
 import { formatDate, formatCurrency } from "../../utils/helpers";
 import { parseShirtOrders } from "../../utils/shirtOrders";
 
-/** Combined-status badge tones and labels, keyed by grouped order status. */
 export const GROUP_STATUS = {
   paid: { tone: "positive", label: "All Paid" },
   partial: { tone: "accent", label: "Partial" },

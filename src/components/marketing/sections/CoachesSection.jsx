@@ -1,9 +1,3 @@
-/**
- * CoachesSection — the background-checked coaching staff, each rendered as a
- * roster card with a tight display name, role, and a hairline divider list of
- * credentials. Defaults to the dark register so the cards read as printed on
- * a deep field-coal slab.
- */
 import { ShieldCheck, Star } from "lucide-react";
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
@@ -34,7 +28,6 @@ const CoachesSection = ({ surface }) => (
       <div className="mt-20 grid grid-cols-1 gap-12 border-t border-ds-border pt-16 lg:grid-cols-2 lg:gap-16">
         {COACHES.map((coach, index) => (
           <Reveal key={coach.name} variant="up" delay={index + 1}>
-            {/* React Bits — SpotlightCard adds a cursor-tracked accent wash to each roster card. */}
             <SpotlightCard as="article" className="card-lift relative border border-ds-border bg-ds-surface p-8 sm:p-10">
               <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-ds-accent" />
               <div className="flex items-start gap-5">

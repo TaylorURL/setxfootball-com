@@ -1,9 +1,5 @@
-/**
- * @module supabaseClient
- * @description Initializes and exports the Supabase client instance.
- * Credentials must be provided via environment variables — no fallback values
- * are permitted to prevent accidental exposure of live credentials in source.
- */
+// No hardcoded fallbacks for the URL or key — a default here is how live
+// credentials end up committed.
 import { createClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.REACT_APP_SUPABASE_URL;

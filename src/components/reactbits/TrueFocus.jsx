@@ -1,10 +1,4 @@
 /**
- * TrueFocus — React Bits
- *
- * Renders a short phrase with every word blurred except one, then walks the
- * sharp focus from word to word on a timer. An accent-cornered frame animates
- * to sit around whichever word is currently in focus.
- *
  * @param {object} props
  * @param {string} props.sentence - The phrase to walk through.
  * @param {number} [props.interval=1400] - Milliseconds each word holds focus.

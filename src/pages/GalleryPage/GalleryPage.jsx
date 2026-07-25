@@ -1,8 +1,4 @@
-/**
- * GalleryPage — the past-seasons photo mosaic, closed with the sign-up callout.
- *
- * Rhythm: dark gallery (photos pop against coal) → LIGHT join callout.
- */
+// Gallery stays dark so the photos carry the contrast; the callout goes light.
 import MarketingPage from "../../components/layout/MarketingPage";
 import GallerySection from "../../components/marketing/sections/GallerySection";
 import JoinCallout from "../../components/marketing/sections/JoinCallout";

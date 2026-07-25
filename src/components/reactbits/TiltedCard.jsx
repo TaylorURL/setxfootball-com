@@ -1,10 +1,4 @@
 /**
- * TiltedCard — React Bits
- *
- * Tilts its children in 3D toward the cursor on hover, with a spring settle and
- * a gentle scale, giving photos and cards a tactile, physical response. The
- * perspective is subtle by design so it reads as premium, not gimmicky.
- *
  * @param {object} props
  * @param {number} [props.max=10] - Maximum tilt in degrees on each axis.
  * @param {number} [props.scale=1.03] - Hover scale factor.

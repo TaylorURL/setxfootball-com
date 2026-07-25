@@ -1,8 +1,4 @@
-/**
- * SponsorsPage — the sponsor thank-you wall, closed with the sign-up callout.
- *
- * Rhythm: LIGHT sponsors (logos breathe on paper) → dark join callout.
- */
+// Sponsors go light — logos on paper read better than logos on coal.
 import MarketingPage from "../../components/layout/MarketingPage";
 import SponsorsSection from "../../components/marketing/sections/SponsorsSection";
 import JoinCallout from "../../components/marketing/sections/JoinCallout";

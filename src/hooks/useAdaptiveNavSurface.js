@@ -1,15 +1,7 @@
 /**
- * useAdaptiveNavSurface — detects which surface register (light vs dark) is
- * currently sitting under the fixed top navigation, so the nav's foreground
- * can flip to stay readable as the page scrolls across the alternating
- * light/dark section rhythm.
- *
- * Strategy: each tick (rAF-throttled scroll/resize, plus a re-sample on route
- * change) we probe the DOM element a few pixels below the nav using
- * `elementFromPoint`, then walk its ancestor chain looking for the nearest
- * `data-surface` attribute. No section needs to be registered with the hook;
- * any `[data-surface="light"]` block (the shared section helper already sets
- * this) is detected automatically — anything else defaults to dark.
+ * Hit-tests the element just below the nav and walks up for the nearest
+ * `data-surface`. Doing it by probe rather than by registration means sections
+ * never have to opt in — anything without the attribute defaults to dark.
  *
  * @param {React.RefObject<HTMLElement>} headerRef - Ref to the fixed nav header.
  * @returns {'light'|'dark'} The surface register currently under the nav.
@@ -25,8 +17,8 @@ const readSurfaceAt = (header) => {
   const probeX = Math.max(1, Math.min(window.innerWidth - 1, window.innerWidth / 2));
   const probeY = Math.max(1, rect.bottom + PROBE_OFFSET_PX);
 
-  // elementFromPoint respects pointer-events:none, so we briefly hide the nav
-  // from hit testing while we sample the surface beneath it.
+  // Without this the probe hits the nav itself — elementFromPoint honours
+  // pointer-events, so disabling it for one frame lets us see through.
   const previousPointerEvents = header.style.pointerEvents;
   header.style.pointerEvents = "none";
   const target = document.elementFromPoint(probeX, probeY);
@@ -68,7 +60,7 @@ const useAdaptiveNavSurface = (headerRef) => {
       rafId = window.requestAnimationFrame(sample);
     };
 
-    // Re-sample after the new route's DOM has been committed.
+    // Two frames: one for the route DOM to commit, one for layout to settle.
     const settle = window.requestAnimationFrame(() => {
       sample();
       window.requestAnimationFrame(sample);

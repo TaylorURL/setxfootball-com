@@ -3,22 +3,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* -----------------------------------------------------------------------------
-   SETX Youth Football — brand foundation (monochrome edition)
+/* Monochrome by rule: near-black, off-white, a neutral ramp between them, and
+   one athletic red. Adding a second hue anywhere breaks the whole system.
 
-   The identity is a deliberately monochrome editorial system: a true near-black
-   canvas, an off-white paper, a neutral gray ramp for everything in between,
-   and a single confident athletic red as the only spark. No other hues — ever.
-
-   The same `--ds-*` tokens drive both the dark canvas and the light paper.
-   Sections opt into the light register with `data-surface="light"`. Every
-   `--ds-*` flips coherently, so cards, hairlines, dividers, eyebrows, and the
-   red accent all adapt to whichever surface they sit on.
-   -------------------------------------------------------------------------- */
+   One set of `--ds-*` tokens drives both registers. A section opts into light
+   with `data-surface="light"` and every token flips together, so no component
+   needs a light/dark variant of its own. */
 :root {
-  /* Neutral gray ramp — replaces the legacy primary navy.
-     Used by ambient gradient/blur fills and a couple of legacy utilities; the
-     scale is intentionally monochrome so nothing reaches for hue. */
+  /* Only used by ambient gradient/blur fills now. Monochrome on purpose. */
   --primary-50: #fafafa;
   --primary-100: #f4f4f4;
   --primary-200: #e8e8e8;
@@ -30,9 +22,8 @@
   --primary-800: #111111;
   --primary-900: #0a0a0a;
 
-  /* Athletic red — the only accent in the system.
-     The bright cut anchors highlights on dark; the darker cut is reserved for
-     light surfaces where the bright cut would lose contrast. */
+  /* The bright cut is for dark surfaces; on paper it loses contrast, so light
+     sections use the darker cut instead. */
   --accent-50: #fff1f2;
   --accent-100: #ffe1e3;
   --accent-200: #ffc1c5;
@@ -44,22 +35,15 @@
   --accent-800: #6e0c14;
   --accent-900: #3f060b;
 
-  /* Semantic brand token — the camp uses ONE color. */
   --brand-red: #e11d2a;
 
-  /* Section-edge shadow tokens (sharper than the legacy jersey-patch glow,
-     because monochrome reads better without bloom). */
+  /* Tight rather than glowing — bloom muddies a monochrome palette. */
   --brand-chip-shadow: 0 8px 24px -12px rgba(225, 29, 42, 0.45);
   --brand-chip-shadow-sm: 0 6px 18px -10px rgba(225, 29, 42, 0.45);
 }
 
-/* -----------------------------------------------------------------------------
-   Dark register — the default surface
-
-   True near-black canvas, off-white text, hairline whites. The `gray` theme
-   key is preserved so the existing `ThemeProvider` mount keeps working without
-   changing the app entry; the values inside are what changed.
-   -------------------------------------------------------------------------- */
+/* The default surface. The `gray` theme key is what ThemeProvider mounts with,
+   so it stays even though nothing here is grey any more. */
 .ds-root,
 .ds-root[data-theme="gray"],
 [data-theme="gray"] {
@@ -114,7 +98,6 @@
   --ds-accent-face-hover: linear-gradient(180deg, #ff4c58 0%, #ec2533 52%, #c0182a 100%);
   --ds-raised-face: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.01) 50%, rgba(255, 255, 255, 0) 100%);
 
-  /* Editorial radius register — sharp corners, sharper edges. */
   --ds-radius-xs: 0px;
   --ds-radius-sm: 0px;
   --ds-radius-md: 2px;
@@ -126,13 +109,7 @@
   color-scheme: dark;
 }
 
-/* -----------------------------------------------------------------------------
-   Light register — opt-in per section via `data-surface="light"`
-
-   Off-white paper, near-black text, hairline blacks. Shares the red accent
-   with the dark register (slightly deeper shade so contrast holds on paper).
-   Apply to a section root and every `--ds-*`-bound child reads light cleanly.
-   -------------------------------------------------------------------------- */
+/* Put this on a section root and every `--ds-*`-bound descendant follows. */
 [data-surface="light"] {
   --ds-bg: #f6f6f4;
   --ds-bg-elevated: #ffffff;
@@ -202,15 +179,10 @@ body {
   color: var(--ds-text);
 }
 
-/* -----------------------------------------------------------------------------
-   Autofill repaint
-   Chromium/Safari paint a hardcoded pale-yellow background on :-webkit-autofill
-   that ignores theme tokens. The 1000px inset box-shadow trick overwrites that
-   layer with the field's actual surface (`--ds-surface-2`, matching the DS
-   `.ds-field` background), so autofilled values look identical to typed ones.
-   Because the rule resolves CSS variables, `[data-surface="light"]` cascades
-   through automatically.
-   -------------------------------------------------------------------------- */
+/* Chromium and Safari paint a hardcoded pale yellow on :-webkit-autofill that
+   ignores theme tokens. A 1000px inset box-shadow is the only way to cover it.
+   Because the shadow resolves a CSS variable, the light register cascades
+   through for free. */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -230,12 +202,7 @@ select:-webkit-autofill:active {
   transition: background-color 9999s ease-in-out 0s;
 }
 
-/* -----------------------------------------------------------------------------
-   Editorial display
-   Big, tight, confident sans-serif headlines — industrial grotesque
-   weight, dramatic size jumps, near-zero leading on the largest cuts.
-   Reserved for hero & section titles.
-   -------------------------------------------------------------------------- */
+/* Hero and section titles only — the negative leading falls apart at body size. */
 .editorial-display {
   font-family: "Inter Tight", "Inter", ui-sans-serif, system-ui, sans-serif;
   font-weight: 800;
@@ -256,7 +223,6 @@ select:-webkit-autofill:active {
   line-height: 1.55;
 }
 
-/* Stencil — kept for the varsity numeral and scoreboard digit moments. */
 .heading-stencil {
   font-family: "Oswald", "Bebas Neue", "Helvetica Neue Condensed", "Arial Narrow",
     ui-sans-serif, system-ui, sans-serif;
@@ -271,11 +237,7 @@ select:-webkit-autofill:active {
   line-height: 0.92;
 }
 
-/* -----------------------------------------------------------------------------
-   Mono microcopy
-   The editorial tag/metadata register — small uppercase, wide tracking,
-   monospace. Used for section eyebrows, indices, dates, supporting labels.
-   -------------------------------------------------------------------------- */
+/* The metadata register: eyebrows, indices, dates, supporting labels. */
 .mono-tag {
   font-family: "JetBrains Mono", "IBM Plex Mono", ui-monospace, "SF Mono",
     Menlo, Consolas, monospace;
@@ -313,10 +275,7 @@ select:-webkit-autofill:active {
   letter-spacing: 0;
 }
 
-/* -----------------------------------------------------------------------------
-   Editorial chrome
-   Sharp section dividers, rule marks, hairline borders.
-   -------------------------------------------------------------------------- */
+/* Dividers, rule marks, hairline borders */
 .brand-chip-shadow {
   box-shadow: var(--brand-chip-shadow);
 }
@@ -349,7 +308,6 @@ select:-webkit-autofill:active {
   border-color: var(--ds-border);
 }
 
-/* Vertical accent rule used in cards and editorial blocks. */
 .left-rule-accent {
   position: relative;
 }
@@ -382,12 +340,7 @@ select:-webkit-autofill:active {
     radial-gradient(circle at 82% 78%, var(--ds-surface-2) 0, transparent 48%);
 }
 
-/* -----------------------------------------------------------------------------
-   Marketing motion
-   Editorial reveal vocabulary — long, soft fades; subtle parallax on hero
-   imagery; honors reduced-motion. Component-level motion comes from the
-   design system itself.
-   -------------------------------------------------------------------------- */
+/* Page-level reveals only. Component motion belongs to the design system. */
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -543,11 +496,7 @@ select:-webkit-autofill:active {
 .scroll-animate.delay-7 { transition-delay: 560ms; }
 .scroll-animate.delay-8 { transition-delay: 640ms; }
 
-/* -----------------------------------------------------------------------------
-   Interaction motion
-   Tasteful card lift, accent-line grow, button press. GPU-cheap transforms,
-   no layout shift. Each effect has a no-op fallback under reduced-motion.
-   -------------------------------------------------------------------------- */
+/* Transform-only, so none of these trigger layout. */
 .card-lift {
   transition:
     transform 360ms cubic-bezier(0.16, 1, 0.3, 1),
@@ -564,9 +513,6 @@ select:-webkit-autofill:active {
     0 10px 24px -16px var(--ds-shadow-key);
 }
 
-/* Decorative accent tick used under nav links and as a section-opener line.
-   Sits behind a hover/active state and animates its width with a fast,
-   confident grow. */
 .accent-tick {
   display: inline-block;
   height: 1px;
@@ -584,7 +530,6 @@ select:-webkit-autofill:active {
   transform-origin: center;
 }
 
-/* Nav link underline that scribbles in beneath the label on hover/active. */
 .nav-underline {
   position: relative;
 }
@@ -607,7 +552,6 @@ select:-webkit-autofill:active {
   transform: scaleX(1);
 }
 
-/* Press affordance on solid CTAs — sits under the hover color transition. */
 .press-down {
   transition: transform 120ms cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -616,8 +560,7 @@ select:-webkit-autofill:active {
   transform: translateY(1px) scale(0.99);
 }
 
-/* Subtle hairline glow under section transitions — used at the seam between
-   light and dark sections so the rhythm reads as deliberate, not abrupt. */
+/* Softens the seam where a light and a dark section meet. */
 .surface-seam {
   position: relative;
 }

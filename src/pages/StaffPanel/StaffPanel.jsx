@@ -1,13 +1,3 @@
-/**
- * StaffPanel — staff admin view for managing camp registrations.
- *
- * Editorial register: large display title with mono eyebrow; filterable stat
- * strip, a hairline-bordered controls bar, and the desktop table / mobile card
- * lists below. Year-filterable, search, payment-status filter, payment
- * toggling, order grouping, summary KPIs, CSV export — all unchanged.
- *
- * @module pages/StaffPanel
- */
 import { useState } from "react";
 import {
   ShieldCheck,
@@ -77,7 +67,6 @@ const PAYMENT_FILTER_OPTIONS = [
 const StatCard = ({ icon: Icon, label, value }) => (
   <div className="left-rule-accent border border-ds-border bg-ds-surface px-5 py-5 pl-7">
     <Icon className="h-3.5 w-3.5 text-ds-accent-bright" />
-    {/* React Bits — CountUp tallies the numeric console stats on load. */}
     {typeof value === "number" ? (
       <CountUp as="p" to={value} duration={1.2} className="editorial-display mt-3 text-3xl text-ds-text sm:text-4xl" />
     ) : (

@@ -1,11 +1,4 @@
 /**
- * StarBorder — React Bits
- *
- * Wraps content in a hairline frame with a soft accent glow that orbits the top
- * and bottom edges on a loop, giving a button or card a living, premium border
- * without any hue outside the red accent. Renders as a real element via `as`,
- * so it can be a `Link`, `button`, or plain block.
- *
  * @param {object} props
  * @param {string} [props.color='var(--ds-accent-bright)'] - Glow colour.
  * @param {number} [props.speed=6] - Seconds per orbit.

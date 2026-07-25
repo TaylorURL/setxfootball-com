@@ -1,9 +1,3 @@
-/**
- * PerksSection — "What every camper gets": the no-pay-to-play promise rendered
- * as a clean four-column editorial grid with hairline dividers and ample
- * whitespace. Defaults to the light/paper register so the band breathes
- * against the hero's coal.
- */
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
 import { CAMPER_PERKS } from "../../../content/campContent";
@@ -29,7 +23,6 @@ const PerksSection = ({ surface = "light" }) => (
       <div className="mt-16 grid grid-cols-1 gap-y-12 border-t border-ds-border pt-12 sm:grid-cols-2 sm:gap-x-12 lg:grid-cols-4 lg:gap-x-10">
         {CAMPER_PERKS.map((perk, index) => (
           <Reveal key={perk.title} variant="up" delay={index + 1}>
-            {/* React Bits — SpotlightCard adds a cursor-tracked accent wash to each perk. */}
             <SpotlightCard className="group left-rule-accent pl-5 transition-colors duration-300" size={220}>
               <perk.icon
                 className="h-6 w-6 text-ds-accent-bright transition-transform duration-300 ease-out group-hover:-translate-y-0.5"

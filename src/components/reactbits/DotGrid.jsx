@@ -1,11 +1,4 @@
 /**
- * DotGrid — React Bits
- *
- * A canvas field of evenly spaced dots that react to the cursor: dots near the
- * pointer swell and brighten toward the accent, then relax back as it moves on.
- * A quietly interactive backdrop for dark editorial slabs. Pointer tracking is
- * skipped under reduced-motion (dots render static).
- *
  * @param {object} props
  * @param {number} [props.gap=34] - Spacing between dots in pixels.
  * @param {number} [props.dotSize=2] - Base dot radius in pixels.

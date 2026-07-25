@@ -1,12 +1,4 @@
 /**
- * ClickSpark — React Bits
- *
- * A transparent canvas overlay that fires a short burst of radial spark lines
- * wherever the user clicks. Mounted once near the app root so every click
- * anywhere on the site gets the same accent-red flourish. Pointer events pass
- * straight through, so it never interferes with the UI beneath it, and the
- * draw loop idles completely between clicks (no permanent rAF) to stay light.
- *
  * @param {object} props
  * @param {string} [props.sparkColor='#ff2e3d'] - Spark stroke colour.
  * @param {number} [props.sparkCount=8] - Lines per burst.

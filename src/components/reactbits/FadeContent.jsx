@@ -1,10 +1,4 @@
 /**
- * FadeContent — React Bits
- *
- * The quietest reveal: a straight opacity (and optional slight blur) fade-in
- * when the block scrolls into view, with no positional travel. Use where a
- * slide would fight the layout — image walls, dense grids, inline chips.
- *
  * @param {object} props
  * @param {number} [props.delay=0] - Entrance delay in seconds.
  * @param {number} [props.duration=0.9] - Entrance duration in seconds.

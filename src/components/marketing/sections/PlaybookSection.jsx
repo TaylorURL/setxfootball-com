@@ -1,8 +1,3 @@
-/**
- * PlaybookSection — "How it works": the three-step sign-up flow rendered as a
- * numbered editorial sequence with large hanging step numerals. Defaults to
- * the dark register so it reads as the deep block between two lighter bands.
- */
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
 import { PLAYBOOK } from "../../../content/campContent";
@@ -29,7 +24,6 @@ const PlaybookSection = ({ surface }) => (
         {PLAYBOOK.map((play, index) => (
           <Reveal key={play.title} variant="up" delay={index + 1}>
             <div className="group grid grid-cols-[auto_1fr] gap-x-6">
-              {/* React Bits — CountUp settles each hanging step numeral in on scroll. */}
               <CountUp
                 to={index + 1}
                 from={0}
@@ -37,7 +31,6 @@ const PlaybookSection = ({ surface }) => (
                 className="editorial-display text-[5rem] leading-none text-ds-accent-bright transition-transform duration-500 ease-out group-hover:-translate-y-1 sm:text-[6rem]"
               />
               <div className="pt-2">
-                {/* React Bits — DecryptedText resolves the step label like a terminal. */}
                 <DecryptedText text={`Step ${index + 1}`} className="mono-tag-sm text-ds-text-faint" />
                 <h3 className="editorial-display mt-3 text-3xl text-ds-text sm:text-4xl">
                   {play.title}

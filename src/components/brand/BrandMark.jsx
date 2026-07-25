@@ -1,10 +1,7 @@
 /**
- * BrandMark — the SETX Youth Football lockup: a square logo tile plus the
- * editorial wordmark and a mono subtitle. Sharp corners, restrained chrome.
- *
- * Renders as a router `Link` when `to` is set, a `button` when `onClick` is set,
- * otherwise a plain element — so each surface controls its own interaction
- * without re-implementing the mark.
+ * Renders as a Link when `to` is set, a button when `onClick` is set, and a
+ * plain element otherwise — so each surface picks its own interaction without
+ * re-implementing the lockup.
  *
  * @param {object} props
  * @param {string} [props.subtitle='Youth Camp · Daisetta TX']

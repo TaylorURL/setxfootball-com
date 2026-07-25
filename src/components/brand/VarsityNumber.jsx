@@ -1,9 +1,4 @@
 /**
- * VarsityNumber — the camp's jersey-patch numeral on a camp-red square. Sharp
- * corners, tabular numerals, restrained ring. One source of truth for the
- * "roster number" treatment used across the hero, registration steps, and
- * dashboard season cards.
- *
  * @param {object} props
  * @param {React.ReactNode} props.children - The numeral (e.g. "01", 3).
  * @param {'sm'|'md'|'lg'} [props.size='md'] - Chip scale.

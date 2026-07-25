@@ -1,9 +1,3 @@
-/**
- * Application entry point. Mounts the root React component into the DOM, wraps
- * it in the design-system ThemeProvider locked to the single camp theme
- * (graphite neutrals + camp-red accent), mounts the global Toaster, and reports
- * web vitals.
- */
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { HelmetProvider } from "react-helmet-async";
@@ -16,7 +10,7 @@ import reportWebVitals from "./hooks/reportWebVitals";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { SundayAnalyticsProvider } from "./library/sunday-analyzer";
 
-/** The camp ships one deliberate theme — graphite neutrals with the camp-red accent. */
+// One theme, deliberately — the ThemeProvider is locked to it.
 const CAMP_THEME = "gray";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

@@ -1,10 +1,4 @@
 /**
- * BlurText — React Bits
- *
- * Reveals text word-by-word, each word rising out of a soft blur with a
- * stagger when the block scrolls into view. Good for supporting copy and
- * section titles that want a calmer entrance than SplitText's per-letter pop.
- *
  * @param {object} props
  * @param {string} props.text - The string to animate.
  * @param {number} [props.delay=120] - Per-word stagger in milliseconds.

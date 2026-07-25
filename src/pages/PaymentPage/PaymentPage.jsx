@@ -1,10 +1,3 @@
-/**
- * PaymentPage — post-registration payment instructions.
- *
- * Editorial register: a confirmation banner, a summary list with hairline
- * dividers, a left-rule total card with mono price stamp, and the CashApp save
- * card. Sharp corners, mono microcopy, large display numerals for totals.
- */
 import { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import {
@@ -126,7 +119,6 @@ const PaymentPage = () => {
             </p>
           </div>
 
-          {/* React Bits — AnimatedContent slides the receipt stack up on arrival. */}
           <AnimatedContent as="div" className="mt-14 space-y-7" distance={40} duration={0.7}>
             {/* Summary */}
             <section className="relative border border-ds-border bg-ds-surface p-7 sm:p-9">
@@ -148,7 +140,6 @@ const PaymentPage = () => {
               <span aria-hidden="true" className="absolute inset-y-0 left-0 w-1 bg-ds-accent" />
               <div className="px-7 py-9 sm:px-10 sm:py-12">
                 <span className="mono-tag text-ds-accent-bright">Total Due</span>
-                {/* React Bits — CountUp tallies the total due on arrival. */}
                 <CountUp
                   as="p"
                   to={totalAmount}

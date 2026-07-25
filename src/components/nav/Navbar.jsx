@@ -1,15 +1,8 @@
 /**
- * Navbar — the public top dock: a thin, full-bleed sticky bar with the brand
- * mark, primary nav links, an animated underline indicator for the active
- * route, and the sign-up CTA. The bar uses a translucent backdrop-blurred
- * chrome with a strong border so it stays legible over BOTH the dark hero and
- * the light paper sections beneath as you scroll. The bar itself adopts the
- * register of whichever section is currently behind it (dark or light), so
- * the wordmark, links, hamburger, and active underline always read against
- * the right contrast. On small screens the bar collapses to brand + a menu
- * trigger that opens a full-screen takeover menu (which keeps the dark
- * register regardless of what's behind it, since the takeover paints its own
- * solid surface).
+ * The bar is translucent and sits over alternating light and dark sections, so
+ * it adopts the register of whatever is currently behind it rather than picking
+ * one contrast and hoping. The mobile takeover is the exception — it paints its
+ * own solid surface, so it stays dark regardless.
  */
 import { useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
@@ -68,10 +61,8 @@ const Navbar = () => {
 
   return (
     <>
-      {/* The header anchors to the dark register by default but flips to the
-          light register whenever a [data-surface="light"] section is sitting
-          beneath it. The `data-surface` attribute is what swaps every --ds-*
-          token coherently for the bar and all of its children. */}
+      {/* Setting data-surface here is what swaps every --ds-* token for the bar
+          and its children at once. */}
       <header
         ref={headerRef}
         data-theme="gray"
@@ -122,8 +113,6 @@ const Navbar = () => {
         </nav>
       </header>
 
-      {/* Full-screen takeover menu (mobile) — also pinned to the dark register
-          so the menu reads consistently regardless of the page beneath it. */}
       <div
         data-theme="gray"
         className={`fixed inset-0 z-modal flex flex-col bg-ds-bg text-ds-text transition-opacity duration-300 md:hidden ${

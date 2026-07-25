@@ -1,8 +1,4 @@
 /**
- * SectionIntro — the canonical marketing section header. Editorial register:
- * a small uppercase eyebrow with a hairline accent rule, a tight display
- * title, and a left-aligned supporting paragraph.
- *
  * @param {object} props
  * @param {string} [props.eyebrow] - Optional small uppercase label.
  * @param {React.ReactNode} [props.badge] - Optional inline icon + label group

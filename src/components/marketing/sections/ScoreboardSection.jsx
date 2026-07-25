@@ -1,8 +1,3 @@
-/**
- * ScoreboardSection — the stat band beneath the hero. A four-column hairline
- * grid with very large numerals and a short label for each fact. The
- * numerals count up from zero when the band scrolls into view.
- */
 import { HERO_STATS } from "../../../content/campContent";
 import { CAMP_FACTS_ID } from "./HeroSection";
 import { useCountUp } from "../../../hooks/useCountUp";
@@ -29,8 +24,6 @@ const Stat = ({ stat }) => {
   });
 
   return (
-    // React Bits — SpotlightCard washes each stat cell with an accent glow that
-    // tracks the cursor, so the scoreboard lights up as you move across it.
     <SpotlightCard className="group relative flex flex-col px-5 py-12 sm:px-8 sm:py-16" size={260}>
       <span aria-hidden="true" className="absolute inset-x-5 top-0 h-px origin-left scale-x-0 bg-ds-accent transition-transform duration-500 ease-out group-hover:scale-x-100" />
       <span

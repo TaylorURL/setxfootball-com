@@ -1,13 +1,5 @@
-/**
- * DesignPage — the public look-book and design language behind the SETX Youth
- * Football Camp brand. A varsity programme: the season identity, the camp
- * palette, the typography, the on-field gear, the design principles, and a
- * closing sign-up callout. Doubles as a unique, keyword-rich page for search.
- *
- * The page composes its own light/dark rhythm so each design topic lands on
- * the surface that flatters it — the palette on paper, the type and gear on
- * dark, the principles on paper, the close on dark.
- */
+// Each topic sits on the surface that flatters it: palette and principles on
+// paper, type and gear on dark.
 import { Link } from "react-router-dom";
 import {
   Palette,
@@ -38,7 +30,6 @@ import { PAGE_SEO } from "../../components/seo/seoContent";
 import { REGISTER_PATH } from "../../components/nav/navLinks";
 import { Squares, TrueFocus } from "../../components/reactbits";
 
-/** The monochrome system: a calm neutral ramp and ONE confident red accent. */
 const BRAND_COLORS = [
   {
     name: "Camp Red",
@@ -214,7 +205,6 @@ const DesignPage = () => (
     <Section space="xl" className="relative overflow-hidden bg-ds-bg">
       <div aria-hidden="true" className="absolute -top-24 right-0 h-80 w-80 rounded-full bg-ds-accent-soft blur-[140px]" />
       <div aria-hidden="true" className="absolute -bottom-24 left-0 h-72 w-72 rounded-full bg-ds-surface-2 blur-[140px] opacity-60" />
-      {/* React Bits — a drifting Squares grid gives the look-book hero quiet motion. */}
       <Squares className="absolute inset-0 opacity-60" size={60} speed={0.22} lineColor="var(--ds-border)" />
       <Container size="xl" className="relative">
         <Reveal>
@@ -348,7 +338,6 @@ const DesignPage = () => (
           <Card variant="elevated" padding="lg" className="card-lift relative overflow-hidden text-center">
             <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 h-1" />
             <Type className="mx-auto mb-4 h-6 w-6 text-ds-accent-bright" />
-            {/* React Bits — TrueFocus walks a sharp focus across the closing line. */}
             <h3 className="editorial-display editorial-display-tight mb-3 flex justify-center text-3xl text-ds-text sm:text-4xl">
               <TrueFocus sentence="Wear the camp." interval={1500} blur={4} />
             </h3>

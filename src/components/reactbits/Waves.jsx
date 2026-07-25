@@ -1,10 +1,4 @@
 /**
- * Waves — React Bits
- *
- * A field of horizontal hairlines that ripple as travelling sine waves across a
- * canvas, layered front-to-back with falling opacity. A calm, atmospheric
- * backdrop for closing callout bands. Line colour follows the current register.
- *
  * @param {object} props
  * @param {number} [props.lineCount=7] - Number of stacked wave lines.
  * @param {number} [props.amplitude=18] - Wave height in pixels.

@@ -1,11 +1,3 @@
-/**
- * RegistrationForm — the camp registration form on the public sign-up page.
- *
- * Owns the multi-shirt registration form state, validates it, submits through
- * RegistrationService, and routes to the payment page on success. Editorial
- * register: hairline-bordered sections, hanging mono step numerals, sharp
- * corners, technical microcopy. Functional behavior is unchanged.
- */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -356,7 +348,6 @@ const RegistrationForm = () => {
           </div>
         </div>
 
-        {/* React Bits — StarBorder orbits an accent glow around the submit CTA. */}
         <StarBorder
           as="button"
           type="submit"
