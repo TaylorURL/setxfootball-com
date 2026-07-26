@@ -201,7 +201,6 @@ const DesignPage = () => (
   <MarketingPage>
     <Seo {...PAGE_SEO.design} />
 
-    {/* Look-book hero — dark cinema */}
     <Section space="xl" className="relative overflow-hidden bg-ds-bg">
       <div aria-hidden="true" className="absolute -top-24 right-0 h-80 w-80 rounded-full bg-ds-accent-soft blur-[140px]" />
       <div aria-hidden="true" className="absolute -bottom-24 left-0 h-72 w-72 rounded-full bg-ds-surface-2 blur-[140px] opacity-60" />
@@ -229,7 +228,6 @@ const DesignPage = () => (
       </Container>
     </Section>
 
-    {/* Brand palette — paper */}
     <Section data-surface="light" space="lg" className="surface-seam bg-ds-bg">
       <Container size="xl">
         <Reveal className="mb-10">
@@ -253,7 +251,6 @@ const DesignPage = () => (
       </Container>
     </Section>
 
-    {/* Typography — back to dark */}
     <Section space="lg" className="surface-seam bg-ds-bg">
       <Container size="xl">
         <Reveal className="mb-10">
