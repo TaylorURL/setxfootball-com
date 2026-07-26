@@ -70,7 +70,6 @@ const AuthPage = () => {
         <Squares className="absolute inset-0 opacity-60" size={56} speed={0.2} lineColor="var(--ds-border)" />
 
         <div className="relative mx-auto grid min-h-[100dvh] w-full max-w-[1440px] grid-cols-1 px-5 py-10 sm:px-8 lg:grid-cols-[1fr_1fr] lg:gap-20 lg:px-10 lg:py-20">
-          {/* Editorial copy column */}
           <div className="flex flex-col">
             <BrandMark size="sm" to="/" />
             <div className="mt-auto pt-16 lg:pt-0 lg:my-auto">
@@ -99,7 +98,6 @@ const AuthPage = () => {
             </div>
           </div>
 
-          {/* Form column */}
           <div className="mt-12 flex items-center lg:mt-0">
             <div className="relative w-full max-w-md border border-ds-border bg-ds-surface p-7 sm:p-10">
               <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-ds-accent" />
@@ -169,7 +167,6 @@ const AuthPage = () => {
             </div>
           </div>
 
-          {/* Footer link */}
           <div className="col-span-full mt-10 flex items-center justify-between border-t border-ds-border pt-6">
             <Link
               to="/"
