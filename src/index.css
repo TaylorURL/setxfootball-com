@@ -275,7 +275,6 @@ select:-webkit-autofill:active {
   letter-spacing: 0;
 }
 
-/* Dividers, rule marks, hairline borders */
 .brand-chip-shadow {
   box-shadow: var(--brand-chip-shadow);
 }
