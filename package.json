@@ -1,6 +1,6 @@
 {
   "name": "setxfootball",
-  "version": "1.7.23",
+  "version": "1.7.24",
   "private": true,
   "dependencies": {
     "@bradley-t-t/sunday-design-system": "file:./vendor/bradley-t-t-sunday-design-system-2026.24.1.tgz",
