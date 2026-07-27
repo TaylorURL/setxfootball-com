@@ -1,11 +1,5 @@
-/**
- * TermsPage — Terms of Service for SETX Football Camp.
- *
- * Editorial article layout matching the Privacy page: large left-aligned title,
- * mono "Legal" eyebrow, prose body. Rendered on the paper register for
- * comfortable long-form legal reading.
- * @module pages/TermsPage
- */
+// Paper register, same as the Privacy page — long-form legal copy is unpleasant
+// on the dark surface.
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { Prose } from "@bradley-t-t/sunday-design-system";

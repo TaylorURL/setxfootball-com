@@ -277,7 +277,6 @@ const DesignPage = () => (
       </Container>
     </Section>
 
-    {/* Camp gear — dark elevated */}
     <Section space="lg" className="surface-seam bg-ds-bg-elevated">
       <Container size="xl">
         <Reveal className="mb-10">
@@ -305,7 +304,6 @@ const DesignPage = () => (
       </Container>
     </Section>
 
-    {/* Design principles — paper */}
     <Section
       data-surface="light"
       space="lg"
