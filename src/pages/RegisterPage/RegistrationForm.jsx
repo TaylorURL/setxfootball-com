@@ -332,7 +332,6 @@ const RegistrationForm = () => {
           </Field>
         </fieldset>
 
-        {/* Editorial total */}
         <div className="relative overflow-hidden border border-ds-accent bg-ds-accent-softer">
           <span aria-hidden="true" className="absolute inset-y-0 left-0 w-1 bg-ds-accent" />
           <div className="flex flex-col items-start justify-between gap-5 px-7 py-7 sm:flex-row sm:items-end">

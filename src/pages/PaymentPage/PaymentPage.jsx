@@ -106,7 +106,6 @@ const PaymentPage = () => {
             <ArrowLeft className="h-3 w-3" /> Back to Home
           </Link>
 
-          {/* Confirmation header — full editorial */}
           <div className="mt-8">
             <span className="mono-tag inline-flex items-center gap-3 text-ds-positive">
               <CheckCircle2 className="h-4 w-4" /> <ShinyText text="You're on the roster" speed={4} />
@@ -120,7 +119,6 @@ const PaymentPage = () => {
           </div>
 
           <AnimatedContent as="div" className="mt-14 space-y-7" distance={40} duration={0.7}>
-            {/* Summary */}
             <section className="relative border border-ds-border bg-ds-surface p-7 sm:p-9">
               <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-ds-accent" />
               <span className="mono-tag text-ds-accent-bright">Sign-up Summary</span>
@@ -135,7 +133,6 @@ const PaymentPage = () => {
               </div>
             </section>
 
-            {/* Receipt / payment */}
             <section className="relative overflow-hidden border border-ds-accent bg-ds-accent-softer">
               <span aria-hidden="true" className="absolute inset-y-0 left-0 w-1 bg-ds-accent" />
               <div className="px-7 py-9 sm:px-10 sm:py-12">
@@ -175,7 +172,6 @@ const PaymentPage = () => {
               </div>
             </section>
 
-            {/* CashApp save card */}
             <section className="relative border border-ds-border bg-ds-surface p-7 sm:p-9">
               <span className="mono-tag text-ds-accent-bright">Your CashApp Info</span>
               <p className="editorial-body mt-4 text-[15px] text-ds-text-muted">
