@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-1.7.24-e11d2a?style=for-the-badge" alt="Version 1.7.24" />
+  <img src="https://img.shields.io/badge/version-1.7.28-e11d2a?style=for-the-badge" alt="Version 1.7.28" />
   <img src="https://img.shields.io/badge/React-19-e11d2a?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
   <img src="https://img.shields.io/badge/React_Router-7-e11d2a?style=for-the-badge&logo=reactrouter&logoColor=white" alt="React Router 7" />
   <img src="https://img.shields.io/badge/Create_React_App-5-0a0a0a?style=for-the-badge&logo=createreactapp&logoColor=white" alt="Create React App 5" />
