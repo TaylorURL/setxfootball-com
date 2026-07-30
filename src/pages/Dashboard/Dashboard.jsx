@@ -141,6 +141,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     loadRegistrations();
+    // loadRegistrations is redeclared every render, so listing it as a dep would
+    // refetch on every render. This load is meant to happen once, at mount.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
