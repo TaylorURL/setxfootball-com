@@ -14,6 +14,7 @@
 # misc
 .DS_Store
 Thumbs.db
+desktop.ini
 *.log
 .env
 .env.local
@@ -31,6 +32,7 @@ CLAUDE.md
 .vscode/
 *.iml
 .fleet/
+.junie/
 *.sql
 
 # Secrets and local tooling state — never commit
