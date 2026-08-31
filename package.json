@@ -1,6 +1,6 @@
 {
   "name": "setxfootball",
-  "version": "2026.35.7",
+  "version": "2026.36.0",
   "private": true,
   "dependencies": {
     "@bradley-t-t/sunday-design-system": "file:./vendor/bradley-t-t-sunday-design-system-2026.24.1.tgz",
@@ -8,7 +8,7 @@
     "@radix-ui/react-slot": "^1.1.2",
     "@radix-ui/react-tooltip": "^1.1.8",
     "@supabase/supabase-js": "^2.88.0",
-    "@taylorurl/split-rail": "github:TaylorURL/split-rail#v2026.35.4",
+    "@taylorurl/split-rail": "github:TaylorURL/split-rail#v2026.36.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "framer-motion": "^11.18.2",
