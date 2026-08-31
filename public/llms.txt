@@ -1,0 +1,30 @@
+# SETX Football Camp
+
+> A two-day youth football camp for kids ages 5 to 12 in Daisetta, Southeast
+> Texas, run by Clayton Hanks and Timothy Taylor Sr. Registration is open for
+> July 2027. There are no tryouts, every camper gets a shirt, and the only cost
+> is $5 per shirt.
+
+## Pages
+
+- [Home](https://www.setxfootball.org/): What the camp is, who runs it, what a camper gets, and the three steps to sign up.
+- [About](https://www.setxfootball.org/about): The camp's story, the two co-founder head coaches, and how the field stays open to every family.
+- [Register](https://www.setxfootball.org/register): The roster form. One entry per camper, with a shirt size, then $5 per shirt by CashApp to $SETXYFC.
+- [Gallery](https://www.setxfootball.org/gallery): Photographs from past seasons on the field in Daisetta.
+- [Sponsors](https://www.setxfootball.org/sponsors): The local businesses whose sponsorship covers shirts, drinks, and snacks.
+- [Contact](https://www.setxfootball.org/contact): Phone, email, and where the field is, for sign-up questions and what a camper brings.
+- [Design](https://www.setxfootball.org/design): The visual identity behind the site, its palette, and its type.
+
+## Details
+
+- Ages: 5 to 12. No tryouts and no bench; every kid who shows up plays.
+- Dates: two half-days, July 2027.
+- Place: Daisetta, Liberty County, Texas.
+- Cost: $5 per shirt. Nothing is due at sign-up. Drinks and snacks are free.
+- Coaches: every coach has cleared a background check. Guest pro athletes coach and speak.
+- Contact: +1-936-641-0681
+
+## Legal
+
+- [Privacy Policy](https://www.setxfootball.org/privacy)
+- [Terms of Service](https://www.setxfootball.org/terms)

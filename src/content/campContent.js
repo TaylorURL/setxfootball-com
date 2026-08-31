@@ -1,0 +1,316 @@
+/**
+ * Every fact and line of copy the marketing pages render.
+ *
+ * The sections import from here rather than holding their own strings, so the
+ * camp's details are changed in one file and the same wording cannot drift
+ * between the page that states it and the page that repeats it.
+ *
+ * The shirt price is the exception, and the one thing to be careful with: it is
+ * written out as copy here and defined as `SHIRT_PRICE` in `utils/constants`,
+ * which is what the form actually charges. Changing one without the other
+ * leaves the site advertising a price it does not bill.
+ */
+import {
+  Star,
+  Heart,
+  Users,
+  Trophy,
+  ShieldCheck,
+  Shirt,
+  CupSoda,
+  ClipboardList,
+  DollarSign,
+  CalendarCheck,
+} from "lucide-react";
+import img1 from "../assets/images/1.JPG";
+import img2 from "../assets/images/2.JPG";
+import img3 from "../assets/images/3.JPG";
+import img4 from "../assets/images/4.JPG";
+import img5 from "../assets/images/5.JPG";
+import img6 from "../assets/images/6.JPG";
+import img7 from "../assets/images/7.JPG";
+import img8 from "../assets/images/8.JPG";
+import img1Jpg400 from "../assets/images/1-400w.jpg";
+import img2Jpg400 from "../assets/images/2-400w.jpg";
+import img3Jpg400 from "../assets/images/3-400w.jpg";
+import img4Jpg400 from "../assets/images/4-400w.jpg";
+import img5Jpg400 from "../assets/images/5-400w.jpg";
+import img6Jpg400 from "../assets/images/6-400w.jpg";
+import img7Jpg400 from "../assets/images/7-400w.jpg";
+import img8Jpg400 from "../assets/images/8-400w.jpg";
+import img1Small from "../assets/images/1-400w.webp";
+import img1Large from "../assets/images/1-800w.webp";
+import img2Small from "../assets/images/2-400w.webp";
+import img2Large from "../assets/images/2-640w.webp";
+import img3Small from "../assets/images/3-400w.webp";
+import img3Large from "../assets/images/3-640w.webp";
+import img4Small from "../assets/images/4-400w.webp";
+import img4Large from "../assets/images/4-800w.webp";
+import img5Small from "../assets/images/5-400w.webp";
+import img5Large from "../assets/images/5-640w.webp";
+import img6Small from "../assets/images/6-400w.webp";
+import img6Large from "../assets/images/6-640w.webp";
+import img7Small from "../assets/images/7-400w.webp";
+import img7Large from "../assets/images/7-640w.webp";
+import img8Small from "../assets/images/8-400w.webp";
+import img8Large from "../assets/images/8-640w.webp";
+import { CAMP_SEASON } from "../utils/constants";
+
+// Each photograph at two widths in both formats: WebP for the browsers that
+// take it, JPEG behind it for the ones that do not, and the intrinsic pixels
+// that reserve the box before either arrives. A phone asking for a 400 point
+// column gets the 400 pixel file whichever branch it lands on.
+const photo = (small, large, largeWidth, jpegSmall, jpegLarge, width, height) => ({
+  src: jpegLarge,
+  jpeg: `${jpegSmall} 400w, ${jpegLarge} ${largeWidth}w`,
+  webp: `${small} 400w, ${large} ${largeWidth}w`,
+  width,
+  height,
+});
+
+export const PHOTOS = {
+  coachesOnField: photo(img1Small, img1Large, 800, img1Jpg400, img1, 800, 532),
+  runningTheDrill: photo(img2Small, img2Large, 640, img2Jpg400, img2, 640, 426),
+  firstContact: photo(img3Small, img3Large, 640, img3Jpg400, img3, 640, 426),
+  ballInHand: photo(img4Small, img4Large, 800, img4Jpg400, img4, 800, 532),
+  sponsorWall: photo(img5Small, img5Large, 640, img5Jpg400, img5, 640, 426),
+  blockingPads: photo(img6Small, img6Large, 640, img6Jpg400, img6, 640, 426),
+  warmUps: photo(img7Small, img7Large, 640, img7Jpg400, img7, 640, 426),
+  waterBreak: photo(img8Small, img8Large, 640, img8Jpg400, img8, 640, 426),
+};
+
+export const HERO_IMAGE = PHOTOS.coachesOnField;
+export const STORY_IMAGE = PHOTOS.warmUps;
+
+export const HERO_STATS = [
+  { value: "5 to 12", label: "Ages" },
+  { value: "$5", label: "Per Shirt" },
+  { value: "2 Days", label: "On Field" },
+  { value: "Year 3", label: "Season" },
+];
+
+// Applies to walk-ons too, not just registered campers.
+export const CAMPER_PERKS = [
+  {
+    icon: Shirt,
+    title: "A Camp Shirt",
+    body: "Every camper gets a shirt. Yours to keep, registered or not.",
+  },
+  {
+    icon: CupSoda,
+    title: "Drinks & Snacks",
+    body: "We keep the sideline stocked so kids stay fueled all day.",
+  },
+  {
+    icon: Trophy,
+    title: "Real Coaching",
+    body: "Fundamentals, drills, and game reps from experienced coaches.",
+  },
+  {
+    icon: Heart,
+    title: "Every Kid Plays",
+    body: "No tryouts, no bench. Show up and you're on the field.",
+  },
+];
+
+export const STORY_PILLARS = [
+  {
+    icon: Users,
+    title: "Open to All",
+    body: "Every kid plays. Registered or not, every camper gets a shirt, drinks, and snacks.",
+  },
+  {
+    icon: ShieldCheck,
+    title: "Background-Checked",
+    body: "Every coach on the field has cleared a background check and arrived with real coaching experience.",
+  },
+  {
+    icon: Heart,
+    title: "Community First",
+    body: "Built in Daisetta, for Daisetta. We keep cost low so the field stays open to every family.",
+  },
+  {
+    icon: Star,
+    title: "Pro-Level Guests",
+    body: "Guest pro athletes show up to coach and speak, giving campers exposure most camps can't offer.",
+  },
+];
+
+export const COACHES = [
+  {
+    name: "Clayton Hanks",
+    number: "01",
+    role: "Co-Founder · Head Coach",
+    icon: Trophy,
+    highlight: "International Playing Experience",
+    points: [
+      "Graduate of Hull-Daisetta High School",
+      "Played semi-professional and international football",
+      "Actively coaching youth football for three consecutive years",
+    ],
+  },
+  {
+    name: "Timothy Taylor Sr.",
+    number: "02",
+    role: "Co-Founder · Head Coach",
+    icon: Heart,
+    highlight: "Dedicated Youth Development",
+    points: [
+      "Graduate of Hull-Daisetta High School",
+      "Former lettering athlete with proven competitive experience",
+      "Approximately five years of coaching experience",
+    ],
+  },
+];
+
+export const PLAYBOOK = [
+  {
+    icon: ClipboardList,
+    title: "Sign Up Online",
+    body: "Fill out the roster form and pick a shirt size for each camper. Takes a couple of minutes.",
+  },
+  {
+    icon: DollarSign,
+    title: "Pay $5 Per Shirt",
+    body: "Send payment by CashApp to $SETXYFC after you sign up. Nothing is due up front.",
+  },
+  {
+    icon: CalendarCheck,
+    title: "Show Up and Play",
+    body: `Bring your camper to Daisetta in ${CAMP_SEASON} for two half-days of football.`,
+  },
+];
+
+export const GALLERY = [
+  { image: PHOTOS.coachesOnField, span: "col-span-2 row-span-2", caption: "Coaches on the field" },
+  { image: PHOTOS.runningTheDrill, span: "col-span-1 row-span-1", caption: "Running the drill" },
+  { image: PHOTOS.firstContact, span: "col-span-1 row-span-1", caption: "First contact" },
+  { image: PHOTOS.ballInHand, span: "col-span-1 row-span-2", caption: "Ball in hand" },
+  { image: PHOTOS.sponsorWall, span: "col-span-2 row-span-1", caption: "The sponsor wall" },
+  { image: PHOTOS.blockingPads, span: "col-span-1 row-span-1", caption: "Blocking pads" },
+  { image: PHOTOS.warmUps, span: "col-span-1 row-span-1", caption: "Warm-ups" },
+  { image: PHOTOS.waterBreak, span: "col-span-2 row-span-1", caption: "Water break" },
+];
+
+// Sponsor logos, named so the alt text can say whose mark it is rather than
+// numbering them.
+export const SPONSORS = [
+  {
+    name: "Coastal Field Services",
+    image: photo(
+      "/sponsors/IMG_2678-585w.webp",
+      "/sponsors/IMG_2678-1170w.webp",
+      1170,
+      "/sponsors/IMG_2678-585w.jpg",
+      "/sponsors/IMG_2678.JPEG",
+      1170,
+      769,
+    ),
+  },
+  {
+    name: "Yu Sushi Steak House",
+    image: photo(
+      "/sponsors/IMG_2685-585w.webp",
+      "/sponsors/IMG_2685-1170w.webp",
+      1170,
+      "/sponsors/IMG_2685-585w.jpg",
+      "/sponsors/IMG_2685.JPEG",
+      1170,
+      713,
+    ),
+  },
+  {
+    name: "Aqua Guard Aerobic",
+    image: photo(
+      "/sponsors/IMG_2686-585w.webp",
+      "/sponsors/IMG_2686-1170w.webp",
+      1170,
+      "/sponsors/IMG_2686-585w.jpg",
+      "/sponsors/IMG_2686.JPEG",
+      1170,
+      1032,
+    ),
+  },
+];
+
+// The questions a parent asks before signing a kid up, answered in the words
+// the rest of the site already uses. Rendered on the About page and emitted as
+// FAQPage markup from the same array, so the page and the search result cannot
+// answer the same question two ways.
+export const FAQ = [
+  {
+    question: "What ages is the camp for?",
+    answer:
+      "Kids ages 5 to 12. There are no tryouts and no bench, so a camper who has never played gets the same reps as one who has played for years.",
+  },
+  {
+    question: "How much does the camp cost?",
+    answer:
+      "The camp itself is free. Shirts are $5 each, paid after you sign up, and drinks and snacks are covered by our sponsors.",
+  },
+  {
+    question: "When and where is the camp held?",
+    answer: `Two half-days in ${CAMP_SEASON}, in Daisetta, Texas. Southeast Texas families across Liberty County are welcome.`,
+  },
+  {
+    question: "Does my camper need experience or gear?",
+    answer:
+      "No. Every kid plays regardless of experience, and the camp is non-contact fundamentals, drills, and game reps rather than full-pad football.",
+  },
+  {
+    question: "What does my camper get?",
+    answer:
+      "A camp shirt to keep, drinks and snacks on the sideline, and coaching from experienced coaches. Walk-ons get the same as registered campers.",
+  },
+  {
+    question: "Who coaches the camp?",
+    answer:
+      "Clayton Hanks and Timothy Taylor Sr., both Hull-Daisetta graduates, lead the camp. Every coach on the field has cleared a background check, and guest pro athletes join to coach and speak.",
+  },
+  {
+    question: "How do I sign up?",
+    answer:
+      "Fill out the roster form with a shirt size for each camper, then send $5 per shirt by CashApp to $SETXYFC. Nothing is due up front.",
+  },
+];
+
+// The copy under the photo grid and the sponsor wall. A page whose whole body
+// is a heading and a set of tiles carries nothing a reader or a search engine
+// can weigh, so each of those two says in words what its pictures show.
+export const GALLERY_NOTES = [
+  {
+    title: "What a camp day looks like",
+    body: `Every camper works through the same rotation: warm-ups, footwork and ball-handling drills, position work with a coach, then live game reps. Nobody sits out a rotation and nobody is cut, so the photographs show the whole roster on the field rather than a starting group and a bench.`,
+  },
+  {
+    title: "Where these were taken",
+    body: `All of it in Daisetta, Liberty County, on the same field the camp has run on since it started. The sponsor wall in the background is the local businesses that pay for the shirts, the drinks and the snacks every camper goes home with.`,
+  },
+  {
+    title: "Using a photo of your camper",
+    body: `Photographs are taken at camp and used on this site and in camp announcements. Families who would rather their camper not appear can say so at sign-up or call the camp, and the photograph comes down.`,
+  },
+  {
+    title: "Three seasons in",
+    body: `The camp has run every summer since it started and this is the third season. The pictures here come from all of them, which is why some faces turn up more than once: campers come back, and several of the older ones now help run the drills they learned in the first year.`,
+  },
+];
+
+export const SPONSOR_NOTES = [
+  {
+    title: "What sponsorship pays for",
+    body: `Sponsorship covers the shirt every camper takes home, the drinks and snacks on the sideline, and the field and equipment costs for both days. It is the reason the camp itself is free and the only thing a family pays is $5 a shirt.`,
+  },
+  {
+    title: "Why it stays local",
+    body: `Every sponsor is a Southeast Texas business or family. Keeping it that way means the money that runs the camp comes from the same community the campers do, and the businesses on the wall are ones a parent in Liberty County already knows.`,
+  },
+  {
+    title: "Becoming a sponsor",
+    body: `Businesses and families who want to sponsor a season can call the camp. Sponsors appear on this page and on the wall at camp, and the coaches will tell you exactly what a season costs before you commit to anything.`,
+  },
+  {
+    title: "This season's sponsors",
+    body: `Coastal Field Services, Yu Sushi Steak House and Aqua Guard Aerobic are carrying this season. Their marks are on the wall above, on the banner at the field, and worth remembering the next time something in Liberty County needs doing.`,
+  },
+];

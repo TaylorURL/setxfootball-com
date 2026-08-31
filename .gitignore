@@ -1,0 +1,59 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+Thumbs.db
+desktop.ini
+*.log
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.intelligence/
+INTELLIGENCE.md
+
+.idea/
+.vscode/
+*.iml
+.fleet/
+.junie/
+*.sql
+# Migrations are the schema's history and have to travel with the repository;
+# the rule above is for ad-hoc query dumps.
+!supabase/migrations/*.sql
+
+# Secrets and local tooling state — never commit
+.env.*
+!.env.example
+*.pem
+*.p12
+*.pfx
+id_rsa
+id_ed25519
+
+# Vercel CLI link state (project/org ids) is per-machine.
+.vercel/*
+# The project link is the repository saying where it deploys, and it carries
+# no credential: project and team id only.
+!.vercel/project.json
+
+# Python bytecode
+__pycache__/
+*.pyc
+.vercel

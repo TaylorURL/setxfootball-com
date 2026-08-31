@@ -1,0 +1,26 @@
+{
+  "short_name": "SETX Football",
+  "name": "SETX Football Camp: Youth Football Training",
+  "description": "Two-day youth football camp for ages 5 to 12 in Southeast Texas. July 2027.",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "64x64 32x32 24x24 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0b0a09",
+  "background_color": "#0b0a09"
+}

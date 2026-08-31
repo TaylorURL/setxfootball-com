@@ -1,0 +1,474 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Left empty on purpose: src/index.js fills it from the resolved --ds-bg
+         token, so the browser chrome follows the surface the reader is on
+         rather than a colour copied out of the palette by hand. -->
+    <meta name="theme-color" />
+
+    <!-- The fallback head, for crawlers that run no JavaScript. React hoists
+         the Seo component's tags into this head rather than replacing what is
+         already here, so src/index.js drops everything marked
+         data-seo-fallback as it boots. Without that, every route outside `/`
+         serves two canonicals pointing different ways and search engines get
+         to pick. -->
+    <title data-seo-fallback>SETX Football Camp: Youth Football in Southeast Texas</title>
+    <meta
+      name="description"
+      data-seo-fallback
+      content="SETX Football Camp is a two-day youth football camp for kids ages 5–12 in Southeast Texas. Two half-days of coaching in July 2027. Sign up now."
+    />
+    <meta name="author" data-seo-fallback content="SETX Football Camp" />
+    <meta name="robots" data-seo-fallback content="index, follow" />
+    <link rel="canonical" data-seo-fallback href="https://www.setxfootball.org" />
+
+    <meta
+      property="og:title"
+      data-seo-fallback
+      content="SETX Football Camp: Youth Football in Southeast Texas"
+    />
+    <meta
+      property="og:description"
+      data-seo-fallback
+      content="Two-day youth football camp for ages 5–12 in Southeast Texas. Build skills, teamwork, and confidence. July 2027."
+    />
+    <meta property="og:type" data-seo-fallback content="website" />
+    <meta property="og:locale" data-seo-fallback content="en_US" />
+    <meta property="og:site_name" data-seo-fallback content="SETX Football Camp" />
+    <meta property="og:url" data-seo-fallback content="https://www.setxfootball.org" />
+    <meta
+      property="og:image"
+      data-seo-fallback
+      content="https://www.setxfootball.org/android-chrome-512x512.png"
+    />
+
+    <meta name="twitter:card" data-seo-fallback content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      data-seo-fallback
+      content="SETX Football Camp: Youth Football in Southeast Texas"
+    />
+    <meta
+      name="twitter:description"
+      data-seo-fallback
+      content="Two-day youth football camp for ages 5–12 in Southeast Texas. Build skills, teamwork, and confidence. July 2027."
+    />
+    <meta
+      name="twitter:image"
+      data-seo-fallback
+      content="https://www.setxfootball.org/android-chrome-512x512.png"
+    />
+
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/apple-touch-icon.png" />
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+    <!-- The three faces the first screen sets type in, fetched alongside the
+         stylesheet rather than after it. The mono face is asked for further down
+         a page and is left to the @font-face rule. -->
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="%PUBLIC_URL%/fonts/archivo-variable.woff2"
+      crossorigin
+    />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="%PUBLIC_URL%/fonts/oswald-variable.woff2"
+      crossorigin
+    />
+
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href="%PUBLIC_URL%/fonts/geist-latin.woff2"
+      crossorigin
+    />
+
+    <!-- The face declarations sit here rather than in the stylesheet so the
+         browser finds them in the first bytes of the document, and so the file
+         names stay stable enough for the preloads above to name them. -->
+    <style>
+      /* Every face is served from this origin, so the first paint waits on one
+         connection rather than several. Each is a variable file covering every
+         weight the site uses, and renders in its fallback while it arrives. Geist
+         is the exception to the one-file rule and ships in two subsets, because the
+         extended range carries the accented characters a camper's name can need.
+
+         The `-fallback` families beside them are the system face rescaled to the
+         metrics of the web face, so the swap moves no line and shifts no layout. */
+      @font-face {
+        font-family: "Archivo";
+        font-style: normal;
+        font-weight: 100 900;
+        font-stretch: 100%;
+        font-display: swap;
+        src: url("%PUBLIC_URL%/fonts/archivo-variable.woff2") format("woff2");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+          U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+
+      /* Geist is the design system's body face. It ships in two subsets rather
+         than one because the extended range carries the accented characters a
+         camper's name can need. */
+      @font-face {
+        font-family: "Geist";
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: swap;
+        src: url("%PUBLIC_URL%/fonts/geist-latin.woff2") format("woff2");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+          U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+
+      @font-face {
+        font-family: "Geist";
+        font-style: normal;
+        font-weight: 100 900;
+        font-display: swap;
+        src: url("%PUBLIC_URL%/fonts/geist-latin-ext.woff2") format("woff2");
+        unicode-range:
+          U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+          U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113,
+          U+2C60-2C7F, U+A720-A7FF;
+      }
+
+      @font-face {
+        font-family: "Oswald";
+        font-style: normal;
+        font-weight: 200 700;
+        font-display: swap;
+        src: url("%PUBLIC_URL%/fonts/oswald-variable.woff2") format("woff2");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+          U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+
+      @font-face {
+        font-family: "JetBrains Mono";
+        font-style: normal;
+        font-weight: 100 800;
+        font-display: swap;
+        src: url("%PUBLIC_URL%/fonts/jetbrains-mono-variable.woff2") format("woff2");
+        unicode-range:
+          U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308,
+          U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+      }
+
+      @font-face {
+        font-family: "Archivo Fallback";
+        font-display: swap;
+        src: local("Helvetica Neue"), local("Arial");
+        size-adjust: 102%;
+        ascent-override: 90%;
+        descent-override: 23%;
+        line-gap-override: 0%;
+      }
+
+      @font-face {
+        font-family: "Oswald Fallback";
+        font-display: swap;
+        src: local("Arial Narrow"), local("Helvetica Neue Condensed"), local("Arial");
+        size-adjust: 88%;
+        ascent-override: 130%;
+        descent-override: 33%;
+        line-gap-override: 0%;
+      }
+
+      @font-face {
+        font-family: "JetBrains Mono Fallback";
+        font-display: swap;
+        src: local("Menlo"), local("Consolas"), local("Courier New");
+        size-adjust: 98%;
+        ascent-override: 102%;
+        descent-override: 30%;
+        line-gap-override: 0%;
+      }
+    </style>
+
+    <!-- The analytics collector is a different origin and the first report goes
+         out during load, so the handshake is worth starting early. -->
+    <link rel="preconnect" href="https://gujgtjqqurildqurpffh.supabase.co" crossorigin />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "@id": "https://www.setxfootball.org/#organization",
+        "name": "SETX Football Camp",
+        "alternateName": "SETX Youth Football Camp",
+        "url": "https://www.setxfootball.org",
+        "logo": "https://www.setxfootball.org/android-chrome-512x512.png",
+        "image": "https://www.setxfootball.org/android-chrome-512x512.png",
+        "description": "A two-day youth football camp in Southeast Texas for kids ages 5 to 12. Real coaching, every kid plays, shirts and snacks included.",
+        "telephone": "+1-936-641-0681",
+        "email": "hanksclayton81@gmail.com",
+        "foundingLocation": {
+          "@type": "Place",
+          "name": "Daisetta, Texas"
+        },
+        "founder": [
+          {
+            "@type": "Person",
+            "name": "Clayton Hanks",
+            "jobTitle": "Co-Founder and Head Coach"
+          },
+          {
+            "@type": "Person",
+            "name": "Timothy Taylor Sr.",
+            "jobTitle": "Co-Founder and Head Coach"
+          }
+        ],
+        "contactPoint": {
+          "@type": "ContactPoint",
+          "contactType": "Camp Registration",
+          "telephone": "+1-936-641-0681",
+          "email": "hanksclayton81@gmail.com",
+          "areaServed": "US-TX",
+          "availableLanguage": "English"
+        }
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "@id": "https://www.setxfootball.org/#website",
+        "url": "https://www.setxfootball.org",
+        "name": "SETX Football Camp",
+        "inLanguage": "en-US",
+        "publisher": {
+          "@id": "https://www.setxfootball.org/#organization"
+        }
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "LocalBusiness",
+        "@id": "https://www.setxfootball.org/#camp",
+        "additionalType": "https://schema.org/SportsActivityLocation",
+        "name": "SETX Youth Football Camp",
+        "url": "https://www.setxfootball.org",
+        "parentOrganization": {
+          "@id": "https://www.setxfootball.org/#organization"
+        },
+        "description": "A two-day youth football camp in Southeast Texas for kids ages 5 to 12. Real coaching, every kid plays, shirts and snacks included.",
+        "telephone": "+1-936-641-0681",
+        "email": "hanksclayton81@gmail.com",
+        "image": "https://www.setxfootball.org/android-chrome-512x512.png",
+        "priceRange": "$",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Daisetta",
+          "addressRegion": "TX",
+          "addressCountry": "US"
+        },
+        "geo": {
+          "@type": "GeoCoordinates",
+          "latitude": 30.1111,
+          "longitude": -94.6394
+        },
+        "openingHours": "Sa-Su",
+        "openingHoursSpecification": {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["https://schema.org/Saturday", "https://schema.org/Sunday"],
+          "validFrom": "2027-07-01",
+          "validThrough": "2027-07-31"
+        },
+        "areaServed": [
+          {
+            "@type": "AdministrativeArea",
+            "name": "Liberty County, Texas"
+          },
+          {
+            "@type": "AdministrativeArea",
+            "name": "Southeast Texas"
+          }
+        ],
+        "sport": "American Football",
+        "audience": {
+          "@type": "PeopleAudience",
+          "suggestedMinAge": 5,
+          "suggestedMaxAge": 12
+        }
+      }
+    </script>
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "SportsEvent",
+        "@id": "https://www.setxfootball.org/#camp-2027",
+        "name": "SETX Youth Football Camp 2027",
+        "description": "Two half-days of youth football for kids ages 5 to 12 in Daisetta, Texas. No tryouts, every camper plays, and every camper takes home a shirt.",
+        "sport": "American Football",
+        "startDate": "2027-07",
+        "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+        "eventStatus": "https://schema.org/EventScheduled",
+        "url": "https://www.setxfootball.org/register",
+        "image": "https://www.setxfootball.org/android-chrome-512x512.png",
+        "organizer": { "@id": "https://www.setxfootball.org/#organization" },
+        "location": { "@id": "https://www.setxfootball.org/#camp" },
+        "audience": {
+          "@type": "PeopleAudience",
+          "suggestedMinAge": 5,
+          "suggestedMaxAge": 12
+        },
+        "offers": {
+          "@type": "Offer",
+          "name": "Camp registration",
+          "url": "https://www.setxfootball.org/register",
+          "price": "0",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "category": "Free"
+        }
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Product",
+        "@id": "https://www.setxfootball.org/#camp-shirt",
+        "name": "SETX Football Camp Shirt",
+        "description": "The camp shirt every camper takes home. Ordered with your registration in youth and adult sizes.",
+        "category": "Apparel",
+        "brand": {
+          "@id": "https://www.setxfootball.org/#organization"
+        },
+        "image": "https://www.setxfootball.org/android-chrome-512x512.png",
+        "offers": {
+          "@type": "Offer",
+          "url": "https://www.setxfootball.org/register",
+          "price": "5.00",
+          "priceCurrency": "USD",
+          "availability": "https://schema.org/InStock",
+          "seller": {
+            "@id": "https://www.setxfootball.org/#organization"
+          }
+        }
+      }
+    </script>
+    <script>
+      (function () {
+        var endpoint = "https://sunday.tail1f78d7.ts.net/report";
+        var site = "SETX Football";
+        var sent = 0;
+        function report(kind, message, stack) {
+          if (sent >= 10) return;
+          sent += 1;
+          try {
+            var body = JSON.stringify({
+              site: site,
+              kind: kind,
+              message: String(message || "Unknown error").slice(0, 1500),
+              stack: String(stack || "").slice(0, 4000),
+              url: location.href,
+              userAgent: navigator.userAgent,
+            });
+            if (navigator.sendBeacon) {
+              navigator.sendBeacon(endpoint, body);
+            } else {
+              fetch(endpoint, { method: "POST", body: body, keepalive: true }).catch(
+                function () {},
+              );
+            }
+          } catch (ignored) {}
+        }
+        // Capture phase, because element load failures fire error events that do not bubble.
+        window.addEventListener(
+          "error",
+          function (event) {
+            if (event.target && event.target !== window && event.target.tagName) {
+              report(
+                "resource",
+                "Failed to load " +
+                  event.target.tagName.toLowerCase() +
+                  ": " +
+                  (event.target.src || event.target.href || ""),
+              );
+            } else {
+              report("uncaught", event.message, event.error && event.error.stack);
+            }
+          },
+          true,
+        );
+        window.addEventListener("unhandledrejection", function (event) {
+          var reason = event.reason;
+          report(
+            "rejection",
+            reason && reason.message ? reason.message : reason,
+            reason && reason.stack,
+          );
+        });
+        var consoleError = console.error;
+        console.error = function () {
+          var parts = [];
+          for (var i = 0; i < arguments.length; i += 1) {
+            var piece = arguments[i];
+            if (piece && piece.stack) {
+              parts.push(piece.stack);
+            } else if (typeof piece === "object") {
+              try {
+                parts.push(JSON.stringify(piece));
+              } catch (ignored) {
+                parts.push(String(piece));
+              }
+            } else {
+              parts.push(String(piece));
+            }
+          }
+          report("console", parts.join(" "));
+          return consoleError.apply(console, arguments);
+        };
+        if (window.fetch) {
+          var originalFetch = window.fetch;
+          window.fetch = function (input) {
+            var target = typeof input === "string" ? input : (input && input.url) || "";
+            if (target.indexOf(endpoint) === 0) return originalFetch.apply(window, arguments);
+            return originalFetch.apply(window, arguments).then(
+              function (response) {
+                if (response.status >= 500)
+                  report("http", "HTTP " + response.status + " from " + target.split("?")[0]);
+                return response;
+              },
+              function (error) {
+                report(
+                  "network",
+                  (error && error.message ? error.message : String(error)) +
+                    " fetching " +
+                    target.split("?")[0],
+                );
+                throw error;
+              },
+            );
+          };
+        }
+      })();
+    </script>
+    <!-- Traffic analytics. The site key is public by design: it says which
+         site a hit belongs to, and the collector accepts it only from this
+         site's own origins. Deferred, so nothing on the page waits for it. -->
+    <script
+      src="https://gujgtjqqurildqurpffh.supabase.co/functions/v1/analytics-tracker"
+      data-site="sa_8ab80eead8d6ccdf704cc9193851da97"
+      defer
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+  </body>
+</html>

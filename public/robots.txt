@@ -1,0 +1,33 @@
+# https://www.robotstxt.org/robotstxt.html
+User-agent: *
+Allow: /
+Disallow: /auth
+Disallow: /payment
+Disallow: /dashboard
+Disallow: /staff
+
+# Crawlers that collect pages for model training are declined. The fetchers
+# that retrieve a page to answer someone's question are not: a parent asking
+# an assistant about youth football in Liberty County should still reach us.
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+Sitemap: https://www.setxfootball.org/sitemap.xml

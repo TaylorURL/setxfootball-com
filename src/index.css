@@ -1,0 +1,785 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* A section the reader has not reached is skipped for style and layout. The
+   `auto` keyword on the intrinsic size means the browser holds the height it
+   measured the first time, so scrolling back up lands where it left. */
+[data-deferred] {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}
+
+/* Monochrome by rule: near-black, off-white, a neutral ramp between them, and
+   one athletic red. Adding a second hue anywhere breaks the whole system.
+
+   One set of `--ds-*` tokens drives both registers. A section opts into light
+   with `data-surface="light"` and every token flips together, so no component
+   needs a light/dark variant of its own. */
+:root {
+  /* Read only by the ambient gradient and blur fills. Monochrome on purpose. */
+  --primary-50: #fafafa;
+  --primary-100: #f4f4f4;
+  --primary-200: #e8e8e8;
+  --primary-300: #c8c8c8;
+  --primary-400: #8a8a8a;
+  --primary-500: #4a4a4a;
+  --primary-600: #2e2e2e;
+  --primary-700: #1a1a1a;
+  --primary-800: #111111;
+  --primary-900: #0a0a0a;
+
+  /* The bright cut is for dark surfaces; on paper it loses contrast, so light
+     sections use the darker cut instead. */
+  --accent-50: #fff1f2;
+  --accent-100: #ffe1e3;
+  --accent-200: #ffc1c5;
+  --accent-300: #ff8a92;
+  --accent-400: #ff4d5b;
+  --accent-500: #e11d2a;
+  --accent-600: #c31624;
+  --accent-700: #9c111c;
+  --accent-800: #6e0c14;
+  --accent-900: #3f060b;
+
+  --brand-red: #e11d2a;
+
+  /* The paper register's cuts of the accent: the bright dark-surface reds lose
+     contrast on white, so the light block reaches for these instead. */
+  --accent-450: #ff2e3d;
+  --accent-paper: #b81e27;
+  --accent-paper-deep: #9b1822;
+
+  /* Neutral and tinted steps the semantic layer maps to meaning. */
+  --primary-250: #d6d6d6;
+  --accent-alpha-12: rgba(225, 29, 42, 0.12);
+  --accent-paper-alpha-10: rgba(184, 30, 39, 0.1);
+  --sheen-alpha-08: rgba(255, 255, 255, 0.08);
+  --sheen-alpha-70: rgba(255, 255, 255, 0.7);
+  --sheen-alpha-15: rgba(255, 255, 255, 0.15);
+  --sheen-alpha-05: rgba(255, 255, 255, 0.05);
+  --shade-alpha-06: rgba(10, 10, 10, 0.06);
+  --paper-white: #ffffff;
+
+  /* Tight rather than glowing, because bloom muddies a monochrome palette. */
+  --brand-chip-shadow: 0 8px 24px -12px rgba(225, 29, 42, 0.45);
+  --brand-chip-shadow-sm: 0 6px 18px -10px rgba(225, 29, 42, 0.45);
+
+  /* One control height for fields and buttons alike, at the touch floor, so a
+     form never shows a short input beside a tall button. */
+  --control-h: 44px;
+
+  /* The height of the fixed bar, so the scroll padding and every offset that
+     has to clear it cannot drift from the bar itself. */
+  --header-height: 60px;
+
+  /* The design system already defines the curve and the three motion steps.
+     Naming them here means a rule reads --ease-out rather than reaching into
+     another namespace, and there is still only one value behind the name. */
+  --ease-out: var(--ds-ease-out);
+  --duration-press: var(--ds-duration-fast);
+  --duration-state: var(--ds-duration-base);
+  --duration-enter: var(--ds-duration-slow);
+
+  /* Reading measure for long-form body copy. */
+  --measure: 66ch;
+}
+
+/* The default surface. `gray` is the design system's key for the theme the
+   ThemeProvider mounts, not a description of these colours; `dark` is the same
+   register under the name the rest of the design system uses for it, so a
+   consumer that asks for either resolves the full token set rather than
+   inheriting whatever the page above it had. */
+.ds-root,
+.ds-root[data-theme="gray"],
+.ds-root[data-theme="dark"],
+[data-theme="gray"],
+[data-theme="dark"] {
+  --ds-bg: #0b0a09;
+  --ds-bg-recessed: #050403;
+  --ds-bg-elevated: #151413;
+  --ds-surface: #1b1a18;
+  --ds-surface-2: #24231f;
+  --ds-surface-3: #2f2e2a;
+  --ds-border: rgba(255, 255, 255, 0.08);
+  --ds-border-strong: rgba(255, 255, 255, 0.16);
+  --ds-border-input: rgba(255, 255, 255, 0.38);
+  --ds-border-hover: rgba(225, 29, 42, 0.55);
+  --ds-text: #f6f6f4;
+  --ds-text-muted: #a9a8a4;
+  --ds-text-faint: #8b8a86;
+  --ds-accent: var(--accent-500);
+  --ds-accent-bright: var(--accent-450);
+  --ds-accent-glow: rgba(225, 29, 42, 0.42);
+  --ds-accent-soft: rgba(225, 29, 42, 0.16);
+  --ds-accent-softer: rgba(225, 29, 42, 0.07);
+  --ds-on-accent: var(--paper-white);
+  /* Anything sitting on a photograph, a scrim, or the accent plate rather than
+     on the page ground: those grounds are dark in both registers, so these hold
+     the same value in both and a component reading them needs no variant. */
+  --ds-on-media: var(--paper-white);
+  --ds-on-media-muted: var(--sheen-alpha-70);
+  --ds-on-media-ring: var(--sheen-alpha-15);
+  --ds-glow-neutral: var(--sheen-alpha-05);
+  --ds-positive: var(--primary-250);
+  --ds-positive-soft: var(--sheen-alpha-08);
+  --ds-warning: var(--primary-250);
+  --ds-warning-soft: var(--sheen-alpha-08);
+  --ds-danger: var(--accent-500);
+  --ds-danger-soft: var(--accent-alpha-12);
+  --ds-violet: #a8a8a8;
+  --ds-violet-soft: rgba(255, 255, 255, 0.06);
+  --ds-indigo: #a8a8a8;
+  --ds-indigo-soft: rgba(255, 255, 255, 0.06);
+  --ds-cyan: #a8a8a8;
+  --ds-cyan-soft: rgba(255, 255, 255, 0.06);
+  --ds-slate: #a8a8a8;
+  --ds-slate-soft: rgba(255, 255, 255, 0.06);
+  --ds-overlay: rgba(0, 0, 0, 0.78);
+  --ds-backdrop: rgba(11, 10, 9, 0.82);
+  --ds-sheen: rgba(255, 255, 255, 0.06);
+  --ds-sheen-strong: rgba(255, 255, 255, 0.1);
+  --ds-glaze: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 42%);
+  --ds-inset-line: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  --ds-field-inset: inset 0 1px 2px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+  --ds-shadow-ambient: rgba(0, 0, 0, 0.5);
+  --ds-shadow-key: rgba(0, 0, 0, 0.45);
+  --ds-glass-fill: rgba(21, 20, 19, 0.7);
+  --ds-glass-border: rgba(255, 255, 255, 0.1);
+  --ds-glass-shadow:
+    0 18px 50px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  --ds-companion-contact: rgba(0, 0, 0, 0.55);
+  --ds-companion-aura: rgba(225, 29, 42, 0.18);
+  --ds-accent-face: linear-gradient(180deg, #ff3a48 0%, #e11d2a 52%, #b3151f 100%);
+  --ds-accent-face-hover: linear-gradient(180deg, #ff4c58 0%, #ec2533 52%, #c0182a 100%);
+  --ds-raised-face: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(255, 255, 255, 0.01) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+
+  --ds-radius-xs: 0px;
+  --ds-radius-sm: 0px;
+  --ds-radius-md: 2px;
+  --ds-radius-lg: 2px;
+  --ds-radius-xl: 2px;
+  --ds-radius-2xl: 2px;
+  --ds-radius-3xl: 2px;
+  --ds-radius-full: 9999px;
+  color-scheme: dark;
+}
+
+/* The paper register. Put `data-surface="light"` on a section root and every
+   `--ds-*`-bound descendant follows; `data-theme="light"` is the same block, so
+   the register can also be set the way the design system sets a theme. */
+[data-surface="light"],
+[data-theme="light"] {
+  --ds-bg: #f6f6f4;
+  --ds-bg-recessed: #e6e4de;
+  --ds-bg-elevated: #ffffff;
+  --ds-surface: #fbfbf9;
+  --ds-surface-2: #eceae5;
+  --ds-surface-3: #dcdad4;
+  --ds-border: rgba(10, 10, 10, 0.1);
+  --ds-border-strong: rgba(10, 10, 10, 0.2);
+  --ds-border-input: rgba(10, 10, 10, 0.46);
+  --ds-border-hover: rgba(184, 30, 39, 0.55);
+  --ds-text: #0b0a09;
+  --ds-text-muted: #53514d;
+  --ds-text-faint: #6a6864;
+  --ds-accent: var(--accent-paper);
+  --ds-accent-bright: var(--accent-paper-deep);
+  --ds-accent-glow: rgba(184, 30, 39, 0.32);
+  --ds-accent-soft: rgba(184, 30, 39, 0.1);
+  --ds-accent-softer: rgba(184, 30, 39, 0.04);
+  --ds-on-accent: var(--paper-white);
+  --ds-on-media: var(--paper-white);
+  --ds-on-media-muted: var(--sheen-alpha-70);
+  --ds-on-media-ring: var(--sheen-alpha-15);
+  --ds-glow-neutral: var(--sheen-alpha-05);
+  --ds-positive: var(--primary-600);
+  --ds-positive-soft: var(--shade-alpha-06);
+  --ds-warning: var(--primary-600);
+  --ds-warning-soft: var(--shade-alpha-06);
+  --ds-danger: var(--accent-paper);
+  --ds-danger-soft: var(--accent-paper-alpha-10);
+  --ds-violet: #525252;
+  --ds-violet-soft: rgba(10, 10, 10, 0.05);
+  --ds-indigo: #525252;
+  --ds-indigo-soft: rgba(10, 10, 10, 0.05);
+  --ds-cyan: #525252;
+  --ds-cyan-soft: rgba(10, 10, 10, 0.05);
+  --ds-slate: #525252;
+  --ds-slate-soft: rgba(10, 10, 10, 0.05);
+  --ds-overlay: rgba(10, 10, 10, 0.4);
+  --ds-backdrop: rgba(246, 246, 244, 0.82);
+  --ds-sheen: rgba(255, 255, 255, 0.9);
+  --ds-sheen-strong: rgba(255, 255, 255, 1);
+  --ds-glaze: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 40%);
+  --ds-inset-line: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  --ds-field-inset: inset 0 1px 2px rgba(10, 10, 10, 0.06);
+  --ds-shadow-ambient: rgba(10, 10, 10, 0.06);
+  --ds-shadow-key: rgba(10, 10, 10, 0.07);
+  --ds-glass-fill: rgba(255, 255, 255, 0.74);
+  --ds-glass-border: rgba(10, 10, 10, 0.12);
+  --ds-glass-shadow:
+    0 10px 30px rgba(10, 10, 10, 0.16), 0 2px 8px rgba(10, 10, 10, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+  --ds-companion-contact: rgba(10, 10, 10, 0.18);
+  --ds-companion-aura: rgba(184, 30, 39, 0.16);
+  --ds-accent-face: linear-gradient(180deg, #d31f29 0%, #b81e27 52%, #911820 100%);
+  --ds-accent-face-hover: linear-gradient(180deg, #de2731 0%, #c2202b 52%, #9d1a23 100%);
+  --ds-raised-face: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.9) 0%,
+    rgba(246, 246, 244, 0.6) 100%
+  );
+  color-scheme: light;
+}
+
+/* `clip` rather than `hidden`: hidden turns the root into a scroll container and
+   breaks the fixed navbar and every sticky descendant. */
+html {
+  overflow-x: clip;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-height);
+}
+
+body {
+  margin: 0;
+  overflow-x: clip;
+  overscroll-behavior-y: none;
+  font-family:
+    "Archivo",
+    "Archivo Fallback",
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: var(--ds-bg);
+  color: var(--ds-text);
+}
+
+::selection {
+  background: var(--ds-accent-soft);
+  color: var(--ds-text);
+}
+
+/* Controls */
+
+/* Every control answers the pointer, the finger, and the keyboard the same way.
+   Declaring it once here is what stops a new button from shipping with the half
+   of the contract whoever wrote it happened to remember. */
+a,
+button,
+summary,
+select,
+[role="button"],
+input[type="checkbox"],
+input[type="radio"] {
+  cursor: pointer;
+  @apply touch-manipulation;
+  -webkit-tap-highlight-color: transparent;
+  accent-color: var(--ds-accent);
+}
+
+a,
+button,
+summary,
+[role="button"] {
+  transition-property: color, background-color, border-color, opacity, transform;
+  transition-duration: var(--duration-state);
+  transition-timing-function: var(--ease-out);
+}
+
+/* Hovered means the edge picks up the accent. Anything that paints its own
+   surface states its own hover and overrides this. */
+a:hover,
+button:hover,
+summary:hover,
+[role="button"]:hover {
+  border-color: var(--ds-border-hover);
+}
+
+/* The press: a 1px settle, fast enough to read as contact. */
+a:active,
+button:active,
+summary:active,
+[role="button"]:active {
+  transform: translateY(1px) scale(0.99);
+  transition-duration: var(--duration-press);
+}
+
+button:disabled,
+select:disabled,
+input:disabled,
+textarea:disabled,
+[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+button:disabled:active,
+[aria-disabled="true"]:active {
+  transform: none;
+}
+
+/* One ring, on everything focusable, appearing instantly. */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--ds-accent-bright);
+  outline-offset: 2px;
+}
+
+/* A control's label is chrome, not copy, and double-clicking a button should not
+   select its word. Body text stays selectable. */
+button,
+summary,
+label,
+nav a,
+[role="button"] {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* A design-system control still has to answer the pointer the way the rest of
+   the site does. These carry the affordances onto it without touching its
+   paint, which the component already owns. */
+.control {
+  cursor: pointer;
+  @apply touch-manipulation;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.control:hover {
+  border-color: var(--ds-border-hover);
+}
+
+.control:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.control:focus-visible {
+  outline: 2px solid var(--ds-accent-bright);
+  outline-offset: 2px;
+}
+
+/* A row presses by stepping its surface: a row that moves under the finger
+   drags the whole grid with it. The tint goes through the cells, because a cell
+   background paints over a row background and leaves the hover half-applied. */
+.control-row {
+  cursor: pointer;
+  @apply touch-manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.control-row:focus-visible {
+  outline: 2px solid var(--ds-accent-bright);
+  outline-offset: -2px;
+}
+
+/* A placeholder is text a reader has to make out, so it answers to the same
+   floor as any other small label rather than to whatever grey comes free. */
+::placeholder,
+[data-placeholder] {
+  color: var(--ds-text-muted);
+  opacity: 1;
+}
+
+/* One control height across fields and buttons, at the touch floor. */
+.ds-field,
+select,
+textarea,
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]) {
+  min-height: 44px;
+  background-color: var(--ds-surface-2);
+}
+
+/* Scroll regions keep their scroll to themselves rather than chaining to the
+   page behind them. */
+[data-scroll-region] {
+  overscroll-behavior: contain;
+}
+
+/* Chromium and Safari paint a hardcoded pale yellow on :-webkit-autofill that
+   ignores theme tokens. A 1000px inset box-shadow is the only way to cover it.
+   Because the shadow resolves a CSS variable, the light register cascades
+   through for free. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+textarea:-webkit-autofill:active,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus,
+select:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--ds-surface-2) inset !important;
+  box-shadow: 0 0 0 1000px var(--ds-surface-2) inset !important;
+  -webkit-text-fill-color: var(--ds-text) !important;
+  caret-color: var(--ds-text) !important;
+  transition: background-color 9999s linear 0s;
+}
+
+/* Typography */
+
+/* Hero and section titles only. Oswald carries the display register: a condensed
+   athletic face, which is what a football camp's headlines have always been set
+   in on paper. It is narrow, so it takes no negative tracking and slightly more
+   leading than a grotesque would; `editorial-display-tight` is where a title
+   opts into the negative leading, which falls apart at body size.
+
+   `overflow-wrap` and `min-width` keep a long compound word inside the viewport
+   instead of pushing the page sideways. */
+.editorial-display {
+  font-family:
+    "Oswald", "Oswald Fallback", "Bebas Neue", "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  min-width: 0;
+}
+
+.editorial-display-tight {
+  letter-spacing: -0.005em;
+  line-height: 0.95;
+}
+
+.editorial-body {
+  font-family: "Archivo", "Archivo Fallback", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.55;
+}
+
+/* Long-form paragraphs opt into a measure the eye can track back from. */
+.measure {
+  max-width: var(--measure);
+}
+
+/* The metadata register: eyebrows, indices, dates, supporting labels. Display
+   type rather than body copy, so the tight leading is deliberate. */
+.mono-tag {
+  font-family:
+    "JetBrains Mono", "JetBrains Mono Fallback", "IBM Plex Mono", ui-monospace, "SF Mono", Menlo,
+    Consolas, monospace;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.mono-tag-sm {
+  font-family:
+    "JetBrains Mono", "JetBrains Mono Fallback", "IBM Plex Mono", ui-monospace, "SF Mono", Menlo,
+    Consolas, monospace;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.mono-tag-lg {
+  font-family:
+    "JetBrains Mono", "JetBrains Mono Fallback", "IBM Plex Mono", ui-monospace, "SF Mono", Menlo,
+    Consolas, monospace;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.mono-num {
+  font-family:
+    "JetBrains Mono", "JetBrains Mono Fallback", "IBM Plex Mono", ui-monospace, "SF Mono", Menlo,
+    Consolas, monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+/* Surfaces */
+
+.brand-chip-shadow {
+  box-shadow: var(--brand-chip-shadow);
+}
+
+.brand-chip-shadow-sm {
+  box-shadow: var(--brand-chip-shadow-sm);
+}
+
+.accent-edge {
+  background-color: var(--ds-accent);
+}
+
+.hairline {
+  border-color: var(--ds-border);
+}
+
+.left-rule-accent {
+  position: relative;
+}
+
+.left-rule-accent::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--ds-accent);
+}
+
+.field-grid {
+  background-image:
+    linear-gradient(currentColor 1px, transparent 1px),
+    linear-gradient(90deg, currentColor 1px, transparent 1px);
+  background-size: 72px 72px;
+  color: var(--ds-text);
+  opacity: 0.04;
+}
+
+[data-surface="light"] .field-grid {
+  opacity: 0.05;
+}
+
+.scoreboard-grain {
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 18% 22%, var(--ds-accent-soft) 0, transparent 42%),
+    radial-gradient(circle at 82% 78%, var(--ds-surface-2) 0, transparent 48%);
+}
+
+/* Softens the seam where a light and a dark section meet. */
+.surface-seam {
+  position: relative;
+}
+
+.surface-seam::before {
+  content: "";
+  position: absolute;
+  inset: -1px 0 auto 0;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    var(--ds-border-strong) 22%,
+    var(--ds-border-strong) 78%,
+    transparent 100%
+  );
+}
+
+/* Placeholders */
+
+/* One placeholder primitive. Anything that waits on data renders this at the
+   shape of the thing that replaces it, so the box is filled and sized from
+   first paint and nothing moves when the content lands. It is deliberately
+   still: a sweep animating under a reader who is already waiting adds motion
+   without adding information. */
+.skeleton {
+  background-color: var(--ds-surface-2);
+  border-radius: var(--ds-radius-md);
+}
+
+/* Motion */
+
+/* Page-level reveals only. Component motion belongs to the design system. */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp var(--duration-enter) var(--ease-out) forwards;
+}
+
+.animate-page-in {
+  animation: fadeInUp var(--duration-enter) var(--ease-out) backwards;
+}
+
+.scroll-animate {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity var(--duration-enter) var(--ease-out),
+    transform var(--duration-enter) var(--ease-out);
+}
+
+.scroll-animate.animate-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-animate.from-left {
+  transform: translateX(-20px);
+}
+
+.scroll-animate.from-left.animate-visible {
+  transform: translateX(0);
+}
+
+.scroll-animate.from-right {
+  transform: translateX(20px);
+}
+
+.scroll-animate.from-right.animate-visible {
+  transform: translateX(0);
+}
+
+.scroll-animate.scale-in {
+  transform: scale(0.96);
+}
+
+.scroll-animate.scale-in.animate-visible {
+  transform: scale(1);
+}
+
+/* 35ms a step, so even an eight-item grid finishes inside the entrance rather
+   than crawling in behind it. */
+.scroll-animate.delay-1 {
+  transition-delay: 35ms;
+}
+.scroll-animate.delay-2 {
+  transition-delay: 70ms;
+}
+.scroll-animate.delay-3 {
+  transition-delay: 105ms;
+}
+.scroll-animate.delay-4 {
+  transition-delay: 140ms;
+}
+.scroll-animate.delay-5 {
+  transition-delay: 175ms;
+}
+.scroll-animate.delay-6 {
+  transition-delay: 210ms;
+}
+.scroll-animate.delay-7 {
+  transition-delay: 245ms;
+}
+.scroll-animate.delay-8 {
+  transition-delay: 280ms;
+}
+
+/* The photograph treatment: muted until the pointer or the keyboard reaches it.
+   One rule, so the hero, the story image, and every gallery tile behave alike. */
+.photo-mute {
+  filter: grayscale(1);
+  transform: scale(1);
+  transition:
+    filter var(--duration-enter) var(--ease-out),
+    transform var(--duration-enter) var(--ease-out);
+}
+
+.group:hover .photo-mute,
+.group:focus-within .photo-mute {
+  filter: none;
+  transform: scale(1.04);
+}
+
+/* Elevation is the one card hover: it lifts, and the lift brings the accent
+   edge and the shadow with it. */
+.card-lift {
+  transition:
+    transform var(--duration-state) var(--ease-out),
+    box-shadow var(--duration-state) var(--ease-out);
+}
+
+.card-lift:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 1px 0 0 var(--ds-accent) inset,
+    0 10px 24px -16px var(--ds-shadow-key);
+}
+
+.accent-tick {
+  display: inline-block;
+  height: 1px;
+  background: var(--ds-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--duration-enter) var(--ease-out);
+}
+
+.accent-tick.is-on {
+  transform: scaleX(1);
+}
+
+.nav-underline {
+  position: relative;
+}
+
+.nav-underline::after {
+  content: "";
+  position: absolute;
+  left: 12px;
+  right: 12px;
+  bottom: 0;
+  height: 1px;
+  background: var(--ds-accent);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform var(--duration-state) var(--ease-out);
+}
+
+/* `.active` is what React Router puts on a matched NavLink. */
+.nav-underline:hover::after,
+.nav-underline.active::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .scroll-animate,
+  .scroll-animate.from-left,
+  .scroll-animate.from-right,
+  .scroll-animate.scale-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  .card-lift:hover,
+  .group:hover .photo-mute,
+  .group:focus-within .photo-mute {
+    transform: none;
+  }
+
+  .accent-tick,
+  .nav-underline::after {
+    transform: scaleX(1);
+  }
+}
