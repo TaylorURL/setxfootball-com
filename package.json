@@ -1,6 +1,6 @@
 {
   "name": "setxfootball",
-  "version": "2026.36.6",
+  "version": "2026.36.8",
   "private": true,
   "license": "UNLICENSED",
   "dependencies": {
@@ -25,8 +25,9 @@
   "scripts": {
     "start": "cross-env DISABLE_ESLINT_PLUGIN=true react-scripts start",
     "build": "cross-env DISABLE_ESLINT_PLUGIN=true react-scripts build",
-    "postbuild": "node scripts/drop-remote-font-import.js && node scripts/preload-hero-image.js && node scripts/preload-shared-chunks.js && node scripts/prerender.js",
+    "postbuild": "node scripts/drop-remote-font-import.js && node scripts/preload-hero-image.js && node scripts/preload-shared-chunks.js && node scripts/start-bundle-after-hero.js && node scripts/prerender.js",
     "test": "cross-env DISABLE_ESLINT_PLUGIN=true react-scripts test --passWithNoTests",
+    "images:avif": "node scripts/generate-photo-avif.js",
     "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",

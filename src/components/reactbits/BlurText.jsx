@@ -1,11 +1,19 @@
 /**
+ * A line that arrives one word at a time, each rising and sharpening into
+ * place.
+ *
+ * The words are the only thing a reader is meant to see: the wrapper carries
+ * the whole string as its accessible name and every span is hidden from the
+ * accessibility tree, so a screen reader is read one sentence rather than
+ * twenty fragments.
+ *
  * @param {object} props
  * @param {string} props.text - The string to animate.
  * @param {number} [props.delay=120] - Per-word stagger in milliseconds.
  * @param {'top'|'bottom'} [props.direction='bottom'] - Where words rise from.
  * @param {React.ElementType} [props.as='p'] - Rendered wrapper element.
  */
-import { motion } from "framer-motion";
+import { Fragment } from "react";
 import clsx from "clsx";
 
 const BlurText = ({
@@ -16,40 +24,33 @@ const BlurText = ({
   className,
   ...rest
 }) => {
-  const MotionTag = motion(Tag);
   const words = text.split(" ");
-  const fromY = direction === "top" ? -16 : 16;
 
   return (
-    <MotionTag
+    <Tag
       className={clsx("inline-block", className)}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true, amount: 0.2 }}
-      transition={{ staggerChildren: delay / 1000 }}
+      style={{ "--rb-blur-from": direction === "top" ? "-16px" : "16px" }}
       aria-label={text}
       {...rest}
     >
+      {/* The space belongs to the line rather than to the word before it. A
+          word box is inline-block, and a space at the end of one is at the end
+          of a line box, which is where the browser drops it: the words would
+          run together. Outside the box it is an ordinary space between two
+          inline-level boxes, and it carries the wrap opportunity too. */}
       {words.map((word, index) => (
-        <motion.span
-          key={index}
-          aria-hidden="true"
-          className="inline-block"
-          variants={{
-            hidden: { opacity: 0, y: fromY, filter: "blur(8px)" },
-            visible: {
-              opacity: 1,
-              y: 0,
-              filter: "blur(0px)",
-              transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] },
-            },
-          }}
-        >
-          {word}
-          {index < words.length - 1 ? " " : ""}
-        </motion.span>
+        <Fragment key={index}>
+          <span
+            aria-hidden="true"
+            className="inline-block rb-blur-word"
+            style={{ "--rb-blur-delay": `${index * delay}ms` }}
+          >
+            {word}
+          </span>
+          {index < words.length - 1 ? " " : ""}
+        </Fragment>
       ))}
-    </MotionTag>
+    </Tag>
   );
 };
 

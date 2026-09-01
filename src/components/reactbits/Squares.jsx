@@ -86,26 +86,34 @@ const Squares = ({
       };
     }
 
-    // Only animate while the canvas is actually on screen. The loop stops
-    // entirely when the section scrolls out of view.
+    // Only animate while the canvas is on screen and the tab is the one being
+    // looked at. Anywhere else the loop stops entirely rather than drifting a
+    // picture nobody is in front of. `raf` doubles as the running flag, so
+    // whichever of the two conditions changes, the state it lands in is the
+    // same.
     let onScreen = false;
+    const sync = () => {
+      const wanted = onScreen && !document.hidden;
+      if (wanted && raf === null) {
+        raf = requestAnimationFrame(loop);
+      } else if (!wanted && raf !== null) {
+        cancelAnimationFrame(raf);
+        raf = null;
+      }
+    };
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting && !onScreen) {
-          onScreen = true;
-          loop();
-        } else if (!entry.isIntersecting && onScreen) {
-          onScreen = false;
-          cancelAnimationFrame(raf);
-          raf = null;
-        }
+        onScreen = entry.isIntersecting;
+        sync();
       },
       { threshold: 0 },
     );
     observer.observe(canvas);
+    document.addEventListener("visibilitychange", sync);
 
     return () => {
       window.removeEventListener("resize", resize);
+      document.removeEventListener("visibilitychange", sync);
       observer.disconnect();
       if (raf !== null) cancelAnimationFrame(raf);
     };

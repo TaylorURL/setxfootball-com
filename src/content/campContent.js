@@ -54,29 +54,103 @@ import img7Small from "../assets/images/7-400w.webp";
 import img7Large from "../assets/images/7-640w.webp";
 import img8Small from "../assets/images/8-400w.webp";
 import img8Large from "../assets/images/8-640w.webp";
+import img1Avif400 from "../assets/images/1-400w.avif";
+import img1Avif800 from "../assets/images/1-800w.avif";
+import img2Avif400 from "../assets/images/2-400w.avif";
+import img2Avif640 from "../assets/images/2-640w.avif";
+import img3Avif400 from "../assets/images/3-400w.avif";
+import img3Avif640 from "../assets/images/3-640w.avif";
+import img4Avif400 from "../assets/images/4-400w.avif";
+import img4Avif800 from "../assets/images/4-800w.avif";
+import img5Avif400 from "../assets/images/5-400w.avif";
+import img5Avif640 from "../assets/images/5-640w.avif";
+import img6Avif400 from "../assets/images/6-400w.avif";
+import img6Avif640 from "../assets/images/6-640w.avif";
+import img7Avif400 from "../assets/images/7-400w.avif";
+import img7Avif640 from "../assets/images/7-640w.avif";
+import img8Avif400 from "../assets/images/8-400w.avif";
+import img8Avif640 from "../assets/images/8-640w.avif";
 import { CAMP_SEASON } from "../utils/constants";
 
-// Each photograph at two widths in both formats: WebP for the browsers that
-// take it, JPEG behind it for the ones that do not, and the intrinsic pixels
-// that reserve the box before either arrives. A phone asking for a 400 point
-// column gets the 400 pixel file whichever branch it lands on.
-const photo = (small, large, largeWidth, jpegSmall, jpegLarge, width, height) => ({
-  src: jpegLarge,
-  jpeg: `${jpegSmall} 400w, ${jpegLarge} ${largeWidth}w`,
-  webp: `${small} 400w, ${large} ${largeWidth}w`,
+// Each photograph at two widths in three formats, ordered the way the browser
+// reads them: AVIF, WebP behind it, and the JPEG the oldest ones fall to. The
+// intrinsic pixels reserve the box before any of them arrives. A phone asking
+// for a 400 point column gets the 400 pixel file whichever branch it lands on,
+// so each format is passed as its own [small, large] pair.
+const photo = (avif, webp, jpeg, largeWidth, width, height) => ({
+  src: jpeg[1],
+  jpeg: `${jpeg[0]} 400w, ${jpeg[1]} ${largeWidth}w`,
+  webp: `${webp[0]} 400w, ${webp[1]} ${largeWidth}w`,
+  avif: `${avif[0]} 400w, ${avif[1]} ${largeWidth}w`,
   width,
   height,
 });
 
 export const PHOTOS = {
-  coachesOnField: photo(img1Small, img1Large, 800, img1Jpg400, img1, 800, 532),
-  runningTheDrill: photo(img2Small, img2Large, 640, img2Jpg400, img2, 640, 426),
-  firstContact: photo(img3Small, img3Large, 640, img3Jpg400, img3, 640, 426),
-  ballInHand: photo(img4Small, img4Large, 800, img4Jpg400, img4, 800, 532),
-  sponsorWall: photo(img5Small, img5Large, 640, img5Jpg400, img5, 640, 426),
-  blockingPads: photo(img6Small, img6Large, 640, img6Jpg400, img6, 640, 426),
-  warmUps: photo(img7Small, img7Large, 640, img7Jpg400, img7, 640, 426),
-  waterBreak: photo(img8Small, img8Large, 640, img8Jpg400, img8, 640, 426),
+  coachesOnField: photo(
+    [img1Avif400, img1Avif800],
+    [img1Small, img1Large],
+    [img1Jpg400, img1],
+    800,
+    800,
+    532,
+  ),
+  runningTheDrill: photo(
+    [img2Avif400, img2Avif640],
+    [img2Small, img2Large],
+    [img2Jpg400, img2],
+    640,
+    640,
+    426,
+  ),
+  firstContact: photo(
+    [img3Avif400, img3Avif640],
+    [img3Small, img3Large],
+    [img3Jpg400, img3],
+    640,
+    640,
+    426,
+  ),
+  ballInHand: photo(
+    [img4Avif400, img4Avif800],
+    [img4Small, img4Large],
+    [img4Jpg400, img4],
+    800,
+    800,
+    532,
+  ),
+  sponsorWall: photo(
+    [img5Avif400, img5Avif640],
+    [img5Small, img5Large],
+    [img5Jpg400, img5],
+    640,
+    640,
+    426,
+  ),
+  blockingPads: photo(
+    [img6Avif400, img6Avif640],
+    [img6Small, img6Large],
+    [img6Jpg400, img6],
+    640,
+    640,
+    426,
+  ),
+  warmUps: photo(
+    [img7Avif400, img7Avif640],
+    [img7Small, img7Large],
+    [img7Jpg400, img7],
+    640,
+    640,
+    426,
+  ),
+  waterBreak: photo(
+    [img8Avif400, img8Avif640],
+    [img8Small, img8Large],
+    [img8Jpg400, img8],
+    640,
+    640,
+    426,
+  ),
 };
 
 export const HERO_IMAGE = PHOTOS.coachesOnField;

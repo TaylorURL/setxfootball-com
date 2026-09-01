@@ -17,7 +17,7 @@
 //
 //   the Photo element marked `priority`  ->  its image expression and sizes
 //   HERO_IMAGE = PHOTOS.<key>            ->  the photo() call for that key
-//   photo(small, large, ...)             ->  the two import identifiers
+//   photo([small, large], ...)           ->  the two import identifiers
 //   import small from "../assets/..."    ->  the source basenames
 //   asset-manifest.json                  ->  the hashed files in the build
 //
@@ -53,22 +53,49 @@ function priorityPhoto() {
   return null;
 }
 
-// HERO_IMAGE -> PHOTOS.<key> -> photo(small, large, largeWidth, ...) -> the two
-// webp import identifiers and the width the large one is offered at.
+/** The arguments of a call, split at the commas that are not inside a bracket. */
+function argumentsOf(content, openIndex) {
+  let depth = 0;
+  const args = [];
+  let start = openIndex + 1;
+  for (let i = start; i < content.length; i += 1) {
+    const character = content[i];
+    if ("([{".includes(character)) depth += 1;
+    else if (")]}".includes(character)) {
+      if (depth === 0) {
+        args.push(content.slice(start, i));
+        return args;
+      }
+      depth -= 1;
+    } else if (character === "," && depth === 0) {
+      args.push(content.slice(start, i));
+      start = i + 1;
+    }
+  }
+  return null;
+}
+
+// HERO_IMAGE -> PHOTOS.<key> -> photo([avifSmall, avifLarge], ..., largeWidth)
+// -> the two AVIF import identifiers and the width the large one is offered at.
+// The AVIF branch is the one to name: it is the first source the picture
+// offers, so it is the file every browser that can decode it will ask for.
 function sourcesFor(exportName, content) {
   const alias = content.match(new RegExp(`export const ${exportName}\\s*=\\s*PHOTOS\\.(\\w+)`));
   if (!alias) fail(`${exportName} is not an alias of a PHOTOS entry`);
-  const call = content.match(new RegExp(`\\b${alias[1]}:\\s*photo\\(([^)]*)\\)`));
+  const call = content.match(new RegExp(`\\b${alias[1]}:\\s*photo\\(`));
   if (!call) fail(`PHOTOS.${alias[1]} is not built by photo()`);
-  const args = call[1].split(",").map((s) => s.trim());
-  if (args.length < 3) fail(`the photo() call for ${alias[1]} has too few arguments`);
-  const [small, large, largeWidth] = args;
+  const args = argumentsOf(content, call.index + call[0].length - 1);
+  if (!args) fail(`the photo() call for ${alias[1]} is not closed`);
+  if (args.length < 4) fail(`the photo() call for ${alias[1]} has too few arguments`);
+  const pair = args[0].match(/\[\s*(\w+)\s*,\s*(\w+)\s*\]/);
+  if (!pair) fail(`the photo() call for ${alias[1]} opens with no [small, large] AVIF pair`);
+  const largeWidth = args[3].trim();
   const fileFor = (identifier) => {
     const found = content.match(new RegExp(`import ${identifier} from "([^"]+)"`));
     if (!found) fail(`${identifier} is not imported in campContent.js`);
     return path.basename(found[1]);
   };
-  return { small: fileFor(small), large: fileFor(large), largeWidth };
+  return { small: fileFor(pair[1]), large: fileFor(pair[2]), largeWidth };
 }
 
 // The hashed name the build gave a source file. The manifest keys are the paths
@@ -101,7 +128,7 @@ const smallUrl = built(manifest, small);
 const largeUrl = built(manifest, large);
 
 const link =
-  `<link rel="preload" as="image" type="image/webp"` +
+  `<link rel="preload" as="image" type="image/avif"` +
   ` href="${smallUrl}"` +
   ` imagesrcset="${smallUrl} 400w, ${largeUrl} ${largeWidth}w"` +
   ` imagesizes="${chosen.sizes}"` +
