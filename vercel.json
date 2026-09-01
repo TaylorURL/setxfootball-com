@@ -31,7 +31,7 @@
   ],
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!static/|fonts/|sponsors/|assets/|api/|.*\\.[a-zA-Z0-9]+$).*)",
       "destination": "/404.html"
     }
   ]
