@@ -13,7 +13,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-2026.36.3-e11d2a?style=for-the-badge" alt="Version 2026.36.3" />
+  <img src="https://img.shields.io/badge/version-2026.36.4-e11d2a?style=for-the-badge" alt="Version 2026.36.4" />
   <img src="https://img.shields.io/badge/React-19-e11d2a?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
   <img src="https://img.shields.io/badge/React_Router-7-e11d2a?style=for-the-badge&logo=reactrouter&logoColor=white" alt="React Router 7" />
   <img src="https://img.shields.io/badge/Create_React_App-5-0a0a0a?style=for-the-badge&logo=createreactapp&logoColor=white" alt="Create React App 5" />
@@ -170,7 +170,7 @@ setxfootball-com/
 
 ## License
 
-Copyright (c) 2026 Trenton Taylor. All rights reserved. See [LICENSE.md](LICENSE.md).
+Copyright (c) 2026 TaylorURL LLC. All rights reserved. See [LICENSE.md](LICENSE.md).
 
 <br />
 
