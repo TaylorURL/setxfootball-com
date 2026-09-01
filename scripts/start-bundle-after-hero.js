@@ -1,0 +1,95 @@
+#!/usr/bin/env node
+// Holds the application bundle back until the first screen's photograph is on
+// the glass.
+//
+// Every prerendered route already carries its first screen as markup, so
+// nothing above the fold is drawn by JavaScript. What the bundle does is adopt
+// that markup and make it interactive. A `<script defer>` in the head is still
+// requested in the opening bytes though, and on a phone connection it is the
+// largest thing on the wire: the bundle and the chunk beside it are the
+// majority of the bytes the document asks for, and every one of them is
+// bandwidth the photograph is not getting. The photograph is the largest paint,
+// so the bundle competing for the pipe is the bundle delaying the metric.
+//
+// So the request moves behind the picture. The tag comes out of the head and an
+// inline bootstrap at the end of the body puts it back one frame after the hero
+// image settles, which is a moment the visitor cannot see and the browser
+// cannot reorder. On a route with no eager image there is nothing to wait for
+// and the bundle starts immediately.
+//
+// The shared-chunk preload travels with it. Left in the head it would be
+// fetched for a bundle that has not been asked for yet, which is both the
+// contention this removes and a hint the browser reports as unused.
+//
+// This runs after the preload steps and before the prerender, so the document
+// every route is stamped from already carries the bootstrap.
+
+const fs = require("fs");
+const path = require("path");
+
+const ROOT = path.join(__dirname, "..");
+const BUILD = path.join(ROOT, "build");
+
+const fail = (why) => {
+  console.error(`bundle start: ${why}`);
+  process.exit(1);
+};
+
+const indexPath = path.join(BUILD, "index.html");
+if (!fs.existsSync(indexPath)) fail("no build/index.html to read - run the build first");
+
+const manifest = JSON.parse(fs.readFileSync(path.join(BUILD, "asset-manifest.json"), "utf8"));
+const entry = (manifest.entrypoints || []).find((file) => file.endsWith(".js"));
+if (!entry) fail("the asset manifest names no JavaScript entrypoint");
+const entryUrl = `/${entry}`;
+
+let html = fs.readFileSync(indexPath, "utf8");
+
+if (html.includes("data-bundle-start")) {
+  console.log("the bundle already starts behind the hero");
+  process.exit(0);
+}
+
+// The entry is matched by the URL the manifest gives rather than by position,
+// so a second script in the document is left where it is.
+const ENTRY_TAG = new RegExp(
+  `<script[^>]*\\bsrc="${entryUrl.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}"[^>]*>\\s*</script>`,
+);
+if (!ENTRY_TAG.test(html)) fail(`build/index.html does not load ${entryUrl}`);
+html = html.replace(ENTRY_TAG, "");
+
+// Whatever preload-shared-chunks left behind, taken in document order so the
+// bootstrap re-issues them the way the head had them.
+const CHUNK_LINK = /<link rel="preload" as="script" href="([^"]+)">/g;
+const chunks = [...html.matchAll(CHUNK_LINK)].map((match) => match[1]);
+html = html.replace(CHUNK_LINK, "");
+
+const bootstrap =
+  `<script data-bundle-start>(function(){` +
+  `var chunks=${JSON.stringify(chunks)},started=false;` +
+  `function start(){` +
+  `if(started)return;started=true;` +
+  `for(var i=0;i<chunks.length;i+=1){` +
+  `var link=document.createElement("link");` +
+  `link.rel="preload";link.as="script";link.href=chunks[i];` +
+  `document.head.appendChild(link)}` +
+  `var script=document.createElement("script");` +
+  `script.src=${JSON.stringify(entryUrl)};` +
+  `document.head.appendChild(script)}` +
+  `var hero=document.querySelector('#root img[loading="eager"]');` +
+  `if(!hero||hero.complete){start();return}` +
+  `function settled(){requestAnimationFrame(start)}` +
+  `hero.addEventListener("load",settled);` +
+  `hero.addEventListener("error",settled);` +
+  // A photograph that never answers cannot be allowed to hold the page
+  // uninteractive, so the wait has an end whatever the network does.
+  `setTimeout(start,3000)})()</script>`;
+
+if (!html.includes("</body>")) fail("build/index.html has no body to write into");
+html = html.replace("</body>", `${bootstrap}</body>`);
+
+fs.writeFileSync(indexPath, html);
+console.log(
+  `${path.basename(entryUrl)} now starts after the hero image` +
+    (chunks.length ? `, with ${chunks.length} shared chunk preload(s) behind it` : ""),
+);
