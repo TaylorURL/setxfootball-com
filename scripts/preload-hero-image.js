@@ -112,7 +112,15 @@ if (html.includes(smallUrl) && html.includes('rel="preload" as="image"')) {
   console.log("the hero preload is already in the document");
   process.exit(0);
 }
-if (!html.includes("</head>")) fail("build/index.html has no head to write into");
-html = html.replace("</head>", `${link}</head>`);
+// Directly after the viewport meta, so the preload scanner reaches it in the
+// opening bytes rather than behind every stylesheet and font in the head.
+const VIEWPORT = /(<meta name="viewport"[^>]*>)/;
+if (VIEWPORT.test(html)) {
+  html = html.replace(VIEWPORT, `$1${link}`);
+} else if (html.includes("</head>")) {
+  html = html.replace("</head>", `${link}</head>`);
+} else {
+  fail("build/index.html has neither a viewport meta nor a head to write into");
+}
 fs.writeFileSync(indexPath, html);
 console.log(`preloaded the hero from ${chosen.where}: ${path.basename(smallUrl)}`);
