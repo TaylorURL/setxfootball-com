@@ -20,6 +20,7 @@ import { REGISTER_PATH } from "../nav/navLinks";
 import { actionClass } from "../ui/actionClass";
 import { CAMP_PHONE, CAMP_EMAIL, CAMP_LOCALITY, CAMP_SEASON } from "../../utils/constants";
 import { SplitText } from "../reactbits";
+import { getCurrentYear } from "../../utils/helpers";
 
 const CONTACTS = [
   { icon: MapPin, label: `${CAMP_LOCALITY}, TX`, href: null },
@@ -96,7 +97,7 @@ const Footer = ({ children }) => (
             read in the next carries the older one until the next build. The
             browser corrects it on load; this says so rather than logging it. */}
         <span className="mono-tag-sm text-ds-text-faint" suppressHydrationWarning>
-          © {new Date().getFullYear()} · SETX Youth Football Camp · All rights reserved
+          © {getCurrentYear()} · SETX Youth Football Camp · All rights reserved
         </span>
         <div className="flex items-center gap-5">
           <Link

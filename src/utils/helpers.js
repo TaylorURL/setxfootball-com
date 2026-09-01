@@ -4,6 +4,16 @@
  */
 
 /**
+ * The league's zone.
+ *
+ * A registration belongs to the camp year the league is in, and a date belongs
+ * to the day the league is on. Read off the parent's own browser instead, a
+ * form submitted on a December evening from a later zone is filed under next
+ * year's camp and vanishes from the staff panel's default filter.
+ */
+const ZONE = "America/Chicago";
+
+/**
  * Formats a date string as a long US date (e.g. "January 1, 2025").
  * @param {string} dateString
  * @returns {string}
@@ -12,6 +22,7 @@ export const formatDate = (dateString) => {
   if (!dateString) return "";
   const date = new Date(dateString);
   return date.toLocaleDateString("en-US", {
+    timeZone: ZONE,
     year: "numeric",
     month: "long",
     day: "numeric",
@@ -35,7 +46,9 @@ export const formatCurrency = (amount) => {
  * @returns {number}
  */
 export const getCurrentYear = () => {
-  return new Date().getFullYear();
+  return Number(
+    new Intl.DateTimeFormat("en-CA", { timeZone: ZONE, year: "numeric" }).format(new Date()),
+  );
 };
 
 /**
