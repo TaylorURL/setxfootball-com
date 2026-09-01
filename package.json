@@ -1,7 +1,8 @@
 {
   "name": "setxfootball",
-  "version": "2026.36.3",
+  "version": "2026.36.4",
   "private": true,
+  "license": "UNLICENSED",
   "dependencies": {
     "@bradley-t-t/sunday-design-system": "file:./vendor/bradley-t-t-sunday-design-system-2026.24.1.tgz",
     "@radix-ui/react-select": "^2.1.6",
