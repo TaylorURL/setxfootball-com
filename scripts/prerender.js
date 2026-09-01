@@ -143,6 +143,17 @@ async function main() {
     const { renderRoute } = require(outfile);
     for (const route of [...RENDERED, NOT_FOUND_ROUTE]) {
       const markup = await renderRoute(route);
+      // A boundary that emitted its fallback leaves the page in a hidden div for
+      // a script at the end of the document to reveal. The footer check below
+      // cannot see that, because the footer is inside the hidden div: what the
+      // visitor paints is the skeleton, and the hero cannot be a largest-paint
+      // candidate until the whole document has been parsed.
+      if (markup.includes('<template id="B:') || markup.includes("<!--$?-->")) {
+        console.error(
+          `${route} rendered with an unresolved Suspense boundary - the page is in a hidden div, not the shell`,
+        );
+        process.exit(1);
+      }
       // The page frame stands in for a route chunk that has not arrived. Seeing
       // it here means the render emitted before the chunk resolved, and shipping
       // it would put a skeleton in the document for good.

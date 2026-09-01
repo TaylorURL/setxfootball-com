@@ -13,6 +13,16 @@ import { prerenderToNodeStream } from "react-dom/static";
 import App from "../src/app/App";
 import Root from "../src/app/Root";
 
+// React streams a Suspense boundary larger than this budget separately: the
+// fallback goes in the shell and the resolved content follows in a hidden div
+// for a script at the end of the document to swap in. That is worth doing down
+// a live connection and worth nothing in a file, where the whole document
+// arrives at once and the swap only delays the first paint. Every route sits
+// inside one boundary and every route is larger than the 12800-byte default, so
+// the budget is lifted past any page rather than set to a number a page could
+// grow past.
+const NEVER_STREAM_SEPARATELY = Number.MAX_SAFE_INTEGER;
+
 const read = (stream) =>
   new Promise((resolve, reject) => {
     let html = "";
@@ -34,6 +44,7 @@ export async function renderRoute(route) {
       <App router={StaticRouter} routerProps={{ location: route }} />
     </Root>,
     {
+      progressiveChunkSize: NEVER_STREAM_SEPARATELY,
       onError(error) {
         errors.push(error);
       },
