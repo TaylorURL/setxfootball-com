@@ -36,7 +36,13 @@ const ScrollReveal = ({
   const MotionTag = motion(Tag);
 
   return (
-    <MotionTag ref={ref} className={clsx(className)} aria-label={String(children)} {...rest}>
+    <MotionTag
+      ref={ref}
+      className={clsx(className)}
+      role="img"
+      aria-label={String(children)}
+      {...rest}
+    >
       {words.map((word, index) => {
         const start = index / words.length;
         const end = (index + 1) / words.length;

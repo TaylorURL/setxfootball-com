@@ -10,6 +10,12 @@
   display: block;
   width: 100%;
   height: 100%;
+  /* Each of these redraws itself every frame it is on screen for. Given a layer
+     of its own, those frames repaint the canvas and nothing else; sharing one
+     with the section behind it makes every frame a repaint of that section too,
+     and the hero's ground is a pair of wide blurs that cost real time to
+     rasterise on a machine drawing without a GPU. */
+  will-change: transform;
 }
 
 /* One word of a BlurText line. The settled state is the element's own, and the

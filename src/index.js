@@ -2,7 +2,7 @@ import ReactDOM from "react-dom/client";
 import "@bradley-t-t/sunday-design-system/styles.css";
 import "./index.css";
 import "./components/reactbits/reactbits.css";
-import App from "./app/App";
+import App, { preloadRoute } from "./app/App";
 import Root from "./app/Root";
 import reportWebVitals from "./hooks/reportWebVitals";
 
@@ -33,8 +33,18 @@ const tree = (
 // render ahead of time, and those pages are adopted rather than drawn a second
 // time. The gated routes ship as an empty shell and the dev server serves one
 // too, so both paths have to work.
+//
+// Adopting the markup only works while nothing suspends part way through it. A
+// boundary that suspends mid-hydration is discarded and drawn again from
+// nothing, which wipes the screen the reader is already looking at, replays
+// every entrance animation on it, and offers the largest paint a second
+// candidate whole seconds after the first. The route's own page module is the
+// one thing in the tree that would suspend, so it is fetched first and the
+// adoption starts with it in hand.
 if (container.firstElementChild) {
-  ReactDOM.hydrateRoot(container, tree);
+  preloadRoute(window.location.pathname).then(() => {
+    ReactDOM.hydrateRoot(container, tree);
+  });
 } else {
   ReactDOM.createRoot(container).render(tree);
 }
