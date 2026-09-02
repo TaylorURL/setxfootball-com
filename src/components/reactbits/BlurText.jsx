@@ -5,7 +5,8 @@
  * The words are the only thing a reader is meant to see: the wrapper carries
  * the whole string as its accessible name and every span is hidden from the
  * accessibility tree, so a screen reader is read one sentence rather than
- * twenty fragments.
+ * twenty fragments. Naming a wrapper takes a role that allows a name, and `img`
+ * is the one for a run of text a reader is meant to take whole.
  *
  * @param {object} props
  * @param {string} props.text - The string to animate.
@@ -30,6 +31,7 @@ const BlurText = ({
     <Tag
       className={clsx("inline-block", className)}
       style={{ "--rb-blur-from": direction === "top" ? "-16px" : "16px" }}
+      role="img"
       aria-label={text}
       {...rest}
     >

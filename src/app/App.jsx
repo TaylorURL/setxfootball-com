@@ -26,20 +26,88 @@ import ProtectedRoute from "../components/routing/ProtectedRoute";
 import Skeleton, { LoadingRegion } from "../components/ui/Skeleton";
 import { ClickSpark } from "../components/reactbits";
 
-const HomePage = lazy(() => import("../pages/HomePage/HomePage"));
-const AboutPage = lazy(() => import("../pages/AboutPage/AboutPage"));
-const GalleryPage = lazy(() => import("../pages/GalleryPage/GalleryPage"));
-const SponsorsPage = lazy(() => import("../pages/SponsorsPage/SponsorsPage"));
-const RegisterPage = lazy(() => import("../pages/RegisterPage/RegisterPage"));
-const AuthPage = lazy(() => import("../pages/AuthPage/AuthPage"));
-const Dashboard = lazy(() => import("../pages/Dashboard/Dashboard"));
-const StaffPanel = lazy(() => import("../pages/StaffPanel/StaffPanel"));
-const PaymentPage = lazy(() => import("../pages/PaymentPage/PaymentPage"));
-const PrivacyPage = lazy(() => import("../pages/PrivacyPage/PrivacyPage"));
-const TermsPage = lazy(() => import("../pages/TermsPage/TermsPage"));
-const ContactPage = lazy(() => import("../pages/ContactPage/ContactPage"));
-const DesignPage = lazy(() => import("../pages/DesignPage/DesignPage"));
-const NotFoundPage = lazy(() => import("../pages/NotFoundPage/NotFound"));
+/**
+ * One page of the table, and the loader the entry can run ahead of it.
+ *
+ * `lazy` suspends the first time a page renders even when its chunk is already
+ * in memory, because the initializer only learns the module arrived on the
+ * microtask after it asked for it. On a navigation that costs a frame of the
+ * fallback nobody sees. During hydration it costs the page: the build writes
+ * the whole first screen inside the boundary below, and React answers a
+ * boundary that suspends while it is being adopted by throwing that markup away
+ * and drawing the page again - which restarts every entrance animation on the
+ * screen the reader is already looking at, and hands the largest paint a second
+ * candidate seconds after the first one.
+ *
+ * So a loader that already holds its module answers in the same tick, which is
+ * what a synchronous thenable is for, and `preloadRoute` is what puts the module
+ * in its hands before the entry hydrates.
+ */
+const page = (load) => {
+  let held = null;
+  const loader = () => {
+    if (held) return { then: (resolve) => resolve(held) };
+    return load().then((module) => {
+      held = module;
+      return module;
+    });
+  };
+  const Page = lazy(loader);
+  Page.load = loader;
+  return Page;
+};
+
+const HomePage = page(() => import("../pages/HomePage/HomePage"));
+const AboutPage = page(() => import("../pages/AboutPage/AboutPage"));
+const GalleryPage = page(() => import("../pages/GalleryPage/GalleryPage"));
+const SponsorsPage = page(() => import("../pages/SponsorsPage/SponsorsPage"));
+const RegisterPage = page(() => import("../pages/RegisterPage/RegisterPage"));
+const AuthPage = page(() => import("../pages/AuthPage/AuthPage"));
+const Dashboard = page(() => import("../pages/Dashboard/Dashboard"));
+const StaffPanel = page(() => import("../pages/StaffPanel/StaffPanel"));
+const PaymentPage = page(() => import("../pages/PaymentPage/PaymentPage"));
+const PrivacyPage = page(() => import("../pages/PrivacyPage/PrivacyPage"));
+const TermsPage = page(() => import("../pages/TermsPage/TermsPage"));
+const ContactPage = page(() => import("../pages/ContactPage/ContactPage"));
+const DesignPage = page(() => import("../pages/DesignPage/DesignPage"));
+const NotFoundPage = page(() => import("../pages/NotFoundPage/NotFound"));
+
+// The same table as the routes below, read the other way: which page a URL
+// lands on, for the entry to have in hand before it hydrates. A path the table
+// has no route for renders the catch-all, which is the page 404.html carries.
+const PAGE_FOR_PATH = {
+  "/": HomePage,
+  "/about": AboutPage,
+  "/gallery": GalleryPage,
+  "/sponsors": SponsorsPage,
+  "/register": RegisterPage,
+  "/auth": AuthPage,
+  "/dashboard": Dashboard,
+  "/staff": StaffPanel,
+  "/payment": PaymentPage,
+  "/privacy": PrivacyPage,
+  "/terms": TermsPage,
+  "/contact": ContactPage,
+  "/design": DesignPage,
+};
+
+/**
+ * Loads the page a path renders, so the render that adopts the document does
+ * not suspend on it. It settles either way: a chunk that never arrives leaves a
+ * page React draws the ordinary way, which is worse than adopting one and far
+ * better than a page that never hydrates at all.
+ *
+ * @param {string} pathname - The path being loaded, as the browser reports it.
+ * @returns {Promise<void>}
+ */
+export const preloadRoute = (pathname) => {
+  const path = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
+  const Page = PAGE_FOR_PATH[path] || NotFoundPage;
+  return Promise.resolve(Page.load()).then(
+    () => undefined,
+    () => undefined,
+  );
+};
 
 /**
  * The page frame, held at the height of a full screen so nothing below it moves

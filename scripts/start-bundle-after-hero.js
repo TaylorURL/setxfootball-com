@@ -12,10 +12,19 @@
 // so the bundle competing for the pipe is the bundle delaying the metric.
 //
 // So the request moves behind the picture. The tag comes out of the head and an
-// inline bootstrap at the end of the body puts it back one frame after the hero
+// inline bootstrap at the end of the body puts it back two frames after the hero
 // image settles, which is a moment the visitor cannot see and the browser
 // cannot reorder. On a route with no eager image there is nothing to wait for
 // and the bundle starts immediately.
+//
+// The wait is taken even when the photograph is already decoded by the time the
+// bootstrap runs. That is the whole of the difference between a good score and
+// a bad one: a page measured over a fast connection decodes the hero before the
+// end of the body is parsed, the bundle is then requested beside it rather than
+// behind it, and a lab tool that replays that request graph down a slow
+// connection hands the photograph a fraction of the bandwidth for the whole of
+// its download. Deferring unconditionally is what makes the order the same one
+// on every connection.
 //
 // The shared-chunk preload travels with it. Left in the head it would be
 // fetched for a bundle that has not been asked for yet, which is both the
@@ -77,8 +86,15 @@ const bootstrap =
   `script.src=${JSON.stringify(entryUrl)};` +
   `document.head.appendChild(script)}` +
   `var hero=document.querySelector('#root img[loading="eager"]');` +
-  `if(!hero||hero.complete){start();return}` +
-  `function settled(){requestAnimationFrame(start)}` +
+  `if(!hero){start();return}` +
+  // Two frames, because one only reaches the frame the picture is drawn in and
+  // the request has to be behind the frame it was drawn in. Taken whether the
+  // picture is still arriving or was already here: a document served fast
+  // enough that the photograph is decoded before this line runs would otherwise
+  // put the bundle on the wire beside it, and that is the case a lab tool
+  // measures on a fast connection and then replays down a slow one.
+  `function settled(){requestAnimationFrame(function(){requestAnimationFrame(start)})}` +
+  `if(hero.complete){settled();return}` +
   `hero.addEventListener("load",settled);` +
   `hero.addEventListener("error",settled);` +
   // A photograph that never answers cannot be allowed to hold the page
