@@ -41,7 +41,13 @@ const DecryptedText = ({
   }, [inView, text, speed, revealPerTick]);
 
   return (
-    <Tag ref={ref} className={clsx("rb-decrypted", className)} aria-label={text} {...rest}>
+    <Tag
+      ref={ref}
+      className={clsx("rb-decrypted", className)}
+      role="img"
+      aria-label={text}
+      {...rest}
+    >
       <span aria-hidden="true">{display}</span>
     </Tag>
   );
