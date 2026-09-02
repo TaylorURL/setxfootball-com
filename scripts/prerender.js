@@ -25,6 +25,15 @@
  * CSS and images. So esbuild bundles a Node copy first, resolving each image to
  * the hashed URL webpack already emitted for it, which is what keeps the two
  * renders agreeing on every `src`.
+ *
+ * The page's head tags are the one part of the markup that does not belong in
+ * the root. React hoists a title, a meta or a link to the document head when it
+ * renders one, but a render of a fragment has no head to hoist into, so they
+ * come back at the front of the markup instead. Written into the root as they
+ * stand, they are a title and a description inside a div: React adopts them
+ * where they are when it hydrates and the head never gets them, so the page
+ * serves no description at all. They are lifted into the head here, which is
+ * where React would have put them and where a reader of the document looks.
  */
 const fs = require("fs");
 const path = require("path");
@@ -105,6 +114,47 @@ async function bundle(manifest, outfile) {
   });
 }
 
+// A title, a meta or a link at the very front of the markup is a tag React
+// hoisted. Only the opening run counts: the same elements further in belong to
+// the page and stay where the page put them.
+const HOISTED = /^\s*(?:<title\b[^>]*>[\s\S]*?<\/title>|<meta\b[^>]*>|<link\b[^>]*>)/;
+
+/** Splits the head tags React hoisted off the front of a route's markup. */
+function liftHead(markup) {
+  const tags = [];
+  let rest = markup;
+  for (;;) {
+    const found = rest.match(HOISTED);
+    if (!found) break;
+    tags.push(found[0].trim());
+    rest = rest.slice(found[0].length);
+  }
+  return { head: tags.join(""), body: rest };
+}
+
+// The stand-in head in public/index.html answers a crawler that runs no
+// JavaScript, and the routes that ship as an empty shell still need it. A route
+// rendered here does not: it carries the real title, description and canonical
+// in the file itself. So the stand-in comes out rather than sitting beside
+// them, because two titles and two canonicals in one document is a worse answer
+// than either of them alone. src/index.js drops the same set at boot, which is
+// what the shell routes still rely on.
+const FALLBACK_TITLE = /<title\b[^>]*\bdata-seo-fallback\b[^>]*>[\s\S]*?<\/title>/;
+const FALLBACK_TAG = /<(?:meta|link)\b[^>]*\bdata-seo-fallback\b[^>]*>/g;
+
+/** Puts a route's own head tags where the stand-in set is, and drops the rest of it. */
+function withHead(shell, head) {
+  const first = shell.search(FALLBACK_TITLE);
+  if (first === -1) {
+    if (!shell.includes("</head>")) {
+      console.error("build/index.html has no head to write the page's own tags into");
+      process.exit(1);
+    }
+    return shell.replace("</head>", `${head}</head>`);
+  }
+  return shell.replace(FALLBACK_TITLE, head).replace(FALLBACK_TAG, "");
+}
+
 /** The number of words a reader would find in the body, which is what RND-01 counts. */
 function bodyWords(html) {
   const body = html.slice(html.indexOf("<body"));
@@ -161,7 +211,14 @@ async function main() {
         console.error(`${route} rendered without its page - the route chunk did not resolve`);
         process.exit(1);
       }
-      const html = shell.replace(ROOT_DIV, `<div id="root">${markup}</div>`);
+      const { head, body } = liftHead(markup);
+      // A rendered route with no head tags would ship with no title and no
+      // description, which is worse than not prerendering it at all.
+      if (!head) {
+        console.error(`${route} rendered no head tags - the page sets no Seo`);
+        process.exit(1);
+      }
+      const html = withHead(shell, head).replace(ROOT_DIV, `<div id="root">${body}</div>`);
       let file;
       if (route === NOT_FOUND_ROUTE) {
         file = "404.html";
