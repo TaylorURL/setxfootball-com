@@ -11,6 +11,9 @@
   A youth football camp in Southeast Texas — parents sign up and pay by CashApp,<br />
   staff verify and manage the roster. Live at <a href="https://www.setxfootball.org">www.setxfootball.org</a>.
 </p>
+<p align="center">
+  <sub>Published for reading. Proprietary — see <a href="LICENSE.md">LICENSE.md</a>. Outside contributions are not accepted.</sub>
+</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/version-2026.36.12-e11d2a?style=for-the-badge" alt="Version 2026.36.12" />
@@ -49,17 +52,17 @@ Camp registration has to be effortless for a parent on a phone and airtight for 
 
 ## Stack
 
-| Layer       | Technology                                                                 |
-| :---------- | :------------------------------------------------------------------------- |
-| UI          | React 19 + React Router 7                                                  |
-| Build & dev | Create React App (`react-scripts` 5)                                       |
-| Styling     | Tailwind CSS 3.4 + the vendored `@bradley-t-t/sunday-design-system` preset |
-| UI & SEO    | `framer-motion` · `lucide-react` · `react-helmet-async`                    |
-| Backend     | Supabase — Postgres, Auth, Row-Level Security                              |
-| Data access | `AuthService` + `RegistrationService`, returning `{ data, error }` tuples  |
-| Analytics   | First-party, cookieless beacon (`src/library/sunday-analyzer`)             |
-| Site chrome | `@taylorurl/split-rail` — the shared footer bar, pinned to a release tag   |
-| Delivery    | Static single-page build, served by Vercel (`vercel.json`)                 |
+| Layer       | Technology                                                                                |
+| :---------- | :---------------------------------------------------------------------------------------- |
+| UI          | React 19 + React Router 7                                                                 |
+| Build & dev | Create React App (`react-scripts` 5)                                                      |
+| Styling     | Tailwind CSS 3.4 + the vendored `@bradley-t-t/sunday-design-system` preset                |
+| UI & SEO    | `framer-motion` · `lucide-react` · `react-helmet-async`                                   |
+| Backend     | Supabase — Postgres, Auth, Row-Level Security                                             |
+| Data access | `AuthService` + `RegistrationService`, returning `{ data, error }` tuples                 |
+| Analytics   | First-party, cookieless beacon (`src/library/sunday-analyzer`)                            |
+| Site chrome | `@taylorurl/split-rail` — the shared footer bar, pinned to a release tag                  |
+| Delivery    | Static build, one prerendered document per public route, served by Vercel (`vercel.json`) |
 
 The design system ships as a committed tarball under `vendor/` and is referenced from `package.json` as `file:./vendor/…tgz`, so installs and CI builds resolve it without a registry. Its peers — Radix, `framer-motion`, `lucide-react`, `recharts`, `clsx`, `tailwind-merge`, `class-variance-authority` — are declared here to satisfy it, so a few appear in `package.json` without appearing in `src/`.
 
@@ -85,17 +88,26 @@ Copy `.env.example` to `.env` and fill in the Supabase credentials. The client i
 
 ### Scripts
 
-| Script                 | Does                                           |
-| :--------------------- | :--------------------------------------------- |
-| `npm start`            | Start the CRA dev server.                      |
-| `npm run build`        | Production build to `build/`.                  |
-| `npm test`             | Jest via `react-scripts`, `--passWithNoTests`. |
-| `npm run lint`         | Lint with ESLint.                              |
-| `npm run format`       | Rewrite the tree to the Prettier config.       |
-| `npm run format:check` | Report formatting without writing; CI runs it. |
-| `npm run eject`        | One-way CRA eject.                             |
+| Script                 | Does                                                |
+| :--------------------- | :-------------------------------------------------- |
+| `npm start`            | Start the CRA dev server.                           |
+| `npm run build`        | Production build to `build/`.                       |
+| `npm test`             | Jest via `react-scripts`, `--passWithNoTests`.      |
+| `npm run images:avif`  | Re-encode the AVIF photo derivatives; needs ffmpeg. |
+| `npm run lint`         | Lint with ESLint.                                   |
+| `npm run format`       | Rewrite the tree to the Prettier config.            |
+| `npm run format:check` | Report formatting without writing; CI runs it.      |
+| `npm run eject`        | One-way CRA eject.                                  |
 
-`postbuild` runs after every build: `scripts/drop-remote-font-import.js` strips the design system's `@import` of Google's font host out of the built stylesheet, because the faces are served from this origin and preloaded in `public/index.html`.
+`postbuild` runs after every build, in order:
+
+| Step                                 | Does                                                                                                                                                                                 |
+| :----------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `scripts/drop-remote-font-import.js` | Strip the design system's `@import` of Google's font host out of the built stylesheet; the faces are served from this origin and preloaded in `public/index.html`.                   |
+| `scripts/preload-hero-image.js`      | Add a `preload` for the photograph the first screen draws, resolved from the `Photo` the source marks `priority`.                                                                    |
+| `scripts/preload-shared-chunks.js`   | Add a `preload` for the chunk the lazy routes have in common.                                                                                                                        |
+| `scripts/start-bundle-after-hero.js` | Move the bundle's script tag out of the head and start it one frame after the hero image settles.                                                                                    |
+| `scripts/prerender.js`               | Write each public route's first screen into a document of its own; `/auth`, `/dashboard`, `/staff` and `/payment` are left as the empty shell, and the catch-all becomes `404.html`. |
 
 ## Routes
 
@@ -138,7 +150,7 @@ flowchart TD
 ### Security
 
 - **Row-Level Security** — the policies in `supabase/migrations/` scope `camp_registrations` and `user_profiles` to their owner, recognised either by `user_id` or by the verified email on the session matching `parent_email`, with staff and admin covered by `is_camp_staff()` reading `user_profiles.role`.
-- **Least privilege** — `anon` holds only `select` and `insert` on `camp_registrations`; everything else is a signed-in grant, and `user_profiles` is closed to `anon` entirely.
+- **Least privilege** — `anon` holds `insert` on `camp_registrations` and nothing more; everything else is a signed-in grant, and `user_profiles` is closed to `anon` entirely. A parent filing without an account reads nothing back, so the client mints the row id rather than depending on a returning clause.
 - **Service boundary** — only the two services import the Supabase client. A query names the row and nothing else: which rows an account may touch is the policy's answer, not a predicate the browser can drop.
 - **No credential fallbacks** — Supabase config comes only from env vars, and CSV export escapes formula triggers to prevent injection.
 
@@ -146,13 +158,16 @@ flowchart TD
 
 ```
 setxfootball-com/
+├── api/                   version.js — the commit this deployment was built from
 ├── public/                index.html, sitemap, manifest, favicons, fonts,
 │                          robots.txt, llms.txt, release.json, sponsors/
-├── scripts/               postbuild step: drop the remote font import
+├── scripts/               the postbuild chain, and the AVIF re-encoder
 ├── supabase/migrations/   row-level security, grants, policy revisions
 ├── vendor/                bradley-t-t-sunday-design-system-*.tgz (committed)
 └── src/
-    ├── app/App.jsx        Client-side route table
+    ├── app/               App.jsx — the route table; Root.jsx — everything
+    │                      above the router, mounted by the browser and the
+    │                      prerender alike
     ├── pages/             Home, About, Gallery, Sponsors, Register, Auth,
     │                      Dashboard, StaffPanel, Payment, Contact, Privacy,
     │                      Terms, Design, NotFound
