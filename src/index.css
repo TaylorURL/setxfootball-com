@@ -603,14 +603,15 @@ select:-webkit-autofill:active {
 
 /* Motion */
 
-/* Page-level reveals only. Component motion belongs to the design system. */
+/* Page-level reveals only. Component motion belongs to the design system.
+   The rise carries no fade: an element first painted at nothing is never
+   reconsidered as the page's largest paint, so a headline that faded in was
+   measured by whatever painted after it. */
 @keyframes fadeInUp {
   from {
-    opacity: 0;
     transform: translateY(16px);
   }
   to {
-    opacity: 1;
     transform: translateY(0);
   }
 }
