@@ -378,6 +378,17 @@
             localStorage.removeItem("reporter-console");
           loud = localStorage.getItem("reporter-console") === "1";
         } catch (ignored) {}
+        // A crawler's headless renderer aborts its render on its own schedule,
+        // and every asset the page had queued fires an error event on the way
+        // down. The reports describe the crawler's timing rather than anything
+        // a visitor could see, and they arrive several at a time per crawl.
+        // A known bot is held for the page's own replay and not forwarded.
+        var bot = false;
+        try {
+          bot = /bot|crawl|spider|slurp|bingbot|googlebot|yandex|baiduspider|duckduckbot|facebookexternalhit|twitterbot|linkedinbot|embedly|prerender|lighthouse|headlesschrome/i.test(
+            navigator.userAgent || "",
+          );
+        } catch (ignored) {}
         // An extension injects its scripts into the page, so a rejection thrown
         // inside one arrives at this handler with nothing of the site in its
         // stack. A stack naming only extension scripts describes the visitor's
@@ -445,6 +456,7 @@
         function report(kind, message, stack) {
           hold(kind, message, stack);
           if (sent >= 10) return; // a page stuck in an error loop stops at ten
+          if (bot) return;
           if (extensionOnly(stack)) return;
           sent += 1;
           try {
