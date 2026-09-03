@@ -385,9 +385,10 @@
         // A known bot is held for the page's own replay and not forwarded.
         var bot = false;
         try {
-          bot = /bot|crawl|spider|slurp|bingbot|googlebot|yandex|baiduspider|duckduckbot|facebookexternalhit|twitterbot|linkedinbot|embedly|prerender|lighthouse|headlesschrome/i.test(
-            navigator.userAgent || "",
-          );
+          bot =
+            /bot|crawl|spider|slurp|bingbot|googlebot|yandex|baiduspider|duckduckbot|facebookexternalhit|twitterbot|linkedinbot|embedly|prerender|lighthouse|headlesschrome/i.test(
+              navigator.userAgent || "",
+            );
         } catch (ignored) {}
         // An extension injects its scripts into the page, so a rejection thrown
         // inside one arrives at this handler with nothing of the site in its
