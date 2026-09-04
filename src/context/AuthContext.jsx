@@ -12,6 +12,7 @@
  */
 import React, { createContext, useContext, useState, useEffect } from "react";
 import AuthService from "../services/AuthService";
+import { hasStoredSession } from "../library/supabaseClient";
 
 const AuthContext = createContext({});
 
@@ -27,6 +28,17 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const initAuth = async () => {
+      // Asking the auth server who this is means downloading the client to ask
+      // with, and the client is the largest chunk the site has. A browser
+      // holding nothing that could become a session has already answered the
+      // question, and that is every visitor who came to read about the camp,
+      // so the download is skipped rather than spent to be told nobody is
+      // signed in. Anyone who might be still goes the long way round.
+      if (!hasStoredSession()) {
+        setLoading(false);
+        return;
+      }
+
       try {
         const { data: verified } = await AuthService.getVerifiedUser();
         setUser(verified ?? null);
