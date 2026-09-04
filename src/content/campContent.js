@@ -75,13 +75,30 @@ import { CAMP_SEASON } from "../utils/constants";
 // Each photograph at two widths in three formats, ordered the way the browser
 // reads them: AVIF, WebP behind it, and the JPEG the oldest ones fall to. The
 // intrinsic pixels reserve the box before any of them arrives. A phone asking
-// for a 400 point column gets the 400 pixel file whichever branch it lands on,
-// so each format is passed as its own [small, large] pair.
+// for a narrow column gets the narrow file whichever branch it lands on, so
+// each format is passed as its own [small, large] pair.
+//
+// The width the small file is offered at is read out of its own name rather
+// than restated here, because the two sets are cut to different widths and a
+// derivative described at a width it is not is picked for the wrong column.
+// The large one is offered at the intrinsic width it was cut to.
+const smallWidth = (file) => {
+  const named = /-(\d+)w\./.exec(file);
+  if (!named) throw new Error(`photo: ${file} does not name the width it was cut to`);
+  return named[1];
+};
+
+// A format the set does not carry is passed as null and simply not offered. A
+// source that is picked and then 404s draws a broken image rather than falling
+// through to the next one, so an absent format has to be absent from the markup.
+const srcSet = (pair, largeWidth) =>
+  pair ? `${pair[0]} ${smallWidth(pair[0])}w, ${pair[1]} ${largeWidth}w` : null;
+
 const photo = (avif, webp, jpeg, largeWidth, width, height) => ({
   src: jpeg[1],
-  jpeg: `${jpeg[0]} 400w, ${jpeg[1]} ${largeWidth}w`,
-  webp: `${webp[0]} 400w, ${webp[1]} ${largeWidth}w`,
-  avif: `${avif[0]} 400w, ${avif[1]} ${largeWidth}w`,
+  jpeg: srcSet(jpeg, largeWidth),
+  webp: srcSet(webp, largeWidth),
+  avif: srcSet(avif, largeWidth),
   width,
   height,
 });
@@ -268,15 +285,19 @@ export const GALLERY = [
 
 // Sponsor logos, named so the alt text can say whose mark it is rather than
 // numbering them.
+//
+// These are served from public/sponsors rather than imported through the
+// bundler, because a sponsor comes and goes between seasons and dropping a file
+// in a directory is the whole job. They carry WebP and JPEG and no AVIF, so the
+// AVIF pair is null and the browser starts at WebP.
 export const SPONSORS = [
   {
     name: "Coastal Field Services",
     image: photo(
-      "/sponsors/IMG_2678-585w.webp",
-      "/sponsors/IMG_2678-1170w.webp",
+      null,
+      ["/sponsors/IMG_2678-585w.webp", "/sponsors/IMG_2678-1170w.webp"],
+      ["/sponsors/IMG_2678-585w.jpg", "/sponsors/IMG_2678.JPEG"],
       1170,
-      "/sponsors/IMG_2678-585w.jpg",
-      "/sponsors/IMG_2678.JPEG",
       1170,
       769,
     ),
@@ -284,11 +305,10 @@ export const SPONSORS = [
   {
     name: "Yu Sushi Steak House",
     image: photo(
-      "/sponsors/IMG_2685-585w.webp",
-      "/sponsors/IMG_2685-1170w.webp",
+      null,
+      ["/sponsors/IMG_2685-585w.webp", "/sponsors/IMG_2685-1170w.webp"],
+      ["/sponsors/IMG_2685-585w.jpg", "/sponsors/IMG_2685.JPEG"],
       1170,
-      "/sponsors/IMG_2685-585w.jpg",
-      "/sponsors/IMG_2685.JPEG",
       1170,
       713,
     ),
@@ -296,11 +316,10 @@ export const SPONSORS = [
   {
     name: "Aqua Guard Aerobic",
     image: photo(
-      "/sponsors/IMG_2686-585w.webp",
-      "/sponsors/IMG_2686-1170w.webp",
+      null,
+      ["/sponsors/IMG_2686-585w.webp", "/sponsors/IMG_2686-1170w.webp"],
+      ["/sponsors/IMG_2686-585w.jpg", "/sponsors/IMG_2686.JPEG"],
       1170,
-      "/sponsors/IMG_2686-585w.jpg",
-      "/sponsors/IMG_2686.JPEG",
       1170,
       1032,
     ),
