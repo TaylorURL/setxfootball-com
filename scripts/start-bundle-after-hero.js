@@ -85,6 +85,17 @@ const bootstrap =
   `var script=document.createElement("script");` +
   `script.src=${JSON.stringify(entryUrl)};` +
   `document.head.appendChild(script)}` +
+  // A photograph that never answers cannot be allowed to hold the page
+  // uninteractive, so the wait has an end whatever the network does. It is
+  // armed here, before any of the paths below can return, because two of them
+  // do: a route with no eager image starts the bundle outright, and a hero the
+  // browser already has decoded hands the entire wait to a pair of animation
+  // frames. A tab in the background is served no animation frames, so that
+  // second path had no end to it at all - the bundle was never asked for and
+  // the page never adopted its markup until the visitor fronted the tab.
+  // start() is idempotent, so a timer left running behind a path that already
+  // started the bundle costs nothing.
+  `setTimeout(start,3000);` +
   `var hero=document.querySelector('#root img[loading="eager"]');` +
   `if(!hero){start();return}` +
   // Two frames, because one only reaches the frame the picture is drawn in and
@@ -96,10 +107,7 @@ const bootstrap =
   `function settled(){requestAnimationFrame(function(){requestAnimationFrame(start)})}` +
   `if(hero.complete){settled();return}` +
   `hero.addEventListener("load",settled);` +
-  `hero.addEventListener("error",settled);` +
-  // A photograph that never answers cannot be allowed to hold the page
-  // uninteractive, so the wait has an end whatever the network does.
-  `setTimeout(start,3000)})()</script>`;
+  `hero.addEventListener("error",settled)})()</script>`;
 
 if (!html.includes("</body>")) fail("build/index.html has no body to write into");
 html = html.replace("</body>", `${bootstrap}</body>`);
