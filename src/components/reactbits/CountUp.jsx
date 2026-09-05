@@ -7,9 +7,14 @@
  * @param {string} [props.suffix=''] - Text after the number (e.g. "+").
  * @param {React.ElementType} [props.as='span'] - Rendered element.
  */
-import { useEffect, useRef, useState } from "react";
-import { useInView } from "framer-motion";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
+import { useScrollReveal } from "../../hooks/useScrollReveal";
+
+// The count starts against the viewport itself, with none of the shared
+// reveal's early margin: a figure that has finished counting before the reader
+// reaches it is a figure that never counted.
+const REVEAL_OPTIONS = { threshold: 0.4, rootMargin: "0px" };
 
 const CountUp = ({
   to,
@@ -21,12 +26,11 @@ const CountUp = ({
   className,
   ...rest
 }) => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.4 });
+  const { ref, visible } = useScrollReveal(REVEAL_OPTIONS);
   const [value, setValue] = useState(from);
 
   useEffect(() => {
-    if (!inView) return undefined;
+    if (!visible) return undefined;
     // A reader who asked for less motion gets the final figure, with no frame
     // loop competing with their next interaction.
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
@@ -44,7 +48,7 @@ const CountUp = ({
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
-  }, [inView, from, to, duration]);
+  }, [visible, from, to, duration]);
 
   return (
     <Tag ref={ref} className={clsx("mono-num", className)} {...rest}>

@@ -9,10 +9,14 @@
 // started at 18ms, on a local server with no latency at all. Over a phone
 // connection that gap is the round trip, not six milliseconds.
 //
-// Only the shared chunk is worth naming in a document that serves every route. A
-// route's own chunk is dead weight on the other twelve, so what gets preloaded is
-// the set of chunks a majority of the lazy imports have in common: on this build
-// that is one chunk, present in 11 of the 14 groups, and every route waits for it.
+// Only a chunk every route waits for is worth naming, because one document is
+// stamped for all of them. A chunk a majority of the routes need is still a
+// whole download handed to the rest, and the rest are where a stranger arrives:
+// the two chunks a majority share on this build are the animation runtime and
+// the component library, and the landing page renders neither. So the test is
+// every group rather than most of them. A build where nothing clears it
+// preloads nothing, which is the honest answer when the document cannot know
+// which route it is about to serve.
 //
 // The hint is `preload as=script` rather than `modulepreload` because the build
 // emits classic scripts - the webpack runtime appends a plain <script> for each
@@ -54,12 +58,10 @@ const seen = new Map();
 for (const ids of groups) {
   for (const id of new Set(ids)) seen.set(id, (seen.get(id) || 0) + 1);
 }
-const shared = [...seen.entries()]
-  .filter(([, count]) => count > groups.length / 2)
-  .map(([id]) => id);
+const shared = [...seen.entries()].filter(([, count]) => count === groups.length).map(([id]) => id);
 
 if (shared.length === 0) {
-  console.log(`no chunk is shared by a majority of the ${groups.length} lazy import(s)`);
+  console.log(`no chunk is shared by all ${groups.length} lazy import(s)`);
   process.exit(0);
 }
 
@@ -85,6 +87,6 @@ if (!html.includes("</head>")) fail("build/index.html has no head to write into"
 html = html.replace("</head>", `${links.join("")}</head>`);
 fs.writeFileSync(indexPath, html);
 console.log(
-  `preloaded ${links.length} chunk(s) shared across ${groups.length} lazy import(s): ` +
+  `preloaded ${links.length} chunk(s) shared by all ${groups.length} lazy import(s): ` +
     shared.join(", "),
 );

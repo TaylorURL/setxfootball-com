@@ -1,7 +1,7 @@
 /**
- * Returns [ref, visible]. `visible` latches true on first intersection and never
- * flips back, so elements don't re-animate on scroll-up. Pairs with the
- * `.scroll-animate` / `.animate-visible` classes in index.css.
+ * Returns `{ ref, visible }`. `visible` latches true on first intersection and
+ * never flips back, so elements don't re-animate on scroll-up. Reveal pairs it
+ * with the `.scroll-animate` / `.animate-visible` classes in index.css.
  */
 import { useEffect, useRef, useState } from "react";
 
