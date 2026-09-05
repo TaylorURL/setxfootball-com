@@ -1,6 +1,6 @@
 /* Only the CSS-driven React Bits components live here. The framer-motion ones
-   (SplitText, TiltedCard, ScrollReveal, ...) carry their animation in JS and
-   need nothing from this file. */
+   (TiltedCard, ScrollReveal, ...) carry their animation in JS and need nothing
+   from this file. */
 
 /* The canvas backgrounds size themselves from their container on mount, so the
    container has to be the thing that holds the box. Every one of them is
@@ -18,21 +18,35 @@
   will-change: transform;
 }
 
-/* One word of a BlurText line. The settled state is the element's own, and the
-   keyframe names only the state it arrives from, so a word that never animates
-   is a word already in place. `backwards` is what holds it out of sight through
-   its stagger, which is the whole of the effect: the delay is per word and the
-   duration is not. */
+/* One unit of a line that arrives a piece at a time: a word of BlurText, a word
+   or a character of SplitText. The settled state is the element's own, and the
+   keyframe names only the state it arrives from, so a unit that never animates
+   is a unit already in place. `backwards` is what holds it out of sight through
+   its stagger, which is the whole of the effect: the delay is per unit and the
+   duration is not.
+
+   The distance and the blur are the caller's, because the two lines are read at
+   different sizes: a paragraph rises a fixed 16px, while a display heading rises
+   half its own line and blurs less, so the letters stay legible at a size where
+   8px would smear them into each other. */
 @keyframes rb-blur-word {
   from {
     opacity: 0;
     transform: translateY(var(--rb-blur-from, 16px));
-    filter: blur(8px);
+    filter: blur(var(--rb-blur-amount, 8px));
   }
 }
 
 .rb-blur-word {
   animation: rb-blur-word 500ms cubic-bezier(0.16, 1, 0.3, 1) var(--rb-blur-delay, 0ms) backwards;
+}
+
+/* Held for a line that is meant to arrive as the reader reaches it rather than
+   as the page loads. A paused animation is already showing the frame it would
+   have started from, so the wait costs no second state to write and no second
+   paint to take it away: releasing the pause is the entrance. */
+.rb-blur-word-held {
+  animation-play-state: paused;
 }
 
 /* Cancelled outright rather than shortened. The global reduced-motion rule

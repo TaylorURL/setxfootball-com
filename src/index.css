@@ -85,8 +85,8 @@
   --measure: 66ch;
 }
 
-/* The default surface. `gray` is the design system's key for the theme the
-   ThemeProvider mounts, not a description of these colours; `dark` is the same
+/* The default surface. `gray` is the design system's key for the theme this
+   site is stamped with, not a description of these colours; `dark` is the same
    register under the name the rest of the design system uses for it, so a
    consumer that asks for either resolves the full token set rather than
    inheriting whatever the page above it had. */
