@@ -10,12 +10,13 @@
 // connection that gap is the round trip, not six milliseconds.
 //
 // Only a chunk every route waits for is worth naming, because one document is
-// stamped for all of them. A chunk most routes need is still dead weight on the
-// rest, and here the rest are the pages a stranger arrives on: the component
-// library is behind every route with a form and none of the marketing pages in
-// front of them, which is a clear majority and the wrong bill to hand a reader
-// of the landing page. So the test is every group rather than most of them, and
-// a build where nothing clears it preloads nothing rather than guessing.
+// stamped for all of them. A chunk a majority of the routes need is still a
+// whole download handed to the rest, and the rest are where a stranger arrives:
+// the two chunks a majority share on this build are the animation runtime and
+// the component library, and the landing page renders neither. So the test is
+// every group rather than most of them. A build where nothing clears it
+// preloads nothing, which is the honest answer when the document cannot know
+// which route it is about to serve.
 //
 // The hint is `preload as=script` rather than `modulepreload` because the build
 // emits classic scripts - the webpack runtime appends a plain <script> for each

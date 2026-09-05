@@ -6,6 +6,12 @@
  * cannot drift into rendering different trees. A provider added to one and not
  * the other would show up as a hydration mismatch on every page.
  *
+ * There is no toast host, deliberately. The design system publishes one flat
+ * bundle, so a host mounted above the router pulls the whole component library
+ * in front of the first screen of every page, including the marketing pages
+ * that render none of it. Nothing here raises a toast; a page that wants one
+ * mounts its own host, in a chunk that has already paid for the package.
+ *
  * @param {object} props
  * @param {React.ReactNode} props.children - The app, already wrapped in its router.
  */
