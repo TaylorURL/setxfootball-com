@@ -5,9 +5,14 @@
  * @param {number} [props.revealPerTick=1] - Characters locked in per settle step.
  * @param {React.ElementType} [props.as='span'] - Rendered element.
  */
-import { useEffect, useRef, useState } from "react";
-import { useInView } from "framer-motion";
+import { useEffect, useState } from "react";
 import clsx from "clsx";
+import { useScrollReveal } from "../../hooks/useScrollReveal";
+
+// The scramble starts when most of the run is on screen, measured against the
+// viewport itself rather than through the shared reveal's early margin: the
+// point of it is that the reader watches the characters settle.
+const REVEAL_OPTIONS = { threshold: 0.6, rootMargin: "0px" };
 
 const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#*<>/";
 const randChar = (i) => CHARS[(i * 7 + Math.floor(performance.now() / 30)) % CHARS.length];
@@ -20,12 +25,11 @@ const DecryptedText = ({
   className,
   ...rest
 }) => {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, amount: 0.6 });
+  const { ref, visible } = useScrollReveal(REVEAL_OPTIONS);
   const [display, setDisplay] = useState(text);
 
   useEffect(() => {
-    if (!inView) return undefined;
+    if (!visible) return undefined;
     let revealed = 0;
     const id = setInterval(() => {
       revealed += revealPerTick;
@@ -38,7 +42,7 @@ const DecryptedText = ({
       if (revealed >= text.length) clearInterval(id);
     }, speed);
     return () => clearInterval(id);
-  }, [inView, text, speed, revealPerTick]);
+  }, [visible, text, speed, revealPerTick]);
 
   return (
     <Tag
