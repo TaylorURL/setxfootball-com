@@ -8,7 +8,7 @@ import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { Menu, X, User, LogOut, ArrowRight, LayoutDashboard, ChevronDown } from "lucide-react";
 import { useAuth } from "../../context/AuthContext";
-import BrandMark from "../brand/BrandMark";
+import BrandMark from "./BrandMark";
 import { PUBLIC_NAV_LINKS, REGISTER_PATH, NAV_PANEL } from "./navLinks";
 import { actionClass } from "../ui/actionClass";
 import useAdaptiveNavSurface from "../../hooks/useAdaptiveNavSurface";

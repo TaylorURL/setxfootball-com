@@ -7,8 +7,8 @@
  *   pages that render under the bar themselves.
  */
 import SplitRail from "@taylorurl/split-rail";
-import Navbar from "../nav/Navbar";
-import Footer from "../footer/Footer";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 const MarketingPage = ({ children, padded = true }) => (
   <div className="flex min-h-[100dvh] flex-col bg-ds-bg text-ds-text">

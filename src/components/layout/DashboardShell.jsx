@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { Home, LayoutDashboard, ShieldCheck, LogOut } from "lucide-react";
 import { AppShell, Sidebar, SidebarItem, Button, Text } from "@bradley-t-t/sunday-design-system";
 import { useAuth } from "../../context/AuthContext";
-import BrandMark from "../../components/brand/BrandMark";
+import BrandMark from "./BrandMark";
 
 const Brand = () => <BrandMark size="sm" subtitle="Camp Console" to="/" />;
 

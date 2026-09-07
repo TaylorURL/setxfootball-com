@@ -5,7 +5,7 @@ import MarketingPage from "../../components/layout/MarketingPage";
 import Seo from "../../components/seo/Seo";
 import { PAGE_SEO } from "../../components/seo/seoContent";
 import { actionClass } from "../../components/ui/actionClass";
-import { PUBLIC_NAV_LINKS, REGISTER_PATH } from "../../components/nav/navLinks";
+import { PUBLIC_NAV_LINKS, REGISTER_PATH } from "../../components/layout/navLinks";
 
 const NotFoundPage = () => (
   <MarketingPage>

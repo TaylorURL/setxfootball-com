@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-2026.36.20-e11d2a?style=for-the-badge" alt="Version 2026.36.20" />
+  <img src="https://img.shields.io/badge/version-2026.37.0-e11d2a?style=for-the-badge" alt="Version 2026.37.0" />
   <img src="https://img.shields.io/badge/React-19-e11d2a?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
   <img src="https://img.shields.io/badge/React_Router-7-e11d2a?style=for-the-badge&logo=reactrouter&logoColor=white" alt="React Router 7" />
   <img src="https://img.shields.io/badge/Create_React_App-5-0a0a0a?style=for-the-badge&logo=createreactapp&logoColor=white" alt="Create React App 5" />
@@ -167,18 +167,18 @@ setxfootball-com/
 └── src/
     ├── app/               App.jsx — the route table; Root.jsx — everything
     │                      above the router, mounted by the browser and the
-    │                      prerender alike
+    │                      prerender alike; ErrorBoundary, ProtectedRoute,
+    │                      RouteFocus
     ├── pages/             Home, About, Gallery, Sponsors, Register, Auth,
     │                      Dashboard, StaffPanel, Payment, Contact, Privacy,
     │                      Terms, Design, NotFound
-    ├── components/        nav, footer, marketing sections, routing, seo, brand,
-    │                      layout, ui, reactbits
+    ├── components/        layout, marketing sections, seo, ui, reactbits
     ├── context/           AuthContext.jsx — session state + role flags
     ├── services/          AuthService.js, RegistrationService.js — Supabase access
     ├── hooks/             useStaffRegistrations, useAdaptiveNavSurface,
-    │                      useScrollReveal, useCountUp, …
+    │                      useScrollReveal, useCountUp
     ├── utils/             constants, helpers, csv, shirtOrders, registrationGrouping
-    ├── library/           supabaseClient.js, sunday-analyzer/
+    ├── library/           supabaseClient.js, reportWebVitals.js, sunday-analyzer/
     ├── content/           campContent.js, terms.js
     └── assets/            the logo at two widths in PNG and WebP, images/
 ```
