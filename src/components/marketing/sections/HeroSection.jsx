@@ -6,7 +6,7 @@
  */
 import { Link } from "react-router-dom";
 import { ArrowRight, Users, ShieldCheck, Heart } from "lucide-react";
-import { REGISTER_PATH } from "../../nav/navLinks";
+import { REGISTER_PATH } from "../../layout/navLinks";
 import { HERO_IMAGE } from "../../../content/campContent";
 import { actionClass } from "../../ui/actionClass";
 import Photo from "../../ui/Photo";

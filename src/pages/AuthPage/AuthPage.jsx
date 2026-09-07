@@ -11,7 +11,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { Mail, Lock, User, ArrowLeft, ShieldCheck, ArrowRight, Eye, EyeOff } from "lucide-react";
 import { Field, Input, IconButton, Alert } from "@bradley-t-t/sunday-design-system";
 import { useAuth } from "../../context/AuthContext";
-import BrandMark from "../../components/brand/BrandMark";
+import BrandMark from "../../components/layout/BrandMark";
 import Seo from "../../components/seo/Seo";
 import { PAGE_SEO } from "../../components/seo/seoContent";
 import { actionClass } from "../../components/ui/actionClass";

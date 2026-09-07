@@ -19,7 +19,7 @@ import JoinCallout from "../../components/marketing/sections/JoinCallout";
 import Seo from "../../components/seo/Seo";
 import { PAGE_SEO } from "../../components/seo/seoContent";
 import Breadcrumbs from "../../components/seo/Breadcrumbs";
-import { REGISTER_PATH } from "../../components/nav/navLinks";
+import { REGISTER_PATH } from "../../components/layout/navLinks";
 import { actionClass } from "../../components/ui/actionClass";
 import { Squares, TrueFocus } from "../../components/reactbits";
 

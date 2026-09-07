@@ -17,7 +17,7 @@
  */
 import React, { useEffect } from "react";
 import { HelmetProvider } from "react-helmet-async";
-import ErrorBoundary from "../components/ErrorBoundary";
+import ErrorBoundary from "./ErrorBoundary";
 import { SundayAnalyticsProvider } from "../library/sunday-analyzer";
 
 // One theme, deliberately: the surface below is locked to it.
