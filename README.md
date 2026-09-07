@@ -167,18 +167,18 @@ setxfootball-com/
 └── src/
     ├── app/               App.jsx — the route table; Root.jsx — everything
     │                      above the router, mounted by the browser and the
-    │                      prerender alike
+    │                      prerender alike; ErrorBoundary, ProtectedRoute,
+    │                      RouteFocus
     ├── pages/             Home, About, Gallery, Sponsors, Register, Auth,
     │                      Dashboard, StaffPanel, Payment, Contact, Privacy,
     │                      Terms, Design, NotFound
-    ├── components/        nav, footer, marketing sections, routing, seo, brand,
-    │                      layout, ui, reactbits
+    ├── components/        layout, marketing sections, seo, ui, reactbits
     ├── context/           AuthContext.jsx — session state + role flags
     ├── services/          AuthService.js, RegistrationService.js — Supabase access
     ├── hooks/             useStaffRegistrations, useAdaptiveNavSurface,
-    │                      useScrollReveal, useCountUp, …
+    │                      useScrollReveal, useCountUp
     ├── utils/             constants, helpers, csv, shirtOrders, registrationGrouping
-    ├── library/           supabaseClient.js, sunday-analyzer/
+    ├── library/           supabaseClient.js, reportWebVitals.js, sunday-analyzer/
     ├── content/           campContent.js, terms.js
     └── assets/            the logo at two widths in PNG and WebP, images/
 ```

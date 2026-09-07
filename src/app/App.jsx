@@ -20,9 +20,9 @@
 import React, { Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "../context/AuthContext";
-import RouteFocus from "../components/routing/RouteFocus";
+import RouteFocus from "./RouteFocus";
 import SkipLink from "../components/layout/SkipLink";
-import ProtectedRoute from "../components/routing/ProtectedRoute";
+import ProtectedRoute from "./ProtectedRoute";
 import Skeleton, { LoadingRegion } from "../components/ui/Skeleton";
 import { ClickSpark } from "../components/reactbits";
 
@@ -70,7 +70,7 @@ const PrivacyPage = page(() => import("../pages/PrivacyPage/PrivacyPage"));
 const TermsPage = page(() => import("../pages/TermsPage/TermsPage"));
 const ContactPage = page(() => import("../pages/ContactPage/ContactPage"));
 const DesignPage = page(() => import("../pages/DesignPage/DesignPage"));
-const NotFoundPage = page(() => import("../pages/NotFoundPage/NotFound"));
+const NotFoundPage = page(() => import("../pages/NotFoundPage/NotFoundPage"));
 
 // The same table as the routes below, read the other way: which page a URL
 // lands on, for the entry to have in hand before it hydrates. A path the table

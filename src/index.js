@@ -4,7 +4,7 @@ import "./index.css";
 import "./components/reactbits/reactbits.css";
 import App, { preloadRoute } from "./app/App";
 import Root from "./app/Root";
-import reportWebVitals from "./hooks/reportWebVitals";
+import reportWebVitals from "./library/reportWebVitals";
 
 // The head in index.html answers crawlers that run no JavaScript. React hoists
 // the Seo component's tags in alongside it rather than over it, so the static

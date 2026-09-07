@@ -7,8 +7,8 @@
  * @param {boolean} [props.requireStaff=false] - Require staff/admin role.
  */
 import { Navigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import Skeleton, { LoadingRegion } from "../ui/Skeleton";
+import { useAuth } from "../context/AuthContext";
+import Skeleton, { LoadingRegion } from "../components/ui/Skeleton";
 
 const ProtectedRoute = ({ children, requireStaff = false }) => {
   const { user, loading, isStaff } = useAuth();

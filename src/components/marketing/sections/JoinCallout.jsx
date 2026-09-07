@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import Reveal from "../Reveal";
 import { SHIRT_PRICE } from "../../../utils/constants";
-import { REGISTER_PATH } from "../../nav/navLinks";
+import { REGISTER_PATH } from "../../layout/navLinks";
 import { surfaceProps } from "../surface";
 import { actionClass } from "../../ui/actionClass";
 import { Waves } from "../../reactbits";

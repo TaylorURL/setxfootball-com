@@ -16,7 +16,7 @@
  */
 import { Link } from "react-router-dom";
 import { MapPin, Phone, Mail, Calendar, Users, Shirt, ArrowUpRight } from "lucide-react";
-import { REGISTER_PATH } from "../nav/navLinks";
+import { REGISTER_PATH } from "./navLinks";
 import { actionClass } from "../ui/actionClass";
 import { CAMP_PHONE, CAMP_EMAIL, CAMP_LOCALITY, CAMP_SEASON } from "../../utils/constants";
 import { SplitText } from "../reactbits";
