@@ -567,6 +567,80 @@
         }
       })();
     </script>
+
+    <!-- The stylesheet carries the whole of the page's appearance, and the
+         markup prerendered into this document opens at opacity 0 waiting to be
+         revealed, so a stylesheet that never arrives leaves a blank white page
+         rather than an unstyled one - every word is in the document and none of
+         it is drawn. A connection dropped in the first moments of a page load is
+         enough to do that, and the file answers normally again by the time
+         anyone goes looking for it.
+
+         One retry answers the dropped connection, which is what most of these
+         are. Where the second attempt fails too, the opening state is lifted so
+         the page reads unstyled instead of empty: an author !important rule
+         outranks a normal inline declaration, so it holds however often the app
+         re-renders those elements. -->
+    <script>
+      (function () {
+        var retried = false;
+        function readable() {
+          if (document.getElementById("stylesheet-fallback")) return;
+          var rule = document.createElement("style");
+          rule.id = "stylesheet-fallback";
+          rule.textContent =
+            '[style*="opacity:0"],[style*="opacity: 0"]' +
+            "{opacity:1!important;filter:none!important;transform:none!important}";
+          (document.head || document.documentElement).appendChild(rule);
+        }
+        // A <picture> commits to the first format the browser understands, and
+        // the commitment is final: a fetch lost after it draws a broken frame
+        // rather than falling through to the WebP and the JPEG sitting right
+        // behind it in the same element. Emptying the source that failed takes
+        // that format out of the running, and the choice is made again over
+        // what is left. This lives in the document rather than in the component
+        // that writes the markup because the first screen's photograph is
+        // prerendered into the page and fails while the app is still arriving,
+        // when no handler of its own is attached yet.
+        function stepBack(image) {
+          var picture = image.parentNode;
+          if (!picture || picture.tagName !== "PICTURE") return;
+          var sources = picture.getElementsByTagName("source");
+          for (var i = 0; i < sources.length; i += 1) {
+            if (sources[i].srcset) {
+              sources[i].srcset = "";
+              return;
+            }
+          }
+        }
+        // Capture phase, because a link's error event does not bubble, and this
+        // listener is installed before the build's own stylesheet tag is parsed.
+        window.addEventListener(
+          "error",
+          function (event) {
+            var link = event.target;
+            if (!link) return;
+            if (link.tagName === "IMG") {
+              stepBack(link);
+              return;
+            }
+            if (link.tagName !== "LINK" || link.rel !== "stylesheet") return;
+            if (retried) {
+              readable();
+              return;
+            }
+            retried = true;
+            var again = document.createElement("link");
+            again.rel = "stylesheet";
+            // A fresh query string, so the second ask cannot be answered out of
+            // whatever cache entry the first one failed against.
+            again.href = link.href + (link.href.indexOf("?") > -1 ? "&" : "?") + "retry=1";
+            (document.head || document.documentElement).appendChild(again);
+          },
+          true,
+        );
+      })();
+    </script>
     <!-- Traffic analytics. The site key is public by design: it says which
          site a hit belongs to, and the collector accepts it only from this
          site's own origins. Deferred, so nothing on the page waits for it. -->
