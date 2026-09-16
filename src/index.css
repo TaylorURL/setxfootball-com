@@ -10,68 +10,61 @@
   contain-intrinsic-size: auto 720px;
 }
 
-/* Monochrome by rule: near-black, off-white, a neutral ramp between them, and
-   one athletic red. Adding a second hue anywhere breaks the whole system.
+/* The Texas flag. White is the ground, flag blue is the voice, flag red is
+   the action. Rules are one pixel of a cool grey and nothing casts a shadow.
+   The icon set keeps its own colours and sits on the page at label size.
 
-   One set of `--ds-*` tokens drives both registers. A section opts into light
-   with `data-surface="light"` and every token flips together, so no component
-   needs a light/dark variant of its own. */
+   One set of `--ds-*` tokens drives both registers. The page sits on ice by
+   default; a section opts into navy with `data-surface="navy"`, and every
+   token flips together, so no component needs a variant of its own. */
 :root {
-  /* Read only by the ambient gradient and blur fills. Monochrome on purpose. */
-  --primary-50: #fafafa;
-  --primary-100: #f4f4f4;
-  --primary-200: #e8e8e8;
-  --primary-300: #c8c8c8;
-  --primary-400: #8a8a8a;
-  --primary-500: #4a4a4a;
-  --primary-600: #2e2e2e;
-  --primary-700: #1a1a1a;
-  --primary-800: #111111;
-  --primary-900: #0a0a0a;
+  /* The pigments. Read only by the token blocks below. */
+  --ice: #f5f6f8;
+  --ice-deep: #eceef2;
+  --ice-2: #f9fafb;
+  --ice-3: #e1e4ea;
+  --white: #ffffff;
+  --peri: #d3d8e2;
+  --ink: #002868;
+  --ink-deep: #001c4a;
+  --ink-2: #0d3a80;
+  --ink-3: #1a4a94;
+  --ink-4: #2a5ca8;
+  --red: #bf0a30;
+  --red-deep: #9a0826;
+  --red-bright: #e4173f;
+  --red-soft: #f9e0e6;
+  --saddle: #5b6577;
 
-  /* The bright cut is for dark surfaces; on paper it loses contrast, so light
-     sections use the darker cut instead. */
-  --accent-50: #fff1f2;
-  --accent-100: #ffe1e3;
-  --accent-200: #ffc1c5;
-  --accent-300: #ff8a92;
-  --accent-400: #ff4d5b;
-  --accent-500: #e11d2a;
-  --accent-600: #c31624;
-  --accent-700: #9c111c;
-  --accent-800: #6e0c14;
-  --accent-900: #3f060b;
-
-  --brand-red: #e11d2a;
-
-  /* The paper register's cuts of the accent: the bright dark-surface reds lose
-     contrast on white, so the light block reaches for these instead. */
-  --accent-450: #ff2e3d;
-  --accent-paper: #b81e27;
-  --accent-paper-deep: #9b1822;
-
-  /* Neutral and tinted steps the semantic layer maps to meaning. */
-  --primary-250: #d6d6d6;
-  --accent-alpha-12: rgba(225, 29, 42, 0.12);
-  --accent-paper-alpha-10: rgba(184, 30, 39, 0.1);
-  --sheen-alpha-08: rgba(255, 255, 255, 0.08);
-  --sheen-alpha-70: rgba(255, 255, 255, 0.7);
-  --sheen-alpha-15: rgba(255, 255, 255, 0.15);
-  --sheen-alpha-05: rgba(255, 255, 255, 0.05);
-  --shade-alpha-06: rgba(10, 10, 10, 0.06);
-  --paper-white: #ffffff;
-
-  /* Tight rather than glowing, because bloom muddies a monochrome palette. */
-  --brand-chip-shadow: 0 8px 24px -12px rgba(225, 29, 42, 0.45);
-  --brand-chip-shadow-sm: 0 6px 18px -10px rgba(225, 29, 42, 0.45);
+  /* Kept for the ambient gradient utilities the preset still names. */
+  --primary-50: #ffffff;
+  --primary-100: #f5f6f8;
+  --primary-200: #e1e4ea;
+  --primary-300: #d3d8e2;
+  --primary-400: #8a97b3;
+  --primary-500: #4b5a78;
+  --primary-600: #2a5ca8;
+  --primary-700: #1a4a94;
+  --primary-800: #0d3a80;
+  --primary-900: #002868;
+  --accent-50: #f9e0e6;
+  --accent-100: #f3bccb;
+  --accent-200: #ea8ca3;
+  --accent-300: #e75d7f;
+  --accent-400: #e4173f;
+  --accent-500: #bf0a30;
+  --accent-600: #9a0826;
+  --accent-700: #78061d;
+  --accent-800: #540414;
+  --accent-900: #34020c;
 
   /* One control height for fields and buttons alike, at the touch floor, so a
      form never shows a short input beside a tall button. */
-  --control-h: 44px;
+  --control-h: 48px;
 
   /* The height of the fixed bar, so the scroll padding and every offset that
      has to clear it cannot drift from the bar itself. */
-  --header-height: 60px;
+  --header-height: 64px;
 
   /* The design system already defines the curve and the three motion steps.
      Naming them here means a rule reads --ease-out rather than reaching into
@@ -82,161 +75,160 @@
   --duration-enter: var(--ds-duration-slow);
 
   /* Reading measure for long-form body copy. */
-  --measure: 66ch;
+  --measure: 62ch;
+
+  /* The rule weight every card, field and bar shares. */
+  --rule: 1px;
 }
 
-/* The default surface. `gray` is the design system's key for the theme this
-   site is stamped with, not a description of these colours; `dark` is the same
-   register under the name the rest of the design system uses for it, so a
-   consumer that asks for either resolves the full token set rather than
-   inheriting whatever the page above it had. */
+/* The ice register, and the default. `gray` is the design system's key for
+   the theme this site is stamped with rather than a description of these
+   colours; anything asking for it, or for nothing, lands on ice. */
 .ds-root,
 .ds-root[data-theme="gray"],
-.ds-root[data-theme="dark"],
 [data-theme="gray"],
-[data-theme="dark"] {
-  --ds-bg: #0b0a09;
-  --ds-bg-recessed: #050403;
-  --ds-bg-elevated: #151413;
-  --ds-surface: #1b1a18;
-  --ds-surface-2: #24231f;
-  --ds-surface-3: #2f2e2a;
-  --ds-border: rgba(255, 255, 255, 0.08);
-  --ds-border-strong: rgba(255, 255, 255, 0.16);
-  --ds-border-input: rgba(255, 255, 255, 0.38);
-  --ds-border-hover: rgba(225, 29, 42, 0.55);
-  --ds-text: #f6f6f4;
-  --ds-text-muted: #a9a8a4;
-  --ds-text-faint: #8b8a86;
-  --ds-accent: var(--accent-500);
-  --ds-accent-bright: var(--accent-450);
-  --ds-accent-glow: rgba(225, 29, 42, 0.42);
-  --ds-accent-soft: rgba(225, 29, 42, 0.16);
-  --ds-accent-softer: rgba(225, 29, 42, 0.07);
-  --ds-on-accent: var(--paper-white);
-  /* Anything sitting on a photograph, a scrim, or the accent plate rather than
-     on the page ground: those grounds are dark in both registers, so these hold
-     the same value in both and a component reading them needs no variant. */
-  --ds-on-media: var(--paper-white);
-  --ds-on-media-muted: var(--sheen-alpha-70);
-  --ds-on-media-ring: var(--sheen-alpha-15);
-  --ds-glow-neutral: var(--sheen-alpha-05);
-  --ds-positive: var(--primary-250);
-  --ds-positive-soft: var(--sheen-alpha-08);
-  --ds-warning: var(--primary-250);
-  --ds-warning-soft: var(--sheen-alpha-08);
-  --ds-danger: var(--accent-500);
-  --ds-danger-soft: var(--accent-alpha-12);
-  --ds-violet: #a8a8a8;
-  --ds-violet-soft: rgba(255, 255, 255, 0.06);
-  --ds-indigo: #a8a8a8;
-  --ds-indigo-soft: rgba(255, 255, 255, 0.06);
-  --ds-cyan: #a8a8a8;
-  --ds-cyan-soft: rgba(255, 255, 255, 0.06);
-  --ds-slate: #a8a8a8;
-  --ds-slate-soft: rgba(255, 255, 255, 0.06);
-  --ds-overlay: rgba(0, 0, 0, 0.78);
-  --ds-backdrop: rgba(11, 10, 9, 0.82);
-  --ds-sheen: rgba(255, 255, 255, 0.06);
-  --ds-sheen-strong: rgba(255, 255, 255, 0.1);
-  --ds-glaze: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0) 42%);
-  --ds-inset-line: inset 0 1px 0 rgba(255, 255, 255, 0.05);
-  --ds-field-inset: inset 0 1px 2px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.02);
-  --ds-shadow-ambient: rgba(0, 0, 0, 0.5);
-  --ds-shadow-key: rgba(0, 0, 0, 0.45);
-  --ds-glass-fill: rgba(21, 20, 19, 0.7);
-  --ds-glass-border: rgba(255, 255, 255, 0.1);
-  --ds-glass-shadow:
-    0 18px 50px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.06);
-  --ds-companion-contact: rgba(0, 0, 0, 0.55);
-  --ds-companion-aura: rgba(225, 29, 42, 0.18);
-  --ds-accent-face: linear-gradient(180deg, #ff3a48 0%, #e11d2a 52%, #b3151f 100%);
-  --ds-accent-face-hover: linear-gradient(180deg, #ff4c58 0%, #ec2533 52%, #c0182a 100%);
-  --ds-raised-face: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.04) 0%,
-    rgba(255, 255, 255, 0.01) 50%,
-    rgba(255, 255, 255, 0) 100%
-  );
+[data-surface="paper"],
+[data-theme="light"] {
+  --ds-bg: var(--ice);
+  --ds-bg-recessed: var(--ice-deep);
+  --ds-bg-elevated: var(--white);
+  --ds-surface: var(--white);
+  --ds-surface-2: var(--ice-2);
+  --ds-surface-3: var(--ice-3);
+  --ds-border: var(--peri);
+  --ds-border-strong: var(--peri);
+  --ds-border-input: var(--saddle);
+  --ds-border-hover: var(--red);
+  --ds-text: var(--ink);
+  --ds-text-muted: #4b5a78;
+  --ds-text-faint: #7b8598;
+  --ds-accent: var(--red);
+  --ds-accent-bright: var(--red-deep);
+  --ds-accent-glow: rgba(191, 10, 48, 0.32);
+  --ds-accent-soft: var(--red-soft);
+  --ds-accent-softer: rgba(191, 10, 48, 0.06);
+  --ds-on-accent: var(--white);
+  --ds-gold: var(--red);
+  --ds-gold-soft: var(--red-soft);
+  --ds-on-gold: var(--white);
+  --ds-ink: var(--ink);
+  --ds-eyebrow-bg: transparent;
+  --ds-eyebrow-fg: var(--red);
+  --ds-eyebrow-rule: var(--red);
+  --ds-on-media: var(--white);
+  --ds-on-media-muted: rgba(255, 255, 255, 0.76);
+  --ds-on-media-ring: rgba(255, 255, 255, 0.2);
+  --ds-glow-neutral: rgba(0, 40, 104, 0.06);
+  --ds-positive: #1f7a4d;
+  --ds-positive-soft: rgba(31, 122, 77, 0.12);
+  --ds-warning: #b07a00;
+  --ds-warning-soft: rgba(251, 192, 45, 0.2);
+  --ds-danger: var(--red-deep);
+  --ds-danger-soft: rgba(191, 10, 48, 0.1);
+  --ds-violet: var(--ink-4);
+  --ds-violet-soft: rgba(0, 40, 104, 0.08);
+  --ds-indigo: var(--ink-4);
+  --ds-indigo-soft: rgba(0, 40, 104, 0.08);
+  --ds-cyan: var(--ink-4);
+  --ds-cyan-soft: rgba(0, 40, 104, 0.08);
+  --ds-slate: #4b5a78;
+  --ds-slate-soft: rgba(0, 40, 104, 0.08);
+  --ds-overlay: rgba(0, 40, 104, 0.5);
+  --ds-backdrop: rgba(245, 246, 248, 0.86);
+  --ds-sheen: rgba(255, 255, 255, 0.9);
+  --ds-sheen-strong: var(--white);
+  --ds-glaze: none;
+  --ds-inset-line: none;
+  --ds-field-inset: none;
+  --ds-shadow-ambient: rgba(0, 40, 104, 0.08);
+  --ds-shadow-key: rgba(0, 40, 104, 0.12);
+  --ds-glass-fill: rgba(255, 255, 255, 0.8);
+  --ds-glass-border: var(--peri);
+  --ds-glass-shadow: none;
+  --ds-companion-contact: rgba(0, 40, 104, 0.2);
+  --ds-companion-aura: rgba(191, 10, 48, 0.16);
+  --ds-accent-face: var(--red);
+  --ds-accent-face-hover: var(--red-deep);
+  --ds-raised-face: var(--white);
 
-  --ds-radius-xs: 0px;
-  --ds-radius-sm: 0px;
-  --ds-radius-md: 2px;
-  --ds-radius-lg: 2px;
-  --ds-radius-xl: 2px;
-  --ds-radius-2xl: 2px;
-  --ds-radius-3xl: 2px;
+  --ds-radius-xs: 3px;
+  --ds-radius-sm: 4px;
+  --ds-radius-md: 6px;
+  --ds-radius-lg: 10px;
+  --ds-radius-xl: 12px;
+  --ds-radius-2xl: 12px;
+  --ds-radius-3xl: 16px;
   --ds-radius-full: 9999px;
-  color-scheme: dark;
+  color-scheme: light;
 }
 
-/* The paper register. Put `data-surface="light"` on a section root and every
-   `--ds-*`-bound descendant follows; `data-theme="light"` is the same block, so
+/* The ink register. Put `data-surface="navy"` on a section root and every
+   `--ds-*`-bound descendant follows; `data-theme="dark"` is the same block, so
    the register can also be set the way the design system sets a theme. */
-[data-surface="light"],
-[data-theme="light"] {
-  --ds-bg: #f6f6f4;
-  --ds-bg-recessed: #e6e4de;
-  --ds-bg-elevated: #ffffff;
-  --ds-surface: #fbfbf9;
-  --ds-surface-2: #eceae5;
-  --ds-surface-3: #dcdad4;
-  --ds-border: rgba(10, 10, 10, 0.1);
-  --ds-border-strong: rgba(10, 10, 10, 0.2);
-  --ds-border-input: rgba(10, 10, 10, 0.46);
-  --ds-border-hover: rgba(184, 30, 39, 0.55);
-  --ds-text: #0b0a09;
-  --ds-text-muted: #53514d;
-  --ds-text-faint: #6a6864;
-  --ds-accent: var(--accent-paper);
-  --ds-accent-bright: var(--accent-paper-deep);
-  --ds-accent-glow: rgba(184, 30, 39, 0.32);
-  --ds-accent-soft: rgba(184, 30, 39, 0.1);
-  --ds-accent-softer: rgba(184, 30, 39, 0.04);
-  --ds-on-accent: var(--paper-white);
-  --ds-on-media: var(--paper-white);
-  --ds-on-media-muted: var(--sheen-alpha-70);
-  --ds-on-media-ring: var(--sheen-alpha-15);
-  --ds-glow-neutral: var(--sheen-alpha-05);
-  --ds-positive: var(--primary-600);
-  --ds-positive-soft: var(--shade-alpha-06);
-  --ds-warning: var(--primary-600);
-  --ds-warning-soft: var(--shade-alpha-06);
-  --ds-danger: var(--accent-paper);
-  --ds-danger-soft: var(--accent-paper-alpha-10);
-  --ds-violet: #525252;
-  --ds-violet-soft: rgba(10, 10, 10, 0.05);
-  --ds-indigo: #525252;
-  --ds-indigo-soft: rgba(10, 10, 10, 0.05);
-  --ds-cyan: #525252;
-  --ds-cyan-soft: rgba(10, 10, 10, 0.05);
-  --ds-slate: #525252;
-  --ds-slate-soft: rgba(10, 10, 10, 0.05);
-  --ds-overlay: rgba(10, 10, 10, 0.4);
-  --ds-backdrop: rgba(246, 246, 244, 0.82);
-  --ds-sheen: rgba(255, 255, 255, 0.9);
-  --ds-sheen-strong: rgba(255, 255, 255, 1);
-  --ds-glaze: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 40%);
-  --ds-inset-line: inset 0 1px 0 rgba(255, 255, 255, 0.7);
-  --ds-field-inset: inset 0 1px 2px rgba(10, 10, 10, 0.06);
-  --ds-shadow-ambient: rgba(10, 10, 10, 0.06);
-  --ds-shadow-key: rgba(10, 10, 10, 0.07);
-  --ds-glass-fill: rgba(255, 255, 255, 0.74);
-  --ds-glass-border: rgba(10, 10, 10, 0.12);
-  --ds-glass-shadow:
-    0 10px 30px rgba(10, 10, 10, 0.16), 0 2px 8px rgba(10, 10, 10, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.9);
-  --ds-companion-contact: rgba(10, 10, 10, 0.18);
-  --ds-companion-aura: rgba(184, 30, 39, 0.16);
-  --ds-accent-face: linear-gradient(180deg, #d31f29 0%, #b81e27 52%, #911820 100%);
-  --ds-accent-face-hover: linear-gradient(180deg, #de2731 0%, #c2202b 52%, #9d1a23 100%);
-  --ds-raised-face: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(246, 246, 244, 0.6) 100%
-  );
-  color-scheme: light;
+[data-surface="navy"],
+[data-theme="dark"] {
+  --ds-bg: var(--ink);
+  --ds-bg-recessed: var(--ink-deep);
+  --ds-bg-elevated: var(--ink-2);
+  --ds-surface: var(--ink-2);
+  --ds-surface-2: var(--ink-3);
+  --ds-surface-3: var(--ink-4);
+  --ds-border: rgba(255, 255, 255, 0.14);
+  --ds-border-strong: var(--ink-4);
+  --ds-border-input: rgba(255, 255, 255, 0.55);
+  --ds-border-hover: var(--red-bright);
+  --ds-text: var(--white);
+  --ds-text-muted: #c4cfe3;
+  --ds-text-faint: #8a9bbf;
+  --ds-accent: var(--red);
+  --ds-accent-bright: var(--red-bright);
+  --ds-accent-glow: rgba(228, 23, 63, 0.4);
+  --ds-accent-soft: rgba(228, 23, 63, 0.16);
+  --ds-accent-softer: rgba(228, 23, 63, 0.08);
+  --ds-on-accent: var(--white);
+  --ds-gold: var(--red-bright);
+  --ds-gold-soft: rgba(228, 23, 63, 0.16);
+  --ds-on-gold: var(--white);
+  --ds-ink: var(--ink-deep);
+  --ds-eyebrow-bg: transparent;
+  --ds-eyebrow-fg: var(--red-bright);
+  --ds-eyebrow-rule: var(--red-bright);
+  --ds-on-media: var(--white);
+  --ds-on-media-muted: rgba(255, 255, 255, 0.72);
+  --ds-on-media-ring: rgba(255, 255, 255, 0.2);
+  --ds-glow-neutral: rgba(255, 255, 255, 0.06);
+  --ds-positive: #5fd39a;
+  --ds-positive-soft: rgba(95, 211, 154, 0.16);
+  --ds-warning: #fbc02d;
+  --ds-warning-soft: rgba(251, 192, 45, 0.16);
+  --ds-danger: var(--red-bright);
+  --ds-danger-soft: rgba(228, 23, 63, 0.14);
+  --ds-violet: var(--peri);
+  --ds-violet-soft: rgba(255, 255, 255, 0.08);
+  --ds-indigo: var(--peri);
+  --ds-indigo-soft: rgba(255, 255, 255, 0.08);
+  --ds-cyan: var(--peri);
+  --ds-cyan-soft: rgba(255, 255, 255, 0.08);
+  --ds-slate: var(--peri);
+  --ds-slate-soft: rgba(255, 255, 255, 0.08);
+  --ds-overlay: rgba(0, 28, 74, 0.78);
+  --ds-backdrop: rgba(0, 40, 104, 0.86);
+  --ds-sheen: rgba(255, 255, 255, 0.06);
+  --ds-sheen-strong: rgba(255, 255, 255, 0.1);
+  --ds-glaze: none;
+  --ds-inset-line: none;
+  --ds-field-inset: none;
+  --ds-shadow-ambient: rgba(0, 0, 0, 0.4);
+  --ds-shadow-key: rgba(0, 0, 0, 0.35);
+  --ds-glass-fill: rgba(13, 58, 128, 0.8);
+  --ds-glass-border: var(--ink-4);
+  --ds-glass-shadow: none;
+  --ds-companion-contact: rgba(0, 0, 0, 0.5);
+  --ds-companion-aura: rgba(228, 23, 63, 0.16);
+  --ds-accent-face: var(--red);
+  --ds-accent-face-hover: var(--red-bright);
+  --ds-raised-face: var(--ink-2);
+  color-scheme: dark;
 }
 
 /* `clip` rather than `hidden`: hidden turns the root into a scroll container and
@@ -267,8 +259,8 @@ body {
 }
 
 ::selection {
-  background: var(--ds-accent-soft);
-  color: var(--ds-text);
+  background: var(--red);
+  color: var(--white);
 }
 
 /* Controls */
@@ -293,26 +285,17 @@ a,
 button,
 summary,
 [role="button"] {
-  transition-property: color, background-color, border-color, opacity, transform;
+  transition-property: color, background-color, border-color, opacity, transform, box-shadow;
   transition-duration: var(--duration-state);
   transition-timing-function: var(--ease-out);
 }
 
-/* Hovered means the edge picks up the accent. Anything that paints its own
-   surface states its own hover and overrides this. */
-a:hover,
-button:hover,
-summary:hover,
-[role="button"]:hover {
-  border-color: var(--ds-border-hover);
-}
-
-/* The press: a 1px settle, fast enough to read as contact. */
+/* The press: the control settles a hair. */
 a:active,
 button:active,
 summary:active,
 [role="button"]:active {
-  transform: translateY(1px) scale(0.99);
+  transform: translateY(1px);
   transition-duration: var(--duration-press);
 }
 
@@ -338,7 +321,7 @@ select:focus-visible,
 textarea:focus-visible,
 [role="button"]:focus-visible,
 [tabindex]:focus-visible {
-  outline: 2px solid var(--ds-accent-bright);
+  outline: 3px solid var(--ds-accent);
   outline-offset: 2px;
 }
 
@@ -364,16 +347,12 @@ nav a,
   user-select: none;
 }
 
-.control:hover {
-  border-color: var(--ds-border-hover);
-}
-
 .control:active {
-  transform: translateY(1px) scale(0.99);
+  transform: translateY(1px);
 }
 
 .control:focus-visible {
-  outline: 2px solid var(--ds-accent-bright);
+  outline: 3px solid var(--ds-accent);
   outline-offset: 2px;
 }
 
@@ -387,25 +366,27 @@ nav a,
 }
 
 .control-row:focus-visible {
-  outline: 2px solid var(--ds-accent-bright);
-  outline-offset: -2px;
+  outline: 3px solid var(--ds-accent);
+  outline-offset: -3px;
 }
 
 /* A placeholder is text a reader has to make out, so it answers to the same
    floor as any other small label rather than to whatever grey comes free. */
 ::placeholder,
 [data-placeholder] {
-  color: var(--ds-text-muted);
+  color: var(--ds-text-faint);
   opacity: 1;
 }
 
-/* One control height across fields and buttons, at the touch floor. */
+/* Every field is a cream box with the two-pixel rule, at the control height.
+   The design system's own fields pick this up through the same tokens. */
 .ds-field,
 select,
 textarea,
 input:not([type="checkbox"]):not([type="radio"]):not([type="file"]) {
-  min-height: 44px;
-  background-color: var(--ds-surface-2);
+  min-height: var(--control-h);
+  background-color: var(--ds-bg-elevated);
+  border-radius: var(--ds-radius-md);
 }
 
 /* Scroll regions keep their scroll to themselves rather than chaining to the
@@ -416,7 +397,7 @@ input:not([type="checkbox"]):not([type="radio"]):not([type="file"]) {
 
 /* Chromium and Safari paint a hardcoded pale yellow on :-webkit-autofill that
    ignores theme tokens. A 1000px inset box-shadow is the only way to cover it.
-   Because the shadow resolves a CSS variable, the light register cascades
+   Because the shadow resolves a CSS variable, the navy register cascades
    through for free. */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
@@ -430,8 +411,8 @@ select:-webkit-autofill,
 select:-webkit-autofill:hover,
 select:-webkit-autofill:focus,
 select:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px var(--ds-surface-2) inset !important;
-  box-shadow: 0 0 0 1000px var(--ds-surface-2) inset !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--ds-bg-elevated) inset !important;
+  box-shadow: 0 0 0 1000px var(--ds-bg-elevated) inset !important;
   -webkit-text-fill-color: var(--ds-text) !important;
   caret-color: var(--ds-text) !important;
   transition: background-color 9999s linear 0s;
@@ -439,31 +420,31 @@ select:-webkit-autofill:active {
 
 /* Typography */
 
-/* Hero and section titles only. Oswald carries the display register: a condensed
-   athletic face, which is what a football camp's headlines have always been set
-   in on paper. It is narrow, so it takes no negative tracking and slightly more
-   leading than a grotesque would; `editorial-display-tight` is where a title
-   opts into the negative leading, which falls apart at body size.
-
-   `overflow-wrap` and `min-width` keep a long compound word inside the viewport
-   instead of pushing the page sideways. */
-.editorial-display {
-  font-family:
-    "Oswald", "Oswald Fallback", "Bebas Neue", "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
-  font-weight: 700;
-  letter-spacing: 0;
-  line-height: 1;
+/* Headlines. Archivo at its heaviest, set in caps and tight, the way the
+   lettering on a stadium wall or the back of a jersey is set: one weight, no
+   decoration. `overflow-wrap` and `min-width` keep a long compound word inside
+   the viewport instead of pushing the page sideways. */
+.display {
+  font-family: "Archivo", "Archivo Fallback", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  text-transform: uppercase;
   text-wrap: balance;
   overflow-wrap: anywhere;
   min-width: 0;
 }
 
-.editorial-display-tight {
-  letter-spacing: -0.005em;
-  line-height: 0.95;
+/* Sub-headings and card titles: the same face, one step lighter. */
+.heading {
+  font-family: "Archivo", "Archivo Fallback", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  text-wrap: balance;
 }
 
-.editorial-body {
+.body-copy {
   font-family: "Archivo", "Archivo Fallback", ui-sans-serif, system-ui, sans-serif;
   font-weight: 400;
   letter-spacing: 0;
@@ -475,118 +456,138 @@ select:-webkit-autofill:active {
   max-width: var(--measure);
 }
 
-/* The metadata register: eyebrows, indices, dates, supporting labels. Display
-   type rather than body copy, so the tight leading is deliberate. */
+/* The small-caps register: eyebrows, field labels, column headings, indices. */
+.label-caps {
+  font-family: "Archivo", "Archivo Fallback", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-size: 12px;
+  line-height: 1.3;
+}
+
+/* Scoreboard numerals. Oswald is the one condensed face left on the site, and
+   it carries only figures: prices, ages, counts, step numbers. */
+.numeral {
+  font-family: "Oswald", "Oswald Fallback", "Arial Narrow", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Small print: the copyright line, a timestamp, a hex value. */
 .mono-tag {
   font-family:
     "JetBrains Mono", "JetBrains Mono Fallback", "IBM Plex Mono", ui-monospace, "SF Mono", Menlo,
     Consolas, monospace;
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   font-size: 11px;
   line-height: 1.5;
-}
-
-.mono-tag-sm {
-  font-family:
-    "JetBrains Mono", "JetBrains Mono Fallback", "IBM Plex Mono", ui-monospace, "SF Mono", Menlo,
-    Consolas, monospace;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  font-size: 11px;
-  line-height: 1.5;
-}
-
-.mono-tag-lg {
-  font-family:
-    "JetBrains Mono", "JetBrains Mono Fallback", "IBM Plex Mono", ui-monospace, "SF Mono", Menlo,
-    Consolas, monospace;
-  font-weight: 500;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.mono-num {
-  font-family:
-    "JetBrains Mono", "JetBrains Mono Fallback", "IBM Plex Mono", ui-monospace, "SF Mono", Menlo,
-    Consolas, monospace;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: 0;
 }
 
 /* Surfaces */
 
-.brand-chip-shadow {
-  box-shadow: var(--brand-chip-shadow);
+/* The card: white face, a one-pixel grey rule, a tight corner, nothing cast
+   under it. On navy the rule steps back to the surface steps so the card
+   reads as a raised panel. */
+.card {
+  border: var(--rule) solid var(--ds-border-strong);
+  border-radius: var(--ds-radius-lg);
+  background-color: var(--ds-bg-elevated);
 }
 
-.brand-chip-shadow-sm {
-  box-shadow: var(--brand-chip-shadow-sm);
+/* The same card without the drop: for rows, list items and anything stacked
+   close enough that six shadows would read as a ladder. */
+.card-flat {
+  border: var(--rule) solid var(--ds-border-strong);
+  border-radius: var(--ds-radius-lg);
+  background-color: var(--ds-bg-elevated);
 }
 
-.accent-edge {
-  background-color: var(--ds-accent);
+/* The two-pixel rule, on its own, for a divider or an edge. */
+.rule {
+  border-color: var(--ds-border-strong);
+  border-width: var(--rule);
 }
 
-.hairline {
-  border-color: var(--ds-border);
+/* Elevation is the one card hover: it lifts a step and its rule darkens. */
+.card-lift {
+  transition:
+    transform var(--duration-state) var(--ease-out),
+    border-color var(--duration-state) var(--ease-out);
 }
 
-.left-rule-accent {
+.card-lift:hover {
+  transform: translateY(-2px);
+  border-color: var(--ds-text);
+}
+
+/* The eyebrow: a small-caps label in the accent, with a short bar in front
+   of it. No pill, no fill: it is a label, not a badge. */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  color: var(--ds-eyebrow-fg);
+  font-family: "Archivo", "Archivo Fallback", ui-sans-serif, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.3;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.eyebrow::before {
+  content: "";
+  width: 22px;
+  height: 3px;
+  flex-shrink: 0;
+  background-color: var(--ds-eyebrow-rule);
+}
+
+/* A photograph: ruled, a tight corner, nothing cast under it. Photos are
+   shown in colour; the camp is a colourful place and the site does not mute
+   it. */
+.photo-frame {
+  border: var(--rule) solid var(--ds-border-strong);
+  border-radius: var(--ds-radius-lg);
+  overflow: hidden;
+  background-color: var(--ds-surface-2);
+}
+
+/* The yard line: a white rule with hash marks, the divider a navy section
+   carries between its heading and its cards. */
+.yard-line {
   position: relative;
+  height: 20px;
+  background-image: repeating-linear-gradient(90deg, var(--white) 0 4px, transparent 4px 41px);
 }
 
-.left-rule-accent::before {
+.yard-line::after {
   content: "";
   position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: var(--ds-accent);
+  inset: 8px 0 auto 0;
+  height: 4px;
+  background-color: var(--white);
 }
 
-.field-grid {
-  background-image:
-    linear-gradient(currentColor 1px, transparent 1px),
-    linear-gradient(90deg, currentColor 1px, transparent 1px);
-  background-size: 72px 72px;
-  color: var(--ds-text);
-  opacity: 0.04;
+/* The end zone: the diagonal stripe that closes the page over the footer. */
+.end-zone {
+  height: 28px;
+  background-color: var(--red);
+  background-image: repeating-linear-gradient(110deg, var(--ink) 0 20px, transparent 20px 72px);
 }
 
-[data-surface="light"] .field-grid {
-  opacity: 0.05;
-}
-
-.scoreboard-grain {
-  pointer-events: none;
-  background-image:
-    radial-gradient(circle at 18% 22%, var(--ds-accent-soft) 0, transparent 42%),
-    radial-gradient(circle at 82% 78%, var(--ds-surface-2) 0, transparent 48%);
-}
-
-/* Softens the seam where a light and a dark section meet. */
-.surface-seam {
-  position: relative;
-}
-
-.surface-seam::before {
-  content: "";
-  position: absolute;
-  inset: -1px 0 auto 0;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    var(--ds-border-strong) 22%,
-    var(--ds-border-strong) 78%,
-    transparent 100%
-  );
+/* A pack icon set on a card: the drawing is transparent, so the card's own
+   ground shows through and nothing has to be tinted. */
+.sticker {
+  display: block;
+  flex-shrink: 0;
+  -webkit-user-select: none;
+  user-select: none;
 }
 
 /* Placeholders */
@@ -598,7 +599,7 @@ select:-webkit-autofill:active {
    without adding information. */
 .skeleton {
   background-color: var(--ds-surface-2);
-  border-radius: var(--ds-radius-md);
+  border-radius: var(--ds-radius-sm);
 }
 
 /* Motion */
@@ -688,71 +689,42 @@ select:-webkit-autofill:active {
   transition-delay: 280ms;
 }
 
-/* The photograph treatment: muted until the pointer or the keyboard reaches it.
-   One rule, so the hero, the story image, and every gallery tile behave alike. */
-.photo-mute {
-  filter: grayscale(1);
+/* The photograph hover: a slow settle closer, and nothing else. */
+.photo-zoom {
   transform: scale(1);
-  transition:
-    filter var(--duration-enter) var(--ease-out),
-    transform var(--duration-enter) var(--ease-out);
-}
-
-.group:hover .photo-mute,
-.group:focus-within .photo-mute {
-  filter: none;
-  transform: scale(1.04);
-}
-
-/* Elevation is the one card hover: it lifts, and the lift brings the accent
-   edge and the shadow with it. */
-.card-lift {
-  transition:
-    transform var(--duration-state) var(--ease-out),
-    box-shadow var(--duration-state) var(--ease-out);
-}
-
-.card-lift:hover {
-  transform: translateY(-3px);
-  box-shadow:
-    0 1px 0 0 var(--ds-accent) inset,
-    0 10px 24px -16px var(--ds-shadow-key);
-}
-
-.accent-tick {
-  display: inline-block;
-  height: 1px;
-  background: var(--ds-accent);
-  transform: scaleX(0);
-  transform-origin: left center;
   transition: transform var(--duration-enter) var(--ease-out);
 }
 
-.accent-tick.is-on {
-  transform: scaleX(1);
+.group:hover .photo-zoom,
+.group:focus-within .photo-zoom {
+  transform: scale(1.03);
 }
 
-.nav-underline {
+/* A link in the bar: muted white on the navy, full white on hover, and the
+   current page carries a red bar under its word. */
+.nav-link {
   position: relative;
+  color: var(--ds-text-muted);
 }
 
-.nav-underline::after {
-  content: "";
-  position: absolute;
-  left: 12px;
-  right: 12px;
-  bottom: 0;
-  height: 1px;
-  background: var(--ds-accent);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform var(--duration-state) var(--ease-out);
+.nav-link:hover,
+.nav-link[aria-expanded="true"] {
+  color: var(--ds-text);
 }
 
 /* `.active` is what React Router puts on a matched NavLink. */
-.nav-underline:hover::after,
-.nav-underline.active::after {
-  transform: scaleX(1);
+.nav-link.active {
+  color: var(--ds-text);
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0;
+  height: 2px;
+  background-color: var(--ds-accent);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -774,13 +746,8 @@ select:-webkit-autofill:active {
   }
 
   .card-lift:hover,
-  .group:hover .photo-mute,
-  .group:focus-within .photo-mute {
+  .group:hover .photo-zoom,
+  .group:focus-within .photo-zoom {
     transform: none;
-  }
-
-  .accent-tick,
-  .nav-underline::after {
-    transform: scaleX(1);
   }
 }

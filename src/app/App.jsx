@@ -117,7 +117,7 @@ const RouteFallback = () => (
   <div className="flex min-h-[100dvh] flex-col bg-ds-bg">
     <Skeleton className="h-[var(--header-height)] w-full rounded-none" />
     <LoadingRegion label="Loading the page" className="flex-1 px-5 py-16 sm:px-8 lg:px-10">
-      <div className="mx-auto w-full max-w-[1440px] space-y-6">
+      <div className="mx-auto w-full max-w-[1160px] space-y-6">
         <Skeleton className="h-4 w-32" />
         <Skeleton className="h-16 w-full max-w-[42ch]" />
         <Skeleton className="h-16 w-full max-w-[34ch]" />

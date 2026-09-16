@@ -1,8 +1,7 @@
-// Surface rhythm: dark hero, dark scoreboard, light perks, dark playbook,
-// light join callout.
+// Surface rhythm: ice hero, white trust strip, white perks, the playbook on
+// navy, the red ticket on ice, ink footer.
 import MarketingPage from "../../components/layout/MarketingPage";
 import HeroSection from "../../components/marketing/sections/HeroSection";
-import ScoreboardSection from "../../components/marketing/sections/ScoreboardSection";
 import PerksSection from "../../components/marketing/sections/PerksSection";
 import PlaybookSection from "../../components/marketing/sections/PlaybookSection";
 import JoinCallout from "../../components/marketing/sections/JoinCallout";
@@ -13,10 +12,9 @@ const HomePage = () => (
   <MarketingPage padded={false}>
     <Seo {...PAGE_SEO.home} />
     <HeroSection />
-    <ScoreboardSection />
-    <PerksSection surface="light" />
-    <PlaybookSection />
-    <JoinCallout surface="light" />
+    <PerksSection />
+    <PlaybookSection surface="navy" />
+    <JoinCallout />
   </MarketingPage>
 );
 

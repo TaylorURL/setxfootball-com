@@ -65,7 +65,7 @@ const WaitingRow = () => (
       </Text>
     </TableCell>
     <TableCell numeric>
-      <Text size="sm" weight="semibold" as="p" className="mono-num">
+      <Text size="sm" weight="semibold" as="p" className="tabular-nums">
         <Bar width="w-12" />
       </Text>
     </TableCell>
@@ -73,7 +73,7 @@ const WaitingRow = () => (
       <Skeleton className="h-5 w-20" />
     </TableCell>
     <TableCell>
-      <Text size="xs" tone="faint" as="p" className="mono-num">
+      <Text size="xs" tone="faint" as="p" className="tabular-nums">
         <Bar width="w-24" />
       </Text>
     </TableCell>
@@ -88,7 +88,10 @@ const StaffRegistrationsTable = ({
   updatingPayment,
   onTogglePayment,
 }) => (
-  <TableContainer data-scroll-region className="max-h-[70dvh] overflow-x-auto overflow-y-auto">
+  <TableContainer
+    data-scroll-region
+    className="card-flat max-h-[70dvh] overflow-x-auto overflow-y-auto"
+  >
     <Table className="table-fixed">
       <caption className="sr-only">
         Camp sign-ups by camper, with parent contact, shirt order, total, and payment status.
@@ -206,7 +209,7 @@ const StaffRegistrationsTable = ({
                     )}
                   </TableCell>
                   <TableCell numeric>
-                    <Text size="sm" weight="semibold" as="span" className="mono-num">
+                    <Text size="sm" weight="semibold" as="span" className="tabular-nums">
                       {formatCurrency(hasMultiple ? combined.totalCost : primary.total_cost)}
                     </Text>
                   </TableCell>
@@ -225,7 +228,7 @@ const StaffRegistrationsTable = ({
                     )}
                   </TableCell>
                   <TableCell>
-                    <Text size="xs" tone="faint" className="mono-num">
+                    <Text size="xs" tone="faint" className="tabular-nums">
                       {formatDate(primary.created_at)}
                     </Text>
                   </TableCell>

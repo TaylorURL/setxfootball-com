@@ -6,7 +6,7 @@
 const SkipLink = () => (
   <a
     href="#main"
-    className="mono-tag sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-spark focus:inline-flex focus:min-h-control focus:items-center focus:border focus:border-ds-accent focus:bg-ds-bg focus:px-5 focus:text-ds-text"
+    className="label-caps sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-spark focus:inline-flex focus:min-h-control focus:items-center focus:rounded-full focus:border-rule focus:border-ds-border-strong focus:bg-ds-gold focus:px-5 focus:text-ds-on-gold"
   >
     Skip to Content
   </a>

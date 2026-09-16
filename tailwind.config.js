@@ -1,8 +1,8 @@
 /**
  * The design-system preset supplies every `ds-*` scale bound to the active
- * `data-theme`. The `primary` (neutral ramp) and `accent` (red) scales below
- * exist only for the gradient and hero treatments that sit outside the token
- * system. Reach for `ds-*` everywhere else.
+ * `data-theme`. The `primary` (navy ramp) and `accent` (red) scales below
+ * exist only for the ambient treatments that sit outside the token system.
+ * Reach for `ds-*` everywhere else.
  */
 const dsPreset = require("@bradley-t-t/sunday-design-system/tailwind-preset");
 
@@ -63,6 +63,13 @@ const DS_COLOR_NAMES = [
   "glass-border",
   "companion-contact",
   "companion-aura",
+  "gold",
+  "gold-soft",
+  "on-gold",
+  "ink",
+  "eyebrow-bg",
+  "eyebrow-fg",
+  "eyebrow-rule",
 ];
 
 const dsColor =
@@ -125,6 +132,24 @@ module.exports = {
         raised: "10",
         "sticky-nav": "1150",
         spark: "1700",
+      },
+      fontFamily: {
+        display: ["Archivo", "Archivo Fallback", "ui-sans-serif", "system-ui", "sans-serif"],
+        body: ["Archivo", "Archivo Fallback", "ui-sans-serif", "system-ui", "sans-serif"],
+        numeral: ["Oswald", "Oswald Fallback", "Arial Narrow", "ui-sans-serif", "sans-serif"],
+        mono: ["JetBrains Mono", "JetBrains Mono Fallback", "ui-monospace", "monospace"],
+      },
+      // Nothing on the site casts a shadow. The names stay so a call site
+      // that asks for one gets nothing rather than an unknown class.
+      boxShadow: {
+        "hard-sm": "none",
+        hard: "none",
+        "hard-lg": "none",
+        "hard-xl": "none",
+        "hard-pressed": "none",
+      },
+      borderWidth: {
+        rule: "var(--rule)",
       },
       minHeight: {
         control: "var(--control-h)",

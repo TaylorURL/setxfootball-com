@@ -51,7 +51,7 @@ const CountUp = ({
   }, [visible, from, to, duration]);
 
   return (
-    <Tag ref={ref} className={clsx("mono-num", className)} {...rest}>
+    <Tag ref={ref} className={clsx("tabular-nums", className)} {...rest}>
       {prefix}
       {value.toLocaleString()}
       {suffix}

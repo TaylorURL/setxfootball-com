@@ -1,20 +1,15 @@
 /* Only the CSS-driven React Bits components live here. The framer-motion ones
-   (TiltedCard, ScrollReveal, ...) carry their animation in JS and need nothing
-   from this file. */
+   (ScrollReveal, AnimatedContent, ...) carry their animation in JS and need
+   nothing from this file. */
 
-/* The canvas backgrounds size themselves from their container on mount, so the
-   container has to be the thing that holds the box. Every one of them is
-   decoration positioned outside flow, pinned to the full extent of the section
-   it sits behind. */
+/* The click canvas sizes itself from its container on mount, so the container
+   has to be the thing that holds the box. It redraws itself every frame it is
+   on screen for; given a layer of its own, those frames repaint the canvas and
+   nothing else. */
 .rb-canvas {
   display: block;
   width: 100%;
   height: 100%;
-  /* Each of these redraws itself every frame it is on screen for. Given a layer
-     of its own, those frames repaint the canvas and nothing else; sharing one
-     with the section behind it makes every frame a repaint of that section too,
-     and the hero's ground is a pair of wide blurs that cost real time to
-     rasterise on a machine drawing without a GPU. */
   will-change: transform;
 }
 
@@ -55,40 +50,5 @@
 @media (prefers-reduced-motion: reduce) {
   .rb-blur-word {
     animation: none;
-  }
-}
-
-.rb-glare-hover {
-  position: relative;
-  overflow: hidden;
-}
-
-/* A single sheen crossing the card. It moves as a transform rather than as a
-   background position, so the sweep stays on the compositor. */
-.rb-glare-hover .rb-glare {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: -150%;
-  width: 150%;
-  pointer-events: none;
-  background: linear-gradient(
-    -45deg,
-    transparent 40%,
-    var(--rb-glare-color, var(--ds-sheen-strong)) 50%,
-    transparent 60%
-  );
-  transform: translateX(0);
-  transition: transform var(--rb-glare-speed, 300ms) var(--ease-out);
-}
-
-.rb-glare-hover:hover .rb-glare,
-.rb-glare-hover:focus-within .rb-glare {
-  transform: translateX(200%);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .rb-glare-hover .rb-glare {
-    display: none;
   }
 }

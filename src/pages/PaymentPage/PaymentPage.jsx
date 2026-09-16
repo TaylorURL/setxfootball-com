@@ -31,9 +31,9 @@ const SUMMARY_FIELDS = [
 ];
 
 const SummaryRow = ({ label, value }) => (
-  <div className="flex items-center justify-between gap-4 border-t border-ds-border py-4">
-    <span className="mono-tag-sm text-ds-text-faint">{label}</span>
-    <span className="text-right text-base font-semibold text-ds-text">{value}</span>
+  <div className="flex items-center justify-between gap-4 border-t border-ds-border py-3.5">
+    <span className="body-copy text-[15px] text-ds-text-muted">{label}</span>
+    <span className="text-right text-[15px] font-bold text-ds-text">{value}</span>
   </div>
 );
 
@@ -91,16 +91,16 @@ const PaymentPage = () => {
   if (!registration) {
     return (
       <MarketingPage>
-        <div className="pb-20 sm:pb-24">
+        <div className="py-16 sm:py-20">
           <LoadingRegion
             label="Loading your sign-up"
-            className="mx-auto w-full max-w-3xl px-5 sm:px-8 lg:px-10"
+            className="mx-auto w-full max-w-4xl px-5 sm:px-8 lg:px-10"
           >
-            <Skeleton className="h-4 w-28" />
-            <Skeleton className="mt-8 h-16 w-full sm:h-20" />
+            <Skeleton className="h-8 w-40 rounded-full" />
+            <Skeleton className="mt-6 h-16 w-full sm:h-20" />
             <Skeleton className="mt-5 h-6 w-3/4" />
-            <div className="mt-14 space-y-7">
-              <div className="border border-ds-border bg-ds-surface p-7 sm:p-9">
+            <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
+              <div className="card-flat p-7">
                 <Skeleton className="h-4 w-36" />
                 {SUMMARY_FIELDS.map((field) => (
                   <div
@@ -112,7 +112,7 @@ const PaymentPage = () => {
                   </div>
                 ))}
               </div>
-              <div className="border border-ds-accent bg-ds-accent-softer px-7 py-9 sm:px-10 sm:py-12">
+              <div className="card-flat p-7">
                 <Skeleton className="h-4 w-24" />
                 <Skeleton className="mt-4 h-20 w-40 sm:h-24" />
                 <Skeleton className="mt-3 h-4 w-48" />
@@ -129,71 +129,69 @@ const PaymentPage = () => {
   return (
     <MarketingPage>
       <Seo {...PAGE_SEO.payment} />
-      <div className="pb-20 sm:pb-24">
-        <div className="mx-auto w-full max-w-3xl px-5 sm:px-8 lg:px-10">
+      <div className="py-16 sm:py-20">
+        <div className="mx-auto w-full max-w-4xl px-5 sm:px-8 lg:px-10">
           <Link
             to="/"
-            className="mono-tag-sm inline-flex min-h-control items-center gap-2 text-ds-text-muted hover:text-ds-text"
+            className="label-caps inline-flex min-h-control items-center gap-2 text-ds-text-muted hover:text-ds-text"
           >
-            <ArrowLeft className="h-3 w-3" aria-hidden="true" /> Back to Home
+            <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" /> Back to Home
           </Link>
 
-          <div className="mt-8">
-            <span className="mono-tag inline-flex items-center gap-3 text-ds-positive">
-              <CheckCircle2 className="h-4 w-4" aria-hidden="true" /> You’re on the roster
+          <div className="mt-6">
+            <span className="inline-flex items-center gap-2 rounded-ds-sm border-rule border-ds-border-strong bg-ds-positive px-3.5 py-1.5 text-ds-on-accent">
+              <CheckCircle2 className="h-4 w-4" aria-hidden="true" />
+              <span className="label-caps">You’re on the roster</span>
             </span>
-            <h1 className="editorial-display editorial-display-tight mt-5 text-5xl text-ds-text sm:text-6xl lg:text-7xl">
+            <h1 className="display mt-6 text-4xl text-ds-text sm:text-5xl lg:text-6xl">
               <SplitText text="Sign-up complete." splitType="words" delay={70} />
             </h1>
-            <p className="editorial-body mt-5 max-w-xl text-lg text-ds-text-muted">
+            <p className="body-copy mt-5 max-w-xl text-lg text-ds-text-muted">
               Thanks for signing up for SETX Football Camp. See you on the field.
             </p>
           </div>
 
-          <AnimatedContent as="div" className="mt-14 space-y-7" distance={40} duration={0.7}>
-            <section className="relative border border-ds-border bg-ds-surface p-7 sm:p-9">
-              <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-ds-accent" />
-              <span className="mono-tag text-ds-accent-bright">Sign-Up Summary</span>
-              <div className="mt-5">
-                {SUMMARY_FIELDS.map(({ label, key, format }) => (
-                  <SummaryRow
-                    key={key}
-                    label={label}
-                    value={format ? format(registration[key]) : registration[key]}
-                  />
-                ))}
-              </div>
-            </section>
+          <AnimatedContent as="div" className="mt-10 space-y-6" distance={40} duration={0.7}>
+            <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:items-start">
+              <section className="card p-7">
+                <span className="label-caps text-ds-accent-bright">Sign-Up Summary</span>
+                <div className="mt-4">
+                  {SUMMARY_FIELDS.map(({ label, key, format }) => (
+                    <SummaryRow
+                      key={key}
+                      label={label}
+                      value={format ? format(registration[key]) : registration[key]}
+                    />
+                  ))}
+                </div>
+              </section>
 
-            <section className="relative overflow-hidden border border-ds-accent bg-ds-accent-softer">
-              <span aria-hidden="true" className="absolute inset-y-0 left-0 w-1 bg-ds-accent" />
-              <div className="px-7 py-9 sm:px-10 sm:py-12">
-                <span className="mono-tag text-ds-accent-bright">Total Due</span>
+              <section className="rounded-ds-lg border-rule border-ds-border-strong bg-ds-accent p-7 text-ds-on-accent shadow-hard">
+                <span className="label-caps">Total Due</span>
                 <CountUp
                   as="p"
                   to={totalAmount}
                   prefix="$"
                   duration={1.4}
-                  className="editorial-display mt-4 text-7xl text-ds-accent-bright sm:text-8xl"
+                  className="numeral mt-3 text-[4.5rem] sm:text-[5.5rem]"
                 />
-                <p className="mono-tag-sm mt-3 text-ds-text-muted">
+                <p className="body-copy mt-2 text-sm">
                   ${SHIRT_PRICE} per shirt × {registration.shirt_quantity} shirt
                   {registration.shirt_quantity !== 1 ? "s" : ""}
                 </p>
 
-                <div className="mt-8 border border-ds-border bg-ds-bg p-5 sm:p-7">
-                  <span className="mono-tag-sm text-ds-text-faint">
-                    Send payment via CashApp to
-                  </span>
-                  <div className="mt-4 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
-                    <span className="editorial-display text-3xl text-ds-positive sm:text-4xl">
-                      ${CASHAPP_USERNAME}
-                    </span>
+                <div
+                  data-surface="paper"
+                  className="mt-6 rounded-ds-md border-rule border-ds-border-strong bg-ds-bg-elevated p-5 text-ds-text"
+                >
+                  <span className="label-caps text-ds-text-muted">Send payment via CashApp to</span>
+                  <div className="mt-3 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+                    <span className="numeral text-4xl text-ds-text">${CASHAPP_USERNAME}</span>
                     <button
                       type="button"
                       onClick={copyToClipboard}
                       aria-label={copied ? "Copied to Clipboard" : "Copy CashApp Username"}
-                      className={actionClass({ tone: "secondary" })}
+                      className={actionClass({ tone: "outline", size: "sm" })}
                     >
                       {copied ? (
                         <Check className="h-3.5 w-3.5" aria-hidden="true" />
@@ -204,15 +202,15 @@ const PaymentPage = () => {
                     </button>
                   </div>
                 </div>
-                <p className="mono-tag-sm mt-4 text-ds-text-muted">
-                  Include your child’s name in the payment note
+                <p className="body-copy mt-4 text-sm">
+                  Include your child&apos;s name in the payment note.
                 </p>
-              </div>
-            </section>
+              </section>
+            </div>
 
-            <section className="relative border border-ds-border bg-ds-surface p-7 sm:p-9">
-              <span className="mono-tag text-ds-accent-bright">Your CashApp Info</span>
-              <p className="editorial-body mt-4 text-[15px] text-ds-text-muted">
+            <section className="card-flat p-7">
+              <span className="label-caps text-ds-accent-bright">Your CashApp Info</span>
+              <p className="body-copy mt-3 text-[15px] text-ds-text-muted">
                 Add your CashApp username or email so we can match your payment to your sign-up.
               </p>
 
@@ -237,7 +235,7 @@ const PaymentPage = () => {
                   onClick={handleSaveCashApp}
                   disabled={saved || !cashappUsername.trim() || saving}
                   aria-busy={saving}
-                  className={actionClass({ size: "lg" })}
+                  className={actionClass({ tone: "navy" })}
                 >
                   {saving ? "Saving…" : saved ? "Saved" : "Save"}
                 </button>
@@ -253,11 +251,11 @@ const PaymentPage = () => {
             </section>
 
             <div className="text-center">
-              <Link to="/auth" className={actionClass({ tone: "secondary", size: "lg" })}>
+              <Link to="/auth" className={actionClass({ tone: "outline", size: "lg" })}>
                 Create an Account to Track Sign-Ups
               </Link>
-              <p className="mono-tag-sm mt-4 text-ds-text-faint">
-                Use the same email to track your registration
+              <p className="body-copy mt-4 text-sm text-ds-text-faint">
+                Use the same email to track your registration.
               </p>
             </div>
           </AnimatedContent>

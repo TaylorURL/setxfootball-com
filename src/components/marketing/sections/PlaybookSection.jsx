@@ -1,55 +1,53 @@
+// The playbook sits on navy: a yard line under the heading, and the three steps as white cards with their number and their mark.
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
 import { PLAYBOOK } from "../../../content/campContent";
 import { surfaceProps } from "../surface";
-import { SplitText, DecryptedText, CountUp } from "../../reactbits";
+import { SplitText, CountUp } from "../../reactbits";
+import CampIcon from "../../ui/CampIcon";
 
-const PlaybookSection = ({ surface }) => (
+const PlaybookSection = ({ surface = "navy" }) => (
   <section
     {...surfaceProps(surface)}
-    className="surface-seam relative border-b border-ds-border bg-ds-bg-elevated py-24 sm:py-32 lg:py-40"
+    className="relative overflow-hidden bg-ds-bg py-16 sm:py-20 lg:py-24"
   >
-    <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
+    <div className="mx-auto w-full max-w-[1160px] px-6 sm:px-10 lg:px-16">
       <Reveal>
         <SectionIntro
           eyebrow="How It Works"
           title={
             <SplitText
-              text="From signup to sideline in three steps."
+              text="From sign-up to sideline in three steps."
               splitType="words"
               delay={55}
             />
           }
         >
-          Three steps from the couch to the field. No payment due until after you’ve signed up.
+          Three steps from the couch to the field. Nothing is due until after you&apos;ve signed up.
         </SectionIntro>
       </Reveal>
 
-      <div className="mt-20 grid grid-cols-1 gap-x-10 gap-y-16 border-t border-ds-border pt-16 lg:grid-cols-3">
+      <div aria-hidden="true" className="yard-line mt-12" />
+
+      <div className="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-3">
         {PLAYBOOK.map((play, index) => (
-          <Reveal key={play.title} variant="up" delay={index + 1}>
-            <div className="group grid grid-cols-[auto_1fr] gap-x-6">
-              <CountUp
-                to={index + 1}
-                from={0}
-                duration={0.9 + index * 0.2}
-                className="editorial-display text-[5rem] leading-none text-ds-accent-bright transition-transform duration-state ease-out group-hover:-translate-y-1 sm:text-[6rem]"
-              />
-              <div className="pt-2">
-                <DecryptedText
-                  text={`Step ${index + 1}`}
-                  className="mono-tag-sm text-ds-text-faint"
+          <Reveal key={play.title} variant="up" delay={index + 1} className="flex">
+            <article
+              data-surface="paper"
+              className="card group flex w-full flex-col p-7 text-ds-text sm:p-8"
+            >
+              <div className="flex items-center justify-between gap-4">
+                <CountUp
+                  to={index + 1}
+                  from={0}
+                  duration={0.9 + index * 0.2}
+                  className="numeral text-[3.5rem] text-ds-accent transition-transform duration-state ease-out group-hover:-translate-y-1"
                 />
-                <h3 className="editorial-display mt-3 text-3xl text-ds-text sm:text-4xl">
-                  {play.title}
-                </h3>
-                <p className="editorial-body mt-4 text-[15px] text-ds-text-muted">{play.body}</p>
-                <play.icon
-                  className="mt-4 h-5 w-5 text-ds-text-faint group-hover:text-ds-accent-bright"
-                  aria-hidden="true"
-                />
+                <CampIcon name={play.icon} size={48} />
               </div>
-            </div>
+              <h3 className="display mt-4 text-2xl text-ds-text">{play.title}</h3>
+              <p className="body-copy mt-3 text-[15px] text-ds-text-muted">{play.body}</p>
+            </article>
           </Reveal>
         ))}
       </div>

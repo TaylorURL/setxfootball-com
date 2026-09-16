@@ -65,10 +65,10 @@ const RELATION_OPTIONS = EMERGENCY_RELATIONS.map((relation) => ({
 const AWAITED = {};
 
 const InfoGroup = ({ icon: Icon, title, children }) => (
-  <div className="left-rule-accent pl-4">
+  <div className="rounded-ds-md border-rule border-ds-border-strong bg-ds-bg p-4">
     <div className="flex items-center gap-2">
       <Icon className="h-3.5 w-3.5 text-ds-accent-bright" aria-hidden="true" />
-      <span className="mono-tag-sm text-ds-text-faint">{title}</span>
+      <span className="label-caps text-ds-accent-bright">{title}</span>
     </div>
     <div className="mt-3 space-y-2">{children}</div>
   </div>
@@ -94,10 +94,8 @@ const StatusPill = ({ paid, loading }) =>
     <Skeleton className="h-[30px] w-[92px]" />
   ) : (
     <span
-      className={`mono-tag-sm inline-flex items-center gap-2 border px-3 py-2 ${
-        paid
-          ? "border-ds-positive/40 bg-ds-positive-soft text-ds-positive"
-          : "border-ds-warning/40 bg-ds-warning-soft text-ds-warning"
+      className={`label-caps inline-flex items-center gap-2 rounded-ds-sm border-rule border-ds-border-strong px-3 py-1.5 ${
+        paid ? "bg-ds-positive text-ds-on-accent" : "bg-ds-gold text-ds-on-gold"
       }`}
     >
       {paid ? "Paid" : "Pending"}
@@ -116,11 +114,10 @@ const CardHeader = ({
   onEdit,
   onDelete,
 }) => (
-  <div className="relative flex flex-col gap-5 border-b border-ds-border bg-ds-surface-2 p-6 sm:flex-row sm:items-end sm:justify-between">
-    <span aria-hidden="true" className="absolute inset-x-0 top-0 h-px bg-ds-accent" />
+  <div className="relative flex flex-col gap-5 rounded-t-[20px] border-b-rule border-ds-border-strong bg-ds-bg-recessed p-6 sm:flex-row sm:items-end sm:justify-between">
     <div className="pb-1">
-      <span className="mono-tag-sm text-ds-text-faint">Camper</span>
-      <h3 className="editorial-display mt-2 text-2xl text-ds-text sm:text-3xl">
+      <span className="label-caps text-ds-text-muted">Camper</span>
+      <h3 className="display mt-2 text-2xl text-ds-text sm:text-3xl">
         {loading ? (
           <Skeleton as="span" className="inline-block h-[0.7em] w-48 align-middle" />
         ) : isEditing ? (
@@ -129,7 +126,7 @@ const CardHeader = ({
           reg.kid_name
         )}
       </h3>
-      <span className="mono-tag-sm mt-2 inline-block text-ds-text-faint">
+      <span className="body-copy mt-2 inline-block text-sm text-ds-text-faint">
         Signed up{" "}
         {loading ? (
           <Skeleton as="span" className="inline-block h-[0.7em] w-28 align-middle" />
@@ -160,7 +157,7 @@ const CardHeader = ({
           <button
             type="button"
             onClick={onCancel}
-            className={actionClass({ tone: "secondary", size: "sm" })}
+            className={actionClass({ tone: "outline", size: "sm" })}
           >
             <X className="h-3.5 w-3.5" aria-hidden="true" /> Cancel
           </button>
@@ -171,7 +168,7 @@ const CardHeader = ({
             <button
               type="button"
               onClick={onEdit}
-              className={actionClass({ tone: "secondary", size: "sm" })}
+              className={actionClass({ tone: "outline", size: "sm" })}
             >
               <Pencil className="h-3.5 w-3.5" aria-hidden="true" /> Edit
             </button>
@@ -215,7 +212,7 @@ const RegistrationCard = ({
   const daysRemaining = loading ? 0 : RegistrationService.getDaysRemaining(reg);
 
   return (
-    <SpotlightCard as="article" className="border border-ds-border bg-ds-surface" size={420}>
+    <SpotlightCard as="article" className="card overflow-hidden" size={420}>
       <CardHeader
         reg={reg}
         loading={loading}
@@ -435,24 +432,24 @@ const RegistrationCard = ({
 };
 
 const DashboardHeader = () => (
-  <header className="border-b border-ds-border pb-8">
-    <span className="mono-tag inline-flex items-center gap-3 text-ds-accent-bright">
+  <header>
+    <span className="eyebrow">
       <Trophy className="h-3.5 w-3.5" aria-hidden="true" /> My Roster
     </span>
-    <h1 className="editorial-display editorial-display-tight mt-5 text-4xl text-ds-text sm:text-5xl lg:text-6xl">
+    <h1 className="display mt-6 text-4xl text-ds-text sm:text-5xl lg:text-6xl">
       <SplitText text="My Dashboard." splitType="chars" delay={35} />
     </h1>
-    <p className="editorial-body mt-4 max-w-measure text-lg text-ds-text-muted">
+    <p className="body-copy mt-4 max-w-measure text-lg text-ds-text-muted">
       View and manage your camp sign-ups.
     </p>
   </header>
 );
 
 const EmptyDashboard = () => (
-  <div className="mt-12 border border-dashed border-ds-border-strong bg-ds-surface p-12 text-center">
+  <div className="mt-10 rounded-ds-lg border-rule border-dashed border-ds-border-strong bg-ds-bg-elevated p-12 text-center">
     <Inbox className="mx-auto h-7 w-7 text-ds-text-faint" aria-hidden="true" />
-    <h2 className="editorial-display mt-5 text-3xl text-ds-text">Nothing on your roster</h2>
-    <p className="editorial-body mx-auto mt-3 max-w-md text-ds-text-muted">
+    <h2 className="display mt-5 text-3xl text-ds-text">Nothing on your roster</h2>
+    <p className="body-copy mx-auto mt-3 max-w-md text-ds-text-muted">
       Sign a camper up and they are on the roster straight away. Shirt orders and payment status
       show here once they are.
     </p>
@@ -565,7 +562,7 @@ const Dashboard = () => {
   return (
     <DashboardShell active="dashboard">
       <Seo {...PAGE_SEO.dashboard} />
-      <div className="mx-auto w-full max-w-[1440px] px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
+      <div className="mx-auto w-full max-w-[1160px] px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
         <DashboardHeader />
 
         <div role="status" aria-live="polite">
