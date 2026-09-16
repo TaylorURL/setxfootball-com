@@ -198,8 +198,8 @@ const DesignPage = () => (
     <Section>
       <Reveal className="mb-10">
         <SectionIntro eyebrow="The Palette" title="Red, white and blue.">
-          Three colors, each with one job. The icon set shares the navy, so the marks and the page
-          read as one.
+          Three colors and one tint, each with one job. The icon set shares the navy, so the marks
+          and the page read as one.
         </SectionIntro>
       </Reveal>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
