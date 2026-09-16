@@ -25,20 +25,14 @@ const SectionIntro = ({
   return (
     <div className={clsx(centered ? "text-center" : "text-left", className)}>
       {(eyebrow || badge) && (
-        <div
-          className={clsx(
-            "mono-tag mb-6 inline-flex items-center gap-3 text-ds-accent-bright",
-            centered && "justify-center",
-          )}
-        >
-          <span aria-hidden="true" className="inline-block h-px w-10 bg-ds-accent" />
-          {badge || eyebrow}
+        <div className={clsx("mb-6", centered && "flex justify-center")}>
+          <span className="eyebrow">{badge || eyebrow}</span>
         </div>
       )}
       <Heading
         className={clsx(
-          "editorial-display editorial-display-tight text-ds-text",
-          "text-[2.5rem] sm:text-[3.5rem] lg:text-[4.5rem]",
+          "display text-ds-text",
+          "text-[2.25rem] sm:text-[2.75rem] lg:text-[3.25rem]",
         )}
       >
         {title}
@@ -46,7 +40,7 @@ const SectionIntro = ({
       {children && (
         <p
           className={clsx(
-            "editorial-body mt-6 text-lg text-ds-text-muted sm:text-xl",
+            "body-copy mt-5 text-base text-ds-text-muted sm:text-lg",
             "max-w-2xl",
             centered && "mx-auto",
           )}

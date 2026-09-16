@@ -18,7 +18,7 @@ const ProtectedRoute = ({ children, requireStaff = false }) => {
     return (
       <LoadingRegion
         label="Checking your sign-in"
-        className="mx-auto w-full max-w-[1440px] px-5 py-10 sm:px-8 sm:py-14 lg:px-10"
+        className="mx-auto w-full max-w-[1160px] px-5 py-10 sm:px-8 sm:py-14 lg:px-10"
       >
         <Skeleton className="h-4 w-28" />
         <Skeleton className="mt-5 h-12 w-64 sm:h-14 lg:h-16" />

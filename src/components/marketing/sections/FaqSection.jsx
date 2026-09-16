@@ -8,7 +8,6 @@
  * JavaScript, the browser's own find reaches inside a shut one, and a crawler
  * reads the answer whether the panel is open or not.
  */
-import { HelpCircle } from "lucide-react";
 import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
 import { FAQ } from "../../../content/campContent";
@@ -19,20 +18,13 @@ import { faqPage } from "../../seo/structuredData";
 
 const FAQ_MARKUP = faqPage(FAQ);
 
-const FaqSection = ({ surface = "light" }) => (
-  <section
-    {...surfaceProps(surface)}
-    className="surface-seam relative border-b border-ds-border bg-ds-bg py-24 sm:py-32 lg:py-40"
-  >
+const FaqSection = ({ surface }) => (
+  <section {...surfaceProps(surface)} className="relative bg-ds-bg py-16 sm:py-20 lg:py-24">
     <JsonLd data={FAQ_MARKUP} />
-    <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
+    <div className="mx-auto w-full max-w-[1160px] px-6 sm:px-10 lg:px-16">
       <Reveal>
         <SectionIntro
-          badge={
-            <span className="inline-flex items-center gap-2">
-              <HelpCircle className="h-3.5 w-3.5" aria-hidden="true" /> Common Questions
-            </span>
-          }
+          eyebrow="Common Questions"
           title={<SplitText text="What parents ask us." splitType="words" delay={55} />}
         >
           Everything a family needs before the first whistle. Anything still unanswered, call the
@@ -40,23 +32,34 @@ const FaqSection = ({ surface = "light" }) => (
         </SectionIntro>
       </Reveal>
 
-      <div className="mt-16 max-w-3xl border-t border-ds-border">
+      <div className="mt-12 max-w-3xl space-y-3">
         {FAQ.map(({ question, answer }, index) => (
           <Reveal key={question} variant="up" delay={index + 1}>
-            <details className="group border-b border-ds-border">
-              <summary className="control flex cursor-pointer list-none items-start gap-4 py-6">
-                <span aria-hidden="true" className="mono-tag-sm mt-1 text-ds-accent-bright">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <h3 className="editorial-display flex-1 text-xl text-ds-text sm:text-2xl">
-                  {question}
-                </h3>
+            <details className="card-flat group open:shadow-hard">
+              <summary className="control flex cursor-pointer list-none items-center gap-4 px-5 py-4 sm:px-6">
                 <span
                   aria-hidden="true"
-                  className="mt-2 h-px w-4 shrink-0 bg-ds-border-strong transition-colors group-open:bg-ds-accent"
-                />
+                  className="numeral inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-ds-sm border-rule border-ds-border-strong bg-ds-bg-elevated text-lg text-ds-accent transition-colors group-open:bg-ds-accent group-open:text-ds-on-accent"
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3 className="heading flex-1 text-lg text-ds-text sm:text-[22px]">{question}</h3>
+                <span
+                  aria-hidden="true"
+                  className="label-caps shrink-0 text-ds-text-faint group-open:hidden"
+                >
+                  Open
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="label-caps hidden shrink-0 text-ds-accent-bright group-open:inline"
+                >
+                  Close
+                </span>
               </summary>
-              <p className="editorial-body max-w-2xl pb-7 pl-11 text-ds-text-muted">{answer}</p>
+              <p className="body-copy max-w-2xl px-5 pb-6 pl-[4.75rem] text-ds-text-muted sm:px-6 sm:pl-[5rem]">
+                {answer}
+              </p>
             </details>
           </Reveal>
         ))}

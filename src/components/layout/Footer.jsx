@@ -1,6 +1,7 @@
 /**
- * The site footer: a closing line, the ways to reach the camp, and the legal
- * links.
+ * The site footer: the end-zone stripe, a closing line, the three camp facts
+ * with their marks, the ways to reach the camp, and the legal links. It is
+ * the one ink band every page ends on.
  *
  * The page index lives in the bar's directory panel rather than here, so the
  * footer closes the page instead of repeating the navigation.
@@ -15,9 +16,10 @@
  *   rather than the page body's.
  */
 import { Link } from "react-router-dom";
-import { MapPin, Phone, Mail, Calendar, Users, Shirt, ArrowUpRight } from "lucide-react";
+import { MapPin, Phone, Mail } from "lucide-react";
 import { REGISTER_PATH } from "./navLinks";
 import { actionClass } from "../ui/actionClass";
+import CampIcon from "../ui/CampIcon";
 import { CAMP_PHONE, CAMP_EMAIL, CAMP_LOCALITY, CAMP_SEASON } from "../../utils/constants";
 import { SplitText } from "../reactbits";
 import { getCurrentYear } from "../../utils/helpers";
@@ -29,42 +31,45 @@ const CONTACTS = [
 ];
 
 const CAMP_FACTS = [
-  { icon: Calendar, title: CAMP_SEASON, subtitle: "Two half-day sessions" },
-  { icon: Users, title: "Ages 5 to 12", subtitle: "All skill levels welcome" },
-  { icon: Shirt, title: "$5 per shirt", subtitle: "Includes drinks and snacks" },
+  { icon: "calendar", title: CAMP_SEASON, subtitle: "Two half-day sessions" },
+  { icon: "field", title: `${CAMP_LOCALITY}, TX`, subtitle: "Liberty County" },
+  { icon: "american-football", title: "Ages 5 to 12", subtitle: "No tryouts" },
 ];
 
 const Footer = ({ children }) => (
-  <footer className="relative border-t border-ds-border bg-ds-bg">
-    <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
-      <div className="grid grid-cols-1 gap-10 border-b border-ds-border py-16 lg:grid-cols-[1.4fr_1fr] lg:py-20">
+  <footer data-surface="navy" className="relative bg-ds-bg text-ds-text">
+    <div aria-hidden="true" className="end-zone" />
+    <div className="mx-auto w-full max-w-[1160px] px-6 sm:px-10 lg:px-16">
+      <div className="grid grid-cols-1 gap-12 py-16 lg:grid-cols-[1.3fr_1fr] lg:items-end lg:gap-16 lg:py-20">
         <div>
-          <span className="mono-tag inline-flex items-center gap-2 text-ds-accent-bright">
-            <span aria-hidden="true" className="inline-block h-px w-4 bg-ds-accent" />
-            SETX Youth Football Camp
-          </span>
-          <p className="editorial-display editorial-display-tight mt-8 text-4xl text-ds-text sm:text-5xl lg:text-6xl">
+          <span className="label-caps text-ds-gold">SETX Youth Football Camp</span>
+          <p className="display mt-5 text-3xl sm:text-4xl lg:text-5xl">
             <SplitText text="Built for our community." splitType="words" delay={45} />
             <br />
-            <span className="text-ds-text-faint">Open to every kid.</span>
+            Open to every kid.
           </p>
           <Link to={REGISTER_PATH} className={actionClass({ className: "mt-8" })}>
-            Sign Up Your Camper <ArrowUpRight className="h-3.5 w-3.5" aria-hidden="true" />
+            Sign Up Your Camper
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 lg:gap-6">
-          {CAMP_FACTS.map(({ icon: Icon, title, subtitle }) => (
-            <div key={title} className="left-rule-accent pl-4">
-              <Icon className="h-4 w-4 text-ds-accent-bright" aria-hidden="true" />
-              <p className="editorial-display mt-2 text-2xl text-ds-text">{title}</p>
-              <p className="mono-tag-sm mt-2 text-ds-text-faint">{subtitle}</p>
+        <div className="flex flex-col gap-3">
+          {CAMP_FACTS.map(({ icon, title, subtitle }) => (
+            <div
+              key={title}
+              className="flex items-center gap-4 rounded-ds-md border-rule border-ds-surface-3 bg-ds-surface px-5 py-3"
+            >
+              <CampIcon name={icon} size={36} />
+              <div>
+                <p className="numeral text-2xl text-ds-text">{title}</p>
+                <p className="body-copy text-sm text-ds-text-muted">{subtitle}</p>
+              </div>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="flex flex-col gap-6 py-10 sm:flex-row sm:items-center sm:justify-between">
+      <div className="flex flex-col gap-6 border-t-rule border-ds-surface-3 py-8 sm:flex-row sm:items-center sm:justify-between">
         {/* `address`, because this is the camp's own contact block rather than
             a list of links: it is what a reader, a screen reader and a crawler
             each look for to find who stands behind the site. */}
@@ -74,9 +79,9 @@ const Footer = ({ children }) => (
               <a
                 key={label}
                 href={href}
-                className="inline-flex min-h-control items-center gap-3 text-[15px] text-ds-text-muted hover:text-ds-text"
+                className="inline-flex min-h-control items-center gap-3 text-[15px] text-ds-text-muted hover:text-ds-gold"
               >
-                <Icon className="h-3.5 w-3.5 shrink-0 text-ds-accent-bright" aria-hidden="true" />
+                <Icon className="h-4 w-4 shrink-0 text-ds-gold" aria-hidden="true" />
                 <span className="break-all">{label}</span>
               </a>
             ) : (
@@ -84,41 +89,36 @@ const Footer = ({ children }) => (
                 key={label}
                 className="inline-flex min-h-control items-center gap-3 text-[15px] text-ds-text-muted"
               >
-                <Icon className="h-3.5 w-3.5 shrink-0 text-ds-accent-bright" aria-hidden="true" />
+                <Icon className="h-4 w-4 shrink-0 text-ds-gold" aria-hidden="true" />
                 {label}
               </p>
             ),
           )}
         </address>
+        <div className="flex items-center gap-5">
+          {[
+            ["/privacy", "Privacy"],
+            ["/terms", "Terms"],
+            ["/contact", "Contact"],
+          ].map(([to, label]) => (
+            <Link
+              key={to}
+              to={to}
+              className="label-caps inline-flex min-h-control items-center text-ds-text-muted hover:text-ds-gold"
+            >
+              {label}
+            </Link>
+          ))}
+        </div>
       </div>
 
-      <div className="flex flex-col items-start justify-between gap-4 border-t border-ds-border py-6 sm:flex-row sm:items-center">
+      <div className="border-t border-ds-border py-6">
         {/* The year is read at render time, so a document built in one year and
             read in the next carries the older one until the next build. The
             browser corrects it on load; this says so rather than logging it. */}
-        <span className="mono-tag-sm text-ds-text-faint" suppressHydrationWarning>
+        <span className="mono-tag text-ds-text-faint" suppressHydrationWarning>
           © {getCurrentYear()} · SETX Youth Football Camp · All rights reserved
         </span>
-        <div className="flex items-center gap-5">
-          <Link
-            to="/privacy"
-            className="mono-tag-sm inline-flex min-h-control items-center text-ds-text-muted hover:text-ds-text"
-          >
-            Privacy
-          </Link>
-          <Link
-            to="/terms"
-            className="mono-tag-sm inline-flex min-h-control items-center text-ds-text-muted hover:text-ds-text"
-          >
-            Terms
-          </Link>
-          <Link
-            to="/contact"
-            className="mono-tag-sm inline-flex min-h-control items-center text-ds-text-muted hover:text-ds-text"
-          >
-            Contact
-          </Link>
-        </div>
       </div>
     </div>
     {children}

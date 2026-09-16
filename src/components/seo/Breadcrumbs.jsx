@@ -10,7 +10,6 @@
  * moving through the page by keyboard or screen reader.
  */
 import { Link } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
 import { breadcrumbList } from "./structuredData";
 import JsonLd from "./JsonLd";
 
@@ -22,16 +21,16 @@ const Breadcrumbs = ({ label, to }) => {
   return (
     <>
       <JsonLd data={markup} />
-      <nav aria-label="Breadcrumb" className="border-b border-ds-border bg-ds-bg">
-        <div className="mx-auto w-full max-w-[1440px] px-5 py-4 sm:px-8 lg:px-10">
-          <ol className="mono-tag flex flex-wrap items-center gap-2 text-ds-text-muted">
+      <nav aria-label="Breadcrumb" className="bg-ds-bg-recessed">
+        <div className="mx-auto w-full max-w-[1160px] px-5 py-3 sm:px-8 lg:px-10">
+          <ol className="label-caps flex flex-wrap items-center gap-3 text-ds-text-muted">
             <li>
               <Link className="control hover:text-ds-accent-bright" to={HOME_CRUMB.to}>
                 {HOME_CRUMB.label}
               </Link>
             </li>
-            <li aria-hidden="true" className="flex items-center">
-              <ChevronRight className="h-3 w-3 text-ds-border-strong" />
+            <li aria-hidden="true" className="text-ds-text-faint">
+              /
             </li>
             <li aria-current="page" className="text-ds-text">
               {label}

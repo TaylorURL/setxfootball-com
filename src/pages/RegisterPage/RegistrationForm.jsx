@@ -56,20 +56,21 @@ const buildFormReset = () => ({
 });
 
 const StepHeader = ({ step, icon: Icon, title, aside }) => (
-  <header className="mb-8 flex items-end justify-between gap-4 border-b border-ds-border pb-5">
-    <div className="flex items-end gap-5">
-      <span className="editorial-display mono-num text-5xl leading-none text-ds-accent-bright sm:text-6xl">
-        {String(step).padStart(2, "0")}
+  <header className="mb-6 flex items-center justify-between gap-4">
+    <div className="flex items-center gap-4">
+      <span
+        aria-hidden="true"
+        className="numeral inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-ds-md border-rule border-ds-border-strong bg-ds-accent text-3xl text-ds-on-accent shadow-hard-sm"
+      >
+        {step}
       </span>
-      <div className="pb-1">
-        <span className="mono-tag-sm text-ds-text-faint">Step {step}</span>
-        <h2 className="editorial-display mt-2 flex items-center gap-3 text-2xl text-ds-text sm:text-3xl">
-          <Icon className="h-4 w-4 text-ds-text-muted" aria-hidden="true" />
-          {title}
-        </h2>
-      </div>
+      <h2 className="display flex items-center gap-3 text-2xl text-ds-text sm:text-3xl">
+        <span className="sr-only">Step {step}: </span>
+        {title}
+        <Icon className="h-5 w-5 text-ds-text-faint" aria-hidden="true" />
+      </h2>
     </div>
-    {aside && <div className="pb-2">{aside}</div>}
+    {aside && <div>{aside}</div>}
   </header>
 );
 
@@ -166,9 +167,7 @@ const RegistrationForm = () => {
   };
 
   return (
-    <div className="relative border border-ds-border bg-ds-surface">
-      <span aria-hidden="true" className="absolute inset-x-0 top-0 z-raised h-px bg-ds-accent" />
-
+    <div className="card relative">
       {/* A live region, so the outcome is announced rather than only painted. */}
       <div role="status" aria-live="polite" className={submitResult ? "p-7 pb-0" : undefined}>
         {submitResult && (
@@ -176,7 +175,7 @@ const RegistrationForm = () => {
         )}
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-14 p-7 md:p-10 lg:p-12">
+      <form onSubmit={handleSubmit} className="space-y-12 p-6 sm:p-8 lg:p-10">
         <fieldset>
           <StepHeader step={1} icon={Trophy} title="Camper" />
           <div className="grid gap-5 sm:grid-cols-2">
@@ -224,7 +223,7 @@ const RegistrationForm = () => {
             step={2}
             icon={Shirt}
             title="Shirts"
-            aside={<span className="mono-tag text-ds-accent-bright">${SHIRT_PRICE} each</span>}
+            aside={<span className="label-caps text-ds-accent-bright">${SHIRT_PRICE} each</span>}
           />
           <div className="space-y-3">
             {formData.shirts.map((shirt, index) => (
@@ -233,10 +232,10 @@ const RegistrationForm = () => {
                 ref={(node) => {
                   shirtRefs.current[shirt.id] = node;
                 }}
-                className="relative border border-ds-border bg-ds-bg p-5"
+                className="relative rounded-ds-md border-rule border-ds-border-strong bg-ds-bg p-5"
               >
                 <div className="mb-4 flex items-center justify-between">
-                  <span className="mono-tag text-ds-text">Shirt {index + 1}</span>
+                  <span className="text-[15px] font-bold text-ds-text">Shirt {index + 1}</span>
                   {formData.shirts.length > 1 && (
                     <IconButton
                       label={`Remove Shirt ${index + 1}`}
@@ -270,7 +269,7 @@ const RegistrationForm = () => {
                     aria-label={`Who Shirt ${index + 1} Is For`}
                     className="flex flex-col gap-2"
                   >
-                    <span className="inline-flex items-center gap-1 text-[12.5px] font-medium text-ds-text">
+                    <span className="label-caps inline-flex items-center gap-1 text-ds-text">
                       For
                     </span>
                     <SegmentedControl
@@ -387,7 +386,7 @@ const RegistrationForm = () => {
             step={5}
             icon={DollarSign}
             title="Payment Info"
-            aside={<span className="mono-tag-sm text-ds-text-faint">Optional</span>}
+            aside={<span className="label-caps text-ds-text-faint">Optional</span>}
           />
           <Field
             label="CashApp Username or Email"
@@ -403,19 +402,16 @@ const RegistrationForm = () => {
           </Field>
         </fieldset>
 
-        <div className="relative overflow-hidden border border-ds-accent bg-ds-accent-softer">
-          <span aria-hidden="true" className="absolute inset-y-0 left-0 w-1 bg-ds-accent" />
-          <div className="flex flex-col items-start justify-between gap-5 px-7 py-7 sm:flex-row sm:items-end">
+        <div className="rounded-ds-lg border-rule border-ds-border-strong bg-ds-gold text-ds-on-gold shadow-hard">
+          <div className="flex flex-col items-start justify-between gap-4 px-7 py-6 sm:flex-row sm:items-end">
             <div>
-              <span className="mono-tag text-ds-accent-bright">Total Due</span>
-              <p className="editorial-body mt-3 text-sm text-ds-text-muted">
+              <span className="label-caps">Total Due</span>
+              <p className="body-copy mt-2 text-sm">
                 {formData.shirts.length} shirt{formData.shirts.length !== 1 ? "s" : ""} × $
-                {SHIRT_PRICE} each
+                {SHIRT_PRICE} each, paid by CashApp after sign-up
               </p>
             </div>
-            <span className="editorial-display mono-num text-6xl text-ds-accent-bright sm:text-7xl">
-              ${totalCost}
-            </span>
+            <span className="numeral text-5xl sm:text-6xl">${totalCost}</span>
           </div>
         </div>
 
@@ -428,8 +424,8 @@ const RegistrationForm = () => {
           <ClipboardList className="h-4 w-4" aria-hidden="true" />
           {submitting ? "Submitting…" : "Complete Sign-Up"}
         </button>
-        <p className="mono-tag-sm text-center text-ds-text-faint">
-          Payment is collected after sign-up, so there is nothing to pay now
+        <p className="body-copy text-center text-sm text-ds-text-faint">
+          Payment is collected after sign-up, so there is nothing to pay now.
         </p>
       </form>
     </div>
