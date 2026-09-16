@@ -1,4 +1,6 @@
-// The one Supabase client for the app; the two services are its only importers.
+// The one Supabase client for the app. `getSupabase` is imported by the two
+// services and by nothing else. `hasStoredSession` below reads the browser and
+// makes no query, so the auth context calls it directly.
 //
 // The module is fetched on the first call rather than with the page. The client
 // and its auth, realtime and storage layers are about a third of the bundle,

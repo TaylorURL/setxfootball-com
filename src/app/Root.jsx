@@ -21,7 +21,7 @@ import ErrorBoundary from "./ErrorBoundary";
 import { SundayAnalyticsProvider } from "../library/sunday-analyzer";
 
 // One theme, deliberately: the surface below is locked to it.
-export const CAMP_THEME = "gray";
+const CAMP_THEME = "gray";
 
 const ANALYTICS_SITE_KEY = "sa_8ab80eead8d6ccdf704cc9193851da97";
 

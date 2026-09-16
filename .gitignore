@@ -47,13 +47,10 @@ INTELLIGENCE.md
 id_rsa
 id_ed25519
 
-# Vercel CLI link state (project/org ids) is per-machine.
-.vercel/*
-# The project link is the repository saying where it deploys, and it carries
-# no credential: project and team id only.
-!.vercel/project.json
+# Vercel CLI link state is per-machine, and the whole directory stays out of
+# the repository.
+.vercel/
 
 # Python bytecode
 __pycache__/
 *.pyc
-.vercel
