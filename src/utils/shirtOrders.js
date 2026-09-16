@@ -10,7 +10,7 @@
  */
 
 /** @enum {string} Who a shirt is for, as stored in the encoded string. */
-export const SHIRT_RECIPIENT_TYPES = { CAMPER: "Camper", FAMILY: "Family" };
+const SHIRT_RECIPIENT_TYPES = { CAMPER: "Camper", FAMILY: "Family" };
 
 /** Normalizes a recipient-type token (form value or stored label) to its label. */
 const toRecipientTypeLabel = (type) =>

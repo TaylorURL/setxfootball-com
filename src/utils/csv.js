@@ -13,7 +13,7 @@ const FORMULA_TRIGGER_PATTERN = /^[=+\-@\t\r]/;
  * @param {*} value
  * @returns {string}
  */
-export const sanitizeCsvCell = (value) => {
+const sanitizeCsvCell = (value) => {
   const text = value == null ? "" : String(value);
   const guarded = FORMULA_TRIGGER_PATTERN.test(text) ? `'${text}` : text;
   return `"${guarded.replace(/"/g, '""')}"`;
