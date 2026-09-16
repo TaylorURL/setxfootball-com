@@ -25,9 +25,27 @@ const LOGO_WEBP = `${logoWebp96} 96w, ${logoWebp192} 192w`;
 const LOGO_PNG = `${logo96} 96w, ${logo192} 192w`;
 
 const SIZES = {
-  sm: { tile: "h-9 w-9", img: "h-7 w-7", word: "text-[15px]", sub: "text-[9px]", gap: "ml-3" },
-  md: { tile: "h-11 w-11", img: "h-9 w-9", word: "text-[16px]", sub: "text-[10px]", gap: "ml-4" },
-  lg: { tile: "h-16 w-16", img: "h-12 w-12", word: "text-[16px]", sub: "text-[10px]", gap: "mt-3" },
+  sm: {
+    tile: "h-10 w-10 rounded-[8px]",
+    img: "h-7 w-7",
+    word: "text-[15px]",
+    sub: "text-[10px]",
+    gap: "ml-3",
+  },
+  md: {
+    tile: "h-12 w-12 rounded-[10px]",
+    img: "h-9 w-9",
+    word: "text-[16px]",
+    sub: "text-[10px]",
+    gap: "ml-3.5",
+  },
+  lg: {
+    tile: "h-16 w-16 rounded-[12px]",
+    img: "h-12 w-12",
+    word: "text-[18px]",
+    sub: "text-[11px]",
+    gap: "mt-3",
+  },
 };
 
 const BrandMark = ({
@@ -48,7 +66,7 @@ const BrandMark = ({
     <>
       <span
         className={clsx(
-          "relative inline-flex shrink-0 items-center justify-center overflow-hidden",
+          "relative inline-flex shrink-0 items-center justify-center overflow-hidden border-rule border-ds-border-strong bg-[var(--white)]",
           scale.tile,
         )}
       >
@@ -68,15 +86,14 @@ const BrandMark = ({
       <span className={clsx(vertical ? "text-center" : "text-left", scale.gap)}>
         <span
           className={clsx(
-            "block font-extrabold uppercase tracking-[-0.01em] leading-none",
+            "block font-black uppercase leading-none tracking-[-0.01em]",
             scale.word,
             wordTone,
           )}
         >
           SETX Football
         </span>
-        <span className={clsx("mono-tag-sm mt-2 inline-flex items-center gap-2", subTone)}>
-          <span aria-hidden="true" className="inline-block h-px w-3 bg-ds-accent" />
+        <span className={clsx("mono-tag mt-1.5 block whitespace-nowrap", scale.sub, subTone)}>
           {subtitle}
         </span>
       </span>

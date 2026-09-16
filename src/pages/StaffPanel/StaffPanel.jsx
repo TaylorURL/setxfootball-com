@@ -73,19 +73,19 @@ const PAYMENT_FILTER_OPTIONS = [
 ];
 
 const StatCard = ({ icon: Icon, label, value }) => (
-  <div className="left-rule-accent border border-ds-border bg-ds-surface px-5 py-5 pl-7">
-    <Icon className="h-3.5 w-3.5 text-ds-accent-bright" aria-hidden="true" />
+  <div className="card px-5 py-5">
+    <Icon className="h-4 w-4 text-ds-accent-bright" aria-hidden="true" />
     {typeof value === "number" ? (
       <CountUp
         as="p"
         to={value}
         duration={1.2}
-        className="editorial-display mt-3 text-3xl text-ds-text sm:text-4xl"
+        className="numeral mt-3 text-4xl text-ds-accent sm:text-5xl"
       />
     ) : (
-      <p className="editorial-display mono-num mt-3 text-3xl text-ds-text sm:text-4xl">{value}</p>
+      <p className="numeral mt-3 text-4xl text-ds-accent sm:text-5xl">{value}</p>
     )}
-    <p className="mono-tag-sm mt-2 text-ds-text-muted">{label}</p>
+    <p className="label-caps mt-2 text-ds-text-muted">{label}</p>
   </div>
 );
 
@@ -130,16 +130,16 @@ const StaffPanel = () => {
   return (
     <DashboardShell active="staff">
       <Seo {...PAGE_SEO.staff} />
-      <div className="mx-auto w-full max-w-[1440px] px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
-        <header className="flex flex-col gap-6 border-b border-ds-border pb-8 lg:flex-row lg:items-end lg:justify-between">
+      <div className="mx-auto w-full max-w-[1160px] px-5 py-10 sm:px-8 sm:py-14 lg:px-10">
+        <header className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <span className="mono-tag inline-flex items-center gap-3 text-ds-accent-bright">
+            <span className="eyebrow">
               <ShieldCheck className="h-3.5 w-3.5" aria-hidden="true" /> Staff Console
             </span>
-            <h1 className="editorial-display editorial-display-tight mt-5 text-4xl text-ds-text sm:text-5xl lg:text-6xl">
+            <h1 className="display mt-6 text-4xl text-ds-text sm:text-5xl lg:text-6xl">
               <SplitText text="Staff Panel." splitType="chars" delay={35} />
             </h1>
-            <p className="editorial-body mt-4 max-w-2xl text-lg text-ds-text-muted">
+            <p className="body-copy mt-4 max-w-2xl text-lg text-ds-text-muted">
               Manage camp sign-ups, payments, and shirt orders by season.
             </p>
           </div>
@@ -159,7 +159,7 @@ const StaffPanel = () => {
           ))}
         </div>
 
-        <div className="mt-8 border border-ds-border bg-ds-surface p-5">
+        <div className="card-flat mt-8 p-5">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
             <Field label="Search" className="sm:flex-1">
               <Input
@@ -196,10 +196,10 @@ const StaffPanel = () => {
             <StaffRegistrationsTable loading groups={[]} expandedRows={expandedRows} />
           </LoadingRegion>
         ) : grouped.length === 0 ? (
-          <div className="mt-8 border border-dashed border-ds-border-strong bg-ds-surface p-12 text-center">
+          <div className="mt-8 rounded-ds-lg border-rule border-dashed border-ds-border-strong bg-ds-bg-elevated p-12 text-center">
             <Inbox className="mx-auto h-7 w-7 text-ds-text-faint" aria-hidden="true" />
-            <h2 className="editorial-display mt-5 text-2xl text-ds-text">No sign-ups found</h2>
-            <p className="editorial-body mx-auto mt-3 max-w-md text-ds-text-muted">
+            <h2 className="display mt-5 text-2xl text-ds-text">No sign-ups found</h2>
+            <p className="body-copy mx-auto mt-3 max-w-md text-ds-text-muted">
               Nothing matches your filters for {selectedYear}.
             </p>
           </div>

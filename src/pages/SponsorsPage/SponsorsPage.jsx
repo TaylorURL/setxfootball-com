@@ -1,4 +1,4 @@
-// Sponsors go light: logos on paper read better than logos on coal.
+// Logos on paper, the sponsor callout on navy, then the join callout on paper.
 import MarketingPage from "../../components/layout/MarketingPage";
 import SponsorsSection from "../../components/marketing/sections/SponsorsSection";
 import JoinCallout from "../../components/marketing/sections/JoinCallout";
@@ -10,7 +10,7 @@ const SponsorsPage = () => (
   <MarketingPage>
     <Seo {...PAGE_SEO.sponsors} />
     <Breadcrumbs label="Sponsors" to="/sponsors" />
-    <SponsorsSection surface="light" />
+    <SponsorsSection />
     <JoinCallout />
   </MarketingPage>
 );

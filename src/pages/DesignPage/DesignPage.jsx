@@ -1,17 +1,8 @@
-// Each topic sits on the surface that flatters it: palette and principles on
-// paper, type and gear on dark.
+// The look-book: the palette, the three faces, the icon set, the gear, and
+// the rules behind them. Palette and type on ice, gear on navy, principles
+// on ice.
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { Palette, Shirt, Type, Sparkles, ArrowRight, Flag, Award, Heart } from "lucide-react";
-import {
-  Container,
-  Section,
-  Card,
-  Grid,
-  Text,
-  Eyebrow,
-  Badge,
-} from "@bradley-t-t/sunday-design-system";
 import MarketingPage from "../../components/layout/MarketingPage";
 import Reveal from "../../components/marketing/Reveal";
 import SectionIntro from "../../components/marketing/SectionIntro";
@@ -21,38 +12,32 @@ import { PAGE_SEO } from "../../components/seo/seoContent";
 import Breadcrumbs from "../../components/seo/Breadcrumbs";
 import { REGISTER_PATH } from "../../components/layout/navLinks";
 import { actionClass } from "../../components/ui/actionClass";
-import { Squares, TrueFocus } from "../../components/reactbits";
+import CampIcon, { ICONS } from "../../components/ui/CampIcon";
 
 const BRAND_COLORS = [
   {
-    name: "Camp Red",
-    token: "--ds-accent",
-    role: "The only hue in the system: CTAs, badges, every trim line",
-    onLight: false,
-  },
-  {
-    name: "Field Coal",
-    token: "--ds-text",
-    role: "Near-black canvas for the cinematic dark register",
-    onLight: false,
-  },
-  {
-    name: "Stadium Slate",
-    token: "--ds-text-muted",
-    role: "Mid-gray for body copy, mute states, and hairline rules",
-    onLight: false,
-  },
-  {
-    name: "Sideline Bone",
-    token: "--ds-bg",
-    role: "Off-white paper for the light register and long-form reads",
-    onLight: true,
-  },
-  {
-    name: "Hairline White",
+    name: "White",
     token: "--ds-bg-elevated",
-    role: "Pure white for cards on paper, text on accent, and edge highlights",
-    onLight: true,
+    role: "The ground. Every card, the bar, and the field lines.",
+    ink: "text-ds-text",
+  },
+  {
+    name: "Ice",
+    token: "--ds-bg",
+    role: "The page behind the cards, a step off white so the cards read as cards.",
+    ink: "text-ds-text",
+  },
+  {
+    name: "Navy",
+    token: "--ds-text",
+    role: "The voice. Headlines, rules, the scoreboard, the footer, and every icon's outline.",
+    ink: "text-ds-bg",
+  },
+  {
+    name: "Red",
+    token: "--ds-accent",
+    role: "The action. Every sign-up button, every price, and the ticket at the end of the page.",
+    ink: "text-ds-on-accent",
   },
 ];
 
@@ -66,41 +51,41 @@ const toHex = (value) => {
 
 const TYPE_SAMPLES = [
   {
-    family: "Oswald",
+    family: "Archivo Black",
     role: "Display and headings",
-    sample: "Where future champions are made.",
-    className: "editorial-display editorial-display-tight text-3xl sm:text-4xl",
+    sample: "Every kid plays.",
+    className: "display text-3xl sm:text-4xl",
   },
   {
     family: "Archivo",
     role: "Body and UI",
     sample:
       "Two days of fundamentals, teamwork, and fun for kids ages 5 to 12. Every camper gets a shirt, drinks, and snacks.",
-    className: "editorial-body text-base leading-relaxed",
+    className: "body-copy text-base",
   },
   {
-    family: "JetBrains Mono",
-    role: "Stat band and jersey numbers",
+    family: "Oswald",
+    role: "Numbers and scoreboards",
     sample: "AGES 5 to 12 · $5 · 2 DAYS",
-    className: "mono-tag-lg",
+    className: "numeral text-4xl text-ds-accent",
   },
 ];
 
 const GEAR_TILES = [
   {
-    icon: Shirt,
+    icon: "jersey",
     title: "The Camp Tee",
-    subtitle: "Camp red on coal",
+    subtitle: "Red on white",
     body: "Every camper gets one, yours to keep, registered or walk-on. Block lettering across the chest, season number tagged at the sleeve.",
   },
   {
-    icon: Flag,
+    icon: "goalpost",
     title: "Field Banners",
-    subtitle: "Yard-line accents",
-    body: "Sponsor banners line the camp red yard rule that runs every section of the field. Clean, varsity, no clutter.",
+    subtitle: "White yard lines",
+    body: "Sponsor banners line the field between the yard markers. Clean, varsity, no clutter.",
   },
   {
-    icon: Award,
+    icon: "referee-whistle",
     title: "Coach Whistles",
     subtitle: "Background-checked staff",
     body: "Issued only to coaches who have cleared a background check and arrived with coaching experience.",
@@ -109,23 +94,23 @@ const GEAR_TILES = [
 
 const DESIGN_PRINCIPLES = [
   {
-    icon: Heart,
+    icon: "stadium",
     title: "Community First",
     body: "Every design choice asks the same question: does it keep the camp open to every kid in Southeast Texas?",
   },
   {
-    icon: Sparkles,
-    title: "Monochrome with a Spark",
-    body: "A full neutral ramp plus one deliberate red accent, and nothing else. The kids bring the color.",
+    icon: "american-football",
+    title: "One Ink, One Set",
+    body: "Every icon carries the same navy outline as the type around it, so a mark and the page it sits on read as one piece.",
   },
   {
-    icon: Palette,
-    title: "Light and Dark, One Rhythm",
-    body: "The page breathes by alternating coal sections and paper sections, with the red staying the same on both surfaces.",
+    icon: "field",
+    title: "Red, White and Blue",
+    body: "The page breathes by moving between white sections and navy sections, with red for the action on both.",
   },
 ];
 
-const ColorSwatch = ({ name, token, role, onLight }) => {
+const ColorSwatch = ({ name, token, role, ink }) => {
   const swatchRef = useRef(null);
   const [hex, setHex] = useState("");
 
@@ -136,76 +121,57 @@ const ColorSwatch = ({ name, token, role, onLight }) => {
   }, [token]);
 
   return (
-    <Card variant="outline" padding="none" className="card-lift group relative overflow-hidden">
-      <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 z-raised h-0.5" />
+    <div className="card card-lift overflow-hidden">
       <div
         ref={swatchRef}
-        className="relative flex h-40 items-end p-5"
+        className="flex h-40 items-end border-b-rule border-ds-border-strong p-5"
         style={{ backgroundColor: `var(${token})` }}
       >
-        <div className={`flex flex-col gap-1 ${onLight ? "text-ds-text" : "text-ds-on-media"}`}>
-          <span className="editorial-display text-2xl leading-none">{name}</span>
-          <span className="mono-num text-[11px] uppercase tracking-[0.18em] opacity-80">
-            {hex || token}
-          </span>
+        <div className={`flex flex-col gap-1 ${ink}`}>
+          <span className="heading text-xl">{name}</span>
+          <span className="mono-tag opacity-80">{hex || token}</span>
         </div>
       </div>
-      <div className="p-4">
-        <Text size="xs" tone="muted">
-          {role}
-        </Text>
-      </div>
-    </Card>
+      <p className="body-copy p-4 text-sm text-ds-text-muted">{role}</p>
+    </div>
   );
 };
 
 const TypeSample = ({ family, role, sample, className }) => (
-  <Card variant="elevated" padding="lg" className="card-lift relative overflow-hidden">
-    <span aria-hidden="true" className="accent-edge absolute inset-y-0 left-0 w-0.5" />
-    <div className="mb-4 flex items-center justify-between gap-3">
-      <Eyebrow strong className="text-ds-accent-bright">
-        {family}
-      </Eyebrow>
-      <Badge tone="neutral" variant="soft" size="sm" className="uppercase tracking-[0.16em]">
-        {role}
-      </Badge>
+  <div className="card card-lift p-7">
+    <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <span className="label-caps text-ds-accent-bright">{family}</span>
+      <span className="mono-tag text-ds-text-faint">{role}</span>
     </div>
     <p className={`${className} text-ds-text`}>{sample}</p>
-  </Card>
+  </div>
 );
 
-const GearTile = ({ icon: Icon, title, subtitle, body }) => (
-  <Card variant="surface" padding="lg" interactive className="card-lift h-full">
-    <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-full bg-ds-accent-soft text-ds-accent-bright">
-      <Icon className="h-5 w-5" aria-hidden="true" />
-    </div>
-    <Text size="sm" weight="bold" className="uppercase tracking-[0.08em] text-ds-text">
-      {title}
-    </Text>
-    <Eyebrow className="mt-1">{subtitle}</Eyebrow>
-    <Text tone="muted" size="sm" className="mt-3">
-      {body}
-    </Text>
-  </Card>
+const GearTile = ({ icon, title, subtitle, body }) => (
+  <div data-surface="paper" className="card h-full p-7 text-ds-text">
+    <CampIcon name={icon} size={56} />
+    <h3 className="display mt-5 text-2xl text-ds-text">{title}</h3>
+    <p className="label-caps mt-1.5 text-ds-accent-bright">{subtitle}</p>
+    <p className="body-copy mt-3 text-[15px] text-ds-text-muted">{body}</p>
+  </div>
 );
 
-const PrincipleRow = ({ icon: Icon, title, body }) => (
-  <Card variant="outline" padding="lg" className="card-lift relative overflow-hidden">
-    <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 h-0.5" />
-    <div className="flex items-start gap-4">
-      <span className="brand-chip-shadow-sm inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ds-accent text-ds-on-accent ring-1 ring-ds-on-media-ring">
-        <Icon className="h-5 w-5" aria-hidden="true" />
-      </span>
-      <div>
-        <Text size="sm" weight="bold" className="uppercase tracking-[0.1em] text-ds-text">
-          {title}
-        </Text>
-        <Text tone="muted" size="sm" className="mt-2">
-          {body}
-        </Text>
-      </div>
-    </div>
-  </Card>
+const PrincipleRow = ({ icon, title, body }) => (
+  <div className="card card-lift h-full p-7">
+    <CampIcon name={icon} size={48} />
+    <h3 className="display mt-5 text-2xl text-ds-text">{title}</h3>
+    <p className="body-copy mt-2 text-[15px] text-ds-text-muted">{body}</p>
+  </div>
+);
+
+const Section = ({ surface, recessed, children }) => (
+  <section
+    data-surface={surface}
+    data-deferred=""
+    className={`${recessed ? "bg-ds-bg-recessed" : "bg-ds-bg"} py-16 sm:py-20 lg:py-24`}
+  >
+    <div className="mx-auto w-full max-w-[1160px] px-6 sm:px-10 lg:px-16">{children}</div>
+  </section>
 );
 
 const DesignPage = () => (
@@ -213,166 +179,124 @@ const DesignPage = () => (
     <Seo {...PAGE_SEO.design} />
     <Breadcrumbs label="Design" to="/design" />
 
-    <Section space="xl" className="relative overflow-hidden bg-ds-bg">
-      <div
-        aria-hidden="true"
-        className="absolute -top-24 right-0 h-80 w-80 rounded-full bg-ds-accent-soft blur-[140px]"
-      />
-      <div
-        aria-hidden="true"
-        className="absolute -bottom-24 left-0 h-72 w-72 rounded-full bg-ds-surface-2 blur-[140px] opacity-60"
-      />
-      <Squares
-        className="absolute inset-0 opacity-60"
-        size={60}
-        speed={0.22}
-        lineColor="var(--ds-border)"
-      />
-      <Container size="xl" className="relative">
+    <section data-surface="navy" className="relative overflow-hidden bg-ds-bg py-20 sm:py-24">
+      <div className="relative mx-auto flex w-full max-w-[1160px] flex-col gap-10 px-5 sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:px-10">
         <Reveal>
           <SectionIntro
             as="h1"
-            badge={
-              <>
-                <Palette className="h-3.5 w-3.5" aria-hidden="true" /> The SETX Look-Book
-              </>
-            }
-            title={
-              <>
-                The look of the camp, <span className="text-ds-accent-bright">play by play.</span>
-              </>
-            }
+            eyebrow="The SETX Look-Book"
+            title="The look of the camp, play by play."
           >
-            A peek under the helmet at how the SETX Youth Football Camp is designed: the monochrome
-            palette, the editorial type, the gear, and the principles that keep the whole program
-            reading like one team.
+            How the SETX Youth Football Camp is designed: white and navy, red for every action, and
+            type that reads like a jersey number.
           </SectionIntro>
         </Reveal>
-      </Container>
+        <CampIcon name="helmet" size={96} className="shrink-0" />
+      </div>
+    </section>
+
+    <Section>
+      <Reveal className="mb-10">
+        <SectionIntro eyebrow="The Palette" title="Red, white and blue.">
+          Three colours, each with one job. The icon set shares the navy, so the marks and the page
+          read as one.
+        </SectionIntro>
+      </Reveal>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {BRAND_COLORS.map((color, index) => (
+          <Reveal key={color.name} variant="scale" delay={index + 1}>
+            <ColorSwatch {...color} />
+          </Reveal>
+        ))}
+      </div>
     </Section>
 
-    <Section data-surface="light" space="lg" className="surface-seam bg-ds-bg">
-      <Container size="xl">
-        <Reveal className="mb-10">
-          <SectionIntro align="start" eyebrow="The Palette" title="One red. Five neutrals.">
-            The camp ships exactly one hue, an athletic red, paired with a full neutral ramp from
-            coal to bone. Nothing else.
-          </SectionIntro>
-        </Reveal>
-        <Grid cols={3} gap={5}>
-          {BRAND_COLORS.map((color, index) => (
-            <Reveal key={color.name} variant="scale" delay={index + 1}>
-              <ColorSwatch {...color} />
-            </Reveal>
-          ))}
-        </Grid>
-      </Container>
+    <Section recessed>
+      <Reveal className="mb-10">
+        <SectionIntro eyebrow="The Voice" title="Heavy display. Plain spoken.">
+          Headlines run in Archivo Black, body copy stays plain in Archivo, Oswald carries the
+          numbers, and a mono tag stamps the small print.
+        </SectionIntro>
+      </Reveal>
+      <div className="grid gap-6 lg:grid-cols-3">
+        {TYPE_SAMPLES.map((sample, index) => (
+          <Reveal key={`${sample.family}-${sample.role}`} variant="up" delay={index + 1}>
+            <TypeSample {...sample} />
+          </Reveal>
+        ))}
+      </div>
     </Section>
 
-    <Section space="lg" className="surface-seam bg-ds-bg">
-      <Container size="xl">
-        <Reveal className="mb-10">
-          <SectionIntro
-            align="start"
-            eyebrow="The Voice"
-            title={
-              <>
-                Condensed display. <span className="text-ds-accent-bright">Plain spoken.</span>
-              </>
-            }
-          >
-            Headlines run condensed in Oswald, body copy stays warm and plain in Archivo, and the
-            mono tag stamps the editorial microcopy.
-          </SectionIntro>
-        </Reveal>
-        <div className="grid gap-5 lg:grid-cols-3">
-          {TYPE_SAMPLES.map((sample, index) => (
-            <Reveal key={`${sample.family}-${sample.role}`} variant="up" delay={index + 1}>
-              <TypeSample {...sample} />
-            </Reveal>
+    <Section>
+      <Reveal className="mb-10">
+        <SectionIntro eyebrow="The Icon Set" title="Thirty marks, one outline.">
+          Every icon is drawn flat with the same navy line and sits transparent on whatever is under
+          it. Nothing on the site draws its own icon.
+        </SectionIntro>
+      </Reveal>
+      <Reveal>
+        <ul className="card grid grid-cols-3 gap-6 p-6 sm:grid-cols-5 sm:p-8 lg:grid-cols-10">
+          {Object.keys(ICONS).map((name) => (
+            <li key={name} className="flex flex-col items-center gap-2 text-center">
+              <CampIcon name={name} size={48} />
+              <span className="mono-tag text-ds-text-faint">{name}</span>
+            </li>
           ))}
+        </ul>
+      </Reveal>
+    </Section>
+
+    <Section surface="navy">
+      <Reveal className="mb-10">
+        <SectionIntro eyebrow="Camp Gear" title="What every camper takes home.">
+          The camp tee, the field banners, and the coach whistle all come from the same palette, so
+          the camp shows up as one piece.
+        </SectionIntro>
+      </Reveal>
+      <div aria-hidden="true" className="yard-line mb-10" />
+      <div className="grid gap-6 md:grid-cols-3">
+        {GEAR_TILES.map((tile, index) => (
+          <Reveal key={tile.title} variant="up" delay={index + 1}>
+            <GearTile {...tile} />
+          </Reveal>
+        ))}
+      </div>
+    </Section>
+
+    <Section>
+      <Reveal className="mb-10">
+        <SectionIntro eyebrow="Design Principles" title="Three rules we don't bend.">
+          Every page on this site, every shirt the camp prints, and every banner on the field
+          answers to the same three checks.
+        </SectionIntro>
+      </Reveal>
+      <div className="grid gap-6 md:grid-cols-3">
+        {DESIGN_PRINCIPLES.map((principle, index) => (
+          <Reveal key={principle.title} variant="up" delay={index + 1}>
+            <PrincipleRow {...principle} />
+          </Reveal>
+        ))}
+      </div>
+
+      <Reveal className="mt-12" delay={4}>
+        <div className="flex flex-col items-center rounded-ds-xl border-rule border-ds-ink bg-ds-gold p-8 text-center text-ds-on-gold shadow-hard-xl sm:p-12">
+          <CampIcon name="jersey" size={64} />
+          <h3 className="display mt-4 text-3xl sm:text-5xl">Wear the camp.</h3>
+          <p className="body-copy mx-auto mt-5 max-w-xl text-lg">
+            The cleanest piece of camp design is a kid in a camp shirt running a route. Sign up to
+            get yours.
+          </p>
+          <Link
+            to={REGISTER_PATH}
+            className={actionClass({ tone: "navy", size: "lg", className: "mt-7" })}
+          >
+            Sign Up Your Camper
+          </Link>
         </div>
-      </Container>
+      </Reveal>
     </Section>
 
-    <Section space="lg" className="surface-seam bg-ds-bg-elevated">
-      <Container size="xl">
-        <Reveal className="mb-10">
-          <SectionIntro
-            align="start"
-            badge={
-              <>
-                <Shirt className="h-3.5 w-3.5" aria-hidden="true" /> Camp Gear
-              </>
-            }
-            title="What every camper takes home."
-          >
-            The camp tee, the field banners, and the coach whistle all come from the same palette,
-            so the camp shows up as one piece.
-          </SectionIntro>
-        </Reveal>
-        <Grid cols={3} gap={5}>
-          {GEAR_TILES.map((tile, index) => (
-            <Reveal key={tile.title} variant="up" delay={index + 1}>
-              <GearTile {...tile} />
-            </Reveal>
-          ))}
-        </Grid>
-      </Container>
-    </Section>
-
-    <Section
-      data-surface="light"
-      space="lg"
-      className="surface-seam relative overflow-hidden bg-ds-bg"
-    >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none scoreboard-grain absolute inset-0 opacity-50"
-      />
-      <Container size="xl" className="relative">
-        <Reveal className="mb-10">
-          <SectionIntro
-            align="start"
-            eyebrow="Design Principles"
-            title="Three rules we don't bend."
-          >
-            Every page on this site, every shirt the camp prints, and every banner on the field
-            answers to the same three checks.
-          </SectionIntro>
-        </Reveal>
-        <div className="grid gap-5 md:grid-cols-3">
-          {DESIGN_PRINCIPLES.map((principle, index) => (
-            <Reveal key={principle.title} variant="up" delay={index + 1}>
-              <PrincipleRow {...principle} />
-            </Reveal>
-          ))}
-        </div>
-
-        <Reveal className="mt-12" delay={4}>
-          <Card
-            variant="elevated"
-            padding="lg"
-            className="card-lift relative overflow-hidden text-center"
-          >
-            <span aria-hidden="true" className="accent-edge absolute inset-x-0 top-0 h-1" />
-            <Type className="mx-auto mb-4 h-6 w-6 text-ds-accent-bright" aria-hidden="true" />
-            <h3 className="editorial-display editorial-display-tight mb-3 flex justify-center text-3xl text-ds-text sm:text-4xl">
-              <TrueFocus sentence="Wear the camp." interval={1500} blur={4} />
-            </h3>
-            <Text tone="muted" size="lg" className="mx-auto mb-6 max-w-xl">
-              The cleanest piece of camp design is a kid in a camp shirt running a route. Sign up to
-              get yours.
-            </Text>
-            <Link to={REGISTER_PATH} className={actionClass({ size: "lg" })}>
-              Sign Up Your Camper <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </Link>
-          </Card>
-        </Reveal>
-      </Container>
-    </Section>
-
-    <JoinCallout />
+    <JoinCallout surface="navy" />
   </MarketingPage>
 );
 

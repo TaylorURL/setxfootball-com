@@ -2,14 +2,15 @@ import Reveal from "../Reveal";
 import SectionIntro from "../SectionIntro";
 import { CAMPER_PERKS } from "../../../content/campContent";
 import { surfaceProps } from "../surface";
-import { SplitText, SpotlightCard } from "../../reactbits";
+import { SplitText } from "../../reactbits";
+import CampIcon from "../../ui/CampIcon";
 
-const PerksSection = ({ surface = "light" }) => (
+const PerksSection = ({ surface }) => (
   <section
     {...surfaceProps(surface)}
-    className="surface-seam relative border-b border-ds-border bg-ds-bg py-24 sm:py-32 lg:py-40"
+    className="relative border-b-rule border-ds-border bg-ds-bg-elevated py-16 sm:py-20 lg:py-24"
   >
-    <div className="mx-auto w-full max-w-[1440px] px-5 sm:px-8 lg:px-10">
+    <div className="mx-auto w-full max-w-[1160px] px-6 sm:px-10 lg:px-16">
       <Reveal>
         <SectionIntro
           eyebrow="What's Included"
@@ -19,19 +20,14 @@ const PerksSection = ({ surface = "light" }) => (
         </SectionIntro>
       </Reveal>
 
-      <div className="mt-16 grid grid-cols-1 gap-y-12 border-t border-ds-border pt-12 sm:grid-cols-2 sm:gap-x-12 lg:grid-cols-4 lg:gap-x-10">
+      <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {CAMPER_PERKS.map((perk, index) => (
-          <Reveal key={perk.title} variant="up" delay={index + 1}>
-            <SpotlightCard className="group left-rule-accent pl-5" size={220}>
-              <perk.icon
-                className="h-6 w-6 text-ds-accent-bright transition-transform duration-state ease-out group-hover:-translate-y-0.5"
-                aria-hidden="true"
-              />
-              <h3 className="editorial-display mt-5 text-2xl text-ds-text sm:text-3xl">
-                {perk.title}
-              </h3>
-              <p className="editorial-body mt-3 text-[15px] text-ds-text-muted">{perk.body}</p>
-            </SpotlightCard>
+          <Reveal key={perk.title} variant="up" delay={index + 1} className="flex">
+            <article className="card card-lift group flex w-full flex-col bg-ds-bg p-7">
+              <CampIcon name={perk.icon} size={56} />
+              <h3 className="display mt-5 text-2xl text-ds-text">{perk.title}</h3>
+              <p className="body-copy mt-2 text-[15px] text-ds-text-muted">{perk.body}</p>
+            </article>
           </Reveal>
         ))}
       </div>

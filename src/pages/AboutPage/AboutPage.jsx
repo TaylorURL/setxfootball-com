@@ -1,5 +1,5 @@
-// Surface rhythm: light story, dark coaches, dark differentiator, light FAQ,
-// light join.
+// Surface rhythm: paper story, navy coaches, recessed differentiator, paper
+// FAQ, recessed join.
 import MarketingPage from "../../components/layout/MarketingPage";
 import StorySection from "../../components/marketing/sections/StorySection";
 import CoachesSection from "../../components/marketing/sections/CoachesSection";
@@ -14,11 +14,11 @@ const AboutPage = () => (
   <MarketingPage>
     <Seo {...PAGE_SEO.about} />
     <Breadcrumbs label="About" to="/about" />
-    <StorySection surface="light" />
-    <CoachesSection />
+    <StorySection />
+    <CoachesSection surface="navy" />
     <DifferentiatorSection />
-    <FaqSection surface="light" />
-    <JoinCallout surface="light" />
+    <FaqSection />
+    <JoinCallout />
   </MarketingPage>
 );
 

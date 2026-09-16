@@ -1,4 +1,4 @@
-// Gallery stays dark so the photos carry the contrast; the callout goes light.
+// The photographs sit on paper; the callout closes the page on navy.
 import MarketingPage from "../../components/layout/MarketingPage";
 import GallerySection from "../../components/marketing/sections/GallerySection";
 import JoinCallout from "../../components/marketing/sections/JoinCallout";
@@ -11,7 +11,7 @@ const GalleryPage = () => (
     <Seo {...PAGE_SEO.gallery} />
     <Breadcrumbs label="Gallery" to="/gallery" />
     <GallerySection />
-    <JoinCallout surface="light" />
+    <JoinCallout surface="navy" />
   </MarketingPage>
 );
 

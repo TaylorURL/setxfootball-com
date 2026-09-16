@@ -13,6 +13,7 @@
  * looping if the problem is not a stale bundle.
  */
 import { Component } from "react";
+import { actionClass } from "../components/ui/actionClass";
 
 const CHUNK_RELOAD_KEY = "chunk-reload-attempted";
 
@@ -30,8 +31,8 @@ const isChunkLoadError = (error) => {
 // the thing that threw. The classes are written out on purpose.
 const DefaultFallback = () => (
   <div className="flex min-h-[100dvh] flex-col items-center justify-center gap-5 bg-ds-bg px-6 text-center">
-    <span className="mono-tag text-ds-accent-bright">System Error</span>
-    <h1 className="editorial-display editorial-display-tight max-w-xl text-4xl text-ds-text sm:text-5xl">
+    <span className="eyebrow">System Error</span>
+    <h1 className="display max-w-xl text-4xl text-ds-text sm:text-5xl">
       Something
       <br />
       <span className="text-ds-accent-bright">went wrong.</span>
@@ -39,11 +40,7 @@ const DefaultFallback = () => (
     <p className="max-w-sm text-sm text-ds-text-muted">
       An unexpected error interrupted the page. Reloading usually clears it.
     </p>
-    <button
-      type="button"
-      onClick={() => window.location.reload()}
-      className="mono-tag inline-flex min-h-control items-center gap-2 border border-ds-accent bg-ds-accent px-5 py-3 text-ds-on-accent hover:border-ds-accent-bright hover:bg-ds-accent-bright"
-    >
+    <button type="button" onClick={() => window.location.reload()} className={actionClass()}>
       Reload Page
     </button>
   </div>

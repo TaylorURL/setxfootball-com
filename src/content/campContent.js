@@ -1,6 +1,8 @@
 /**
  * Every fact and line of copy the marketing pages render.
  *
+ * An `icon` here is a name from the camp's own icon set, drawn by CampIcon.
+ *
  * The sections import from here rather than holding their own strings, so the
  * camp's details are changed in one file and the same wording cannot drift
  * between the page that states it and the page that repeats it.
@@ -10,18 +12,6 @@
  * which is what the form actually charges. Changing one without the other
  * leaves the site advertising a price it does not bill.
  */
-import {
-  Star,
-  Heart,
-  Users,
-  Trophy,
-  ShieldCheck,
-  Shirt,
-  CupSoda,
-  ClipboardList,
-  DollarSign,
-  CalendarCheck,
-} from "lucide-react";
 import img1 from "../assets/images/1.JPG";
 import img2 from "../assets/images/2.JPG";
 import img3 from "../assets/images/3.JPG";
@@ -173,32 +163,25 @@ export const PHOTOS = {
 export const HERO_IMAGE = PHOTOS.coachesOnField;
 export const STORY_IMAGE = PHOTOS.warmUps;
 
-export const HERO_STATS = [
-  { value: "5 to 12", label: "Ages" },
-  { value: "$5", label: "Per Shirt" },
-  { value: "2 Days", label: "On Field" },
-  { value: "Year 3", label: "Season" },
-];
-
 // Applies to walk-ons too, not just registered campers.
 export const CAMPER_PERKS = [
   {
-    icon: Shirt,
+    icon: "jersey",
     title: "A Camp Shirt",
     body: "Every camper gets a shirt. Yours to keep, registered or not.",
   },
   {
-    icon: CupSoda,
+    icon: "nachos",
     title: "Drinks & Snacks",
     body: "We keep the sideline stocked so kids stay fueled all day.",
   },
   {
-    icon: Trophy,
+    icon: "referee-whistle",
     title: "Real Coaching",
     body: "Fundamentals, drills, and game reps from experienced coaches.",
   },
   {
-    icon: Heart,
+    icon: "athlete",
     title: "Every Kid Plays",
     body: "No tryouts, no bench. Show up and you're on the field.",
   },
@@ -206,22 +189,22 @@ export const CAMPER_PERKS = [
 
 export const STORY_PILLARS = [
   {
-    icon: Users,
+    icon: "fans",
     title: "Open to All",
     body: "Every kid plays. Registered or not, every camper gets a shirt, drinks, and snacks.",
   },
   {
-    icon: ShieldCheck,
+    icon: "badge",
     title: "Background-Checked",
     body: "Every coach on the field has cleared a background check and arrived with real coaching experience.",
   },
   {
-    icon: Heart,
+    icon: "stadium",
     title: "Community First",
     body: "Built in Daisetta, for Daisetta. We keep cost low so the field stays open to every family.",
   },
   {
-    icon: Star,
+    icon: "mvp",
     title: "Pro-Level Guests",
     body: "Guest pro athletes show up to coach and speak, giving campers exposure most camps can't offer.",
   },
@@ -232,7 +215,7 @@ export const COACHES = [
     name: "Clayton Hanks",
     number: "01",
     role: "Co-Founder · Head Coach",
-    icon: Trophy,
+    icon: "trophy",
     highlight: "International Playing Experience",
     points: [
       "Graduate of Hull-Daisetta High School",
@@ -244,7 +227,7 @@ export const COACHES = [
     name: "Timothy Taylor Sr.",
     number: "02",
     role: "Co-Founder · Head Coach",
-    icon: Heart,
+    icon: "coach",
     highlight: "Dedicated Youth Development",
     points: [
       "Graduate of Hull-Daisetta High School",
@@ -256,17 +239,17 @@ export const COACHES = [
 
 export const PLAYBOOK = [
   {
-    icon: ClipboardList,
+    icon: "strategy",
     title: "Sign Up Online",
     body: "Fill out the roster form and pick a shirt size for each camper. Takes a couple of minutes.",
   },
   {
-    icon: DollarSign,
+    icon: "ticket",
     title: "Pay $5 Per Shirt",
     body: "Send payment by CashApp to $SETXYFC after you sign up. Nothing is due up front.",
   },
   {
-    icon: CalendarCheck,
+    icon: "calendar",
     title: "Show Up and Play",
     body: `Bring your camper to Daisetta in ${CAMP_SEASON} for two half-days of football.`,
   },
