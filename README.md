@@ -16,7 +16,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-2026.38.0-e11d2a?style=for-the-badge" alt="Version 2026.38.0" />
+  <img src="https://img.shields.io/badge/version-2026.38.1-e11d2a?style=for-the-badge" alt="Version 2026.38.1" />
   <img src="https://img.shields.io/badge/React-19-e11d2a?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
   <img src="https://img.shields.io/badge/React_Router-7-e11d2a?style=for-the-badge&logo=reactrouter&logoColor=white" alt="React Router 7" />
   <img src="https://img.shields.io/badge/Create_React_App-5-0a0a0a?style=for-the-badge&logo=createreactapp&logoColor=white" alt="Create React App 5" />
@@ -92,11 +92,12 @@ Copy `.env.example` to `.env` and fill in the Supabase credentials. The client i
 | :--------------------- | :-------------------------------------------------- |
 | `npm start`            | Start the CRA dev server.                           |
 | `npm run build`        | Production build to `build/`.                       |
-| `npm test`             | Jest via `react-scripts`, `--passWithNoTests`.      |
-| `npm run images:avif`  | Re-encode the AVIF photo derivatives; needs ffmpeg. |
 | `npm run lint`         | Lint with ESLint.                                   |
+| `npm run lint:fix`     | Lint and write back what ESLint can fix.            |
 | `npm run format`       | Rewrite the tree to the Prettier config.            |
 | `npm run format:check` | Report formatting without writing; CI runs it.      |
+| `npm test`             | Jest via `react-scripts`, `--passWithNoTests`.      |
+| `npm run images:avif`  | Re-encode the AVIF photo derivatives; needs ffmpeg. |
 | `npm run eject`        | One-way CRA eject.                                  |
 
 `postbuild` runs after every build, in order:
@@ -151,7 +152,7 @@ flowchart TD
 
 - **Row-Level Security** — the policies in `supabase/migrations/` scope `camp_registrations` and `user_profiles` to their owner, recognised either by `user_id` or by the verified email on the session matching `parent_email`, with staff and admin covered by `is_camp_staff()` reading `user_profiles.role`.
 - **Least privilege** — `anon` holds `insert` on `camp_registrations` and nothing more; everything else is a signed-in grant, and `user_profiles` is closed to `anon` entirely. A parent filing without an account reads nothing back, so the client mints the row id rather than depending on a returning clause.
-- **Service boundary** — only the two services import the Supabase client. A query names the row and nothing else: which rows an account may touch is the policy's answer, not a predicate the browser can drop.
+- **Service boundary** — `getSupabase` is imported by the two services and by nothing else. A query names the row and nothing else: which rows an account may touch is the policy's answer, not a predicate the browser can drop.
 - **No credential fallbacks** — Supabase config comes only from env vars, and CSV export escapes formula triggers to prevent injection.
 
 ## Project structure
