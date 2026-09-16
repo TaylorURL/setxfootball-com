@@ -24,8 +24,8 @@ const RegisterPage = () => (
             eyebrow={`Sign Up · $${SHIRT_PRICE} per shirt`}
             title={<SplitText text="Sign your camper up." splitType="words" delay={60} />}
           >
-            Fill out the form, choose your shirts, and you are on the roster. Payment is collected
-            after, so nothing is due now.
+            Fill out the form, choose your shirts, and you&apos;re on the roster. You pay for the
+            shirts after, by CashApp, so nothing is due now.
           </SectionIntro>
         </Reveal>
 

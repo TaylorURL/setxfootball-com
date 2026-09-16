@@ -21,10 +21,10 @@ import {
 const ROUTES = [
   {
     icon: "fans-megaphone",
-    label: "Call or text",
+    label: "Call or Text",
     value: CAMP_PHONE,
     href: `tel:${CAMP_PHONE}`,
-    note: "Fastest on a camp weekend. Leave a message and you get a call back the same day.",
+    note: "Fastest on a camp weekend. Leave a message if nobody picks up.",
     cta: "Call the Camp",
     tone: "primary",
   },
@@ -33,17 +33,17 @@ const ROUTES = [
     label: "Email",
     value: CAMP_EMAIL,
     href: `mailto:${CAMP_EMAIL}`,
-    note: "Answered within a day or two. Best for sponsor questions and anything with an attachment.",
+    note: "We answer within a day or two. Best for sponsor questions and anything with an attachment.",
     cta: "Send an Email",
     tone: "outline",
   },
   {
     icon: "stadium",
-    label: "Find the field",
+    label: "Find the Field",
     value: `${CAMP_LOCALITY}, Texas`,
     href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${CAMP_LOCALITY}, Texas`)}`,
     external: true,
-    note: "Liberty County, Southeast Texas. Camp runs on the community field, with parking on the grass.",
+    note: "Liberty County, Southeast Texas.",
     cta: "Get Directions",
     tone: "outline",
   },
@@ -53,7 +53,7 @@ const ANSWERS = [
   {
     icon: "calendar",
     title: "When",
-    body: `${CAMP_SEASON}, two half-day sessions. Exact dates go out to every family on the roster first.`,
+    body: `${CAMP_SEASON}, two half-day sessions.`,
   },
   {
     icon: "american-football",
@@ -62,13 +62,13 @@ const ANSWERS = [
   },
   {
     icon: "jersey",
-    title: "What it costs",
+    title: "What It Costs",
     body: `$${SHIRT_PRICE} per shirt, paid by CashApp after you sign up. The camp itself is free.`,
   },
   {
     icon: "nachos",
-    title: "What to bring",
-    body: "Cleats or sneakers and a water bottle. Snacks and drinks are on us.",
+    title: "What to Bring",
+    body: "Snacks and drinks are on us.",
   },
 ];
 
@@ -124,7 +124,7 @@ const ContactPage = () => (
           data-surface="navy"
           className="rounded-ds-xl border-rule border-ds-ink bg-ds-bg p-8 text-ds-text shadow-hard-xl sm:p-12"
         >
-          <span className="eyebrow">Before you call</span>
+          <span className="eyebrow">Before You Call</span>
           <h2 className="display mt-5 max-w-2xl text-3xl sm:text-4xl">
             Most questions have a short answer.
           </h2>

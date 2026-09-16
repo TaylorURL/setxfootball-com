@@ -18,8 +18,8 @@ const SponsorsSection = ({ surface }) => (
             eyebrow="Our Partners"
             title={<SplitText text="Thank you to our sponsors." splitType="words" delay={55} />}
           >
-            We are grateful for the local businesses and families whose generosity keeps the camp
-            free for kids who need it.
+            We&apos;re grateful for the local businesses and families whose generosity keeps the
+            camp free for kids who need it.
           </SectionIntro>
         </Reveal>
 
@@ -79,7 +79,7 @@ const SponsorsSection = ({ surface }) => (
             href={`tel:${CAMP_PHONE}`}
             className={actionClass({ tone: "navy", size: "lg", className: "shrink-0" })}
           >
-            Call the Camp
+            Call About Sponsoring
           </a>
         </Reveal>
       </div>

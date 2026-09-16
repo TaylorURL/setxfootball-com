@@ -203,7 +203,7 @@ const PaymentPage = () => {
                   </div>
                 </div>
                 <p className="body-copy mt-4 text-sm">
-                  Include your child’s name in the payment note.
+                  Include your child's name in the payment note.
                 </p>
               </section>
             </div>

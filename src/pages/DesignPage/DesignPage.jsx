@@ -198,7 +198,7 @@ const DesignPage = () => (
     <Section>
       <Reveal className="mb-10">
         <SectionIntro eyebrow="The Palette" title="Red, white and blue.">
-          Three colours, each with one job. The icon set shares the navy, so the marks and the page
+          Three colors, each with one job. The icon set shares the navy, so the marks and the page
           read as one.
         </SectionIntro>
       </Reveal>

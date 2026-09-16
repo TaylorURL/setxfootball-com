@@ -425,7 +425,7 @@ const RegistrationForm = () => {
           {submitting ? "Submitting…" : "Complete Sign-Up"}
         </button>
         <p className="body-copy text-center text-sm text-ds-text-faint">
-          Payment is collected after sign-up, so there is nothing to pay now.
+          You pay for the shirts after sign-up, so there is nothing to pay now.
         </p>
       </form>
     </div>

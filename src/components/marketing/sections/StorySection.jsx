@@ -44,14 +44,14 @@ const StorySection = ({ surface }) => (
           </h2>
           <div className="body-copy mt-6 max-w-measure space-y-4">
             <p className="text-base text-ds-text-muted">
-              Growing up in Daisetta, we did not have many youth sports options, so we built one.
-              SETXYFC is a community-first, majority-free football camp offering two half-days of
-              confidence-building instruction.
+              Growing up in Daisetta, we didn&apos;t have many youth sports options, so we built
+              one. SETXYFC is a community-first, majority-free football camp offering two half-days
+              of confidence-building instruction.
             </p>
             <p className="text-base text-ds-text-muted">
               Drinks, snacks, and a camp shirt for every participant, registered or not, because
               inclusion matters more than optics. Now in our third year, the camp keeps growing, and
-              we are proud of what this community has built together.
+              we&apos;re proud of what this community has built together.
             </p>
           </div>
 

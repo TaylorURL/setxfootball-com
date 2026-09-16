@@ -17,7 +17,7 @@ import { CAMP_SEASON, SHIRT_PRICE } from "../../../utils/constants";
 export const CAMP_FACTS_ID = "camp-facts";
 
 const QUICK_FACTS = [
-  { value: "5–12", label: "Ages" },
+  { value: "5 to 12", label: "Ages" },
   { value: `$${SHIRT_PRICE}`, label: "Per Shirt" },
   { value: "2", label: "Days" },
   { value: "$0", label: "To Play" },
@@ -46,7 +46,7 @@ const HeroSection = () => (
               as="p"
               className="body-copy mt-6 max-w-measure text-base text-ds-text-muted sm:text-lg"
               delay={30}
-              text="Two days of real coaching for ages 5 to 12, run by neighbors in Daisetta. Shirts, drinks, and snacks included, and the camp itself is free."
+              text="Two days of real coaching for ages 5 to 12, run by neighbors in Daisetta. Shirts, drinks, and snacks are included, and the camp itself is free."
             />
 
             <div className="mt-9 flex flex-wrap gap-3">
