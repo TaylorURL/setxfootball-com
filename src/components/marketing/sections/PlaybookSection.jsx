@@ -23,7 +23,7 @@ const PlaybookSection = ({ surface = "navy" }) => (
             />
           }
         >
-          Three steps from the couch to the field. Nothing is due until after you have signed up.
+          Three steps from the couch to the field. Nothing is due until after you&apos;ve signed up.
         </SectionIntro>
       </Reveal>
 

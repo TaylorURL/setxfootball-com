@@ -6,7 +6,7 @@
  */
 import { Link } from "react-router-dom";
 import Reveal from "../Reveal";
-import { SHIRT_PRICE } from "../../../utils/constants";
+import { SHIRT_PRICE, CAMP_SEASON } from "../../../utils/constants";
 import { REGISTER_PATH } from "../../layout/navLinks";
 import { surfaceProps } from "../surface";
 import { actionClass } from "../../ui/actionClass";
@@ -27,8 +27,8 @@ const JoinCallout = ({ surface }) => (
             Get on the roster.
           </h2>
           <p className="body-copy mt-6 max-w-measure text-lg text-ds-on-gold sm:text-xl">
-            Sign-up takes two minutes. Pay for the shirts after, by CashApp, and bring your camper
-            to the field in July.
+            Sign-up takes two minutes and nothing is due now. Pay for the shirts by CashApp after
+            you sign up, and bring your camper to the field in {CAMP_SEASON}.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link to={REGISTER_PATH} className={actionClass({ tone: "navy", size: "lg" })}>
