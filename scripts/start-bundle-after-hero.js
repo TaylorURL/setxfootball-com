@@ -75,16 +75,40 @@ html = html.replace(CHUNK_LINK, "");
 
 const bootstrap =
   `<script data-bundle-start>(function(){` +
-  `var chunks=${JSON.stringify(chunks)},started=false;` +
+  `var chunks=${JSON.stringify(chunks)},started=false,tried=0;` +
+  // The entry carries a content hash, so it belongs to the deploy that built
+  // it and the next deploy deletes it. A document held open across one then
+  // asks for a file that has gone. ErrorBoundary already recovers from exactly
+  // that for a route chunk - reload once, guarded by the key below - but it is
+  // code inside the bundle, so when the bundle is the missing file none of it
+  // runs. What the reader is left with is the prerendered markup and no
+  // application on top of it: a page that looks right and answers nothing.
+  `function recover(){` +
+  `try{if(sessionStorage.getItem("chunk-reload-attempted")==="1")return;` +
+  `sessionStorage.setItem("chunk-reload-attempted","1")}catch(e){return}` +
+  // The document is the stale thing rather than the file it names, so asking
+  // for it again is the fix: the server answers with the current one, naming
+  // an entry that exists. ErrorBoundary clears the key on its next clean
+  // mount, which is this load having worked, so a second deploy later in the
+  // same tab is recovered from too. Storage that refuses to answer takes the
+  // fallback rather than the reload, because a guard that cannot be written is
+  // a reload that cannot be stopped.
+  `location.reload()}` +
+  `function load(){` +
+  `var script=document.createElement("script");` +
+  // A dropped request is worth one more try before the document is fetched
+  // again, and the query makes that a request of its own rather than a repeat
+  // of one something on the way is holding a failure for.
+  `script.src=tried?${JSON.stringify(entryUrl)}+"?retry="+tried:${JSON.stringify(entryUrl)};` +
+  `script.onerror=function(){tried+=1;if(tried<2){setTimeout(load,600)}else{recover()}};` +
+  `document.head.appendChild(script)}` +
   `function start(){` +
   `if(started)return;started=true;` +
   `for(var i=0;i<chunks.length;i+=1){` +
   `var link=document.createElement("link");` +
   `link.rel="preload";link.as="script";link.href=chunks[i];` +
   `document.head.appendChild(link)}` +
-  `var script=document.createElement("script");` +
-  `script.src=${JSON.stringify(entryUrl)};` +
-  `document.head.appendChild(script)}` +
+  `load()}` +
   // A photograph that never answers cannot be allowed to hold the page
   // uninteractive, so the wait has an end whatever the network does. It is
   // armed here, before any of the paths below can return, because two of them
