@@ -165,11 +165,31 @@ function bodyWords(html) {
   return text.split(/\s+/).filter(Boolean).length;
 }
 
+// The hero preload is written into the shell every route is stamped from, so
+// each of them asks for the first screen's photograph in its opening bytes at
+// the highest priority the browser has. Only the home page draws it. Everywhere
+// else it is a large file fetched ahead of the content the reader came for and
+// then dropped unused - and one more request per route that can lose its
+// connection and report a photograph nothing on the page was going to show.
+const HERO_PRELOAD = /<link rel="preload" as="image" type="image\/avif"[^>]*>/;
+
+function withoutUnusedHeroPreload(html) {
+  const tag = html.match(HERO_PRELOAD);
+  if (!tag) return html;
+  const body = html.slice(html.indexOf("<body"));
+  const urls = [...tag[0].matchAll(/(?:href|imagesrcset)="([^"]+)"/g)]
+    .flatMap((attribute) => attribute[1].split(","))
+    .map((candidate) => candidate.trim().split(/\s+/)[0])
+    .filter(Boolean);
+  if (urls.some((url) => body.includes(url))) return html;
+  return html.replace(HERO_PRELOAD, "");
+}
+
 function writeRoute(route, html) {
   const file =
     route === "/" ? indexPath : path.join(buildDir, route.replace(/^\//, ""), "index.html");
   fs.mkdirSync(path.dirname(file), { recursive: true });
-  fs.writeFileSync(file, html);
+  fs.writeFileSync(file, withoutUnusedHeroPreload(html));
   return path.relative(buildDir, file);
 }
 
@@ -222,7 +242,7 @@ async function main() {
       let file;
       if (route === NOT_FOUND_ROUTE) {
         file = "404.html";
-        fs.writeFileSync(path.join(buildDir, file), html);
+        fs.writeFileSync(path.join(buildDir, file), withoutUnusedHeroPreload(html));
       } else {
         file = writeRoute(route, html);
       }
