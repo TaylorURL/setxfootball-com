@@ -602,9 +602,73 @@
         // that writes the markup because the first screen's photograph is
         // prerendered into the page and fails while the app is still arriving,
         // when no handler of its own is attached yet.
+        //
+        // Stepping down is the second answer rather than the first. The picture
+        // the browser gave up on is nearly always one it asked for from the
+        // head, as a preload, before the markup naming it was parsed - and a
+        // preload that loses its connection is not retried: the img that wants
+        // the same file is handed the failure the preload already took, so a
+        // single dropped packet costs the format outright. One more ask settles
+        // that, on a URL of its own so the second attempt cannot be answered out
+        // of whatever the first one failed against, and only a second failure
+        // takes the format out of the running.
+
+        /** The candidate URLs of a srcset, without their width descriptors. */
+        function candidates(list) {
+          var urls = [];
+          var parts = (list || "").split(",");
+          for (var i = 0; i < parts.length; i += 1) {
+            var url = parts[i].trim().split(/\s+/)[0];
+            if (url) urls.push(url);
+          }
+          return urls;
+        }
+        /** The same candidates, each asked for under a URL nothing holds yet. */
+        function afresh(list) {
+          var parts = (list || "").split(",");
+          for (var i = 0; i < parts.length; i += 1) {
+            var piece = parts[i].trim();
+            var url = piece.split(/\s+/)[0];
+            if (!url) continue;
+            parts[i] =
+              url + (url.indexOf("?") > -1 ? "&" : "?") + "retry=1" + piece.slice(url.length);
+          }
+          return parts.join(", ");
+        }
+        /** Whether a srcset offers the file the browser settled on and lost. */
+        function offers(list, chosen) {
+          var urls = candidates(list);
+          for (var i = 0; i < urls.length; i += 1) {
+            if (chosen.slice(-urls[i].length) === urls[i]) return true;
+          }
+          return false;
+        }
+        // The element that named the file that failed: the <source> whose srcset
+        // offers it, or the img itself where the img's own candidates were what
+        // the browser chose from.
+        function chosenBy(image, picture, chosen) {
+          var sources = picture.getElementsByTagName("source");
+          for (var i = 0; i < sources.length; i += 1) {
+            if (sources[i].srcset && offers(sources[i].srcset, chosen)) return sources[i];
+          }
+          if (image.srcset && offers(image.srcset, chosen)) return image;
+          return image.src && chosen.slice(-image.src.length) === image.src ? image : null;
+        }
+        function askAgain(element, image) {
+          if (element.getAttribute("data-asked-again") === "1") return false;
+          element.setAttribute("data-asked-again", "1");
+          if (element.srcset) element.srcset = afresh(element.srcset);
+          if (element === image && image.src) {
+            image.src = image.src + (image.src.indexOf("?") > -1 ? "&" : "?") + "retry=1";
+          }
+          return true;
+        }
         function stepBack(image) {
           var picture = image.parentNode;
           if (!picture || picture.tagName !== "PICTURE") return;
+          var chosen = image.currentSrc;
+          var element = chosen ? chosenBy(image, picture, chosen) : null;
+          if (element && askAgain(element, image)) return;
           var sources = picture.getElementsByTagName("source");
           for (var i = 0; i < sources.length; i += 1) {
             if (sources[i].srcset) {
