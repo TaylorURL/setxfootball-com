@@ -663,6 +663,29 @@
           }
           return true;
         }
+        // An <img> standing on its own has neither of those answers behind it.
+        // There is no sibling format to fall back to, and nothing above reaches
+        // it, so a mark the page loses is a blank space for as long as the
+        // reader is on the page - the element keeps the box its width and
+        // height reserve and never draws anything in it.
+        //
+        // That is the whole of the camp's icon set: one small file each, drawn
+        // by a plain img, and asked for in the opening bytes of the document
+        // alongside every other mark on the page. A connection lost in that
+        // moment is not one missing mark, it is all of them.
+        //
+        // So they get the same single ask the stylesheet and the photograph
+        // already get, on a URL of its own so the second attempt cannot be
+        // answered out of whatever the first one failed against. A second
+        // failure is left alone: the box is already empty, and the mark is
+        // decorative with the label beside it carrying the meaning.
+        function askForItAgain(image) {
+          if (image.getAttribute("data-asked-again") === "1") return;
+          image.setAttribute("data-asked-again", "1");
+          var source = image.getAttribute("src");
+          if (!source) return;
+          image.src = source + (source.indexOf("?") > -1 ? "&" : "?") + "retry=1";
+        }
         function stepBack(image) {
           var picture = image.parentNode;
           if (!picture || picture.tagName !== "PICTURE") return;
@@ -685,7 +708,8 @@
             var link = event.target;
             if (!link) return;
             if (link.tagName === "IMG") {
-              stepBack(link);
+              if (link.parentNode && link.parentNode.tagName === "PICTURE") stepBack(link);
+              else askForItAgain(link);
               return;
             }
             if (link.tagName !== "LINK" || link.rel !== "stylesheet") return;
