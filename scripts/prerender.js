@@ -185,11 +185,32 @@ function withoutUnusedHeroPreload(html) {
   return html.replace(HERO_PRELOAD, "");
 }
 
+// React's server renderer hoists a preload for every image it draws, so each
+// document opens by asking for every mark on the page at the browser's highest
+// priority - fifteen of them on the home page, ahead of the stylesheet and the
+// bundle that the reader is actually waiting on. The marks are decorative and
+// a few kilobytes each: the <img> that draws one asks for it anyway, a moment
+// later, at the priority it deserves, so the hint buys the reader nothing.
+//
+// What it costs is a burst. Every one of those requests goes on the wire in the
+// opening bytes together, and a connection lost in that moment takes all of
+// them that are in flight rather than one - which is a page of empty boxes off
+// a single dropped packet, and the icons have no second ask behind them.
+//
+// Only the hoisted hints go. The hero photograph's preload is deliberate: it
+// is written by scripts/preload-hero-image.js, which names a format and a
+// candidate set, and it is the largest paint on the page.
+const ICON_PRELOAD = /<link rel="preload" as="image" href="[^"]+\.svg"\s*\/?>/g;
+
+function withoutIconPreloads(html) {
+  return html.replace(ICON_PRELOAD, "");
+}
+
 function writeRoute(route, html) {
   const file =
     route === "/" ? indexPath : path.join(buildDir, route.replace(/^\//, ""), "index.html");
   fs.mkdirSync(path.dirname(file), { recursive: true });
-  fs.writeFileSync(file, withoutUnusedHeroPreload(html));
+  fs.writeFileSync(file, withoutIconPreloads(withoutUnusedHeroPreload(html)));
   return path.relative(buildDir, file);
 }
 
