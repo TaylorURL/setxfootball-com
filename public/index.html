@@ -674,17 +674,47 @@
         // alongside every other mark on the page. A connection lost in that
         // moment is not one missing mark, it is all of them.
         //
-        // So they get the same single ask the stylesheet and the photograph
-        // already get, on a URL of its own so the second attempt cannot be
-        // answered out of whatever the first one failed against. A second
-        // failure is left alone: the box is already empty, and the mark is
-        // decorative with the label beside it carrying the meaning.
+        // So they get asked for again, on a URL of their own so the next
+        // attempt cannot be answered out of whatever the last one failed
+        // against - and after a wait, which is the part that decides whether
+        // asking again is worth anything at all.
+        //
+        // The thing that loses a mark is a connection dropped while the
+        // document's opening bytes are still arriving, and a connection comes
+        // back on a timescale of hundreds of milliseconds to seconds. An ask
+        // made in the same instant as the failure is made against the same
+        // dead connection and fails the same way, so a single immediate retry
+        // buys nothing in exactly the case it exists for: both asks land
+        // inside the one outage, and the mark is then an empty box for the
+        // rest of the reader's visit. Waiting first is what lets the second
+        // ask find a connection that has recovered.
+        //
+        // Three asks spread over about four seconds, so a mark survives an
+        // outage of a few seconds and a file that is genuinely gone stops
+        // being asked for. Each wait is the one before it roughly tripled:
+        // short enough that a mark is back before a reader has read the
+        // heading beside it, long enough that the asks are not all spent
+        // inside the same blip.
+        var WAITS = [400, 1200, 3000];
         function askForItAgain(image) {
-          if (image.getAttribute("data-asked-again") === "1") return;
-          image.setAttribute("data-asked-again", "1");
-          var source = image.getAttribute("src");
-          if (!source) return;
-          image.src = source + (source.indexOf("?") > -1 ? "&" : "?") + "retry=1";
+          var asked = Number(image.getAttribute("data-asks") || 0);
+          if (asked >= WAITS.length) return;
+          var origin = image.getAttribute("data-src-origin");
+          if (!origin) {
+            origin = image.getAttribute("src");
+            if (!origin) return;
+            image.setAttribute("data-src-origin", origin);
+          }
+          image.setAttribute("data-asks", String(asked + 1));
+          window.setTimeout(function () {
+            // Nothing to do if the element was taken off the page, or if a
+            // later render handed it a different file, or if it has since
+            // drawn: a mark that arrived does not get asked for again.
+            if (!image.parentNode) return;
+            if (image.getAttribute("data-src-origin") !== origin) return;
+            if (image.complete && image.naturalWidth > 0) return;
+            image.src = origin + (origin.indexOf("?") > -1 ? "&" : "?") + "retry=" + (asked + 1);
+          }, WAITS[asked]);
         }
         function stepBack(image) {
           var picture = image.parentNode;
@@ -699,6 +729,12 @@
               return;
             }
           }
+          // Every format has been stepped down and the picture is on the last
+          // candidate the img itself names, so there is nothing further to give
+          // way to. An outage long enough to take all of them leaves the
+          // photograph exactly where it leaves a mark - an empty box with
+          // nobody asking again - so it waits and asks like one.
+          askForItAgain(image);
         }
         // Capture phase, because a link's error event does not bubble, and this
         // listener is installed before the build's own stylesheet tag is parsed.
