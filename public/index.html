@@ -696,14 +696,48 @@
         // heading beside it, long enough that the asks are not all spent
         // inside the same blip.
         var WAITS = [400, 1200, 3000];
+        // The ladder covers an outage of about five seconds and then stops,
+        // which is right for a file that has gone and wrong for every file
+        // here. A mark is named by its content hash, served immutable and kept
+        // for a year, so it does not stop existing while a reader is on the
+        // page: the only thing that takes one away is the connection, and a
+        // connection lost to a wifi handover, a cell switch or a tunnel comes
+        // back after ten or twenty seconds rather than four. The ladder is
+        // spent by then, the count that gates it is never given back, and the
+        // mark is an empty box for the rest of the visit even though the
+        // network recovered a moment later. Widening the ladder does not answer
+        // that - there is no number of seconds that is both soon enough to be
+        // worth anything and long enough to outlast an outage - so what
+        // follows waits for the two moments the browser can actually tell us
+        // the connection is worth using again, and gives the asks back then.
+        //
+        // The marks whose ladders are spent and which still have not drawn.
+        var missing = [];
+        // Every ask in the page's life gets a number of its own, so a revived
+        // ladder cannot be answered out of the cache entry a spent one failed
+        // against.
+        var asks = 0;
+        // A ceiling, because a file that truly cannot be fetched should stop
+        // being asked for rather than follow the reader around the site.
+        var REVIVALS = 5;
+        var revivals = 0;
+        function waitingOn(image) {
+          for (var i = 0; i < missing.length; i += 1) {
+            if (missing[i] === image) return;
+          }
+          missing.push(image);
+        }
         function askForItAgain(image) {
-          var asked = Number(image.getAttribute("data-asks") || 0);
-          if (asked >= WAITS.length) return;
           var origin = image.getAttribute("data-src-origin");
           if (!origin) {
             origin = image.getAttribute("src");
             if (!origin) return;
             image.setAttribute("data-src-origin", origin);
+          }
+          var asked = Number(image.getAttribute("data-asks") || 0);
+          if (asked >= WAITS.length) {
+            waitingOn(image);
+            return;
           }
           image.setAttribute("data-asks", String(asked + 1));
           window.setTimeout(function () {
@@ -713,9 +747,40 @@
             if (!image.parentNode) return;
             if (image.getAttribute("data-src-origin") !== origin) return;
             if (image.complete && image.naturalWidth > 0) return;
-            image.src = origin + (origin.indexOf("?") > -1 ? "&" : "?") + "retry=" + (asked + 1);
+            asks += 1;
+            image.src = origin + (origin.indexOf("?") > -1 ? "&" : "?") + "retry=" + asks;
           }, WAITS[asked]);
         }
+        // A fresh ladder for everything still waiting. The count goes back to
+        // zero, which is the part that matters: the first ask arrives 400ms
+        // from here and the mark is drawn before the reader looks up.
+        function askAgainForEverything() {
+          if (!missing.length) return;
+          if (revivals >= REVIVALS) return;
+          // `onLine` is false only when the browser is certain there is no
+          // network, and that certainty is worth honouring - an ask made into
+          // it is one of the three spent for nothing.
+          if (navigator.onLine === false) return;
+          revivals += 1;
+          var waiting = missing;
+          missing = [];
+          for (var i = 0; i < waiting.length; i += 1) {
+            var image = waiting[i];
+            if (!image.parentNode) continue;
+            if (image.complete && image.naturalWidth > 0) continue;
+            image.setAttribute("data-asks", "0");
+            askForItAgain(image);
+          }
+        }
+        // The connection coming back is the signal this exists for. Returning
+        // to the tab is the one behind it, because `onLine` stays true through
+        // a captive portal and through a gateway that accepts a connection and
+        // answers nothing, so an outage the browser never noticed ends when
+        // the reader comes back and looks.
+        window.addEventListener("online", askAgainForEverything);
+        document.addEventListener("visibilitychange", function () {
+          if (!document.hidden) askAgainForEverything();
+        });
         function stepBack(image) {
           var picture = image.parentNode;
           if (!picture || picture.tagName !== "PICTURE") return;
