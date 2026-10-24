@@ -721,11 +721,67 @@
         // being asked for rather than follow the reader around the site.
         var REVIVALS = 5;
         var revivals = 0;
+        // Both of those signals come from outside the page, and the ordinary
+        // version of this fault raises neither of them. `navigator.onLine`
+        // flips - and the `online` event fires - only when the machine loses
+        // its link altogether; a connection reset, a stream dropped mid
+        // response, a 502 or 503 from a CDN edge, a name that fails to resolve
+        // for a moment, or a few seconds of loss on a link that never goes
+        // down take every ask without the browser ever believing it was
+        // offline. And a reader who stays on one page reading it never leaves
+        // the tab, so returning to it never happens either. With neither
+        // signal the asks are never given back and the mark is an empty box
+        // for the rest of the visit - which is exactly the behaviour giving
+        // them back was added to end.
+        //
+        // So recovery does not wait to be told. A mark whose ladder is spent
+        // keeps asking on its own, on a backoff that grows from seconds into
+        // minutes, and the signals above stay as the fast path on top of it.
+        var KEEP = [8000, 20000, 45000, 90000, 180000];
+        // Every ask any of the three paths makes counts against one ceiling
+        // per mark, so a file that genuinely cannot be fetched stops being
+        // chased and no combination of waits and signals can turn into
+        // runaway traffic.
+        var MOST_ASKS = 12;
+        function askNow(image, origin) {
+          var made = Number(image.getAttribute("data-ask-total") || 0);
+          if (made >= MOST_ASKS) return;
+          image.setAttribute("data-ask-total", String(made + 1));
+          asks += 1;
+          image.src = origin + (origin.indexOf("?") > -1 ? "&" : "?") + "retry=" + asks;
+        }
+        // The next unconditional ask for a mark the ladder has given up on.
+        function keepAsking(image) {
+          if (image.getAttribute("data-waiting") === "1") return;
+          var origin = image.getAttribute("data-src-origin");
+          if (!origin) return;
+          var step = Number(image.getAttribute("data-waits") || 0);
+          if (step >= KEEP.length) return;
+          if (Number(image.getAttribute("data-ask-total") || 0) >= MOST_ASKS) return;
+          image.setAttribute("data-waits", String(step + 1));
+          image.setAttribute("data-waiting", "1");
+          // Jittered, so six marks lost in the same instant do not come back
+          // in lockstep and land on the origin as one burst.
+          var wait = Math.round(KEEP[step] * (0.75 + Math.random() * 0.5));
+          window.setTimeout(function () {
+            image.removeAttribute("data-waiting");
+            if (!image.parentNode) return;
+            if (image.getAttribute("data-src-origin") !== origin) return;
+            if (image.complete && image.naturalWidth > 0) return;
+            askNow(image, origin);
+            // The step after this one is not scheduled here. An ask that fails
+            // raises `error` again, which arrives back at a spent ladder and
+            // arms the next wait; an ask that draws raises nothing, so the
+            // chain ends the moment the mark arrives.
+          }, wait);
+        }
         function waitingOn(image) {
+          var known = false;
           for (var i = 0; i < missing.length; i += 1) {
-            if (missing[i] === image) return;
+            if (missing[i] === image) known = true;
           }
-          missing.push(image);
+          if (!known) missing.push(image);
+          keepAsking(image);
         }
         function askForItAgain(image) {
           var origin = image.getAttribute("data-src-origin");
@@ -747,8 +803,7 @@
             if (!image.parentNode) return;
             if (image.getAttribute("data-src-origin") !== origin) return;
             if (image.complete && image.naturalWidth > 0) return;
-            asks += 1;
-            image.src = origin + (origin.indexOf("?") > -1 ? "&" : "?") + "retry=" + asks;
+            askNow(image, origin);
           }, WAITS[asked]);
         }
         // A fresh ladder for everything still waiting. The count goes back to
