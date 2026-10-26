@@ -453,6 +453,12 @@
           replay: function () {
             return held.slice();
           },
+          // A mark the page lost and could not get back, named by the URL the
+          // document asked for. The recovery code below is what calls this,
+          // once, after every ask it has is spent.
+          lost: function (url) {
+            report("resource", "Failed to load img: " + String(url || ""));
+          },
         };
         function report(kind, message, stack) {
           hold(kind, message, stack);
@@ -497,13 +503,21 @@
           function (event) {
             try {
               if (event.target && event.target !== window && event.target.tagName) {
-                report(
-                  "resource",
-                  "Failed to load " +
-                    event.target.tagName.toLowerCase() +
-                    ": " +
-                    (event.target.src || event.target.href || ""),
-                );
+                var tag = event.target.tagName.toLowerCase();
+                var asked = event.target.src || event.target.href || "";
+                // One ask for an image that failed is not a defect yet. The
+                // page asks again for a mark it loses, and nearly always gets
+                // it back inside a second - so reporting the first failure
+                // outright files a defect for an outage the site has already
+                // recovered from, and reporting each further ask files the
+                // recovery itself. Both are held for the page's own replay and
+                // neither is forwarded; the recovery code reports the mark once
+                // if it is still missing when every ask is spent.
+                if (tag === "img" && window.__imageRecovery) {
+                  hold("resource", "Failed to load img: " + asked);
+                } else {
+                  report("resource", "Failed to load " + tag + ": " + asked);
+                }
               } else {
                 report("uncaught", event.message, event.error && event.error.stack);
               }
@@ -583,6 +597,10 @@
          re-renders those elements. -->
     <script>
       (function () {
+        // The reporter above holds an image's failed ask instead of forwarding
+        // it, because this code is here to answer it. Set before any image in
+        // the document has been parsed, so no ask can fail ahead of it.
+        window.__imageRecovery = true;
         var retried = false;
         function readable() {
           if (document.getElementById("stylesheet-fallback")) return;
@@ -624,16 +642,18 @@
           return urls;
         }
         /** The same candidates, each asked for under a URL nothing holds yet. */
-        function afresh(list) {
+        function freshen(list, mark) {
           var parts = (list || "").split(",");
           for (var i = 0; i < parts.length; i += 1) {
             var piece = parts[i].trim();
             var url = piece.split(/\s+/)[0];
             if (!url) continue;
-            parts[i] =
-              url + (url.indexOf("?") > -1 ? "&" : "?") + "retry=1" + piece.slice(url.length);
+            parts[i] = url + (url.indexOf("?") > -1 ? "&" : "?") + mark + piece.slice(url.length);
           }
           return parts.join(", ");
+        }
+        function afresh(list) {
+          return freshen(list, "retry=1");
         }
         /** Whether a srcset offers the file the browser settled on and lost. */
         function offers(list, chosen) {
@@ -743,12 +763,52 @@
         // chased and no combination of waits and signals can turn into
         // runaway traffic.
         var MOST_ASKS = 12;
+        // What the document originally named for a mark, kept before any path
+        // below rewrites it, so every later ask is built from the real URLs
+        // rather than from the last ask's rewrite of them.
+        function remember(image) {
+          if (!image.getAttribute("data-src-origin") && image.getAttribute("src")) {
+            image.setAttribute("data-src-origin", image.getAttribute("src"));
+          }
+          if (image.getAttribute("data-srcset-origin") === null) {
+            image.setAttribute("data-srcset-origin", image.getAttribute("srcset") || "");
+          }
+        }
+        // Every ask is spent and the mark is still not here. This is the only
+        // place an image failure is reported, and it reports the file the
+        // document asked for rather than whichever retry URL happened to be
+        // the last one tried.
+        function giveUp(image) {
+          if (image.getAttribute("data-reported") === "1") return;
+          if (image.complete && image.naturalWidth > 0) return;
+          image.setAttribute("data-reported", "1");
+          var reporter = window.__reporter;
+          if (!reporter || !reporter.lost) return;
+          reporter.lost(image.getAttribute("data-src-origin") || image.getAttribute("src") || "");
+        }
         function askNow(image, origin) {
           var made = Number(image.getAttribute("data-ask-total") || 0);
-          if (made >= MOST_ASKS) return;
+          if (made >= MOST_ASKS) {
+            giveUp(image);
+            return;
+          }
           image.setAttribute("data-ask-total", String(made + 1));
           asks += 1;
-          image.src = origin + (origin.indexOf("?") > -1 ? "&" : "?") + "retry=" + asks;
+          var mark = "retry=" + asks;
+          // An img that carries a srcset picks what it fetches from the
+          // candidate list, not from `src`, so freshening `src` alone changes
+          // nothing on the wire: the ask repeats the exact URL the one before
+          // it failed against, which is the one thing every wait here exists
+          // to avoid. The candidates are freshened from the list the document
+          // named, so a mark asked for eight times does not carry eight
+          // queries by the end of it.
+          var list = image.getAttribute("data-srcset-origin");
+          if (list === null) {
+            list = image.getAttribute("srcset") || "";
+            image.setAttribute("data-srcset-origin", list);
+          }
+          if (list) image.srcset = freshen(list, mark);
+          image.src = origin + (origin.indexOf("?") > -1 ? "&" : "?") + mark;
         }
         // The next unconditional ask for a mark the ladder has given up on.
         function keepAsking(image) {
@@ -756,8 +816,14 @@
           var origin = image.getAttribute("data-src-origin");
           if (!origin) return;
           var step = Number(image.getAttribute("data-waits") || 0);
-          if (step >= KEEP.length) return;
-          if (Number(image.getAttribute("data-ask-total") || 0) >= MOST_ASKS) return;
+          if (step >= KEEP.length) {
+            giveUp(image);
+            return;
+          }
+          if (Number(image.getAttribute("data-ask-total") || 0) >= MOST_ASKS) {
+            giveUp(image);
+            return;
+          }
           image.setAttribute("data-waits", String(step + 1));
           image.setAttribute("data-waiting", "1");
           // Jittered, so six marks lost in the same instant do not come back
@@ -787,7 +853,12 @@
           var origin = image.getAttribute("data-src-origin");
           if (!origin) {
             origin = image.getAttribute("src");
-            if (!origin) return;
+            // Nothing names a file to ask for again, so there is no recovery to
+            // wait on and the failure is reported as it arrives.
+            if (!origin) {
+              giveUp(image);
+              return;
+            }
             image.setAttribute("data-src-origin", origin);
           }
           var asked = Number(image.getAttribute("data-asks") || 0);
@@ -864,6 +935,7 @@
             var link = event.target;
             if (!link) return;
             if (link.tagName === "IMG") {
+              remember(link);
               if (link.parentNode && link.parentNode.tagName === "PICTURE") stepBack(link);
               else askForItAgain(link);
               return;
