@@ -9,7 +9,7 @@
 <p align="center"><a href="https://www.setxfootball.org">setxfootball.org</a></p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/version-2026.44.0-e11d2a?style=for-the-badge" alt="Version 2026.44.0" />
+  <img src="https://img.shields.io/badge/version-2026.44.1-e11d2a?style=for-the-badge" alt="Version 2026.44.1" />
 </p>
 
 SETX Football Camp is a free camp for kids 5 to 12 in Daisetta, in Liberty County, held over two half-days in July. There are no tryouts, and the only cost is $5 for each camp shirt. The site lets parents sign their kids up and order shirts from their phone, and gives the volunteers running the camp a staff panel for payments and the roster.
