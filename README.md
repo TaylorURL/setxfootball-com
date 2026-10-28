@@ -6,7 +6,7 @@ Registration and shirt orders for a youth football camp in Daisetta, Texas.
 
 [setxfootball.org](https://www.setxfootball.org)
 
-<img src="https://img.shields.io/badge/version-2026.44.2-e11d2a?style=for-the-badge" alt="Version 2026.44.2" />
+<img src="https://img.shields.io/badge/version-2026.44.3-e11d2a?style=for-the-badge" alt="Version 2026.44.3" />
 
 A free camp for kids 5 to 12, two half-days in July. The only cost is $5 per camp shirt. Parents sign kids up and order shirts from their phone, no account needed. Volunteers get a staff panel for payments and the roster.
 
