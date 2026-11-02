@@ -459,6 +459,12 @@
           lost: function (url) {
             report("resource", "Failed to load img: " + String(url || ""));
           },
+          // The stylesheet the page asked for and never got, named by the URL
+          // the document carried rather than by whichever retry URL was last
+          // tried. Called once, after every ask is spent.
+          lostStyle: function (url) {
+            report("resource", "Failed to load link: " + String(url || ""));
+          },
         };
         function report(kind, message, stack) {
           hold(kind, message, stack);
@@ -513,8 +519,18 @@
                 // recovery itself. Both are held for the page's own replay and
                 // neither is forwarded; the recovery code reports the mark once
                 // if it is still missing when every ask is spent.
-                if (tag === "img" && window.__imageRecovery) {
-                  hold("resource", "Failed to load img: " + asked);
+                // The same reasoning covers the stylesheet. The page now
+                // asks for a lost stylesheet again on a ladder, so the first
+                // failure is an outage the site recovers from inside a second
+                // nearly every time, and forwarding each ask would file the
+                // recovery rather than the fault. Both are held for the page's
+                // own replay, and the recovery code reports the stylesheet
+                // once if it is still missing when every ask is spent.
+                var answered =
+                  (tag === "img" && window.__imageRecovery) ||
+                  (tag === "link" && event.target.rel === "stylesheet" && window.__styleRecovery);
+                if (answered) {
+                  hold("resource", "Failed to load " + tag + ": " + asked);
                 } else {
                   report("resource", "Failed to load " + tag + ": " + asked);
                 }
@@ -601,7 +617,7 @@
         // it, because this code is here to answer it. Set before any image in
         // the document has been parsed, so no ask can fail ahead of it.
         window.__imageRecovery = true;
-        var retried = false;
+        window.__styleRecovery = true;
         function readable() {
           if (document.getElementById("stylesheet-fallback")) return;
           var rule = document.createElement("style");
@@ -881,12 +897,13 @@
         // zero, which is the part that matters: the first ask arrives 400ms
         // from here and the mark is drawn before the reader looks up.
         function askAgainForEverything() {
-          if (!missing.length) return;
-          if (revivals >= REVIVALS) return;
           // `onLine` is false only when the browser is certain there is no
           // network, and that certainty is worth honouring - an ask made into
           // it is one of the three spent for nothing.
           if (navigator.onLine === false) return;
+          askAgainForStyle();
+          if (!missing.length) return;
+          if (revivals >= REVIVALS) return;
           revivals += 1;
           var waiting = missing;
           missing = [];
@@ -927,6 +944,105 @@
           // nobody asking again - so it waits and asks like one.
           askForItAgain(image);
         }
+        // The stylesheet is asked for again the same way a mark is, and for
+        // the same reason. One immediate retry was what stood here, and it
+        // answers only the narrowest version of this fault: both asks land
+        // inside the same outage - the second one arrives about fifty
+        // milliseconds after the first fails - so a connection lost for two
+        // seconds takes them both, and the page then reads unstyled for the
+        // rest of the visit even though the file answers normally a moment
+        // later. Nothing gave the asks back: no wait, no backoff, and neither
+        // of the two signals that tell a page the connection is worth using
+        // again. A lost mark had all three and a lost stylesheet had none of
+        // them, and the stylesheet is the one that costs the reader the whole
+        // appearance of the page rather than one small picture.
+        //
+        // So it climbs the same ladder: WAITS first, then KEEP, jittered, to
+        // the same ceiling of asks, with `online` and returning to the tab as
+        // the fast path on top. Each ask carries a number of its own, so it
+        // cannot be answered out of the cache entry a previous one failed
+        // against.
+        var styleOrigin = "";
+        var styleAsks = 0;
+        var styleStep = 0;
+        var stylePending = false;
+        var styleHere = false;
+        // The stylesheet arrived, so the opening state goes back to the
+        // stylesheet's own keeping and the page draws as it was designed to.
+        function styleHasArrived() {
+          styleHere = true;
+          var rule = document.getElementById("stylesheet-fallback");
+          if (rule && rule.parentNode) rule.parentNode.removeChild(rule);
+        }
+        function spentOnStyle() {
+          if (styleHere || !styleOrigin) return;
+          if (window.__reporter && window.__reporter.lostStyle) {
+            window.__reporter.lostStyle(styleOrigin);
+          }
+        }
+        function askForStyleNow() {
+          if (styleHere) return;
+          if (styleAsks >= MOST_ASKS) {
+            spentOnStyle();
+            return;
+          }
+          styleAsks += 1;
+          asks += 1;
+          var again = document.createElement("link");
+          again.rel = "stylesheet";
+          again.href = styleOrigin + (styleOrigin.indexOf("?") > -1 ? "&" : "?") + "retry=" + asks;
+          // A link that loads raises nothing the capture listener can read, so
+          // the arrival is taken from the element itself. A link that fails
+          // raises `error`, which arrives back below and arms the next wait.
+          again.onload = styleHasArrived;
+          (document.head || document.documentElement).appendChild(again);
+        }
+        function keepAskingForStyle() {
+          if (styleHere || stylePending) return;
+          if (styleAsks >= MOST_ASKS) {
+            spentOnStyle();
+            return;
+          }
+          var wait =
+            styleStep < WAITS.length
+              ? WAITS[styleStep]
+              : KEEP[Math.min(styleStep - WAITS.length, KEEP.length - 1)];
+          styleStep += 1;
+          stylePending = true;
+          window.setTimeout(
+            function () {
+              stylePending = false;
+              askForStyleNow();
+            },
+            Math.round(wait * (0.75 + Math.random() * 0.5)),
+          );
+        }
+        function styleLost(href) {
+          if (styleHere) return;
+          if (!styleOrigin) {
+            styleOrigin = String(href || "").split("?")[0];
+            if (!styleOrigin) return;
+            // The reader is not made to wait on the ladder to be able to read.
+            // The first ask usually lands inside half a second and the page is
+            // then drawn properly, so lifting the opening state at once would
+            // show an unstyled page and restyle it under the reader. A second
+            // and a half covers the common recovery and still puts the words
+            // in front of a reader the ladder is going to lose.
+            window.setTimeout(function () {
+              if (!styleHere) readable();
+            }, 1500);
+          }
+          keepAskingForStyle();
+        }
+        // The stylesheet joins the marks on both revival signals: its ladder
+        // goes back to the top and asks again from there.
+        function askAgainForStyle() {
+          if (styleHere || !styleOrigin) return;
+          if (styleAsks >= MOST_ASKS) return;
+          styleStep = 0;
+          stylePending = false;
+          askForStyleNow();
+        }
         // Capture phase, because a link's error event does not bubble, and this
         // listener is installed before the build's own stylesheet tag is parsed.
         window.addEventListener(
@@ -941,17 +1057,7 @@
               return;
             }
             if (link.tagName !== "LINK" || link.rel !== "stylesheet") return;
-            if (retried) {
-              readable();
-              return;
-            }
-            retried = true;
-            var again = document.createElement("link");
-            again.rel = "stylesheet";
-            // A fresh query string, so the second ask cannot be answered out of
-            // whatever cache entry the first one failed against.
-            again.href = link.href + (link.href.indexOf("?") > -1 ? "&" : "?") + "retry=1";
-            (document.head || document.documentElement).appendChild(again);
+            styleLost(link.href);
           },
           true,
         );
