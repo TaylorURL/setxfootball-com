@@ -526,9 +526,22 @@
                 // recovery rather than the fault. Both are held for the page's
                 // own replay, and the recovery code reports the stylesheet
                 // once if it is still missing when every ask is spent.
+                // The hero photograph is also named in a preload hint at the
+                // top of the document. A hint is a head start and nothing the
+                // reader sees: when its fetch is lost the picture drawn from
+                // the same file asks again on its own ladder, and that
+                // recovery reports the photograph once if it is still missing
+                // when every ask is spent. Forwarding the hint's failure as
+                // well files a defect for a request the page has already
+                // answered, and it files under the 400w name whichever
+                // derivative the browser fetched.
                 var answered =
                   (tag === "img" && window.__imageRecovery) ||
-                  (tag === "link" && event.target.rel === "stylesheet" && window.__styleRecovery);
+                  (tag === "link" && event.target.rel === "stylesheet" && window.__styleRecovery) ||
+                  (tag === "link" &&
+                    event.target.rel === "preload" &&
+                    event.target.as === "image" &&
+                    window.__imageRecovery);
                 if (answered) {
                   hold("resource", "Failed to load " + tag + ": " + asked);
                 } else {
